@@ -1,0 +1,39 @@
+.employees {
+  background-color: white;
+  height: 100vh;
+  max-width: 1970px;
+  margin: 2rem auto;
+
+  &-header {
+    background-color: rgb(210, 218, 243);
+    padding: 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-controls {
+      display: flex;
+      gap: 1rem;
+    }
+
+    h2 {
+      margin: 0 1rem 0 0;
+    }
+  }
+
+  &-form {
+    background-color: none !important;
+  }
+}
+
+.icon-container {
+  position: relative;
+  background-color: #3f51b5;
+  padding: 0.8rem;
+  border-radius: 10rem;
+  filter: drop-shadow(0 0.1rem 0.3rem #3f51b59d);
+
+  &-icon {
+    color: white;
+  }
+}

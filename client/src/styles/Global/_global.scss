@@ -1,0 +1,56 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ecf0f4;
+  font-family: "Roboto", sans-serif;
+  color: rgb(84, 84, 84);
+}
+
+p {
+  font-size: 14px;
+}
+h1 {
+  font-size: 1.5rem;
+}
+h1,
+h2 {
+  color: rgb(67, 67, 67);
+}
+h2,
+h3 {
+  font-size: 1.2rem;
+}
+h3 {
+  color: rgb(30, 30, 30);
+}
+.info {
+  font-weight: 500;
+}
+
+//  **************************FORMS
+.header-search {
+  &-input {
+    &::placeholder {
+      font-size: 13.4px;
+      padding: 0 0 0 0.8rem;
+    }
+  }
+}
+
+.delete-btn {
+  color: rgb(184, 8, 8);
+}
+
+.edit-btn {
+  color: rgb(72, 79, 160);
+}
+
+.update-btn {
+  background-color: #3f51b5;
+}

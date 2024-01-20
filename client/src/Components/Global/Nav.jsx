@@ -1,0 +1,56 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+
+function Navigation() {
+  return (
+    <Navbar
+      expand="lg"
+      className="bg-body-tertiary"
+    >
+      <Container>
+        <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            {/* MAIN LINKS */}
+            <Nav.Link href="/">Dashboard</Nav.Link>
+            <Nav.Link href="/add-employee"></Nav.Link>
+            {/* EMPLOYEES */}
+            <NavDropdown
+              title="Employees"
+              id="basic-nav-dropdown"
+            >
+              <NavDropdown.Item href="/add-employee">
+                Add Employee
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/all-employees">
+                all employees
+              </NavDropdown.Item>
+            </NavDropdown>
+            {/* EMPLOYEES END */}
+            {/* PROJECTS */}
+            <NavDropdown
+              title="Projects"
+              id="basic-nav-dropdown"
+            >
+              <NavDropdown.Item href="/add-project">
+                Add Project
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/all-projects">
+                All Projects
+              </NavDropdown.Item>
+            </NavDropdown>
+            {/* PROJECTS END */}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
+
+export default Navigation;
