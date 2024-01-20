@@ -1,51 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Nav from "../Global/Nav";
 import { Container, Form } from "react-bootstrap";
-
 import EmployeeCard from "./EmployeeCard";
+import { date } from "../../Helpers/date";
+import GetEmployeesNow from "../../Hooks/GetEmployeesNow";
 
 const AllEmployees = () => {
-  function getDate() {
-    let dateObj = new Date();
-    var year = dateObj.getFullYear();
-    var month = dateObj.getMonth();
-    var day = dateObj.getDate();
-
-    const reformatMonth = () => {
-      let result = "";
-      (month <= 10) & (month === 0)
-        ? (result = `0${month + 1}`)
-        : (result = month);
-
-      return result;
-    };
-    const reformatDay = () => {
-      let result = "";
-      day <= 10 ? (result = `0${day}`) : (result = day);
-      return result;
-    };
-    const finalMonth = reformatMonth();
-    const finalDay = reformatDay();
-
-    let date = `${year}-${finalMonth}-${finalDay}`;
-
-    return date;
-  }
-
-  const date = getDate()
-
-  const URL = "http://localhost:8080";
-  // get employees
-  useEffect(() => {
-    fetch(`${URL}/employees`)
-      .then((res) => res.json())
-      .then((json) => setEmployees(json));
-  }, []);
-  const [employees, setEmployees] = useState([]);
-
+  const employees = GetEmployeesNow();
   let filteredEmloyees = [];
+
   const [employeeNewArray, setemployeeNewArray] = useState([]);
-  // SHOW UPDATE MODAL
+
+  // GET FILTERED EMPLLOYEES
+  const getFilteredEmployees = (e) => {
+    filteredEmloyees = employees.filter((employee) => {
+      const {
+        firstname,
+        lastname,
+        department,
+        employeeid,
+        designation,
+        email,
+        date,
+        mobile,
+      } = employee;
+      return (
+        firstname.includes(e.target.value) ||
+        lastname.includes(e.target.value) ||
+        department == e.target.value ||
+        employeeid == e.target.value ||
+        designation == e.target.value ||
+        department == e.target.value ||
+        email == e.target.value ||
+        date == e.target.value ||
+        mobile == e.target.value
+      );
+    });
+  };
 
   return (
     <>
@@ -65,29 +56,7 @@ const AllEmployees = () => {
                   type="text"
                   placeholder="Search"
                   onChange={(e) => {
-                    filteredEmloyees = employees.filter((employee) => {
-                      const {
-                        firstname,
-                        lastname,
-                        department,
-                        employeeid,
-                        designation,
-                        email,
-                        date,
-                        mobile,
-                      } = employee;
-                      return (
-                        firstname == e.target.value ||
-                        lastname == e.target.value ||
-                        department == e.target.value ||
-                        employeeid == e.target.value ||
-                        designation == e.target.value ||
-                        department == e.target.value ||
-                        email == e.target.value ||
-                        date == e.target.value ||
-                        mobile == e.target.value
-                      );
-                    });
+                    getFilteredEmployees(e);
                     setemployeeNewArray(filteredEmloyees);
                   }}
                 />
@@ -100,7 +69,6 @@ const AllEmployees = () => {
                   type="button"
                   onClick={() => {
                     handleShow;
-                    console.log("workinggg");
                   }}
                   className="fa-solid fa-plus icon-container-icon"
                 ></i>
@@ -124,8 +92,6 @@ const AllEmployees = () => {
 
                 return (
                   <EmployeeCard
-                    // show={show}
-                    // handleShow={handleShow}
                     URL={URL}
                     employees={employees}
                     key={employeeid}
@@ -165,4 +131,12 @@ const AllEmployees = () => {
                     email={email}
                     date={date}
                   />
-                )
+                );
+              })}
+        </section>
+      </Container>
+    </>
+  );
+};
+
+export default AllEmployees;
