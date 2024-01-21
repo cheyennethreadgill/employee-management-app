@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "../Global/Nav";
-import AllEmployees from "../Employees/AllEmployees";
 import { Button, Container, Form } from "react-bootstrap";
 
 const AddEmployee = () => {
@@ -19,8 +18,8 @@ const AddEmployee = () => {
   const URL = "http://localhost:8080";
 
   // ADD EMPLOYEE TO DB
-  async function addEmployeeNow() {
-
+  async function addEmployeeNow(e) {
+    e.preventDefault();
     // Post options
     const options = {
       method: "POST",
@@ -122,8 +121,6 @@ const AddEmployee = () => {
           />
           <br />
           <br />
-
-        
 
           <br />
           <br />

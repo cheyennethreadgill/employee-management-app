@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
 const EmployeeCard = ({
-  // show,
-  // handleShow,
+  onUpdateEmployeeState,
+  onDelete,
   URL,
   employees,
   employeeid,
@@ -84,34 +84,6 @@ const EmployeeCard = ({
     try {
       const fetchPromiseResponse = await fetch(
         `${URL}/update-employee`,
-        options
-      );
-      if (!fetchPromiseResponse.ok) {
-        console.log(
-          `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
-        );
-      }
-      const jsonPromiseResponse = fetchPromiseResponse.json();
-
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
-    } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
-    }
-  }
-  // DELETE EMPLOYEE
-  async function deleteEmployee(id) {
-    // Post options
-    const options = {
-      method: "DELETE",
-    };
-
-    try {
-      const fetchPromiseResponse = await fetch(
-        `${URL}/delete-employee/${id}`,
         options
       );
       if (!fetchPromiseResponse.ok) {
@@ -325,7 +297,8 @@ const EmployeeCard = ({
                   ></i>
                   <i
                     onClick={() => {
-                      deleteEmployee(employeeid);
+                      onDelete(employeeid);
+                      onUpdateEmployeeState(employeeid);
                     }}
                     type="submit"
                     className="fa-solid fa-trash delete-btn"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "../Global/Nav";
 import { Container, Form } from "react-bootstrap";
 import EmployeeCard from "./EmployeeCard";
@@ -6,36 +6,83 @@ import { date } from "../../Helpers/date";
 import GetEmployeesNow from "../../Hooks/GetEmployeesNow";
 
 const AllEmployees = () => {
-  const employees = GetEmployeesNow();
-  let filteredEmloyees = [];
+  const URL = "http://localhost:8080";
+  const [employees, setEmployees] = useState([]);
+  const [filteredEmloyees, setfilteredEmloyees] = useState([]);
 
-  const [employeeNewArray, setemployeeNewArray] = useState([]);
+  // get Employees
+  useEffect(() => {
+    fetch(`${URL}/employees`)
+      .then((res) => res.json())
+      .then((json) => setEmployees(json));
+  }, []);
+  console.log(employees);
 
   // GET FILTERED EMPLLOYEES
-  const getFilteredEmployees = (e) => {
-    filteredEmloyees = employees.filter((employee) => {
-      const {
-        firstname,
-        lastname,
-        department,
-        employeeid,
-        designation,
-        email,
-        date,
-        mobile,
-      } = employee;
-      return (
-        firstname.includes(e.target.value) ||
-        lastname.includes(e.target.value) ||
-        department == e.target.value ||
-        employeeid == e.target.value ||
-        designation == e.target.value ||
-        department == e.target.value ||
-        email == e.target.value ||
-        date == e.target.value ||
-        mobile == e.target.value
+  const handleFilteredEmployees = (e) => {
+    setfilteredEmloyees(
+      employees.filter((employee) => {
+        const {
+          firstname,
+          lastname,
+          department,
+          employeeid,
+          designation,
+          email,
+          date,
+          mobile,
+        } = employee;
+        return (
+          firstname.includes(e.target.value) ||
+          lastname.includes(e.target.value) ||
+          department == e.target.value ||
+          employeeid == e.target.value ||
+          designation == e.target.value ||
+          department == e.target.value ||
+          email == e.target.value ||
+          date == e.target.value ||
+          mobile == e.target.value
+        );
+      })
+    );
+  };
+  // DELETE EMPLOYEE From DB
+  async function deleteEmployeeFromDB(id) {
+    // Post options
+    const options = {
+      method: "DELETE",
+    };
+
+    try {
+      const fetchPromiseResponse = await fetch(
+        `${URL}/delete-employee/${id}`,
+        options
       );
-    });
+      if (!fetchPromiseResponse.ok) {
+        console.log(
+          `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
+        );
+      }
+      const jsonPromiseResponse = fetchPromiseResponse.json();
+
+      jsonPromiseResponse.then((res) => {
+        console.log(res);
+      });
+    } catch {
+      (err) => {
+        console.log(`FETCH FAILED: ${err}`);
+      };
+    }
+  }
+
+  // Delete Employee State
+  const handleEmployeeDelete = (id) => {
+    setEmployees(
+      employees.filter((employee) => {
+        const { employeeid } = employee;
+        return employeeid !== id;
+      })
+    );
   };
 
   return (
@@ -56,8 +103,7 @@ const AllEmployees = () => {
                   type="text"
                   placeholder="Search"
                   onChange={(e) => {
-                    getFilteredEmployees(e);
-                    setemployeeNewArray(filteredEmloyees);
+                    handleFilteredEmployees(e);
                   }}
                 />
               </div>
@@ -78,8 +124,8 @@ const AllEmployees = () => {
               </span>
             </div>
           </div>
-          {employeeNewArray.length > 0
-            ? employeeNewArray.map((employee) => {
+          {filteredEmloyees.length > 0
+            ? filteredEmloyees.map((employee) => {
                 const {
                   department,
                   designation,
@@ -93,6 +139,8 @@ const AllEmployees = () => {
                 return (
                   <EmployeeCard
                     URL={URL}
+                    onUpdateEmployeeState={handleEmployeeDelete}
+                    onDelete={deleteEmployeeFromDB}
                     employees={employees}
                     key={employeeid}
                     employeeid={employeeid}
@@ -120,6 +168,8 @@ const AllEmployees = () => {
                 return (
                   <EmployeeCard
                     URL={URL}
+                    onDelete={deleteEmployeeFromDB}
+                    onUpdateEmployeeState={handleEmployeeDelete}
                     employees={employees}
                     key={employeeid}
                     employeeid={employeeid}
