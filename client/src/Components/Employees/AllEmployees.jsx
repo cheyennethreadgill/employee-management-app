@@ -3,12 +3,18 @@ import Nav from "../Global/Nav";
 import { Container, Form } from "react-bootstrap";
 import EmployeeCard from "./EmployeeCard";
 import { date } from "../../Helpers/date";
-import GetEmployeesNow from "../../Hooks/GetEmployeesNow";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const AllEmployees = () => {
   const URL = "http://localhost:8080";
   const [employees, setEmployees] = useState([]);
   const [filteredEmloyees, setfilteredEmloyees] = useState([]);
+
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  let navigate = useNavigate();
+  const ADD_EMPLOYEE_URL = "/add-employee";
 
   // get Employees
   useEffect(() => {
@@ -114,9 +120,9 @@ const AllEmployees = () => {
                 <i
                   type="button"
                   onClick={() => {
-                    handleShow;
+                    navigate(ADD_EMPLOYEE_URL);
                   }}
-                  className="fa-solid fa-plus icon-container-icon"
+                  className="fa-solid fa-plus icon-container-icon add-employee-btn"
                 ></i>
               </span>
               <span className="icon-container">
@@ -138,6 +144,10 @@ const AllEmployees = () => {
 
                 return (
                   <EmployeeCard
+                    ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
+                    show={show}
+                    handleShow={handleShow}
+                    handleClose={handleClose}
                     URL={URL}
                     onUpdateEmployeeState={handleEmployeeDelete}
                     onDelete={deleteEmployeeFromDB}
@@ -167,6 +177,10 @@ const AllEmployees = () => {
 
                 return (
                   <EmployeeCard
+                    ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
+                    show={show}
+                    handleShow={handleShow}
+                    handleClose={handleClose}
                     URL={URL}
                     onDelete={deleteEmployeeFromDB}
                     onUpdateEmployeeState={handleEmployeeDelete}

@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
 const EmployeeCard = ({
+  show,
+  handleShow,
+  handleClose,
   onUpdateEmployeeState,
   onDelete,
   URL,
@@ -16,6 +19,7 @@ const EmployeeCard = ({
   email,
   date,
 }) => {
+  const UPDATE_EMPLOYEE_URL = "/update-employee";
   // EDIT MODE
   const [editMode, setEditMode] = useState(false);
   const [btnValue, setBtnValue] = useState(0);
@@ -40,26 +44,24 @@ const EmployeeCard = ({
   const [newMobile, setNewMobile] = useState("");
 
   // SHOW UPDATE MODAL
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+
+  const handleBtnValue = (id) => setBtnValue(id);
+  const handleEditMode = () => setEditMode(!editMode);
 
   // SEARCH EMPLOYEE
-  const findEmployeeForUpdate = (id) => {
-    let foundEmployee = employees.filter((employee) => {
-      const { employeeid } = employee;
-      if (employeeid === id) {
-        return employee;
-      }
-    });
-    setBtnValue(id);
-    setEditMode(!editMode);
-    setEmployee(foundEmployee);
-    return foundEmployee;
+  const handleEmployeeSearch = (id) => {
+    setEmployee(
+      employees.filter((employee) => {
+        const { employeeid } = employee;
+        if (employeeid === id) {
+          return employee;
+        }
+      })
+    );
   };
 
   // UPDATE EMPLOYEE
-  async function updateEmployee(e, id) {
+  async function handleEmployeeUpdate(e, id) {
     e.preventDefault();
 
     // Post options
@@ -83,7 +85,7 @@ const EmployeeCard = ({
 
     try {
       const fetchPromiseResponse = await fetch(
-        `${URL}/update-employee`,
+        `${URL}${UPDATE_EMPLOYEE_URL}`,
         options
       );
       if (!fetchPromiseResponse.ok) {
@@ -119,11 +121,10 @@ const EmployeeCard = ({
                 lg="12"
                 className="col-6"
               >
-                <input
+                <Form.Control
                   style={{ margin: "0" }}
                   className="radio"
                   type="radio"
-                  name=""
                   id=""
                 />
               </Col>
@@ -289,8 +290,10 @@ const EmployeeCard = ({
                 <div className="form-btns">
                   <i
                     onClick={(e) => {
-                      findEmployeeForUpdate(employeeid);
+                      handleEmployeeSearch(employeeid);
                       handleShow();
+                      handleBtnValue(employeeid);
+                      handleEditMode(employeeid);
                     }}
                     type="button"
                     className="fa-regular fa-pen-to-square fs-5 edit-btn"
@@ -344,7 +347,7 @@ const EmployeeCard = ({
                   }
                   type="text"
                   autoFocus
-                  onKeyUp={(e) => {
+                  onChange={(e) => {
                     setNewFirstnameUpdated(true);
                     setNewLastnameUpdated(true);
                     setCombinedName(e.target.value);
@@ -382,7 +385,7 @@ const EmployeeCard = ({
                       : department
                   }
                   type="text"
-                  onKeyUp={(e) => {
+                  onChange={(e) => {
                     setNewDepartment(e.target.value);
                     setNewDepartmentUpdated(true);
                   }}
@@ -416,7 +419,7 @@ const EmployeeCard = ({
                       : designation
                   }
                   type="text"
-                  onKeyUp={(e) => {
+                  onChange={(e) => {
                     setNewDesignation(e.target.value);
                     setNewDesignationUpdated(true);
                   }}
@@ -450,7 +453,7 @@ const EmployeeCard = ({
                       : mobile
                   }
                   type="number"
-                  onKeyUp={(e) => {
+                  onChange={(e) => {
                     setNewMobile(e.target.value);
                     setNewMobileUpdated(true);
                   }}
@@ -484,7 +487,7 @@ const EmployeeCard = ({
                       : email
                   }
                   type="text"
-                  onKeyUp={(e) => {
+                  onChange={(e) => {
                     setNewEmail(e.target.value);
                     setNewEmailUpdated(true);
                   }}
@@ -517,8 +520,8 @@ const EmployeeCard = ({
             onClick={(e) => {
               handleClose();
               setEditMode(!editMode);
-              updateEmployee(e, employeeid);
-              updateEmployee(e, employeeid);
+              handleEmployeeUpdate(e, employeeid);
+              handleEmployeeUpdate(e, employeeid);
             }}
           >
             Save Changes

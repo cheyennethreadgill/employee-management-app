@@ -15,10 +15,8 @@ const AddProject = () => {
   const [description, setDescription] = useState("");
   const URL = "http://localhost:8080";
 
-  console.log(description);
-
   // fetch for data
-  async function AddProjectNow() {
+  async function handleProjectAdd() {
     // Post options
     const options = {
       method: "POST",
@@ -61,7 +59,7 @@ const AddProject = () => {
       <Container>
         <Form
           action=""
-          onSubmit={AddProjectNow}
+          onSubmit={handleProjectAdd}
         >
           <Form.Label htmlFor="">Add Project</Form.Label>
           <Form.Control

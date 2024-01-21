@@ -1,9 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { Navigate } from "react-router-dom";
+
+// const Navigation = () => {
+//   let navigate = useNavigate();
+//   return (
+//     <nav className="main-nav">
+//       <div className="main-nav-controls">
+//         <h1 className="main-nav-brand">LOGO</h1>
+//         <h1 className="main-nav-toggle">=</h1>
+//       </div>
+
+//       <li className="main-nav-list">
+//         <a href="/">Dashboard</a>
+//         <a href="/all-projects">Add Projects</a>
+//         <a href="/all-projects">All Projects</a>
+//         <a href="/all-employees">All Employees</a>
+//         <a href="/add-employee">Add Employee</a>
+//       </li>
+//     </nav>
+//   );
+// };
 
 function Navigation() {
   return (

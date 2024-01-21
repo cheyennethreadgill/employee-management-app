@@ -5,15 +5,15 @@ import Container from "react-bootstrap/esm/Container";
 import { Row, Col } from "react-bootstrap";
 
 const AllProjects = () => {
+  const URL = "http://localhost:8080";
+  const [projects, setProjects] = useState([]);
+
   // get Project
   useEffect(() => {
     fetch(`${URL}/projects`)
       .then((res) => res.json())
       .then((json) => setProjects(json));
   }, []);
-
-  const URL = "http://localhost:8080";
-  const [projects, setProjects] = useState([]);
 
   return (
     <>
