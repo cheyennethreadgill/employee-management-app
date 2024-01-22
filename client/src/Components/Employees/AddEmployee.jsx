@@ -60,7 +60,6 @@ const AddEmployee = () => {
 
   return (
     <>
-      <Navigation />
       <Container>
         <Form
           onSubmit={addEmployeeNow}

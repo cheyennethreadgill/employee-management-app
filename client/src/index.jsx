@@ -2,39 +2,49 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../src/styles/styles.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import AddEmployee from "./Components/Employees/AddEmployee";
 import AllEmployees from "./Components/Employees/AllEmployees";
-import Dashboard from "./Components/Dashboard/Dashboard";
+import App from "./Routes/App";
 import AddProject from "./Components/Projects/AddProject";
 import AllProjects from "./Components/Projects/AllProjects";
+import ErrorPage from "./Components/Errors/ErrorPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/all-employees",
+        element: <AllEmployees />,
+      },
+      {
+        path: "/add-employee",
+        element: <AddEmployee />,
+      },
+      {
+        path: "/all-projects",
+        element: <AllProjects />,
+      },
+      {
+        path: "/add-projects",
+        element: <AddProject />,
+      },
+    ],
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<Dashboard />}
-        ></Route>
-        <Route
-          path="/add-employee"
-          element={<AddEmployee />}
-        ></Route>
-        <Route
-          path="/all-employees"
-          element={<AllEmployees />}
-        ></Route>
-        <Route
-          path="/add-project"
-          element={<AddProject />}
-        ></Route>
-        <Route
-          path="/all-projects"
-          element={<AllProjects />}
-        ></Route>
-      </Routes>
-    </BrowserRouter>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

@@ -55,7 +55,6 @@ const AddProject = () => {
   }
   return (
     <>
-      <Nav />
       <Container>
         <Form
           action=""

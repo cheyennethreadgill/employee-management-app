@@ -23,6 +23,7 @@ const AllEmployees = () => {
       .then((json) => setEmployees(json));
   }, []);
   console.log(employees);
+  const filterCount = filteredEmloyees.length > 0;
 
   // GET FILTERED EMPLLOYEES
   const handleFilteredEmployees = (e) => {
@@ -91,10 +92,76 @@ const AllEmployees = () => {
     );
   };
 
+  // Employees Content
+  const employeesContent = employees.map((employee) => {
+    const {
+      department,
+      designation,
+      email,
+      employeeid,
+      firstname,
+      lastname,
+      mobile,
+    } = employee;
+
+    return (
+      <EmployeeCard
+        ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
+        show={show}
+        handleShow={handleShow}
+        handleClose={handleClose}
+        URL={URL}
+        onDelete={deleteEmployeeFromDB}
+        onUpdateEmployeeState={handleEmployeeDelete}
+        employees={employees}
+        key={employeeid}
+        employeeid={employeeid}
+        firstname={firstname}
+        lastname={lastname}
+        department={department}
+        designation={designation}
+        mobile={mobile}
+        email={email}
+        date={date}
+      />
+    );
+  });
+  const filteredEmloyeesContent = filteredEmloyees.map((employee) => {
+    const {
+      department,
+      designation,
+      email,
+      employeeid,
+      firstname,
+      lastname,
+      mobile,
+    } = employee;
+
+    return (
+      <EmployeeCard
+        ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
+        show={show}
+        handleShow={handleShow}
+        handleClose={handleClose}
+        URL={URL}
+        onUpdateEmployeeState={handleEmployeeDelete}
+        onDelete={deleteEmployeeFromDB}
+        employees={employees}
+        key={employeeid}
+        employeeid={employeeid}
+        firstname={firstname}
+        lastname={lastname}
+        department={department}
+        designation={designation}
+        mobile={mobile}
+        email={email}
+        date={date}
+      />
+    );
+  });
+
   return (
     <>
-      <Nav />
-
       <Container>
         <section className="employees">
           <div className="employees-header">
@@ -130,73 +197,7 @@ const AllEmployees = () => {
               </span>
             </div>
           </div>
-          {filteredEmloyees.length > 0
-            ? filteredEmloyees.map((employee) => {
-                const {
-                  department,
-                  designation,
-                  email,
-                  employeeid,
-                  firstname,
-                  lastname,
-                  mobile,
-                } = employee;
-
-                return (
-                  <EmployeeCard
-                    ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
-                    show={show}
-                    handleShow={handleShow}
-                    handleClose={handleClose}
-                    URL={URL}
-                    onUpdateEmployeeState={handleEmployeeDelete}
-                    onDelete={deleteEmployeeFromDB}
-                    employees={employees}
-                    key={employeeid}
-                    employeeid={employeeid}
-                    firstname={firstname}
-                    lastname={lastname}
-                    department={department}
-                    designation={designation}
-                    mobile={mobile}
-                    email={email}
-                    date={date}
-                  />
-                );
-              })
-            : employees.map((employee) => {
-                const {
-                  department,
-                  designation,
-                  email,
-                  employeeid,
-                  firstname,
-                  lastname,
-                  mobile,
-                } = employee;
-
-                return (
-                  <EmployeeCard
-                    ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
-                    show={show}
-                    handleShow={handleShow}
-                    handleClose={handleClose}
-                    URL={URL}
-                    onDelete={deleteEmployeeFromDB}
-                    onUpdateEmployeeState={handleEmployeeDelete}
-                    employees={employees}
-                    key={employeeid}
-                    employeeid={employeeid}
-                    firstname={firstname}
-                    lastname={lastname}
-                    department={department}
-                    designation={designation}
-                    mobile={mobile}
-                    email={email}
-                    date={date}
-                  />
-                );
-              })}
+          {filterCount ? filteredEmloyeesContent : employeesContent}
         </section>
       </Container>
     </>

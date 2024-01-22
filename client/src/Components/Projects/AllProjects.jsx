@@ -17,7 +17,6 @@ const AllProjects = () => {
 
   return (
     <>
-      <Nav />
 
       <Container>
         {" "}

@@ -3,6 +3,8 @@
   height: 100vh;
   max-width: 1970px;
   margin: 2rem auto;
+  position: relative;
+  z-index: 3;
 
   &-header {
     background-color: rgb(210, 218, 243);

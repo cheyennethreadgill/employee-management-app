@@ -11984,6 +11984,19 @@ textarea.form-control-lg {
   padding: 0;
 }
 
+.container {
+  margin-top: 9rem;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 body {
   background-color: #ecf0f4;
   font-family: "Roboto", sans-serif;
@@ -12139,18 +12152,57 @@ select {
   z-index: 99;
 }
 
-.main-nav-controls {
+.main-nav {
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  transition: all ease-in-out 600ms;
+  filter: drop-shadow(0 0.1rem 0.3rem rgb(217, 221, 227));
+}
+.main-nav-brand {
   display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: inherit;
+}
+.main-nav-controls {
+  position: relative;
+  top: 0;
+  display: flex;
+  width: 100vw;
   background-color: white;
   gap: 5em;
-  padding: 0 0 0 2em;
+  padding: 1rem;
+  transition: all ease-in-out 600ms;
 }
-.main-nav-list {
+
+.main-nav-list, .main-nav-list_toggled {
+  z-index: 6;
+  position: fixed;
+  bottom: 0;
+  top: 64px;
+  padding: 5rem 1rem;
   background-color: white;
-  width: 100px;
+  width: 300px;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  font-size: 1.15rem;
+  transition: all ease-in-out 600ms;
+  filter: drop-shadow(0.1rem 0.5remrem 0.2rem rgb(217, 221, 227));
+}
+.main-nav-list-linkHeader {
+  font-size: inherit;
+}
+.main-nav-list-linkContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.main-nav-list_toggled {
+  width: 63px;
+  transition: inherit;
 }
 
 .employees {
@@ -12158,6 +12210,8 @@ select {
   height: 100vh;
   max-width: 1970px;
   margin: 2rem auto;
+  position: relative;
+  z-index: 3;
 }
 .employees-header {
   background-color: rgb(210, 218, 243);
