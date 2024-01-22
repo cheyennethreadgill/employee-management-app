@@ -12204,6 +12204,18 @@ select {
   width: 63px;
   transition: inherit;
 }
+@media screen and (max-width: 482px) {
+  .main-nav-list_toggled_mobile {
+    transform: translateX(-100vw);
+    transition: inherit;
+    padding: 0;
+  }
+}
+@media screen and (max-width: 482px) {
+  .main-nav-list-icon {
+    visibility: hidden;
+  }
+}
 
 .employees {
   background-color: white;

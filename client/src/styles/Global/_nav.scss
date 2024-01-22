@@ -54,5 +54,19 @@
     @extend .main-nav-list;
     width: 63px;
     transition: inherit;
+
+    @include breakpointDown(sm) {
+      &_mobile {
+        transform: translateX(-100vw);
+        transition: inherit;
+        padding: 0;
+      }
+    }
+  }
+
+  @include breakpointDown(sm) {
+    &-icon {
+      visibility: hidden;
+    }
   }
 }

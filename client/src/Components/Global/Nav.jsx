@@ -43,12 +43,16 @@ const Navigation = () => {
         </div>
       </div>
       <nav
-        className={toggled ? "main-nav-list_toggled" : "main-nav-list"}
+        className={
+          toggled
+            ? "main-nav-list_toggled main-nav-list_toggled_mobile"
+            : "main-nav-list"
+        }
         onMouseLeave={handleMouseLeave}
         onMouseEnter={handleNavToggle}
       >
         {toggled ? (
-          <i className="fa-solid fa-table-columns"></i>
+          <i className=" main-nav-list-icon fa-solid fa-table-columns"></i>
         ) : (
           <span className="main-nav-list-linkContainer">
             <i className="fa-solid fa-table-columns"></i>
@@ -56,7 +60,7 @@ const Navigation = () => {
           </span>
         )}
         {toggled ? (
-          <i className="fa-solid fa-book"></i>
+          <i className=" main-nav-list-icon fa-solid fa-book"></i>
         ) : (
           <p className="main-nav-list-linkHeader d-flex flex-column">
             Projects
@@ -65,7 +69,7 @@ const Navigation = () => {
           </p>
         )}
         {toggled ? (
-          <i className="fa-solid fa-user"></i>
+          <i className="fa main-nav-list-icon -solid fa-user"></i>
         ) : (
           <p className="main-nav-list-linkHeader d-flex flex-column">
             Employees
