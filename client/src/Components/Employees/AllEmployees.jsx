@@ -8,7 +8,7 @@ import { Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
 const AllEmployees = () => {
-  const URL = "employee-management-app-eight.vercel.app/";
+  const URL = "https://employee-management-app-eight.vercel.app/";
   const PATH = "employees";
 
   const [employees, setEmployees] = useState([]);
