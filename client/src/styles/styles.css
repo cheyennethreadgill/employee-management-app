@@ -12201,8 +12201,9 @@ select {
 }
 
 .brand-bar-mobile {
-  position: sticky;
+  position: fixed;
   top: 0;
+  bottom: 0;
   z-index: 5;
   transition: all ease-in-out cubic-bezier(0.075, 0.82, 0.165, 1);
   filter: drop-shadow(0 0.1rem 0.3rem rgb(217, 221, 227));
@@ -12253,6 +12254,7 @@ select {
 .brand-bar-desktop {
   position: fixed;
   top: 0;
+  bottom: 0;
   z-index: 5;
   transition: all ease-in-out cubic-bezier(0.075, 0.82, 0.165, 1);
   filter: drop-shadow(0 0.1rem 0.3rem rgb(217, 221, 227));
@@ -12324,6 +12326,9 @@ select {
   font-size: 1.15rem;
   transition: all ease-in-out 800ms;
   filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
+  position: sticky;
+  z-index: 4;
+  top: 0;
 }
 @media screen and (min-width: 1600px) {
   .main-nav-list, .main-nav-list_toggled {
