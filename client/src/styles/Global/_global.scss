@@ -8,13 +8,23 @@
 .app-flex {
   display: flex;
 
-  @include breakpointDown (md) {
+  @include breakpointDown(md) {
     display: block;
   }
 }
 .container {
   max-width: 1425px;
   width: min(100% - 2rem);
+
+  @include breakpointDown(md) {
+    max-width: 865px;
+  }
+  @include breakpointUp(lg) {
+    max-width: 1805px;
+  }
+  @include breakpointUp(xl) {
+    max-width: 1935px;
+  }
 }
 
 li {

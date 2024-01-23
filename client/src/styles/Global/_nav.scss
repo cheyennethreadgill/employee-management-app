@@ -131,7 +131,6 @@
 
 .main-nav-list {
   height: 100vh;
-  float: left;
   padding: 5rem 1rem;
   background-color: rgb(255, 255, 255);
   width: 238px;
@@ -141,8 +140,18 @@
   margin: 2rem 0 0 0;
   gap: 2rem;
   font-size: 1.15rem;
-  filter: $drop-shadow-right;
   transition: all ease-in-out 800ms;
+  filter: $drop-shadow-right;
+
+  @include breakpointUp(lg) {
+    float: left;
+  }
+
+  @include breakpointDown(md) {
+    position: fixed;
+    z-index: 4;
+    top: 0;
+  }
 
   &-linkHeader {
     font-size: inherit;
@@ -154,19 +163,19 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-
     transition: all ease-in-out 800ms;
   }
 
   &_toggled {
-    transition: all ease-in-out 800ms;
     @extend .main-nav-list;
-    width: 63px;
-    transform: translateX(-63px);
-
+    filter: $drop-shadow-right;
     transition: all ease-in-out 800ms;
-
+    width: 63px;
+    
+    transition: all ease-in-out 800ms;
+    
     @include breakpointDown(sm) {
+      transform: translateX(-63px);
       &_mobile {
         transition: all ease-in-out 800ms;
         // padding: 0;
