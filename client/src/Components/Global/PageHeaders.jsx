@@ -1,7 +1,7 @@
 const PageHeaders = ({ name }) => {
   return (
     <section className="page-headers">
-      <h1> {name} </h1>;
+      <h1> {name} </h1>
       <div className="page-headers-breadcrumbs">
         <i className="fa-solid fa-house"></i>
         <i className="fa-solid fa-greater-than "></i>

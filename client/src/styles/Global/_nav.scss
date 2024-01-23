@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 5;
-  transition: all ease-in-out 600ms;
+  transition: all ease-in-out cubic-bezier(0.075, 0.82, 0.165, 1);
   filter: $drop-shadow-bottom;
   height: 64px;
 
@@ -59,7 +59,7 @@
   position: fixed;
   top: 0;
   z-index: 5;
-  transition: all ease-in-out 600ms;
+  transition: all ease-in-out cubic-bezier(0.075, 0.82, 0.165, 1);
   filter: $drop-shadow-bottom;
   height: 64px;
 
@@ -171,9 +171,9 @@
     filter: $drop-shadow-right;
     transition: all ease-in-out 800ms;
     width: 63px;
-    
+
     transition: all ease-in-out 800ms;
-    
+
     @include breakpointDown(sm) {
       transform: translateX(-63px);
       &_mobile {

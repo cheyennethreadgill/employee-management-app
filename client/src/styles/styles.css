@@ -12033,7 +12033,8 @@ p {
 }
 
 h1, .h1 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 h1, .h1,
@@ -12203,7 +12204,7 @@ select {
   position: sticky;
   top: 0;
   z-index: 5;
-  transition: all ease-in-out 600ms;
+  transition: all ease-in-out cubic-bezier(0.075, 0.82, 0.165, 1);
   filter: drop-shadow(0 0.1rem 0.3rem rgb(217, 221, 227));
   height: 64px;
 }
@@ -12253,7 +12254,7 @@ select {
   position: fixed;
   top: 0;
   z-index: 5;
-  transition: all ease-in-out 600ms;
+  transition: all ease-in-out cubic-bezier(0.075, 0.82, 0.165, 1);
   filter: drop-shadow(0 0.1rem 0.3rem rgb(217, 221, 227));
   height: 64px;
 }
@@ -12322,7 +12323,7 @@ select {
   gap: 2rem;
   font-size: 1.15rem;
   transition: all ease-in-out 800ms;
-  filter: drop-shadow(0.1rem 0.5remrem 0.2rem rgb(217, 221, 227));
+  filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
 }
 @media screen and (min-width: 1600px) {
   .main-nav-list, .main-nav-list_toggled {
@@ -12347,7 +12348,7 @@ select {
   transition: all ease-in-out 800ms;
 }
 .main-nav-list_toggled {
-  filter: drop-shadow(0.1rem 0.5remrem 0.2rem rgb(217, 221, 227));
+  filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
   transition: all ease-in-out 800ms;
   width: 63px;
   transition: all ease-in-out 800ms;
@@ -12371,6 +12372,11 @@ select {
   padding: 5.4rem 0 1.6rem 0;
   display: flex;
   justify-content: space-between;
+}
+@media screen and (max-width: 482px) {
+  .page-headers {
+    padding: 1.3rem 0 1.6rem 0;
+  }
 }
 .page-headers-breadcrumbs {
   display: flex;
