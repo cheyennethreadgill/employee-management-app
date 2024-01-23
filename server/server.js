@@ -4,12 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const app = express();
-app.use(
-  cors({
-    origin: "https://kubermanagement.netlify.app/",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  })
-);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 8080;
