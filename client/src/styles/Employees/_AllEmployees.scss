@@ -9,12 +9,13 @@
   &-header {
     background-color: rgb(210, 218, 243);
     padding: 1rem 1rem;
-    display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
 
     &-controls {
       display: flex;
+      justify-content: flex-end;
       gap: 1rem;
     }
 

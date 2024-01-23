@@ -17,7 +17,6 @@ const AllProjects = () => {
 
   return (
     <>
-
       <Container>
         {" "}
         <section className="project">
@@ -25,7 +24,7 @@ const AllProjects = () => {
             <h2>New Projects</h2>
             <p>3 projects</p>
           </div>
-          <Row>
+          <Row className="all-projects-row">
             {projects.map((project) => {
               const {
                 projectID,
@@ -43,7 +42,9 @@ const AllProjects = () => {
 
               return (
                 <Col
+                  className="project-col"
                   key={projectID}
+                  lg="3"
                   md="4"
                 >
                   {" "}

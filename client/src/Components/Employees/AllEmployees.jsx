@@ -4,6 +4,7 @@ import { Container, Form } from "react-bootstrap";
 import EmployeeCard from "./EmployeeCard";
 import { date } from "../../Helpers/date";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
 
 const AllEmployees = () => {
   const URL = "http://localhost:8080";
@@ -126,6 +127,7 @@ const AllEmployees = () => {
       />
     );
   });
+
   const filteredEmloyeesContent = filteredEmloyees.map((employee) => {
     const {
       department,
@@ -164,25 +166,41 @@ const AllEmployees = () => {
     <>
       <Container>
         <section className="employees">
-          <div className="employees-header">
-            <div>
-              <h2>Employees</h2>
-              <div className="header-search form-control-container">
-                <span className="search-icon form-control-container-icon">
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </span>
-                <Form.Control
-                  className="header-search-input"
-                  type="text"
-                  placeholder="Search"
-                  onChange={(e) => {
-                    handleFilteredEmployees(e);
-                  }}
-                />
-              </div>
-            </div>
+          <Row className="employees-header">
+            <Col lg="7">
+              <Row>
+                <Col
+                  md="1"
+                  lg="2"
+                >
+                  <h2>Employees</h2>
+                </Col>
+                <Col
+                  md="1"
+                  lg="10"
+                >
+                  {" "}
+                  <div className="header-search form-control-container">
+                    <span className="search-icon form-control-container-icon">
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <Form.Control
+                      className="header-search-input form-control-container-input m-0"
+                      type="text"
+                      placeholder="Search"
+                      onChange={(e) => {
+                        handleFilteredEmployees(e);
+                      }}
+                    />
+                  </div>
+                </Col>
+              </Row>
+            </Col>
 
-            <div className="employees-header-controls">
+            <Col
+              lg="2"
+              className="employees-header-controls"
+            >
               <span className="icon-container">
                 <i
                   type="button"
@@ -195,8 +213,8 @@ const AllEmployees = () => {
               <span className="icon-container">
                 <i className="fa-solid fa-arrows-rotate icon-container-icon"></i>
               </span>
-            </div>
-          </div>
+            </Col>
+          </Row>
           {filterCount ? filteredEmloyeesContent : employeesContent}
         </section>
       </Container>

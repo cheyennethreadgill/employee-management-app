@@ -106,10 +106,10 @@ const EmployeeCard = ({
   }
 
   return (
-    <section>
+    <Row>
       <Form
         autoComplete="true"
-        className="employees_form"
+        className="employee-form"
       >
         <Row className="justify-content-between">
           <Col
@@ -528,7 +528,7 @@ const EmployeeCard = ({
           </Button>
         </Modal.Footer>
       </Modal>
-    </section>
+    </Row>
   );
 };
 

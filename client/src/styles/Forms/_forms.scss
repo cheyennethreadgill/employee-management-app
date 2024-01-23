@@ -2,17 +2,34 @@
 form {
   background-color: white;
   padding: 2rem;
+  border-radius: 0.8rem;
 }
 
 .form-btns {
   display: flex;
   gap: 1rem;
 }
+fieldset {
+  margin: 0 0 2.5rem 0;
+}
+
+select {
+  background: none;
+  width: 100%;
+}
+
+.form-control {
+  &::placeholder {
+    position: relative;
+    z-index: 3;
+  }
+}
 
 .form-control,
 select {
   padding: 0.8rem 2rem;
   border: solid rgba(128, 128, 128, 0.39) 1px;
+  margin: 0 0 2.5rem 0;
 }
 
 .form-control-container {
@@ -26,6 +43,7 @@ select {
     right: 0;
     margin: 0 auto;
     padding: 0 0 0 1rem;
+    z-index: 1;
 
     &_end {
       position: absolute;
@@ -34,8 +52,6 @@ select {
     }
   }
 }
-
-
 
 .radio {
   appearance: none;

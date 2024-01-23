@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
 import Navigation from "../Global/Nav";
+import React, { useState, useEffect } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 const AddEmployee = () => {
   const [fname, setFname] = useState("");
@@ -65,109 +66,135 @@ const AddEmployee = () => {
           onSubmit={addEmployeeNow}
           autoComplete="true"
         >
-          <legend className="add employee">ADD EMPLOYEE</legend>
-          <Form.Control
-            type="text"
-            placeholder="first name *"
-            onChange={(e) => {
-              setFname(e.target.value);
-            }}
-            required={true}
-          />
-          <Form.Control
-            type="text"
-            placeholder="last name"
-            onChange={(e) => {
-              setLname(e.target.value);
-            }}
-          />
+          <Row>
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="first name *"
+                onChange={(e) => {
+                  setFname(e.target.value);
+                }}
+                required={true}
+              />
+            </Col>
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="last name"
+                onChange={(e) => {
+                  setLname(e.target.value);
+                }}
+              />
+            </Col>
 
-          <Form.Control
-            type="text"
-            placeholder="gender"
-            onChange={(e) => {
-              setGender(e.target.value);
-            }}
-          />
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="gender"
+                onChange={(e) => {
+                  setGender(e.target.value);
+                }}
+              />
+            </Col>
 
-          <Form.Control
-            type="tel"
-            placeholder="mobile*"
-            onChange={(e) => {
-              setMobile(e.target.value);
-            }}
-            required={true}
-          />
-          <Form.Control
-            type="text"
-            placeholder="password*"
-            required={true}
-          />
-          <Form.Control
-            type="text"
-            placeholder="re-enter password*"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            required={true}
-          />
-          <Form.Control
-            type="text"
-            placeholder="designmation"
-            onChange={(e) => {
-              setDesignation(e.target.value);
-            }}
-          />
-          <br />
-          <br />
+            <Col lg="6">
+              <Form.Control
+                type="tel"
+                placeholder="mobile*"
+                onChange={(e) => {
+                  setMobile(e.target.value);
+                }}
+                required={true}
+              />
+            </Col>
 
-          <br />
-          <br />
-          <Form.Control
-            type="text"
-            placeholder="address"
-            onChange={(e) => {
-              setAddress(e.target.value);
-            }}
-          />
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="password*"
+                required={true}
+              />
+            </Col>
 
-          <Form.Control
-            type="text"
-            placeholder="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="re-enter password*"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                required={true}
+              />
+            </Col>
 
-          <label
-            htmlFor="date"
-            className="mt-4"
-          >
-            DOB
-          </label>
-          <Form.Control
-            name="date"
-            type="date"
-            placeholder="date of birth"
-            onChange={(e) => {
-              setDOB(e.target.value);
-            }}
-            className="mt-0"
-          />
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="designmation"
+                onChange={(e) => {
+                  setDesignation(e.target.value);
+                }}
+              />
+            </Col>
 
-          <Form.Control
-            type="text"
-            placeholder="Degree"
-            onChange={(e) => {
-              setDegree(e.target.value);
-            }}
-          />
-          <fieldset>
-            <legend>Upload Image</legend>
-            <Form.Control type="file" />
-            <Button type="submit">Submit</Button>
-            <Button type="button">Cancel</Button>
-          </fieldset>
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="department"
+                onChange={(e) => {
+                  setDepartment(e.target.value);
+                }}
+              />
+            </Col>
+
+            <Col lg="12">
+              <Form.Control
+                type="text"
+                placeholder="address"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+              />
+            </Col>
+
+            <Col lg="6">
+              <Form.Control
+                type="text"
+                placeholder="email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </Col>
+
+            <Col lg="6">
+              <Form.Control
+                name="date"
+                type="date"
+                placeholder="date of birth"
+                onChange={(e) => {
+                  setDOB(e.target.value);
+                }}
+              />
+            </Col>
+
+            <Col lg="12">
+              <Form.Control
+                type="text"
+                placeholder="Degree"
+                onChange={(e) => {
+                  setDegree(e.target.value);
+                }}
+              />
+            </Col>
+
+            <fieldset>
+              <legend>Upload Image</legend>
+              <Form.Control type="file" />
+              <Button type="submit">Submit</Button>
+              <Button type="button">Cancel</Button>
+            </fieldset>
+          </Row>
         </Form>
       </Container>
     </>
