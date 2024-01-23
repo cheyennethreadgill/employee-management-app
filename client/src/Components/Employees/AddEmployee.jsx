@@ -5,7 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
 const AddEmployee = () => {
-  const URL = "http://localhost:8080/";
+  const URL = "employee-management-app-eight.vercel.app/";
   const PATH = "add-employee";
 
   const [fname, setFname] = useState("");
