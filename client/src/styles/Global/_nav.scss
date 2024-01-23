@@ -162,6 +162,7 @@
     transition: all ease-in-out 800ms;
     @extend .main-nav-list;
     width: 63px;
+    transform: translateX(-63px);
 
     transition: all ease-in-out 800ms;
 

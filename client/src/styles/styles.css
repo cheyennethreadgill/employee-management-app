@@ -11987,6 +11987,11 @@ textarea.form-control-lg {
 .app-flex {
   display: flex;
 }
+@media screen and (max-width: 1024px) {
+  .app-flex {
+    display: block;
+  }
+}
 
 .container {
   max-width: 1425px;
@@ -12318,6 +12323,7 @@ select {
 .main-nav-list_toggled {
   transition: all ease-in-out 800ms;
   width: 63px;
+  transform: translateX(-63px);
   transition: all ease-in-out 800ms;
 }
 @media screen and (max-width: 482px) {
@@ -12462,6 +12468,7 @@ select {
 
 .work-status {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
 }/*# sourceMappingURL=styles.css.map */

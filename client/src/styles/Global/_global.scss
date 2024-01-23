@@ -7,6 +7,10 @@
 }
 .app-flex {
   display: flex;
+
+  @include breakpointDown (md) {
+    display: block;
+  }
 }
 .container {
   max-width: 1425px;
