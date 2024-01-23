@@ -27,7 +27,7 @@ const AddEmployee = () => {
     // Post options
     const options = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Accept: "*" },
       body: JSON.stringify({
         fname: fname,
         lname: lname,

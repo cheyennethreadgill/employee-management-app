@@ -21,11 +21,10 @@ const AllEmployees = () => {
 
   // get Employees
   useEffect(() => {
-    fetch(`${URL}employees`)
+    fetch(`${URL}${PATH}`)
       .then((res) => res.json())
       .then((json) => setEmployees(json));
   }, []);
-  console.log(employees);
   const filterCount = filteredEmloyees.length > 0;
 
   // GET FILTERED EMPLLOYEES
