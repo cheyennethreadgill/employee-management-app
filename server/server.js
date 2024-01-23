@@ -7,6 +7,7 @@ const app = express();
 app.use(
   cors({
     origin: "https://kubermanagement.netlify.app/",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
 app.use(bodyParser.json());
