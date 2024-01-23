@@ -1,5 +1,5 @@
 .brand-bar-mobile {
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 5;
   transition: all ease-in-out 600ms;
@@ -50,7 +50,11 @@
       height: 40px;
     }
   }
+  @include breakpointDown(md) {
+    display: block;
+  }
 }
+// DESKTOP
 .brand-bar-desktop {
   position: fixed;
   top: 0;
@@ -74,7 +78,6 @@
 
     &-left {
       display: flex;
-      gap: 5rem;
 
       @include breakpointDown(md) {
       }
@@ -127,16 +130,15 @@
 }
 
 .main-nav-list {
-  z-index: 6;
-  position: fixed;
-  bottom: 0;
-  top: 64px;
+  height: 100vh;
+  float: left;
   padding: 5rem 1rem;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   width: 238px;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 2rem 0 0 0;
   gap: 2rem;
   font-size: 1.15rem;
   filter: $drop-shadow-right;
@@ -157,7 +159,6 @@
   }
 
   &_toggled {
-    transform: translateX(100vw);
     transition: all ease-in-out 800ms;
     @extend .main-nav-list;
     width: 63px;
@@ -166,8 +167,6 @@
 
     @include breakpointDown(sm) {
       &_mobile {
-        transform: translateX(-100vw);
-
         transition: all ease-in-out 800ms;
         // padding: 0;
       }

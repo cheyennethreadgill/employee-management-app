@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Nav from "../Global/Nav";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
+import PageHeaders from "../Global/PageHeaders";
 
 const AddProject = () => {
   const [title, setTitle] = useState("");
@@ -13,7 +14,8 @@ const AddProject = () => {
   const [team, setTeam] = useState("");
   const [status, setStatus] = useState("");
   const [description, setDescription] = useState("");
-  const URL = "http://localhost:8080";
+  const URL = "http://localhost:8080/";
+  const PATH = "add-project";
 
   // fetch for data
   async function handleProjectAdd() {
@@ -36,7 +38,7 @@ const AddProject = () => {
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}/add-project`, options);
+      const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
       if (!fetchPromiseResponse.ok) {
         console.log(
           `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
@@ -56,6 +58,7 @@ const AddProject = () => {
   return (
     <>
       <Container>
+        <PageHeaders name={PATH} />
         <Form
           action=""
           onSubmit={handleProjectAdd}

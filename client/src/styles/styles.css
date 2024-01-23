@@ -11984,9 +11984,12 @@ textarea.form-control-lg {
   padding: 0;
 }
 
+.app {
+  display: flex;
+}
+
 .container {
-  max-width: 1892px;
-  margin-top: 9rem;
+  max-width: 1425px;
   width: min(100% - 2rem);
 }
 
@@ -12177,7 +12180,7 @@ select {
 }
 
 .brand-bar-mobile {
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 5;
   transition: all ease-in-out 600ms;
@@ -12220,6 +12223,11 @@ select {
 .brand-bar-mobile-controls button {
   height: 40px;
 }
+@media screen and (max-width: 1024px) {
+  .brand-bar-mobile {
+    display: block;
+  }
+}
 
 .brand-bar-desktop {
   position: fixed;
@@ -12241,7 +12249,6 @@ select {
 }
 .brand-bar-desktop-brand-left {
   display: flex;
-  gap: 5rem;
 }
 .brand-bar-desktop-brand-right {
   display: flex;
@@ -12284,16 +12291,15 @@ select {
 }
 
 .main-nav-list, .main-nav-list_toggled {
-  z-index: 6;
-  position: fixed;
-  bottom: 0;
-  top: 64px;
+  height: 100vh;
+  float: left;
   padding: 5rem 1rem;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   width: 238px;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 2rem 0 0 0;
   gap: 2rem;
   font-size: 1.15rem;
   filter: drop-shadow(0.1rem 0.5remrem 0.2rem rgb(217, 221, 227));
@@ -12310,14 +12316,12 @@ select {
   transition: all ease-in-out 800ms;
 }
 .main-nav-list_toggled {
-  transform: translateX(100vw);
   transition: all ease-in-out 800ms;
   width: 63px;
   transition: all ease-in-out 800ms;
 }
 @media screen and (max-width: 482px) {
   .main-nav-list_toggled_mobile {
-    transform: translateX(-100vw);
     transition: all ease-in-out 800ms;
   }
 }
@@ -12328,10 +12332,23 @@ select {
   }
 }
 
+.page-headers {
+  padding: 5.4rem 0 1.6rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+.page-headers-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.page-headers-breadcrumbs-crumb {
+  margin: 0;
+}
+
 .employees {
   background-color: white;
   height: 100vh;
-  max-width: 1970px;
   margin: 2rem auto;
   position: relative;
   z-index: 3;
@@ -12342,6 +12359,8 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
 }
 .employees-header-controls {
   display: flex;
@@ -12380,7 +12399,6 @@ select {
 .project {
   background-color: white;
   padding: 4rem 0.8rem;
-  margin-top: 3rem;
   border-radius: 0.8rem;
 }
 .project-col {

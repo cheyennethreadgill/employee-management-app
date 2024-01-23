@@ -1,7 +1,6 @@
 .employees {
   background-color: white;
   height: 100vh;
-  max-width: 1970px;
   margin: 2rem auto;
   position: relative;
   z-index: 3;
@@ -12,6 +11,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    width: 100%;
+    margin: 0 auto;
 
     &-controls {
       display: flex;

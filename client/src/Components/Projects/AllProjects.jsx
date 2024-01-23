@@ -3,14 +3,16 @@ import Nav from "../Global/Nav";
 import ProjectCard from "./ProjectCard";
 import Container from "react-bootstrap/esm/Container";
 import { Row, Col } from "react-bootstrap";
+import PageHeaders from "../Global/PageHeaders";
 
 const AllProjects = () => {
-  const URL = "http://localhost:8080";
+  const URL = "http://localhost:8080/";
+  const PATH = "projects";
   const [projects, setProjects] = useState([]);
 
   // get Project
   useEffect(() => {
-    fetch(`${URL}/projects`)
+    fetch(`${URL}${PATH}`)
       .then((res) => res.json())
       .then((json) => setProjects(json));
   }, []);
@@ -18,7 +20,7 @@ const AllProjects = () => {
   return (
     <>
       <Container>
-        {" "}
+        <PageHeaders name={PATH} />{" "}
         <section className="project">
           <div className="project-header-main">
             <h2>New Projects</h2>

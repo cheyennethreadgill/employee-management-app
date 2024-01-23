@@ -11,13 +11,13 @@ import Logo from "../../images/logo.png";
 const Navigation = () => {
   let navigate = useNavigate();
 
-  const [toggled, setToggled] = useState(true);
+  const [toggled, setToggled] = useState(false);
   const handleNavToggle = () => setToggled(!toggled);
   const handleMouseLeave = () => setToggled(true);
 
   return (
     <>
-      <div className="brand-bar-mobile  d-md-block d-lg-none">
+      <div className="brand-bar-mobile d-md-block d-lg-none">
         <div className="brand-bar-mobile-controls-container">
           <div className="brand-bar-mobile-controls">
             <>
@@ -52,21 +52,21 @@ const Navigation = () => {
               <img
                 src={require("../../images/logo.png")}
                 alt=""
+                className="me-5"
               />
             ) : (
               <div className="brand-bar-desktop-brand-left">
-                <div className="">
-                  <img
-                    src={require("../../images/logo.png")}
-                    alt=""
-                  />
-                  <h1>Kuber</h1>
-                </div>
+                <img
+                  src={require("../../images/logo.png")}
+                  alt=""
+                  className="me-3"
+                />
+                <h1 className="">Kuber</h1>
               </div>
             )}
             <button
               type="button"
-              className="brand-bar-desktop-toggle "
+              className="brand-bar-desktop-toggle ms-5"
               onClick={handleNavToggle}
             >
               =

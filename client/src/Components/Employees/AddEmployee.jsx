@@ -2,8 +2,12 @@ import Navigation from "../Global/Nav";
 import React, { useState, useEffect } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
+import PageHeaders from "../Global/PageHeaders";
 
 const AddEmployee = () => {
+  const URL = "http://localhost:8080/";
+  const PATH = "add-employee";
+
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [gender, setGender] = useState("");
@@ -16,7 +20,6 @@ const AddEmployee = () => {
   const [dob, setDOB] = useState("");
   const [degree, setDegree] = useState("");
   const [image, setImage] = useState("");
-  const URL = "http://localhost:8080";
 
   // ADD EMPLOYEE TO DB
   async function addEmployeeNow(e) {
@@ -41,7 +44,7 @@ const AddEmployee = () => {
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}/add-employee`, options);
+      const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
       if (!fetchPromiseResponse.ok) {
         console.log(
           `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
@@ -62,6 +65,7 @@ const AddEmployee = () => {
   return (
     <>
       <Container>
+        <PageHeaders name={PATH} />
         <Form
           onSubmit={addEmployeeNow}
           autoComplete="true"

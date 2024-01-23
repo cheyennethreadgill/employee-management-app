@@ -5,9 +5,12 @@ import EmployeeCard from "./EmployeeCard";
 import { date } from "../../Helpers/date";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
+import PageHeaders from "../Global/PageHeaders";
 
 const AllEmployees = () => {
-  const URL = "http://localhost:8080";
+  const URL = "http://localhost:8080/";
+  const PATH = "employees";
+
   const [employees, setEmployees] = useState([]);
   const [filteredEmloyees, setfilteredEmloyees] = useState([]);
 
@@ -15,11 +18,10 @@ const AllEmployees = () => {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   let navigate = useNavigate();
-  const ADD_EMPLOYEE_URL = "/add-employee";
 
   // get Employees
   useEffect(() => {
-    fetch(`${URL}/employees`)
+    fetch(`${URL}employees`)
       .then((res) => res.json())
       .then((json) => setEmployees(json));
   }, []);
@@ -63,7 +65,7 @@ const AllEmployees = () => {
 
     try {
       const fetchPromiseResponse = await fetch(
-        `${URL}/delete-employee/${id}`,
+        `${URL}delete-employee/${id}`,
         options
       );
       if (!fetchPromiseResponse.ok) {
@@ -107,7 +109,7 @@ const AllEmployees = () => {
 
     return (
       <EmployeeCard
-        ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
+        PATH={PATH}
         show={show}
         handleShow={handleShow}
         handleClose={handleClose}
@@ -141,7 +143,7 @@ const AllEmployees = () => {
 
     return (
       <EmployeeCard
-        ADD_EMPLOYEE_URL={ADD_EMPLOYEE_URL}
+        PATH={PATH}
         show={show}
         handleShow={handleShow}
         handleClose={handleClose}
@@ -165,6 +167,7 @@ const AllEmployees = () => {
   return (
     <>
       <Container>
+        <PageHeaders name={PATH} />
         <section className="employees">
           <Row className="employees-header">
             <Col lg="7">
@@ -205,7 +208,7 @@ const AllEmployees = () => {
                 <i
                   type="button"
                   onClick={() => {
-                    navigate(ADD_EMPLOYEE_URL);
+                    navigate(PATH);
                   }}
                   className="fa-solid fa-plus icon-container-icon add-employee-btn"
                 ></i>
