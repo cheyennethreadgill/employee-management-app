@@ -7,12 +7,18 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
+// const db = mysql.createConnection({
+//   user: "root",
+//   host: "localhost",
+//   password: "Cheyenne1234",
+//   database: "employee-management",
+// });
 const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "Cheyenne1234",
-  database: "employee-management",
+  user: process.env.DBUser,
+  host: process.env.DBHost,
+  password: process.env.DBPassword,
+  database: process.env.DBDatabase,
 });
 
 db.connect();
@@ -94,6 +100,7 @@ app.post("/add-employee", (req, res) => {
 app.post("/add-project", (req, res) => {
   console.log(req.body);
   let title = req.body.title;
+  let projectID = req.body.projectID;
   let department = req.body.department;
   let priority = req.body.priority;
   let client = req.body.client;
@@ -104,9 +111,10 @@ app.post("/add-project", (req, res) => {
   let status = req.body.status;
   let description = req.body.description;
 
-  let sql = `INSERT into projects (title, department, priority, client, price, startDate, endDate, team, status, description) VALUES (?)`;
+  let sql = `INSERT into projects (title, projectID, department, priority, client, price, startDate, endDate, team, status, description) VALUES (?)`;
   let values = [
     title,
+    projectID,
     department,
     priority,
     client,

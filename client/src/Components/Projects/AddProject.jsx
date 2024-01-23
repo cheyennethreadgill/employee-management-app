@@ -5,6 +5,7 @@ import PageHeaders from "../Global/PageHeaders";
 
 const AddProject = () => {
   const [title, setTitle] = useState("");
+  const [projectID, setProjectID] = useState("");
   const [department, setDepartment] = useState("");
   const [priority, setPriority] = useState("");
   const [client, setClient] = useState(0);
@@ -18,13 +19,15 @@ const AddProject = () => {
   const PATH = "add-project";
 
   // fetch for data
-  async function handleProjectAdd() {
+  async function handleProjectAdd(e) {
+    e.preventDefault();
     // Post options
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: title,
+        projectID: projectID,
         department: department,
         priority: priority,
         client: client,
@@ -61,7 +64,9 @@ const AddProject = () => {
         <PageHeaders name={PATH} />
         <Form
           action=""
-          onSubmit={handleProjectAdd}
+          onSubmit={(e) => {
+            handleProjectAdd(e);
+          }}
         >
           <Row>
             <Col lg="6">
@@ -70,7 +75,7 @@ const AddProject = () => {
                 placeholder="Project Id *"
                 required={true}
                 onKeyUp={(e) => {
-                  setTitle(e.target.value);
+                  setProjectID(e.target.value);
                 }}
               />
             </Col>
@@ -90,12 +95,17 @@ const AddProject = () => {
                   name="select department"
                   id="select department"
                   placeholder="Select Department"
-                  onKeyUp={(e) => {
+                  onChange={(e) => {
                     setDepartment(e.target.value);
                   }}
                   required={true}
-                  defaultValue="designing"
                 >
+                  <option
+                    defaultValue={true}
+                    value="null"
+                  >
+                    Choose Option
+                  </option>
                   <option value="development">Development</option>
                   <option value="designing">designing</option>
                   <option value="testing">testing</option>
@@ -110,12 +120,17 @@ const AddProject = () => {
                   name="priority"
                   id="priority"
                   placeholder="priority"
-                  onKeyUp={(e) => {
+                  onChange={(e) => {
                     setPriority(e.target.value);
                   }}
                   required={true}
-                  defaultValue="medium"
                 >
+                  <option
+                    defaultValue={true}
+                    value="null"
+                  >
+                    Choose Option
+                  </option>
                   <option value="high">high</option>
                   <option value="medium">medium</option>
                   <option value="low">low</option>
@@ -144,7 +159,7 @@ const AddProject = () => {
             </Col>
             <Col lg="6">
               <Form.Control
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setStartDate(e.target.value);
                 }}
                 type="date"
@@ -153,7 +168,7 @@ const AddProject = () => {
             </Col>
             <Col lg="6">
               <Form.Control
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setEndDate(e.target.value);
                 }}
                 type="date"
@@ -163,14 +178,21 @@ const AddProject = () => {
             <Col lg="12">
               <Form.Label htmlFor="Team">Team</Form.Label>
               <select
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setTeam(e.target.value);
                 }}
                 name="Team"
                 id="Team"
                 placeholder="Team"
                 required={true}
+                def
               >
+                <option
+                  defaultValue={true}
+                  value="null"
+                >
+                  Choose Option
+                </option>
                 <option value="sarah">sarah</option>
                 <option value="michelle">michelle</option>
                 <option value="kelly">kelly</option>
@@ -249,7 +271,6 @@ const AddProject = () => {
               <Form.Control
                 onKeyUp={(e) => {
                   setDescription(e.target.value);
-                  console.log(e.target.value);
                 }}
                 type="text"
                 id="description"
