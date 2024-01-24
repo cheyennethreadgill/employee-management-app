@@ -6,7 +6,7 @@ import { Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
 const AllProjects = () => {
-  const URL = "https://employee-management-app-eight.vercel.app/";
+  const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "projects";
   const [projects, setProjects] = useState([]);
 

@@ -15,7 +15,7 @@ const AddProject = () => {
   const [team, setTeam] = useState("");
   const [status, setStatus] = useState("");
   const [description, setDescription] = useState("");
-  const URL = "https://employee-management-app-eight.vercel.app/";
+  const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "add-project";
 
   // fetch for data
