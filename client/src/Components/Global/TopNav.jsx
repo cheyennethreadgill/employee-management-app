@@ -5,13 +5,14 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
         <div className="brand-bar-mobile-controls-container">
           <div className="brand-bar-mobile-controls">
             <>
-              <button
-                type="button"
-                className="brand-bar-mobile-toggle "
-                onClick={handleNavToggle}
-              >
-                =
-              </button>
+              {toggled ? (
+                <i
+                  type="button"
+                  className="brand-bar-mobile-toggle fa-solid fa-bars"
+                  onClick={handleNavToggle}
+                ></i>
+              ) : null}
+
               <div className="brand-bar-mobile-brand">
                 <img
                   src={require("../../images/logo.png")}
@@ -48,13 +49,11 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
                 <h1 className="">Kuber</h1>
               </div>
             )}
-            <button
+            <i
               type="button"
-              className="brand-bar-desktop-toggle ms-5"
+              className="brand-bar-mobile-toggle fa-solid fa-bars"
               onClick={handleNavToggle}
-            >
-              =
-            </button>
+            ></i>
             <div className="brand-bar-desktop-brand-right">
               <p>Ella Jones</p>
             </div>

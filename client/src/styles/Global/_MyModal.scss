@@ -1,0 +1,17 @@
+.my-modal {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  background-color: black;
+  position: absolute;
+  display: flex;
+  padding: 1rem 0;
+  z-index: 6;
+  justify-content: center;
+  align-items: center;
+
+  &-form {
+    max-width: 800px;
+  }
+}

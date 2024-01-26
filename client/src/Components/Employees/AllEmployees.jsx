@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../Global/Nav";
+import Navigation from "../Global/Nav";
 import { Container, Form } from "react-bootstrap";
 import EmployeeCard from "./EmployeeCard";
 import { date } from "../../Helpers/date";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
+import { Link } from "react-router-dom";
 
 const AllEmployees = () => {
+  // const URL = "http://localhost:8080/";
   const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "employees";
 
@@ -29,32 +31,36 @@ const AllEmployees = () => {
 
   // GET FILTERED EMPLLOYEES
   const handleFilteredEmployees = (e) => {
-    setfilteredEmloyees(
-      employees.filter((employee) => {
-        const {
-          firstname,
-          lastname,
-          department,
-          employeeid,
-          designation,
-          email,
-          date,
-          mobile,
-        } = employee;
-        return (
-          firstname.includes(e.target.value) ||
-          lastname.includes(e.target.value) ||
-          department == e.target.value ||
-          employeeid == e.target.value ||
-          designation == e.target.value ||
-          department == e.target.value ||
-          email == e.target.value ||
-          date == e.target.value ||
-          mobile == e.target.value
-        );
-      })
-    );
+    let found = employees.filter((employee) => {
+      const {
+        firstname,
+        lastname,
+        department,
+        employeeid,
+        designation,
+        email,
+        date,
+        mobile,
+        degree,
+      } = employee;
+
+      if (
+        e.includes(firstname) ||
+        e.includes(lastname) ||
+        e.includes(department) ||
+        e.includes(employeeid) ||
+        e.includes(designation) ||
+        e.includes(email) ||
+        e.includes(date) ||
+        e.includes(mobile) ||
+        e.includes(degree)
+      ) {
+        return employee;
+      }
+    });
+    setfilteredEmloyees(found);
   };
+
   // DELETE EMPLOYEE From DB
   async function deleteEmployeeFromDB(id) {
     // Post options
@@ -104,6 +110,7 @@ const AllEmployees = () => {
       firstname,
       lastname,
       mobile,
+      degree,
     } = employee;
 
     return (
@@ -125,6 +132,7 @@ const AllEmployees = () => {
         mobile={mobile}
         email={email}
         date={date}
+        degree={degree}
       />
     );
   });
@@ -138,6 +146,7 @@ const AllEmployees = () => {
       firstname,
       lastname,
       mobile,
+      degree,
     } = employee;
 
     return (
@@ -159,6 +168,7 @@ const AllEmployees = () => {
         mobile={mobile}
         email={email}
         date={date}
+        degree={degree}
       />
     );
   });
@@ -169,55 +179,75 @@ const AllEmployees = () => {
         <PageHeaders name={PATH} />
         <section className="employees">
           <Row className="employees-header">
-            <Col lg="7">
-              <Row>
+            <Col
+              lg="7"
+              sm="1"
+            >
+              <div className="employees-header-left">
                 <Col
-                  md="1"
+                  sm="1"
                   lg="2"
                 >
                   <h2>Employees</h2>
                 </Col>
                 <Col
-                  md="1"
-                  lg="10"
+                  sm="1"
+                  lg="4"
                 >
                   {" "}
-                  <div className="header-search form-control-container">
-                    <span className="search-icon form-control-container-icon">
-                      <i className="fa-solid fa-magnifying-glass"></i>
-                    </span>
+                  <div className="employees-header-search form-control-container">
+                    <span className="gg-search"></span>
                     <Form.Control
-                      className="header-search-input form-control-container-input m-0"
+                      className="employees-header-search-input form-control-container-input m-0"
                       type="text"
                       placeholder="Search"
-                      onChange={(e) => {
-                        handleFilteredEmployees(e);
+                      onKeyDown={(e) => {
+                        handleFilteredEmployees(e.target.value);
                       }}
                     />
                   </div>
                 </Col>
-              </Row>
+              </div>
             </Col>
 
             <Col
               lg="2"
+              sm="1"
+              md="3"
               className="employees-header-controls"
             >
               <span className="icon-container">
-                <i
-                  type="button"
-                  onClick={() => {
-                    navigate(PATH);
-                  }}
-                  className="fa-solid fa-plus icon-container-icon add-employee-btn"
-                ></i>
+                <Link to="/add-employee">
+                  <i className="fa-solid fa-plus icon-container-icon add-employee-btn"></i>
+                </Link>
               </span>
               <span className="icon-container">
                 <i className="fa-solid fa-arrows-rotate icon-container-icon"></i>
               </span>
             </Col>
           </Row>
-          {filterCount ? filteredEmloyeesContent : employeesContent}
+
+          <section className="employees-card-container">
+            <div className="employees-card-titles-desktop d-none d-md-flex">
+              {" "}
+              {/* <div className="employees-card-titles"> */}
+              <h3></h3>
+              <h3>Image</h3>
+              <h3>Employee ID</h3>
+              <h3>Degree</h3>
+              <h3>Name</h3>
+              <h3>Department</h3>
+              <h3>Designation</h3>
+              <h3>Mobile</h3>
+              <h3>Email</h3>
+              <h3>Join Date</h3>
+              <h3>Actions</h3>
+              {/* </div> */}
+              <hr />
+            </div>
+
+            {filterCount ? filteredEmloyeesContent : employeesContent}
+          </section>
         </section>
       </Container>
     </>

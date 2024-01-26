@@ -2,6 +2,7 @@ import { Container, Button, Row, Form, Col } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import PageHeaders from "../Global/PageHeaders";
+import MyModal from "../Global/MyModal";
 
 const EmployeeCard = ({
   show,
@@ -14,6 +15,7 @@ const EmployeeCard = ({
   employeeid,
   firstname,
   lastname,
+  degree,
   department,
   designation,
   mobile,
@@ -24,7 +26,8 @@ const EmployeeCard = ({
   // EDIT MODE
   const [editMode, setEditMode] = useState(false);
   const [btnValue, setBtnValue] = useState(0);
-  const [employee, setEmployee] = useState("");
+  const [employee, setEmployee] = useState([]);
+  const [foundEmployee, setFoundEmployee] = useState([]);
 
   // SET UPDATED INPUTS
   const [newDepartmentUpdated, setNewDepartmentUpdated] = useState(false);
@@ -33,31 +36,49 @@ const EmployeeCard = ({
   const [newFirstnameUpdated, setNewFirstnameUpdated] = useState(false);
   const [newLastnameUpdated, setNewLastnameUpdated] = useState(false);
   const [newMobileUpdated, setNewMobileUpdated] = useState(false);
+  const [newDegreeUpdated, setNewDegreeUpdated] = useState(false);
 
   const [combinedName, setCombinedName] = useState("");
   let splitName = combinedName.split(" ");
   // SET NEW FORM
   const [newDepartment, setNewDepartment] = useState("");
+  const [newDegree, setNewDegree] = useState("");
   const [newDesignation, setNewDesignation] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newFirstname, setNewFirstname] = useState("");
   const [newLastname, setNewLastname] = useState("");
-  const [newMobile, setNewMobile] = useState("");
+  const [newMobile, setNewMobile] = useState(0);
 
   // SHOW UPDATE MODAL
-  const handleBtnValue = (id) => setBtnValue(id);
+  const handleBtnValue = (id) => {
+    setBtnValue(id);
+  };
+
   const handleEditMode = () => setEditMode(!editMode);
 
   // SEARCH EMPLOYEE
   const handleEmployeeSearch = (id) => {
     setEmployee(
-      employees.filter((employee) => {
-        const { employeeid } = employee;
+      employees.filter((empl) => {
+        const { employeeid } = empl;
         if (employeeid === id) {
-          return employee;
+          setEmployee(empl);
+          return empl;
         }
       })
     );
+  };
+
+  // Find Employee
+  const handleFindEmployee = (id) => {
+    let found = employees.find((empl) => {
+      const { employeeid } = empl;
+      if (employeeid === id) {
+        return empl;
+      }
+    });
+    setFoundEmployee(found);
+    console.log(found);
   };
 
   // UPDATE EMPLOYEE
@@ -69,17 +90,14 @@ const EmployeeCard = ({
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        employeeid: employee[0].employeeid,
-        fname: `${newFirstnameUpdated ? newFirstname : employee[0].firstname}`,
-        lname: `${newLastnameUpdated ? newLastname : employee[0].lastname}`,
-        mobile: `${newMobileUpdated ? newMobile : employee[0].mobile}`,
-        designation: `${
-          newDesignationUpdated ? newDesignation : employee[0].designation
-        }`,
-        department: `${
-          newDepartmentUpdated ? newDepartment : employee[0].department
-        }`,
-        email: `${newEmailUpdated ? newEmail : employee[0].email}`,
+        employeeid: employeeid,
+        fname: `${newFirstnameUpdated ? newFirstname : firstname}`,
+        lname: `${newLastnameUpdated ? newLastname : lastname}`,
+        degree: `${newDegreeUpdated ? newDegree : degree}`,
+        mobile: `${newMobileUpdated ? newMobile : mobile}`,
+        designation: `${newDesignationUpdated ? newDesignation : designation}`,
+        department: `${newDepartmentUpdated ? newDepartment : department}`,
+        email: `${newEmailUpdated ? newEmail : email}`,
       }),
     };
 
@@ -102,12 +120,16 @@ const EmployeeCard = ({
     }
   }
 
+  const [showNow, setShowNow] = useState(false);
+  const handleShowNow = () => setShowNow(!showNow);
+
   return (
-    <Container>
-      <Row>
+    <>
+      {/* ***********************************************************MOBILE */}
+      <section className="employee-card-mobile ">
         <Form
           autoComplete="true"
-          className="employee-form"
+          className="employee-card-form"
         >
           <Row className="justify-content-between">
             <Col
@@ -115,10 +137,7 @@ const EmployeeCard = ({
               style={{ width: "3%" }}
             >
               <Row style={{ justifyContent: "center" }}>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <Form.Control
                     style={{ margin: "0" }}
                     className="radio"
@@ -130,165 +149,113 @@ const EmployeeCard = ({
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>Image</p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <img
                     src=""
                     alt="picturrrrrr"
                   />
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>Employee ID: </p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <p> {employeeid} </p>
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>Name: </p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <p>
-                    {" "}
                     {newFirstnameUpdated
                       ? newFirstname + " " + newLastname
                       : firstname + " " + lastname}{" "}
                   </p>
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>Department </p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <p>{newDepartmentUpdated ? newDepartment : department}</p>
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>Role</p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <p>{newDesignationUpdated ? newDesignation : designation}</p>
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>Mobile</p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <p> {newMobileUpdated ? newMobile : mobile} </p>
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>email</p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <p> {newEmailUpdated ? newEmail : email} </p>
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
                   <p>join date</p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <p> {date} </p>
                 </Col>
-              </Row>
+              </div>
             </Col>
             <hr className="d-block d-lg-none" />
             <Col lg="1">
-              <Row>
+              <div className="employee-card-mobile-fields">
                 <Col
                   lg="12"
                   className="col-6 d-none d-lg-block"
                 >
                   <p>Actions</p>
                 </Col>
-                <Col
-                  lg="12"
-                  className="col-6"
-                >
+                <Col lg="12">
                   <div className="form-btns">
                     <i
                       onClick={(e) => {
-                        handleEmployeeSearch(employeeid);
+                        // handleEmployeeSearch(employeeid);
                         handleShow();
                         handleBtnValue(employeeid);
                         handleEditMode(employeeid);
@@ -306,18 +273,102 @@ const EmployeeCard = ({
                     ></i>
                   </div>
                 </Col>
-              </Row>
+              </div>
             </Col>
-
-            {/* END CONTAINER ROW */}
           </Row>
         </Form>
+      </section>
 
-        {/* *********************************MODAL */}
-        <Modal
+      {/* ******************************************************DESKTOP */}
+      <Row className="employee-card-desktop d-none d-md-flex">
+        <div
+          autoComplete="true"
+          className="employee-card-desktop-form"
+        >
+          <div className="employee-card-desktop-form-fields">
+            <Form.Control
+              style={{ margin: "0" }}
+              className="radio"
+              type="radio"
+              id=""
+            />
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <img
+              src=""
+              alt="picturrrrrr"
+            />
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <p> {employeeid} </p>
+          </div>
+          <div className="employee-card-desktop-form-fields">
+            <p> {newDegreeUpdated ? newDegree : degree} </p>
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <p>
+              {newFirstnameUpdated
+                ? newFirstname + " " + newLastname
+                : firstname + " " + lastname}{" "}
+            </p>
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <p>{newDepartmentUpdated ? newDepartment : department}</p>
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <p>{newDesignationUpdated ? newDesignation : designation}</p>
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <p> {newMobileUpdated ? newMobile : mobile} </p>
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <p> {newEmailUpdated ? newEmail : email} </p>
+          </div>
+
+          <div className="employee-card-desktop-form-fields">
+            <p> {date} </p>
+          </div>
+
+          <div className="form-btns employee-card-desktop-form-fields">
+            <i
+              onClick={(e) => {
+                // handleEmployeeSearch(employeeid);
+                handleBtnValue(employeeid);
+                handleEditMode();
+                handleEmployeeSearch(employeeid);
+                handleFindEmployee(employeeid);
+                handleShowNow(true);
+              }}
+              type="button"
+              className="fa-regular fa-pen-to-square fs-5 edit-btn"
+            ></i>
+            <i
+              onClick={() => {
+                onDelete(employeeid);
+                onUpdateEmployeeState(employeeid);
+              }}
+              type="submit"
+              className="fa-solid fa-trash delete-btn"
+            ></i>
+          </div>
+          {/* END CONTAINER ROW */}
+        </div>
+
+        {/* **************************************************************************MODAL */}
+        {/* <Modal
           show={show}
           onHide={handleClose}
-          dialogClassName="modal-100vh"
+          onEnter={(employeeid) => {
+            handleFindEmployee(employeeid);
+            console.log(foundEmployee);
+          }}
         >
           <Modal.Header closeButton>
             <Modal.Title>
@@ -325,6 +376,7 @@ const EmployeeCard = ({
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            +
             <Form>
               <Form.Group
                 className="mb-3"
@@ -334,14 +386,12 @@ const EmployeeCard = ({
                 <div className="form-control-container ">
                   <Form.Control
                     className="form-control-container-input"
-                    nam
-                    e="name"
                     defaultValue={
                       (btnValue === employeeid) & !newFirstnameUpdated
                         ? firstname + " " + lastname
                         : newFirstnameUpdated & (btnValue === employeeid)
                         ? newFirstname + " " + newLastname
-                        : firstname + " " + "lastname"
+                        : firstname + " " + lastname
                     }
                     type="text"
                     autoFocus
@@ -352,13 +402,6 @@ const EmployeeCard = ({
                       setNewFirstname(splitName[0]);
                       setNewLastname(splitName[1]);
                     }}
-                    placeholder={
-                      (btnValue === employeeid) & !newFirstnameUpdated
-                        ? firstname + " " + lastname
-                        : newFirstnameUpdated & (btnValue === employeeid)
-                        ? newFirstname + " " + newLastname
-                        : firstname + " " + "lastname"
-                    }
                   />
                   <span className="form-control-container-icon_end">
                     <i className="fa-regular fa-user"></i>
@@ -371,7 +414,7 @@ const EmployeeCard = ({
               >
                 <Form.Label>Department</Form.Label>
                 <div className="form-control-container">
-                  {" "}
+                 
                   <Form.Control
                     name="department"
                     className="form-control-container-input"
@@ -387,13 +430,6 @@ const EmployeeCard = ({
                       setNewDepartment(e.target.value);
                       setNewDepartmentUpdated(true);
                     }}
-                    placeholder={
-                      (btnValue === employeeid) & !newDepartmentUpdated
-                        ? department
-                        : newDepartmentUpdated & (btnValue === employeeid)
-                        ? newDepartment
-                        : department
-                    }
                   />
                   <span className="form-control-container-icon_end">
                     <i className="fa-solid fa-briefcase"></i>
@@ -421,13 +457,6 @@ const EmployeeCard = ({
                       setNewDesignation(e.target.value);
                       setNewDesignationUpdated(true);
                     }}
-                    placeholder={
-                      (btnValue === employeeid) & !newDesignationUpdated
-                        ? designation
-                        : newDesignationUpdated & (btnValue === employeeid)
-                        ? newDesignation
-                        : designation
-                    }
                   />
                   <span className="form-control-container-icon_end">
                     <i className="fa-regular fa-flag"></i>
@@ -455,13 +484,6 @@ const EmployeeCard = ({
                       setNewMobile(e.target.value);
                       setNewMobileUpdated(true);
                     }}
-                    placeholder={
-                      (btnValue === employeeid) & !newMobileUpdated
-                        ? mobile
-                        : newMobileUpdated & (btnValue === employeeid)
-                        ? newMobile
-                        : mobile
-                    }
                   />
                   <span className="form-control-container-icon_end">
                     <i className="fa-solid fa-phone"></i>
@@ -489,13 +511,6 @@ const EmployeeCard = ({
                       setNewEmail(e.target.value);
                       setNewEmailUpdated(true);
                     }}
-                    placeholder={
-                      (btnValue === employeeid) & !newEmailUpdated
-                        ? email
-                        : newEmailUpdated & (btnValue === employeeid)
-                        ? newEmail
-                        : email
-                    }
                   />
                   <span className="form-control-container-icon_end">
                     <i className="fa-regular fa-envelope"></i>
@@ -525,9 +540,57 @@ const EmployeeCard = ({
               Save Changes
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </Row>
-    </Container>
+
+      {/* ***************************************************SHOW MODAL */}
+      {!showNow ? null : (
+        <MyModal
+          showNow={showNow}
+          degree={degree}
+          newDegreeUpdated={newDegreeUpdated}
+          setNewDegreeUpdated={setNewDegreeUpdated}
+          newDegree={newDegree}
+          setNewDegree={setNewDegree}
+          handleShowNow={handleShowNow}
+          setEditMode={setEditMode}
+          editMode={editMode}
+          employeeid={employeeid}
+          setNewFirstname={setNewFirstname}
+          setNewFirstnameUpdated={setNewFirstnameUpdated}
+          newFirstnameUpdated={newFirstnameUpdated}
+          newFirstname={newFirstname}
+          newLastname={newLastname}
+          firstname={firstname}
+          lastname={lastname}
+          setNewLastnameUpdated={setNewLastnameUpdated}
+          setNewLastname={setNewLastname}
+          setCombinedName={setCombinedName}
+          splitName={splitName}
+          department={department}
+          newDepartment={newDepartment}
+          setNewDepartment={setNewDepartment}
+          newDepartmentUpdated={newDepartmentUpdated}
+          setNewDepartmentUpdated={setNewDepartmentUpdated}
+          designation={designation}
+          newDesignationUpdated={newDesignationUpdated}
+          setNewDesignationUpdated={setNewDesignationUpdated}
+          newDesignation={newDesignation}
+          setNewDesignation={setNewDesignation}
+          handleEmployeeUpdate={handleEmployeeUpdate}
+          mobile={mobile}
+          newMobileUpdated={newMobileUpdated}
+          setNewMobileUpdated={setNewMobileUpdated}
+          newMobile={newMobile}
+          setNewMobile={setNewMobile}
+          email={email}
+          newEmailUpdated={newEmailUpdated}
+          setNewEmailUpdated={setNewEmailUpdated}
+          newEmail={newEmail}
+          setNewEmail={setNewEmail}
+        />
+      )}
+    </>
   );
 };
 

@@ -2,13 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../src/styles/styles.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AddEmployee from "./Components/Employees/AddEmployee";
 import AllEmployees from "./Components/Employees/AllEmployees";
 import App from "./Routes/App";

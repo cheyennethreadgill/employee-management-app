@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Nav from "../Components/Global/Nav";
 import { Outlet } from "react-router-dom";
-import PageHeaders from "../Components/Global/PageHeaders";
-
 import TopNav from "../Components/Global/TopNav";
 
 function Dashboard() {
   const [toggled, setToggled] = useState(false);
   const handleNavToggle = () => setToggled(!toggled);
-  const handleMouseLeave = () => setToggled(true);
+  const handleMouseLeave = () => setToggled(!toggled);
 
   return (
     <section className="app">
@@ -20,7 +17,11 @@ function Dashboard() {
       />
 
       <div className="app-flex">
-        <Nav toggled={toggled} />
+        <Nav
+          toggled={toggled}
+          handleNavToggle={handleNavToggle}
+          handleMouseLeave={handleMouseLeave}
+        />
 
         <Outlet />
       </div>

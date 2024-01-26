@@ -8,7 +8,7 @@
 .app-flex {
   display: flex;
 
-  @include breakpointDown(md) {
+  @include breakpointDown(sm) {
     display: block;
   }
 }
@@ -17,7 +17,7 @@
   width: min(100% - 2rem);
 
   @include breakpointDown(md) {
-    max-width: 865px;
+    max-width: 965px;
   }
   @include breakpointUp(lg) {
     max-width: 1805px;
@@ -49,13 +49,17 @@ h1 {
   font-size: 1.2rem;
   font-weight: 500;
 }
-h1,
+
 h2 {
-  color: rgb(67, 67, 67);
+  font-size: 1rem;
 }
-h2,
+
+h2 {
+  color: rgba(67, 67, 67, 0.868);
+}
+
 h3 {
-  font-size: 1.2rem;
+  font-size: $font-size-h3;
 }
 h3 {
   color: rgb(30, 30, 30);

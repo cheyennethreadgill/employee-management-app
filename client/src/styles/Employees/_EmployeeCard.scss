@@ -1,4 +1,46 @@
-.employee-form {
+.employee-card-mobile,
+.employee-card-form {
   border-radius: 0;
-  padding: 3rem;
+  // padding: 0 3rem;
+  font-size: $font-size-h3;
+}
+
+.employee-card-desktop {
+  @include breakpointDown(sm) {
+    display: none;
+  }
+  &-form {
+    display: flex;
+    padding: 0 0 0 3rem;
+    justify-content: space-around;
+
+    @include breakpointDown(md) {
+      padding: 0 0 0 3rem;
+    }
+    &-fields {
+      overflow-x: hidden;
+
+      @include breakpointDown(md) {
+        flex: 0 0 110px;
+      }
+      @include breakpointUp(lg) {
+        flex: 0 0 154px;
+      }
+    }
+  }
+}
+
+.employee-card-mobile {
+  display: none;
+
+  &-fields {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @include breakpointDown(sm) {
+    display: flex;
+  }
+  // .employee-card-form {
+  // }
 }

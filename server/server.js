@@ -7,7 +7,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
+// const PORT = process.env.PORT || 8080;
 // const db = mysql.createConnection({
 //   user: "root",
 //   host: "localhost",
@@ -144,7 +145,7 @@ app.post("/add-project", (req, res) => {
 app.put("/update-employee", (req, res) => {
   console.log(req.body);
 
-  let sql = `UPDATE employees SET firstname = '${req.body.fname}', lastname = '${req.body.lname}', mobile = '${req.body.mobile}', designation = '${req.body.designation}', department = '${req.body.department}', email = '${req.body.email}' WHERE employeeid = '${req.body.employeeid}'`;
+  let sql = `UPDATE employees SET firstname = '${req.body.fname}', degree = '${req.body.degree}', lastname = '${req.body.lname}', mobile = '${req.body.mobile}', designation = '${req.body.designation}', department = '${req.body.department}', email = '${req.body.email}' WHERE employeeid = '${req.body.employeeid}'`;
 
   db.query(sql, (err) => {
     if (err) {
