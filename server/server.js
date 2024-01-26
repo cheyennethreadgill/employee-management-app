@@ -66,9 +66,8 @@ app.post("/add-employee", (req, res) => {
   let email = req.body.email;
   let dateofbirth = req.body.dateofbirth;
   let degree = req.body.degree;
-  let image = req.body.image;
 
-  let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree, image) VALUES (?)`;
+  let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree) VALUES (?)`;
   let values = [
     fname,
     lname,
@@ -81,7 +80,6 @@ app.post("/add-employee", (req, res) => {
     email,
     dateofbirth,
     degree,
-    image,
   ];
 
   db.query(sql, [values], (err) => {
