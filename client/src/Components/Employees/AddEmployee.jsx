@@ -20,7 +20,6 @@ const AddEmployee = () => {
   const [email, setEmail] = useState("");
   const [dob, setDOB] = useState("");
   const [degree, setDegree] = useState("");
-  const [image, setImage] = useState("");
 
   // ADD EMPLOYEE TO DB
   async function addEmployeeNow(e) {
