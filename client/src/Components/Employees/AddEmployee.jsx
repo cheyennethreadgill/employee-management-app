@@ -7,8 +7,8 @@ const AddEmployee = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
-  const URL = "http://localhost:8080/";
-  // const URL = "https://employee-management-app-rho.vercel.app/";
+  // const URL = "http://localhost:8080/";
+  const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "add-employee";
 
   const [fname, setFname] = useState("");

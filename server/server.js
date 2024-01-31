@@ -7,20 +7,20 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// const PORT = process.env.PORT || 8080;
-const PORT = 8080;
-const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "Cheyenne1234",
-  database: "employee-management",
-});
+const PORT = process.env.PORT || 8080;
+// const PORT = 8080;
 // const db = mysql.createConnection({
-//   user: process.env.DBUser,
-//   host: process.env.DBHost,
-//   password: process.env.DBPassword,
-//   database: process.env.DBDatabase,
+//   user: "root",
+//   host: "localhost",
+//   password: "Cheyenne1234",
+//   database: "employee-management",
 // });
+const db = mysql.createConnection({
+  user: process.env.DBUser,
+  host: process.env.DBHost,
+  password: process.env.DBPassword,
+  database: process.env.DBDatabase,
+});
 
 db.connect();
 

@@ -9,8 +9,8 @@ import PageHeaders from "../Global/PageHeaders";
 import { Link } from "react-router-dom";
 
 const AllEmployees = () => {
-  const URL = "http://localhost:8080/";
-  // const URL = "https://employee-management-app-rho.vercel.app/";
+  // const URL = "http://localhost:8080/";
+  const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "employees";
 
   const [employees, setEmployees] = useState([]);
