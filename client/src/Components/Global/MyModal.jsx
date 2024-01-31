@@ -10,8 +10,10 @@ const MyModal = ({
   firstname,
   lastname,
   department,
-    designation,
+  designation,
   degree,
+  email,
+  image,
 
   newFirstname,
   newLastname,
@@ -42,7 +44,6 @@ const MyModal = ({
   newMobile,
   setNewMobile,
 
-  email,
   newEmailUpdated,
   setNewEmailUpdated,
   newEmail,
@@ -52,6 +53,11 @@ const MyModal = ({
   setNewDegreeUpdated,
   newDegree,
   setNewDegree,
+
+  newImageUpdated,
+  setNewImageUpdated,
+  newImage,
+  setNewImage,
 }) => {
   return (
     <section className="my-modal">
@@ -112,34 +118,32 @@ const MyModal = ({
         </Form.Group>
 
         {/* *******************************DEPARTMENT */}
-        <Form.Group
-          className="mb-3"
-          controlId="exampleForm.ControlTextarea1"
-        >
-          <Form.Label>Department</Form.Label>
-          <div className="form-control-container">
-            {" "}
-            <Form.Control
-              name="department"
-              className="form-control-container-input"
-              defaultValue={
-                !newDepartmentUpdated
-                  ? department
-                  : newDepartmentUpdated
-                  ? newDepartment
-                  : department
-              }
-              type="text"
-              onChange={(e) => {
-                setNewDepartment(e.target.value);
-                setNewDepartmentUpdated(true);
-              }}
-            />
-            <span className="form-control-container-icon_end">
-              <i className="fa-solid fa-briefcase"></i>
-            </span>
-          </div>
-        </Form.Group>
+        <fieldset>
+          <select
+            name="select department"
+            id="select department"
+            onChange={(e) => {
+              setNewDepartment(e.target.value);
+              setNewDepartmentUpdated(true);
+            }}
+            required={true}
+          >
+            <option
+              defaultValue={true}
+              value="null"
+            >
+              {!newDepartmentUpdated
+                ? department
+                : newDepartmentUpdated
+                ? newDepartment
+                : department}
+            </option>
+            <option value="development">Development</option>
+            <option value="designing">Designing</option>
+            <option value="testing">Testing</option>
+            <option value="hr">HR</option>
+          </select>
+        </fieldset>
 
         {/* *******************************Designation */}
         <Form.Group
@@ -222,6 +226,18 @@ const MyModal = ({
               <i className="fa-regular fa-envelope"></i>
             </span>
           </div>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Control
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            onChange={(e) => {
+              setNewImage(e.target.value);
+              setNewImageUpdated(true);
+              console.log(e.target.value);
+            }}
+          />
         </Form.Group>
 
         <Button

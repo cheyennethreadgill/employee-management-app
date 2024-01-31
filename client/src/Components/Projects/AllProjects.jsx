@@ -6,8 +6,8 @@ import { Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
 const AllProjects = () => {
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  const URL = "http://localhost:8080/";
+  // const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "projects";
   const [projects, setProjects] = useState([]);
 
@@ -25,8 +25,9 @@ const AllProjects = () => {
         <section className="project">
           <div className="project-header-main">
             <h2>New Projects</h2>
-            <p>3 projects</p>
+            <p>{projects.length} projects</p>
           </div>
+
           <Row className="all-projects-row">
             {projects.map((project) => {
               const {
@@ -48,7 +49,7 @@ const AllProjects = () => {
                   className="project-col"
                   key={projectID}
                   lg="3"
-                  md="4"
+                  md="1"
                 >
                   {" "}
                   <ProjectCard

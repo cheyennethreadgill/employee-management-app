@@ -1,30 +1,33 @@
 .brand-bar-mobile {
   position: fixed;
   top: 0;
-
   bottom: 0;
   z-index: 5;
-  transition: all ease-in-out 200ms;
+  transition: all ease-in-out 350ms;
   filter: $drop-shadow-bottom;
   height: 64px;
+  transition: all ease-in-out 350ms;
 
   &-controls-container {
     height: 64px;
+    transition: all ease-in-out 350ms;
   }
 
   &-brand {
     display: flex;
     gap: 1rem;
+    transition: all ease-in-out 350ms;
 
     &-logo {
       margin: 0;
+      transition: all ease-in-out 350ms;
     }
   }
 
   &-toggle {
-    background-color: rgb(236, 236, 236);
     border: none;
     padding: 1rem;
+    transition: all ease-in-out 350ms;
   }
 
   &-controls {
@@ -32,28 +35,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // gap: 5em;
     position: relative;
     top: 0;
     width: 100vw;
     height: 100%;
-
     padding: 0 1rem;
-    transition: all ease-in-out 200ms;
+    transition: all ease-in-out 350ms;
 
     @include breakpointDown(md) {
       flex-wrap: wrap;
       justify-content: space-between;
+      transition: all ease-in-out 350ms;
     }
-    @include breakpointDown(lg) {
-    }
-
     button {
       height: 40px;
+      transition: all ease-in-out 350ms;
     }
   }
   @include breakpointDown(md) {
     display: block;
+    transition: all ease-in-out 350ms;
   }
 }
 // DESKTOP
@@ -62,12 +63,13 @@
   top: 0;
   bottom: 0;
   z-index: 5;
-  transition: all ease-in-out 200ms;
   filter: $drop-shadow-bottom;
   height: 64px;
+  transition: all ease-in-out 350ms;
 
   &-controls-container {
     height: 64px;
+    transition: all ease-in-out 350ms;
   }
 
   &-brand {
@@ -76,13 +78,16 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      transition: inherit;
+      transition: all ease-in-out 350ms;
     }
 
     &-left {
       display: flex;
+      transition: all ease-in-out 350ms;
 
-      @include breakpointDown(md) {
+      h1 {
+        margin: 0 8rem 0 0;
+        transition: all ease-in-out 350ms;
       }
     }
     &-right {
@@ -92,17 +97,19 @@
       height: 50px;
       gap: 3rem;
       width: 145px;
+      transition: all ease-in-out 350ms;
 
       @include breakpointDown(md) {
         gap: 5rem;
+        transition: all ease-in-out 350ms;
       }
     }
   }
 
   &-toggle {
-    background-color: rgb(236, 236, 236);
     border: none;
     padding: 1rem;
+    transition: all ease-in-out 350ms;
   }
 
   &-controls {
@@ -110,24 +117,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // gap: 5em;
     position: relative;
     top: 0;
     width: 100vw;
     height: 100%;
-
     padding: 0 1rem;
-    transition: all ease-in-out 200ms;
+    transition: all ease-in-out 350ms;
 
     @include breakpointDown(md) {
       flex-wrap: wrap;
       justify-content: space-between;
-    }
-    @include breakpointDown(lg) {
+      transition: all ease-in-out 350ms;
     }
 
     button {
       height: 40px;
+      transition: all ease-in-out 350ms;
     }
   }
 }
@@ -143,49 +148,34 @@
   margin: 2rem 0 0 0;
   font-size: 0.95rem;
   font-weight: 400;
-  transition: all ease-in-out 200ms;
   filter: $drop-shadow-right;
-  position: fixed;
   z-index: 9;
   top: 32px;
-
-  @include breakpointDown(sm) {
-    position: fixed;
-    top: 32px;
-    transition: all ease-in-out 200ms;
-  }
-
-  @include breakpointUp(lg) {
-    float: left;
-    top: 32px;
-    position: relative;
-    transition: all ease-in-out 200ms;
-  }
+  transition: all ease-in-out 350ms;
 
   &-linkHeader {
     font-size: inherit;
-    transition: all ease-in-out 200ms;
+    transition: all ease-in-out 350ms;
   }
 
   &-icon-container {
-    // background-color: grey;
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    transition: all ease-in-out 200ms;
     justify-content: space-between;
     position: relative;
     margin: 2rem 0 0 0;
     cursor: pointer;
+    transition: all ease-in-out 350ms;
 
     div {
       display: flex;
       gap: 0.5rem;
+      transition: all ease-in-out 350ms;
     }
   }
 
   &-links {
-    // background-color: pink;
     display: flex;
     flex-direction: column;
     height: 0%;
@@ -197,25 +187,38 @@
   }
 
   &_toggled {
+    transition: all ease-in-out 350ms;
+
     @extend .main-nav-list;
     filter: $drop-shadow-right;
-    transition: all ease-in-out 200ms;
+    transition: all ease-in-out 350ms;
     width: 63px;
     gap: 1rem;
-    transition: all ease-in-out 200ms;
 
     @include breakpointDown(md) {
       transform: translateX(-63px);
-      transition: all ease-in-out 200ms;
+      transition: all ease-in-out 350ms;
     }
   }
 
   @include breakpointDown(sm) {
+    position: fixed;
+    top: 32px;
+    transition: all ease-in-out 350ms;
+
     &-icon {
       visibility: hidden;
-
-      transition: all ease-in-out 200ms;
+      transition: all ease-in-out 350ms;
     }
+  }
+
+  @include breakpointUp(md) {
+    float: left;
+    top: 32px;
+    position: relative;
+    transition: all ease-in-out 350ms;
+    position: relative;
+    overflow: hidden;
   }
 }
 
@@ -225,6 +228,8 @@
   visibility: visible;
   gap: 1rem;
   padding: 0 2rem;
+
+  transition: all ease-in-out 350ms;
 }
 
 .list-group-icon {
@@ -233,6 +238,8 @@
   height: 2rem;
   position: absolute;
   top: 0;
+
+  transition: all ease-in-out 350ms;
 }
 
 // ***********************************************************ICONS

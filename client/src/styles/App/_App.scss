@@ -1,3 +1,38 @@
 .app {
-    position: relative;
+  position: relative;
+}
+
+.dash-projects {
+  &-card {
+    margin: 6rem 0;
+    padding: 5rem;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    overflow: auto;
+
+    &-titles {
+      display: flex;
+      justify-content: space-between;
+      background-color: rgba(202, 202, 202, 0.205);
+      padding: 0.8rem 0.5rem;
+      margin: 1rem 0 1rem 0;
+
+      h3 {
+        flex: 0 0 110px;
+      }
+    }
+
+    &-project-entry {
+      justify-content: space-between;
+      display: flex;
+      padding: 0.5rem;
+
+      .overflow-hidden {
+        flex: 0 0 110px;
+        justify-self: flex-start;
+        width: 110px;
+      }
+    }
+  }
 }

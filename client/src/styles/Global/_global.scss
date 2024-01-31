@@ -5,6 +5,9 @@
   margin: 0;
   padding: 0;
 }
+.overflow-hidden {
+  overflow-x: hidden;
+}
 .app-flex {
   display: flex;
 
@@ -59,7 +62,8 @@ h2 {
 }
 
 h3 {
-  font-size: $font-size-h3;
+  font-size: 1.075rem;
+  // font-size: $font-size-h3;
 }
 h3 {
   color: rgb(30, 30, 30);
@@ -88,4 +92,96 @@ h3 {
 
 .update-btn {
   background-color: #3f51b5;
+}
+
+// Dashboard
+// projects
+.priority {
+  display: flex;
+  justify-content: center;
+  border: solid 1px;
+  border-radius: 0.2rem;
+
+  &-high {
+    color: red;
+  }
+  &-medium {
+    color: rgb(81, 151, 248);
+  }
+  &-low {
+    color: rgb(113, 226, 117);
+  }
+}
+
+.status-bar {
+  height: 4.2px;
+  width: inherit;
+  position: relative;
+  transition: all ease-in-out 350ms;
+  border-radius: 0.8rem;
+
+  &-inner {
+    height: inherit;
+    width: inherit;
+    display: inline-block;
+    position: relative;
+    background-color: rgba(128, 128, 128, 0.233);
+    border-radius: inherit;
+    z-index: 10;
+
+    &_active {
+      width: 15px;
+      height: inherit;
+      background-color: #3f51b5;
+      position: absolute;
+      top: 0;
+      z-index: 10;
+      border-radius: inherit;
+    }
+    &_completed {
+      width: inherit;
+      height: inherit;
+      background-color: #3fb557;
+      position: absolute;
+      top: 0;
+      z-index: 10;
+      border-radius: inherit;
+    }
+    &_running {
+      width: 40px;
+      height: inherit;
+      background-color: #b5823f;
+      position: absolute;
+      top: 0;
+      z-index: 10;
+      border-radius: inherit;
+    }
+    &_pending {
+      width: 5px;
+      height: inherit;
+      background-color: #666666;
+      position: absolute;
+      top: 0;
+      z-index: 10;
+      border-radius: inherit;
+    }
+    &_not-started {
+      width: 0px;
+      height: inherit;
+      background-color: #3f51b5;
+      position: absolute;
+      top: 0;
+      z-index: 10;
+      border-radius: inherit;
+    }
+    &_canceled {
+      width: 0px;
+      height: inherit;
+      background-color: #3f51b5;
+      position: absolute;
+      top: 0;
+      z-index: 10;
+      border-radius: inherit;
+    }
+  }
 }

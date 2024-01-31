@@ -1,12 +1,14 @@
-import Navigation from "../Global/Nav";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
 const AddEmployee = () => {
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const handleFormSubmissionStatus = () => setFormSubmitted(true);
+
+  const URL = "http://localhost:8080/";
+  // const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "add-employee";
 
   const [fname, setFname] = useState("");
@@ -20,11 +22,12 @@ const AddEmployee = () => {
   const [email, setEmail] = useState("");
   const [dob, setDOB] = useState("");
   const [degree, setDegree] = useState("");
+  const [image, setImage] = useState("");
 
   // ADD EMPLOYEE TO DB
-  async function addEmployeeNow(e) {
-    e.preventDefault();
-    // Post options
+  async function addEmployeeNow() {
+    console.log("posted");
+    // // Post options
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "*" },
@@ -40,6 +43,7 @@ const AddEmployee = () => {
         email: email,
         dateofbirth: dob,
         degree: degree,
+        image: image,
       }),
     };
 
@@ -60,6 +64,41 @@ const AddEmployee = () => {
         console.log(`FETCH FAILED: ${err}`);
       };
     }
+    setValidated(!validated);
+  }
+
+  const [validated, setValidated] = useState(false);
+  const [error, setFormError] = useState(false);
+
+  // get form validation response
+  const promise = (e) => {
+    const form = e.currentTarget;
+    let check = form.checkValidity();
+    // return check;
+    if (check === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setValidated(true);
+
+    return new Promise((resolve, reject) => {
+      resolve(check);
+      reject("ERROR");
+    });
+  };
+
+  // handle form submission after form validation response is ok
+  async function handleSubmit(e) {
+    const promiseResponse = await promise(e);
+
+    if (promiseResponse === true) {
+      {
+        addEmployeeNow();
+        handleFormSubmissionStatus();
+        setValidated(false);
+      }
+    } else setFormError(true);
   }
 
   return (
@@ -67,31 +106,53 @@ const AddEmployee = () => {
       <Container>
         <PageHeaders name={PATH} />
         <Form
-          onSubmit={addEmployeeNow}
+          noValidate
+          validated={validated}
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
           autoComplete="true"
         >
           <Row>
-            <Col lg="6">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="text"
                 placeholder="first name *"
                 onChange={(e) => {
                   setFname(e.target.value);
                 }}
-                required={true}
+                required
               />
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter valid name.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="text"
                 placeholder="last name"
                 onChange={(e) => {
                   setLname(e.target.value);
                 }}
+                required
               />
-            </Col>
+            </Form.Group>
 
-            <Col lg="6">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="text"
                 placeholder="gender"
@@ -99,79 +160,113 @@ const AddEmployee = () => {
                   setGender(e.target.value);
                 }}
               />
-            </Col>
+            </Form.Group>
 
-            <Col lg="6">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="tel"
                 placeholder="mobile*"
                 onChange={(e) => {
                   setMobile(e.target.value);
                 }}
-                required={true}
+                pattern="[0-9]{10}"
+                required
               />
-            </Col>
+            </Form.Group>
 
-            <Col lg="6">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="text"
-                placeholder="password*"
-                required={true}
-              />
-            </Col>
-
-            <Col lg="6">
-              <Form.Control
-                type="text"
-                placeholder="re-enter password*"
+                placeholder="enter password*"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
-                required={true}
+                required
               />
-            </Col>
+            </Form.Group>
 
-            <Col lg="6">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="text"
-                placeholder="designmation"
+                placeholder="designation"
                 onChange={(e) => {
                   setDesignation(e.target.value);
                 }}
+                required
               />
-            </Col>
+            </Form.Group>
 
             <Col lg="6">
-              <Form.Control
-                type="text"
-                placeholder="department"
-                onChange={(e) => {
-                  setDepartment(e.target.value);
-                }}
-              />
+              <fieldset>
+                <select
+                  name="select department"
+                  id="select department"
+                  onChange={(e) => {
+                    setDepartment(e.target.value);
+                  }}
+                  required
+                >
+                  <option
+                    defaultValue={true}
+                    value="null"
+                  >
+                    Select Department
+                  </option>
+                  <option value="development">Development</option>
+                  <option value="designing">Designing</option>
+                  <option value="testing">Testing</option>
+                  <option value="hr">HR</option>
+                </select>
+              </fieldset>
             </Col>
 
-            <Col lg="12">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="12"
+            >
               <Form.Control
                 type="text"
                 placeholder="address"
                 onChange={(e) => {
                   setAddress(e.target.value);
                 }}
+                required
               />
-            </Col>
+            </Form.Group>
 
-            <Col lg="6">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="text"
                 placeholder="email"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                required
               />
-            </Col>
+            </Form.Group>
 
-            <Col lg="6">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 name="date"
                 type="date"
@@ -179,10 +274,16 @@ const AddEmployee = () => {
                 onChange={(e) => {
                   setDOB(e.target.value);
                 }}
+                required
               />
-            </Col>
+            </Form.Group>
 
-            <Col lg="12">
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="12"
+            >
+              {" "}
               <Form.Control
                 type="text"
                 placeholder="Degree"
@@ -190,14 +291,39 @@ const AddEmployee = () => {
                   setDegree(e.target.value);
                 }}
               />
-            </Col>
+              <Form.Control.Feedback>Looks good</Form.Control.Feedback>
+            </Form.Group>
 
             <fieldset>
-              <legend>Upload Image</legend>
-              <Form.Control type="file" />
-              <Button type="submit">Submit</Button>
-              <Button type="button">Cancel</Button>
+              <label htmlFor="image upload">Upload Image</label>
+              <Form.Control
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                onChange={(e) => {
+                  setImage(e.target.value);
+                }}
+                id="image upload"
+              />
             </fieldset>
+
+            {formSubmitted ? (
+              <p className="fw-medium mt-2">Employee Added Successfully!</p>
+            ) : error ? (
+              <p className="fw-bold mt-2">Please correct errors above.</p>
+            ) : null}
+
+            <Button
+              className="btn btn-success"
+              type="submit"
+            >
+              Submit
+            </Button>
+            <Button
+              className=" btn btn-danger"
+              type="button"
+            >
+              Cancel
+            </Button>
           </Row>
         </Form>
       </Container>

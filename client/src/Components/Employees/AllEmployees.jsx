@@ -9,8 +9,8 @@ import PageHeaders from "../Global/PageHeaders";
 import { Link } from "react-router-dom";
 
 const AllEmployees = () => {
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  const URL = "http://localhost:8080/";
+  // const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "employees";
 
   const [employees, setEmployees] = useState([]);
@@ -19,7 +19,6 @@ const AllEmployees = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  let navigate = useNavigate();
 
   // get Employees
   useEffect(() => {
@@ -111,6 +110,7 @@ const AllEmployees = () => {
       lastname,
       mobile,
       degree,
+      image,
     } = employee;
 
     return (
@@ -133,6 +133,7 @@ const AllEmployees = () => {
         email={email}
         date={date}
         degree={degree}
+        image={image}
       />
     );
   });
@@ -147,10 +148,12 @@ const AllEmployees = () => {
       lastname,
       mobile,
       degree,
+      image,
     } = employee;
 
     return (
       <EmployeeCard
+        key={employeeid}
         PATH={PATH}
         show={show}
         handleShow={handleShow}
@@ -159,7 +162,6 @@ const AllEmployees = () => {
         onUpdateEmployeeState={handleEmployeeDelete}
         onDelete={deleteEmployeeFromDB}
         employees={employees}
-        key={employeeid}
         employeeid={employeeid}
         firstname={firstname}
         lastname={lastname}
@@ -169,6 +171,7 @@ const AllEmployees = () => {
         email={email}
         date={date}
         degree={degree}
+        image={image}
       />
     );
   });
@@ -230,19 +233,17 @@ const AllEmployees = () => {
           <section className="employees-card-container">
             <div className="employees-card-titles-desktop d-none d-md-flex">
               {" "}
-              {/* <div className="employees-card-titles"> */}
               <h3></h3>
               <h3>Image</h3>
               <h3>Employee ID</h3>
-              <h3>Degree</h3>
               <h3>Name</h3>
+              <h3>Degree</h3>
               <h3>Department</h3>
               <h3>Designation</h3>
               <h3>Mobile</h3>
               <h3>Email</h3>
               <h3>Join Date</h3>
               <h3>Actions</h3>
-              {/* </div> */}
               <hr />
             </div>
 

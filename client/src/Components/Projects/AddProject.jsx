@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Nav from "../Global/Nav";
+import React, { useState, useRef } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
@@ -15,8 +14,10 @@ const AddProject = () => {
   const [team, setTeam] = useState("");
   const [status, setStatus] = useState("");
   const [description, setDescription] = useState("");
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const handleFormSubmissionStatus = () => setFormSubmitted(true);
+  const URL = "http://localhost:8080/";
+  // const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "add-project";
 
   // fetch for data
@@ -58,40 +59,98 @@ const AddProject = () => {
         console.log(`FETCH FAILED: ${err}`);
       };
     }
+    setValidated(!validated);
+  }
+
+  // get form validation response
+  const [validated, setValidated] = useState(false);
+  const [error, setFormError] = useState(false);
+
+  const promise = (e) => {
+    const form = e.currentTarget;
+    let check = form.checkValidity();
+    // return check;
+    if (check === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setValidated(true);
+
+    return new Promise((resolve, reject) => {
+      resolve(check);
+      reject("ERROR");
+    });
+  };
+
+  // handle form submission after form validation response is ok
+  async function handleSubmit(e) {
+    const promiseResponse = await promise(e);
+
+    if (promiseResponse === true) {
+      {
+        handleProjectAdd(e);
+        handleFormSubmissionStatus();
+        setValidated(false);
+      }
+    } else setFormError(true);
   }
   return (
     <>
       <Container>
         <PageHeaders name={PATH} />
         <Form
-          action=""
+          noValidate
+          validated={validated}
           onSubmit={(e) => {
-            handleProjectAdd(e);
+            handleSubmit(e);
           }}
         >
           <Row>
-            <Col lg="6">
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 type="text"
                 placeholder="Project Id *"
-                required={true}
-                onKeyUp={(e) => {
+                required
+                onChange={(e) => {
                   setProjectID(e.target.value);
                 }}
+                pattern="[0-9]{4}"
               />
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter valid ID. <br></br> ID Must Ccontain 4 numbers.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <Form.Control
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setTitle(e.target.value);
                 }}
                 type="text"
                 placeholder="Project title"
               />
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter valid title.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <fieldset>
-                <legend htmlFor="select department">Select Department</legend>
+                <Form.Label htmlFor="select department">
+                  Select Department
+                </Form.Label>
                 <select
                   name="select department"
                   id="select department"
@@ -99,7 +158,7 @@ const AddProject = () => {
                   onChange={(e) => {
                     setDepartment(e.target.value);
                   }}
-                  required={true}
+                  required
                 >
                   <option
                     defaultValue={true}
@@ -108,15 +167,23 @@ const AddProject = () => {
                     Choose Option
                   </option>
                   <option value="development">Development</option>
-                  <option value="designing">designing</option>
-                  <option value="testing">testing</option>
+                  <option value="designing">Designing</option>
+                  <option value="testing">Testing</option>
                   <option value="hr">HR</option>
                 </select>
               </fieldset>
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please select department
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <fieldset>
-                <legend htmlFor="priority">priority</legend>
+                <Form.Label htmlFor="priority">Priority</Form.Label>
                 <select
                   name="priority"
                   id="priority"
@@ -124,7 +191,7 @@ const AddProject = () => {
                   onChange={(e) => {
                     setPriority(e.target.value);
                   }}
-                  required={true}
+                  required
                 >
                   <option
                     defaultValue={true}
@@ -137,46 +204,88 @@ const AddProject = () => {
                   <option value="low">low</option>
                 </select>
               </fieldset>
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please select priority.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <Form.Control
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setClient(e.target.value);
                 }}
                 type="text"
                 placeholder="client*"
-                required={true}
+                required
               />
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter valid name.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <Form.Control
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setPrice(e.target.value);
                 }}
                 type="number"
                 placeholder="price*"
-                required={true}
+                required
               />
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter a price.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 onChange={(e) => {
                   setStartDate(e.target.value);
                 }}
                 type="date"
                 placeholder="start date"
+                required
               />
-            </Col>
-            <Col lg="6">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter a start date.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="6"
+            >
               <Form.Control
                 onChange={(e) => {
                   setEndDate(e.target.value);
                 }}
                 type="date"
                 placeholder="end date"
+                required
               />
-            </Col>
-            <Col lg="12">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter an end date.
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="12"
+            >
               <Form.Label htmlFor="Team">Team</Form.Label>
               <select
                 onChange={(e) => {
@@ -185,7 +294,7 @@ const AddProject = () => {
                 name="Team"
                 id="Team"
                 placeholder="Team"
-                required={true}
+                required
                 def
               >
                 <option
@@ -198,10 +307,17 @@ const AddProject = () => {
                 <option value="michelle">michelle</option>
                 <option value="kelly">kelly</option>
               </select>
-            </Col>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter a team
+              </Form.Control.Feedback>
+            </Form.Group>
 
             {/* *********WORK STATUS RADIOS */}
-            <Col lg="12">
+            <Form.Group
+              as={Col}
+              lg="12"
+            >
               <fieldset className="work-status">
                 <p>Work Status</p>
                 <input
@@ -265,28 +381,44 @@ const AddProject = () => {
                 />
                 <Form.Label htmlFor="">canceled</Form.Label>
               </fieldset>
-            </Col>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please select a work status.
+              </Form.Control.Feedback>
+            </Form.Group>
 
-            <Col lg="12">
+            <Form.Group
+              as={Col}
+              lg="12"
+            >
               <Form.Label htmlFor="description">Description</Form.Label>
               <Form.Control
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setDescription(e.target.value);
                 }}
                 type="text"
                 id="description"
               />
-            </Col>
-            <Col lg="12">
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please enter a description
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              lg="12"
+            >
               <div className="">
                 {" "}
-                <Form.Label>upload image</Form.Label>
+                <Form.Label>upload file</Form.Label>
                 <Form.Control
                   className="upload-control"
                   type="file"
+                  accept=".pdf,.doc"
                 />
               </div>
-            </Col>
+            </Form.Group>
 
             <div className="form-btns">
               <Button
@@ -302,6 +434,10 @@ const AddProject = () => {
                 Cancel
               </Button>
             </div>
+
+            {formSubmitted ? (
+              <p className=" fw-medium mt-2">Project Added Successfully!</p>
+            ) : null}
           </Row>
         </Form>
       </Container>

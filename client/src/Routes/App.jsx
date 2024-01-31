@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import TopNav from "../Components/Global/TopNav";
 
 function Dashboard() {
-  const [toggled, setToggled] = useState(false);
+  const [toggled, setToggled] = useState(true);
   const handleNavToggle = () => setToggled(!toggled);
   const handleMouseLeave = () => setToggled(!toggled);
 

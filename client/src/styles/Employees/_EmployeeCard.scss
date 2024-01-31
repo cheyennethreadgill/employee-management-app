@@ -1,7 +1,11 @@
+.employee-card {
+  &-img {
+    border-radius: 10rem;
+  }
+}
 .employee-card-mobile,
 .employee-card-form {
   border-radius: 0;
-  // padding: 0 3rem;
   font-size: $font-size-h3;
 }
 
@@ -41,6 +45,4 @@
   @include breakpointDown(sm) {
     display: flex;
   }
-  // .employee-card-form {
-  // }
 }

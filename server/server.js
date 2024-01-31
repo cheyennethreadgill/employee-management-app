@@ -7,20 +7,20 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const PORT = 8080;
 // const PORT = process.env.PORT || 8080;
-// const db = mysql.createConnection({
-//   user: "root",
-//   host: "localhost",
-//   password: "Cheyenne1234",
-//   database: "employee-management",
-// });
+const PORT = 8080;
 const db = mysql.createConnection({
-  user: process.env.DBUser,
-  host: process.env.DBHost,
-  password: process.env.DBPassword,
-  database: process.env.DBDatabase,
+  user: "root",
+  host: "localhost",
+  password: "Cheyenne1234",
+  database: "employee-management",
 });
+// const db = mysql.createConnection({
+//   user: process.env.DBUser,
+//   host: process.env.DBHost,
+//   password: process.env.DBPassword,
+//   database: process.env.DBDatabase,
+// });
 
 db.connect();
 
@@ -66,8 +66,9 @@ app.post("/add-employee", (req, res) => {
   let email = req.body.email;
   let dateofbirth = req.body.dateofbirth;
   let degree = req.body.degree;
+  let image = req.body.image;
 
-  let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree) VALUES (?)`;
+  let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree, image) VALUES (?)`;
   let values = [
     fname,
     lname,
@@ -80,6 +81,7 @@ app.post("/add-employee", (req, res) => {
     email,
     dateofbirth,
     degree,
+    image,
   ];
 
   db.query(sql, [values], (err) => {
@@ -152,6 +154,23 @@ app.put("/update-employee", (req, res) => {
       res.json({
         status: "success",
         message: "Employee updated successfully.",
+        employee: req.body,
+      });
+    }
+  });
+});
+app.put("/update-project", (req, res) => {
+  console.log(req.body);
+
+  let sql = `UPDATE projects SET title = '${req.body.title}', department = '${req.body.department}', priority = '${req.body.priority}', status = '${req.body.status}', team = '${req.body.team}' WHERE projectID = '${req.body.projectID}'`;
+
+  db.query(sql, (err) => {
+    if (err) {
+      throw err;
+    } else {
+      res.json({
+        status: "success",
+        message: "Project updated successfully.",
         employee: req.body,
       });
     }

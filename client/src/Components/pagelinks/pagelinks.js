@@ -1,6 +1,17 @@
 export default [
   {
     id: 0,
+    name: "Dashboard",
+    icon: "gg-browser",
+    links: [
+      {
+        name: "Dashboard",
+        link: "/dashboard",
+      },
+    ],
+  },
+  {
+    id: 1,
     name: "Projects",
     icon: "gg-desktop",
     links: [
@@ -15,7 +26,7 @@ export default [
     ],
   },
   {
-    id: 1,
+    id: 2,
     name: "Employees",
     icon: "gg-user",
     links: [

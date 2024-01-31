@@ -103,10 +103,18 @@
       padding: 1.5rem 0 0 0;
       overflow-x: auto;
 
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
       @include breakpointDown(sm) {
         overflow-x: initial;
       }
     }
+  }
+  @include breakpointUp(sm) {
+    overflow-y: scroll;
+    max-height: $height-body;
   }
 }
 
