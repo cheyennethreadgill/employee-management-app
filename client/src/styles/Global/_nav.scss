@@ -153,6 +153,10 @@
   top: 32px;
   transition: all ease-in-out 350ms;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &-linkHeader {
     font-size: inherit;
     transition: all ease-in-out 350ms;
@@ -188,6 +192,10 @@
 
   &_toggled {
     transition: all ease-in-out 350ms;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     @extend .main-nav-list;
     filter: $drop-shadow-right;
