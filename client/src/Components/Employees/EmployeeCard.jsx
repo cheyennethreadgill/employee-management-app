@@ -396,7 +396,7 @@ const EmployeeCard = ({
           {/* END CONTAINER ROW */}
         </div>
       </Row>
-      <hr className='d-none d-md-block'/>
+      <hr className="d-none d-md-block" />
 
       {/* ***************************************************SHOW MODAL */}
       {!showNow ? null : (
