@@ -180,7 +180,7 @@ app.delete("/delete-employee/:id", (req, res) => {
 });
 
 app.delete("/delete-project/:id", (req, res) => {
-  let sql = `DELETE FROM employees WHERE employeeid = (?)`;
+  let sql = `DELETE FROM projects WHERE projectID = (?)`;
 
   let vals = [req.params.id];
 
