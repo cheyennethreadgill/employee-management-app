@@ -31,17 +31,7 @@ const AllEmployees = () => {
   // GET FILTERED EMPLLOYEES
   const handleFilteredEmployees = (e) => {
     let found = employees.filter((employee) => {
-      const {
-        firstname,
-        lastname,
-        department,
-        employeeid,
-        designation,
-        email,
-        date,
-        mobile,
-        degree,
-      } = employee;
+      const { firstname, lastname, department, employeeid, designation, email, date, mobile, degree } = employee;
 
       if (
         e.includes(firstname) ||
@@ -68,14 +58,9 @@ const AllEmployees = () => {
     };
 
     try {
-      const fetchPromiseResponse = await fetch(
-        `${URL}delete-employee/${id}`,
-        options
-      );
+      const fetchPromiseResponse = await fetch(`${URL}delete-employee/${id}`, options);
       if (!fetchPromiseResponse.ok) {
-        console.log(
-          `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
-        );
+        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
       }
       const jsonPromiseResponse = fetchPromiseResponse.json();
 
@@ -101,17 +86,7 @@ const AllEmployees = () => {
 
   // Employees Content
   const employeesContent = employees.map((employee) => {
-    const {
-      department,
-      designation,
-      email,
-      employeeid,
-      firstname,
-      lastname,
-      mobile,
-      degree,
-      image,
-    } = employee;
+    const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
 
     return (
       <EmployeeCard
@@ -139,17 +114,7 @@ const AllEmployees = () => {
   });
 
   const filteredEmloyeesContent = filteredEmloyees.map((employee) => {
-    const {
-      department,
-      designation,
-      email,
-      employeeid,
-      firstname,
-      lastname,
-      mobile,
-      degree,
-      image,
-    } = employee;
+    const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
 
     return (
       <EmployeeCard

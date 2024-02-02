@@ -179,6 +179,19 @@ app.delete("/delete-employee/:id", (req, res) => {
   res.json("Employee deleted.");
 });
 
+app.delete("/delete-project/:id", (req, res) => {
+  let sql = `DELETE FROM employees WHERE employeeid = (?)`;
+
+  let vals = [req.params.id];
+
+  db.query(sql, [vals], (err, res) => {
+    if (err) {
+      throw err;
+    }
+  });
+  res.json("Employee deleted.");
+});
+
 app.listen(PORT, () => {
   console.log("Server running on port 8080");
 });

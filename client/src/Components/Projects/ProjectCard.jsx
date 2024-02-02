@@ -46,6 +46,7 @@ const ProjectCard = ({
   newPriorityUpdated,
   newTeamUpdated,
   handleProjectUpdate,
+  deleteProjectFromDB,
 }) => {
   const PATH = "update-project";
   const [btnValue, setBtnValue] = useState(0);
@@ -150,7 +151,12 @@ const ProjectCard = ({
               <p>Edit Project</p>
             </div>
 
-            <div className="options-btns-link">
+            <div
+              className="options-btns-link"
+              onClick={() => {
+                deleteProjectFromDB(projectID);
+              }}
+            >
               <i className="fa-regular fa-trash-can fs-5"></i>
               <p>Delete Project</p>
             </div>
@@ -176,10 +182,7 @@ const ProjectCard = ({
           <p className="project-card-header-status project-card-header-status_canceled info"> {status} </p>
         )}
       </div>
-      <p className="description">
-        {" "}
-        {!description ? "N/A" : description ? description : newDescriptionUpdated ? newDescription : null}{" "}
-      </p>
+      <p className="description"> {description}</p>
 
       <Row>
         <Col lg="4">

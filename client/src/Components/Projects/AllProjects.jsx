@@ -94,6 +94,30 @@ const AllProjects = () => {
     }
   }
 
+  // DELETE EMPLOYEE From DB
+  async function deleteProjectFromDB(id) {
+    // Post options
+    const options = {
+      method: "DELETE",
+    };
+
+    try {
+      const fetchPromiseResponse = await fetch(`${URL}delete-project/${id}`, options);
+      if (!fetchPromiseResponse.ok) {
+        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
+      }
+      const jsonPromiseResponse = fetchPromiseResponse.json();
+
+      jsonPromiseResponse.then((res) => {
+        console.log(res);
+      });
+    } catch {
+      (err) => {
+        console.log(`FETCH FAILED: ${err}`);
+      };
+    }
+  }
+
   return (
     <section className="all-projects">
       <Container>
@@ -169,6 +193,7 @@ const AllProjects = () => {
                     newDescriptionUpdated={projectInfoForModal.newDescriptionUpdated}
                     setnewTeamUpdated={projectInfoForModal.setnewTeamUpdated}
                     handleProjectUpdate={handleProjectUpdate}
+                    deleteProjectFromDB={deleteProjectFromDB}
                   />
                 </Col>
               );

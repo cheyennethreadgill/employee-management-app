@@ -74,7 +74,6 @@ const ProjectModal = ({
                   ...projectInfoForModal,
                   title: e.target.value,
                 });
-                console.log(`Title Status: ${newTitleUpdated} New Title: ${newTitle}`);
               }}
             />
             <span className="form-control-container-icon_end">
@@ -118,8 +117,8 @@ const ProjectModal = ({
               handleProjectToUpdate({ ...projectInfoForModal, department: e.target.value });
             }}
             required
+            defaultValue={newDepartmentUpdated ? newDepartment : department}
           >
-            <option defaultValue>{newDepartmentUpdated ? newDepartment : department}</option>
             <option value="development">Development</option>
             <option value="designing">Designing</option>
             <option value="testing">Testing</option>
@@ -140,9 +139,9 @@ const ProjectModal = ({
           id="Team"
           placeholder="Team"
           required
-          def
+          defaultValue="null"
         >
-          <option defaultValue="null">{newTeamUpdated ? newTeam : team}</option>
+          {newTeamUpdated ? newTeam : team}
           <option value="sarah">Sarah</option>
           <option value="michelle">Michelle</option>
           <option value="kelly">Kelly</option>
@@ -163,8 +162,8 @@ const ProjectModal = ({
             }}
             required
             className="form-control-container-input"
+            defaultValue={newPriorityUpdated ? newPriority : priority}
           >
-            <option defaultValue="null">{newPriorityUpdated ? newPriority : priority}</option>
             <option value="high">high</option>
             <option value="medium">medium</option>
             <option value="low">low</option>

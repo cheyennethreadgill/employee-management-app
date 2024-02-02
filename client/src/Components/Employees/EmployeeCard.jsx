@@ -172,7 +172,7 @@ const EmployeeCard = ({
                       className="employee-card-img"
                     />
                   ) : (
-                    <i class="fa-solid fa-circle-user fs-1"></i>
+                    <i className="fa-solid fa-circle-user fs-1"></i>
                   )}
                 </Col>
               </div>
@@ -316,7 +316,7 @@ const EmployeeCard = ({
                 className="employee-card-img"
               />
             ) : (
-              <i class="fa-solid fa-circle-user fs-2"></i>
+              <i className="fa-solid fa-circle-user fs-2"></i>
             )}
           </div>
 
