@@ -3,7 +3,13 @@ import { useState } from "react";
 import ProjectModal from "../Global/ProjectModal";
 
 const ProjectCard = ({
+  projectInfoForModal,
   URL,
+  showNow,
+  handleShowNow,
+  handleProjectSet,
+  handleEditMode,
+  editMode,
   projectID,
   title,
   department,
@@ -15,37 +21,59 @@ const ProjectCard = ({
   team,
   status,
   description,
+  newTitle,
+  newDepartment,
+  newPriority,
+  newStatus,
+  newTeam,
+  newDescription,
+  setnewTitle,
+  setnewDepartment,
+  setnewPriority,
+  setnewStatus,
+  setnewTeam,
+  setnewDescription,
+  newDepartmentUpdated,
+  newDescriptionUpdated,
+  setnewTitleUpdated,
+  setnewDepartmentUpdated,
+  setnewDescriptionUpdated,
+  setnewPriorityUpdated,
+  setnewTeamUpdated,
+  setnewStatusUpdated,
+  newTitleUpdated,
+  newStatusUpdated,
+  newPriorityUpdated,
+  newTeamUpdated,
+  handleProjectUpdate,
 }) => {
+  const PATH = "update-project";
   const [btnValue, setBtnValue] = useState(0);
-  const [showNow, setShowNow] = useState(false);
+
   const handleBtnValue = (id) => setBtnValue(id);
-  const [editMode, setEditMode] = useState(false);
-  const handleEditMode = () => setEditMode(!editMode);
+
+  // // UpdatedInputs
+  // const [newTitleUpdated, setnewTitleUpdated] = useState(false);
+  // const [newDepartmentUpdated, setnewDepartmentUpdated] = useState(false);
+  // const [newPriorityUpdated, setnewPriorityUpdated] = useState(false);
+  // const [newStatusUpdated, setnewStatusUpdated] = useState(false);
+  // const [newTeamUpdated, setnewTeamUpdated] = useState(false);
+
+  // // SET NEW FORM
+  // const [newTitle, setnewTitle] = useState("");
+  // const [newDepartment, setnewDepartment] = useState("");
+  // const [newPriority, setnewPriority] = useState("");
+  // const [newStatus, setnewStatus] = useState("");
+  // const [newTeam, setnewTeam] = useState("");
+
+  // UI State
   const [optionsIconDisplay, setOptionsIconDisplay] = useState(false);
   const [optionPanelDisplay, setOptionPanelDisplay] = useState(false);
 
-  // UpdatedInputs
-  const [newTitleUpdated, setnewTitleUpdated] = useState(false);
-  const [newDepartmentUpdated, setnewDepartmentUpdated] = useState(false);
-  const [newPriorityUpdated, setnewPriorityUpdated] = useState(false);
-  const [newStatusUpdated, setnewStatusUpdated] = useState(false);
-  const [newTeamUpdated, setnewTeamUpdated] = useState(false);
+  const handleOptionsIconEnter = () => setOptionsIconDisplay(true);
+  const handleOptionsIconLeave = () => setOptionsIconDisplay(false);
+  const handleOptionPanelDisplay = () => setOptionPanelDisplay(!optionPanelDisplay);
 
-  // SET NEW FORM
-  const [newTitle, setnewTitle] = useState("");
-  const [newDepartment, setnewDepartment] = useState("");
-  const [newPriority, setnewPriority] = useState("");
-  const [newStatus, setnewStatus] = useState("");
-  const [newTeam, setnewTeam] = useState("");
-
-  const handleOptionPanelDisplay = (value) => setOptionPanelDisplay(value);
-
-  const handleOptionsDisplayEnter = () => {
-    setOptionsIconDisplay(true);
-  };
-  const handleOptionsIconDisplayLeave = () => {
-    setOptionsIconDisplay(false);
-  };
   const startDateReformat = () => {
     let newStartDate = startDate.substring(0, 10);
     return newStartDate;
@@ -60,40 +88,70 @@ const ProjectCard = ({
   return (
     <section
       className="project-card"
-      onMouseEnter={handleOptionsDisplayEnter}
-      onClick={() => handleOptionPanelDisplay(true)}
+      onMouseEnter={handleOptionsIconEnter}
+      onMouseLeave={handleOptionsIconLeave}
     >
       <div className="options">
         <i
-          onClick={() => {
-            handleOptionPanelDisplay();
-          }}
-          class={
-            optionsIconDisplay
-              ? "fa-solid fa-ellipsis-vertical fs-5 options-icon"
-              : null
-          }
+          onClick={handleOptionPanelDisplay}
+          className={optionsIconDisplay ? "fa-solid fa-ellipsis-vertical fs-5 options-icon options-icon_visible" : null}
         ></i>
         {optionPanelDisplay ? (
           <div className="options-btns">
-            <div className="options-btns-link">
-              {" "}
+            <div
+              className="options-btns-link"
+              onClick={(e) => {
+                handleOptionPanelDisplay();
+                handleBtnValue(projectID);
+                handleEditMode();
+                handleShowNow(true);
+                handleProjectSet({
+                  projectID,
+                  title,
+                  department,
+                  priority,
+                  client,
+                  price,
+                  startDate,
+                  endDate,
+                  team,
+                  status,
+                  description,
+                  newTitleUpdated,
+                  newDescriptionUpdated,
+                  setnewTitleUpdated,
+                  setnewDescriptionUpdated,
+                  newDepartmentUpdated,
+                  setnewDepartmentUpdated,
+                  newPriorityUpdated,
+                  setnewPriorityUpdated,
+                  newStatusUpdated,
+                  setnewStatusUpdated,
+                  newTeamUpdated,
+                  setnewTeamUpdated,
+                  newTitle,
+                  setnewTitle,
+                  newDepartment,
+                  setnewDepartment,
+                  newDescription,
+                  newPriority,
+                  setnewPriority,
+                  newStatus,
+                  setnewStatus,
+                  newTeam,
+                  setnewTeam,
+                });
+              }}
+            >
               <i
-                onClick={() => {
-                  handleBtnValue(projectID);
-                  handleEditMode();
-                  handleShowNow(true);
-                }}
                 type="button"
                 className="fa-regular fa-pen-to-square fs-5 edit-btn"
-              >
-                {" "}
-              </i>
+              ></i>
               <p>Edit Project</p>
             </div>
 
             <div className="options-btns-link">
-              <i class="fa-regular fa-trash-can fs-5"></i>
+              <i className="fa-regular fa-trash-can fs-5"></i>
               <p>Delete Project</p>
             </div>
           </div>
@@ -102,41 +160,26 @@ const ProjectCard = ({
       <div className="project-card-header">
         <div className="project-card-header-left">
           <i className="fa-regular fa-circle-check"></i>
-          <h3> {title} </h3>
+          <h3> {newTitleUpdated ? newTitle : title} </h3>
         </div>
         {status == "active" ? (
-          <p className="project-card-header-status project-card-header-status_active info">
-            {" "}
-            {status}{" "}
-          </p>
+          <p className="project-card-header-status project-card-header-status_active info"> {status} </p>
         ) : status == "running" ? (
-          <p className="project-card-header-status project-card-header-status_running info">
-            {" "}
-            {status}{" "}
-          </p>
+          <p className="project-card-header-status project-card-header-status_running info"> {status} </p>
         ) : status == "completed" ? (
-          <p className="project-card-header-status project-card-header-status_completed info">
-            {" "}
-            {status}{" "}
-          </p>
+          <p className="project-card-header-status project-card-header-status_completed info"> {status} </p>
         ) : status == "pending" ? (
-          <p className="project-card-header-status project-card-header-status_pending info">
-            {" "}
-            {status}{" "}
-          </p>
+          <p className="project-card-header-status project-card-header-status_pending info"> {status} </p>
         ) : status == "not-started" ? (
-          <p className="project-card-header-status project-card-header-status_not info-started">
-            {" "}
-            {status}{" "}
-          </p>
+          <p className="project-card-header-status project-card-header-status_not info-started"> {status} </p>
         ) : (
-          <p className="project-card-header-status project-card-header-status_canceled info">
-            {" "}
-            {status}{" "}
-          </p>
+          <p className="project-card-header-status project-card-header-status_canceled info"> {status} </p>
         )}
       </div>
-      <p className="description"> {description} </p>
+      <p className="description">
+        {" "}
+        {!description ? "N/A" : description ? description : newDescriptionUpdated ? newDescription : null}{" "}
+      </p>
 
       <Row>
         <Col lg="4">
@@ -150,14 +193,11 @@ const ProjectCard = ({
         </Col>
         <Col lg="5">
           <p className="info calendar">
-            <i className="fa-regular fa-calendar-days"></i>{" "}
-            {newStartDate ? newStartDate : "None"}{" "}
+            <i className="fa-regular fa-calendar-days"></i> {newStartDate ? newStartDate : "None"}{" "}
           </p>
-          <p className="info">{team ? team : "None"}</p>
-          <p className="priority">
-            {" "}
+          <p className="info">{newTeamUpdated ? newTeam : team ? team : "None"}</p>
+          <div className="priority">
             <span className="priority-icon">
-              {" "}
               {priority === "high" ? (
                 <div className="priority-icon-high">
                   <i className="fa-solid fa-angle-up "></i>
@@ -175,13 +215,12 @@ const ProjectCard = ({
                 </div>
               )}{" "}
             </span>{" "}
-          </p>
+          </div>
           <p className="info calendar">
-            <i className="fa-regular fa-calendar-days"></i>{" "}
-            {newEndDate ? newEndDate : "None"}{" "}
+            <i className="fa-regular fa-calendar-days"></i> {newEndDate ? newEndDate : "None"}{" "}
           </p>
           <p className="info">Bug</p>
-          <p className="info">{department ? department : "None"}</p>
+          <p className="info">{newDepartmentUpdated ? newDepartment : department ? department : "None"}</p>
         </Col>
       </Row>
 
@@ -222,15 +261,13 @@ const ProjectCard = ({
                   ? "progress-bar-inner_canceled progress-bar-inner-bar"
                   : null
               }
-            >
-              {" "}
-            </span>{" "}
+            ></span>{" "}
           </span>
         </div>
       </div>
 
       {/* ***************************************************SHOW MODAL */}
-      {!showNow ? null : (
+      {/* {!showNow ? null : (
         <ProjectModal
           handleShowNow={handleShowNow}
           handleEditMode={handleEditMode}
@@ -262,7 +299,7 @@ const ProjectCard = ({
           setnewTeamUpdated={setnewTeamUpdated}
           handleProjectUpdate={handleProjectUpdate}
         />
-      )}
+      )} */}
     </section>
   );
 };

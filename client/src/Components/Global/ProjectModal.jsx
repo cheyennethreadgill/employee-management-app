@@ -1,6 +1,8 @@
 import { Form, Button } from "react-bootstrap";
+import { useState } from "react";
 
 const ProjectModal = ({
+  projectInfoForModal,
   handleEditMode,
   handleShowNow,
   projectID,
@@ -9,28 +11,50 @@ const ProjectModal = ({
   priority,
   team,
   status,
-  newTitle,
-  setnewTitle,
-  newDepartment,
-  setnewDepartment,
-  newPriority,
-  setnewPriority,
-  newStatus,
-  setnewStatus,
-  newTeam,
-  setnewTeam,
-  newTitleUpdated,
-  setnewTitleUpdated,
-  newDepartmentUpdated,
-  setnewDepartmentUpdated,
-  newPriorityUpdated,
-  setnewPriorityUpdated,
-  newStatusUpdated,
-  setnewStatusUpdated,
-  newTeamUpdated,
-  setnewTeamUpdated,
+  description,
+  projects,
+  setProjects,
+  // newTitle,
+  // setnewTitle,
+  // newDepartment,
+  // setnewDepartment,
+  // newPriority,
+  // setnewPriority,
+  // newStatus,
+  // setnewStatus,
+  // newTeam,
+  // setnewTeam,
+  // newTitleUpdated,
+  // setnewTitleUpdated,
+  // newDepartmentUpdated,
+  // setnewDepartmentUpdated,
+  // newPriorityUpdated,
+  // setnewPriorityUpdated,
+  // newStatusUpdated,
+  // setnewStatusUpdated,
+  // newTeamUpdated,
+  // setnewTeamUpdated,
   handleProjectUpdate,
 }) => {
+  // UpdatedInputs
+  const [newTitleUpdated, setnewTitleUpdated] = useState(false);
+  const [newDepartmentUpdated, setnewDepartmentUpdated] = useState(false);
+  const [newPriorityUpdated, setnewPriorityUpdated] = useState(false);
+  const [newStatusUpdated, setnewStatusUpdated] = useState(false);
+  const [newTeamUpdated, setnewTeamUpdated] = useState(false);
+  const [newDescriptionUpdated, setnewDescriptionUpdated] = useState(false);
+
+  // SET NEW FORM
+  const [newTitle, setnewTitle] = useState("");
+  const [newDepartment, setnewDepartment] = useState("");
+  const [newPriority, setnewPriority] = useState("");
+  const [newStatus, setnewStatus] = useState("");
+  const [newTeam, setnewTeam] = useState("");
+  const [newDescription, setnewDescription] = useState("");
+
+  const [projectToUpdate, setProjectToUpdate] = useState({ projectInfoForModal });
+  const handleProjectToUpdate = (values) => setProjectToUpdate(values);
+
   return (
     <section className="my-modal">
       <Form className="my-modal-form">
@@ -40,13 +64,39 @@ const ProjectModal = ({
           <div className="form-control-container ">
             <Form.Control
               className="form-control-container-input"
-              defaultValue={title}
+              defaultValue={newTitleUpdated ? newTitle : title}
               type="text"
               autoFocus
               onChange={(e) => {
                 setnewTitleUpdated(true);
                 setnewTitle(e.target.value);
+                handleProjectToUpdate({
+                  ...projectInfoForModal,
+                  title: e.target.value,
+                });
+                console.log(`Title Status: ${newTitleUpdated} New Title: ${newTitle}`);
               }}
+            />
+            <span className="form-control-container-icon_end">
+              <i className="fa-regular fa-user"></i>
+            </span>
+          </div>
+        </Form.Group>
+
+        {/* *******************************Description */}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="description">Description</Form.Label>
+          <div className="form-control-container ">
+            <textarea
+              className="form-control-container-input"
+              onChange={(e) => {
+                setnewDescriptionUpdated(true);
+                setnewDescription(e.target.value);
+                handleProjectToUpdate({ ...projectInfoForModal, description: e.target.value });
+              }}
+              type="text"
+              id="description"
+              defaultValue={newDescriptionUpdated ? newDescription : description}
             />
             <span className="form-control-container-icon_end">
               <i className="fa-regular fa-user"></i>
@@ -64,15 +114,12 @@ const ProjectModal = ({
             onChange={(e) => {
               setnewDepartmentUpdated(true);
               setnewDepartment(e.target.value);
+              console.log(` New Department: ${e.target.value}`);
+              handleProjectToUpdate({ ...projectInfoForModal, department: e.target.value });
             }}
-            required={true}
+            required
           >
-            <option
-              defaultValue={true}
-              value="null"
-            >
-              Choose Option
-            </option>
+            <option defaultValue>{newDepartmentUpdated ? newDepartment : department}</option>
             <option value="development">Development</option>
             <option value="designing">Designing</option>
             <option value="testing">Testing</option>
@@ -86,19 +133,16 @@ const ProjectModal = ({
           onChange={(e) => {
             setnewTeamUpdated(true);
             setnewTeam(e.target.value);
+            handleProjectToUpdate({ ...projectInfoForModal, team: e.target.value });
+            console.log(projectInfoForModal);
           }}
           name="Team"
           id="Team"
           placeholder="Team"
-          required={true}
+          required
           def
         >
-          <option
-            defaultValue={true}
-            value="null"
-          >
-            Choose Option
-          </option>
+          <option defaultValue="null">{newTeamUpdated ? newTeam : team}</option>
           <option value="sarah">Sarah</option>
           <option value="michelle">Michelle</option>
           <option value="kelly">Kelly</option>
@@ -114,16 +158,13 @@ const ProjectModal = ({
             onChange={(e) => {
               setnewPriorityUpdated(true);
               setnewPriority(e.target.value);
+              handleProjectToUpdate({ ...projectInfoForModal, priority: e.target.value });
+              console.log(projectInfoForModal);
             }}
-            required={true}
+            required
             className="form-control-container-input"
           >
-            <option
-              defaultValue={true}
-              value="null"
-            >
-              Choose Option
-            </option>
+            <option defaultValue="null">{newPriorityUpdated ? newPriority : priority}</option>
             <option value="high">high</option>
             <option value="medium">medium</option>
             <option value="low">low</option>
@@ -131,8 +172,6 @@ const ProjectModal = ({
         </fieldset>
 
         {/* *******************************Status */}
-
-        {/* ************************************************** */}
         <fieldset className="work-status">
           <p>Work Status</p>
           <input
@@ -143,6 +182,8 @@ const ProjectModal = ({
             onClick={(e) => {
               setnewStatusUpdated(true);
               setnewStatus(e.target.value);
+              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+              console.log(projectInfoForModal);
             }}
           />
           <Form.Label htmlFor="Active">Active </Form.Label>
@@ -153,6 +194,8 @@ const ProjectModal = ({
             onClick={(e) => {
               setnewStatusUpdated(true);
               setnewStatus(e.target.value);
+              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+              console.log(projectInfoForModal);
             }}
             value="completed"
           />
@@ -164,6 +207,8 @@ const ProjectModal = ({
             onClick={(e) => {
               setnewStatusUpdated(true);
               setnewStatus(e.target.value);
+              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+              console.log(projectInfoForModal);
             }}
             value="running"
           />
@@ -175,6 +220,8 @@ const ProjectModal = ({
             onClick={(e) => {
               setnewStatusUpdated(true);
               setnewStatus(e.target.value);
+              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+              console.log(projectInfoForModal);
             }}
             value="pending"
           />
@@ -186,6 +233,8 @@ const ProjectModal = ({
             onClick={(e) => {
               setnewStatusUpdated(true);
               setnewStatus(e.target.value);
+              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+              console.log(projectInfoForModal);
             }}
             value="not started"
           />
@@ -197,6 +246,8 @@ const ProjectModal = ({
             onClick={(e) => {
               setnewStatusUpdated(true);
               setnewStatus(e.target.value);
+              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+              console.log(projectInfoForModal);
             }}
             value="canceled"
           />
@@ -206,7 +257,10 @@ const ProjectModal = ({
         <Button
           className="close-btn"
           variant="secondary"
-          onClick={() => handleShowNow(false)}
+          onClick={() => {
+            handleShowNow(false);
+            // console.log(projectInfoForModal);
+          }}
         >
           Close
         </Button>
@@ -215,8 +269,12 @@ const ProjectModal = ({
           variant="primary"
           onClick={(e) => {
             handleEditMode();
-            handleProjectUpdate(e, projectID);
+            handleProjectUpdate(e, projectID, projectToUpdate);
             handleShowNow(false);
+            console.log(`Department Updated Status: ${newDepartmentUpdated}`);
+
+            // setProjects([...holla, projectInfoForModal]);
+            // **this is showing updates
           }}
         >
           Save Changes

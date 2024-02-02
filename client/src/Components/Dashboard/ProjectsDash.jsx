@@ -83,7 +83,7 @@ const ProjectsDash = () => {
           <h3>Completed Task</h3>
           <h3>Status</h3>
           <h3>Documents</h3>
-          <h3>Actions</h3>
+          {/* <h3>Actions</h3> */}
         </div>
         {projectsMapContent}
         {/* ****************************************************END CARD */}

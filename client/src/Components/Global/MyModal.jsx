@@ -132,11 +132,7 @@ const MyModal = ({
               defaultValue={true}
               value="null"
             >
-              {!newDepartmentUpdated
-                ? department
-                : newDepartmentUpdated
-                ? newDepartment
-                : department}
+              {!newDepartmentUpdated ? department : newDepartmentUpdated ? newDepartment : department}
             </option>
             <option value="development">Development</option>
             <option value="designing">Designing</option>
@@ -155,13 +151,7 @@ const MyModal = ({
             <Form.Control
               name="designation"
               className="form-control-container-input"
-              defaultValue={
-                !newDesignationUpdated
-                  ? designation
-                  : newDesignationUpdated
-                  ? newDesignation
-                  : designation
-              }
+              defaultValue={!newDesignationUpdated ? designation : newDesignationUpdated ? newDesignation : designation}
               type="text"
               onChange={(e) => {
                 setNewDesignation(e.target.value);
@@ -184,13 +174,7 @@ const MyModal = ({
             <Form.Control
               name="mobile"
               className="form-control-container-input"
-              defaultValue={
-                !newMobileUpdated
-                  ? mobile
-                  : newMobileUpdated
-                  ? newMobile
-                  : mobile
-              }
+              defaultValue={!newMobileUpdated ? mobile : newMobileUpdated ? newMobile : mobile}
               type="text"
               onChange={(e) => {
                 setNewMobile(e.target.value);
@@ -213,9 +197,7 @@ const MyModal = ({
             <Form.Control
               name="email"
               className="form-control-container-input"
-              defaultValue={
-                !newEmailUpdated ? email : newEmailUpdated ? newEmail : email
-              }
+              defaultValue={!newEmailUpdated ? email : newEmailUpdated ? newEmail : email}
               type="text"
               onChange={(e) => {
                 setNewEmail(e.target.value);

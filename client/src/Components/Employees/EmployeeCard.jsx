@@ -103,9 +103,7 @@ const EmployeeCard = ({
     try {
       const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
       if (!fetchPromiseResponse.ok) {
-        console.log(
-          `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
-        );
+        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
       }
       const jsonPromiseResponse = fetchPromiseResponse.json();
 
@@ -122,8 +120,7 @@ const EmployeeCard = ({
   // Image Name extraction
   function extractFilename() {
     if (image) {
-      if (image.substring(0, 12) == "C:\\fakeimage\\")
-        return image.substring(12); // modern browser
+      if (image.substring(0, 12) == "C:\\fakeimage\\") return image.substring(12); // modern browser
 
       var x;
       x = image.lastIndexOf("\\");
@@ -168,11 +165,7 @@ const EmployeeCard = ({
                 <Col lg="12">
                   {fileName ? (
                     <img
-                      src={
-                        fileName
-                          ? require(`../../../../client/src/images/${fileName}`)
-                          : null
-                      }
+                      src={fileName ? require(`../../../../client/src/images/${fileName}`) : null}
                       alt="desktop img"
                       height="35px"
                       width="35px"
@@ -202,11 +195,7 @@ const EmployeeCard = ({
                   <h3>Name: </h3>
                 </Col>
                 <Col lg="12">
-                  <p>
-                    {newFirstnameUpdated
-                      ? newFirstname + " " + newLastname
-                      : firstname + " " + lastname}{" "}
-                  </p>
+                  <p>{newFirstnameUpdated ? newFirstname + " " + newLastname : firstname + " " + lastname} </p>
                 </Col>
               </div>
             </Col>
@@ -320,11 +309,7 @@ const EmployeeCard = ({
           <div className="employee-card-desktop-form-fields">
             {fileName ? (
               <img
-                src={
-                  fileName
-                    ? require(`../../../../client/src/images/${fileName}`)
-                    : null
-                }
+                src={fileName ? require(`../../../../client/src/images/${fileName}`) : null}
                 alt="desktop img"
                 height="35px"
                 width="35px"
@@ -340,11 +325,7 @@ const EmployeeCard = ({
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            <p>
-              {newFirstnameUpdated
-                ? newFirstname + " " + newLastname
-                : firstname + " " + lastname}{" "}
-            </p>
+            <p>{newFirstnameUpdated ? newFirstname + " " + newLastname : firstname + " " + lastname} </p>
           </div>
 
           <div className="employee-card-desktop-form-fields">

@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 8080;
-// const PORT = 8080;
+
 // const db = mysql.createConnection({
 //   user: "root",
 //   host: "localhost",
@@ -113,19 +113,7 @@ app.post("/add-project", (req, res) => {
   let description = req.body.description;
 
   let sql = `INSERT into projects (title, projectID, department, priority, client, price, startDate, endDate, team, status, description) VALUES (?)`;
-  let values = [
-    title,
-    projectID,
-    department,
-    priority,
-    client,
-    price,
-    startDate,
-    endDate,
-    team,
-    status,
-    description,
-  ];
+  let values = [title, projectID, department, priority, client, price, startDate, endDate, team, status, description];
 
   db.query(sql, [values], (err) => {
     if (err) {
@@ -159,10 +147,11 @@ app.put("/update-employee", (req, res) => {
     }
   });
 });
+
 app.put("/update-project", (req, res) => {
   console.log(req.body);
 
-  let sql = `UPDATE projects SET title = '${req.body.title}', department = '${req.body.department}', priority = '${req.body.priority}', status = '${req.body.status}', team = '${req.body.team}' WHERE projectID = '${req.body.projectID}'`;
+  let sql = `UPDATE projects SET title = '${req.body.title}', department = '${req.body.department}', priority = '${req.body.priority}', status = '${req.body.status}', team = '${req.body.team}', description = '${req.body.description}' WHERE projectID = '${req.body.projectID}'`;
 
   db.query(sql, (err) => {
     if (err) {
@@ -171,7 +160,7 @@ app.put("/update-project", (req, res) => {
       res.json({
         status: "success",
         message: "Project updated successfully.",
-        employee: req.body,
+        project: req.body,
       });
     }
   });

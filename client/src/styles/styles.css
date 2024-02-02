@@ -12687,15 +12687,15 @@ select {
 .my-modal {
   width: 100vw;
   height: 100vh;
-  left: 0;
-  top: 0;
-  background-color: black;
-  position: absolute;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.0784313725);
   display: flex;
   padding: 1rem 0;
   z-index: 100;
   justify-content: center;
   align-items: center;
+  top: 0;
+  left: 0;
 }
 .my-modal-form {
   max-width: 800px;
@@ -12896,6 +12896,7 @@ select {
   background-color: white;
   padding: 4rem 0.8rem;
   border-radius: 0.8rem;
+  position: relative;
 }
 .project-col {
   padding: 0;
@@ -12913,6 +12914,12 @@ select {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+.project-card_modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
 }
 .project-card:hover {
   cursor: pointer;
@@ -12939,7 +12946,7 @@ select {
   font-size: 0.73rem;
   font-weight: 500;
   letter-spacing: 0.03rem;
-  margin-top: 2rem;
+  margin-top: 4rem;
 }
 .project-card-header-status_active {
   background-color: rgb(50, 103, 226);
@@ -13033,12 +13040,23 @@ select {
   cursor: pointer;
 }
 .project .options-icon {
-  visibility: visible;
-  opacity: 1;
+  visibility: hidden;
+  opacity: 0;
   position: absolute;
   top: 0;
   right: 0;
-  transition: all ease-in-out 350ms;
+  transition: opacity ease-in-out 400ms;
+  padding: 0.6rem 1.1rem;
+}
+.project .options-icon_visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity ease-in-out 400ms;
+}
+.project .options-icon:hover {
+  background-color: rgb(241, 241, 241);
+  border-radius: 10rem;
+  padding: 0.6rem 1.1rem;
 }
 .project .options-btns {
   display: flex;

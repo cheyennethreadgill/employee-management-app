@@ -1,5 +1,6 @@
 import ProjectModal from "../Global/ProjectModal";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const DashSingleProject = ({
   employeeTeam,
@@ -53,9 +54,7 @@ const DashSingleProject = ({
     try {
       const fetchPromiseResponse = await fetch(`${URL}update-project`, options);
       if (!fetchPromiseResponse.ok) {
-        console.log(
-          `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
-        );
+        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
       }
       const jsonPromiseResponse = fetchPromiseResponse.json();
 
@@ -70,7 +69,10 @@ const DashSingleProject = ({
   }
 
   return (
-    <div className="dash-projects-card-project">
+    <Link
+      to="/all-projects"
+      className="dash-projects-card-project"
+    >
       <div className="dash-projects-card-project-entry">
         <div className="overflow-hidden">
           <p> {newTitleUpdated ? newTitle : title} </p>
@@ -129,7 +131,7 @@ const DashSingleProject = ({
         <div className="overflow-hidden">
           <p> docs </p>
         </div>
-        <div className="form-btns employee-card-desktop-form-fields overflow-hidden">
+        {/* <div className="form-btns employee-card-desktop-form-fields overflow-hidden">
           <i
             onClick={(e) => {
               handleBtnValue(projectID);
@@ -148,7 +150,7 @@ const DashSingleProject = ({
             type="submit"
             className="fa-regular fa-trash-can delete-btn"
           ></i>
-        </div>
+        </div> */}
       </div>
       <hr />
 
@@ -186,7 +188,7 @@ const DashSingleProject = ({
           handleProjectUpdate={handleProjectUpdate}
         />
       )}
-    </div>
+    </Link>
   );
 };
 

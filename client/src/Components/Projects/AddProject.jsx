@@ -16,6 +16,7 @@ const AddProject = () => {
   const [description, setDescription] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
+
   // const URL = "http://localhost:8080/";
   const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "add-project";
@@ -45,9 +46,7 @@ const AddProject = () => {
     try {
       const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
       if (!fetchPromiseResponse.ok) {
-        console.log(
-          `Something went wrong with fetch from server ${fetchPromiseResponse.status}`
-        );
+        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
       }
       const jsonPromiseResponse = fetchPromiseResponse.json();
 
@@ -138,9 +137,7 @@ const AddProject = () => {
                 placeholder="Project title"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please enter valid title.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter valid title.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -148,9 +145,7 @@ const AddProject = () => {
               lg="6"
             >
               <fieldset>
-                <Form.Label htmlFor="select department">
-                  Select Department
-                </Form.Label>
+                <Form.Label htmlFor="select department">Select Department</Form.Label>
                 <select
                   name="select department"
                   id="select department"
@@ -173,9 +168,7 @@ const AddProject = () => {
                 </select>
               </fieldset>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please select department
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please select department</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -205,9 +198,7 @@ const AddProject = () => {
                 </select>
               </fieldset>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please select priority.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please select priority.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -223,9 +214,7 @@ const AddProject = () => {
                 required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please enter valid name.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter valid name.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -241,9 +230,7 @@ const AddProject = () => {
                 required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please enter a price.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a price.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -259,9 +246,7 @@ const AddProject = () => {
                 required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please enter a start date.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a start date.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -277,9 +262,7 @@ const AddProject = () => {
                 required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please enter an end date.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter an end date.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -308,9 +291,7 @@ const AddProject = () => {
                 <option value="kelly">kelly</option>
               </select>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please enter a team
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a team</Form.Control.Feedback>
             </Form.Group>
 
             {/* *********WORK STATUS RADIOS */}
@@ -382,9 +363,7 @@ const AddProject = () => {
                 <Form.Label htmlFor="">canceled</Form.Label>
               </fieldset>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please select a work status.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please select a work status.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -400,9 +379,7 @@ const AddProject = () => {
                 id="description"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Please enter a description
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter a description</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -435,9 +412,7 @@ const AddProject = () => {
               </Button>
             </div>
 
-            {formSubmitted ? (
-              <p className=" fw-medium mt-2">Project Added Successfully!</p>
-            ) : null}
+            {formSubmitted ? <p className=" fw-medium mt-2">Project Added Successfully!</p> : null}
           </Row>
         </Form>
       </Container>
