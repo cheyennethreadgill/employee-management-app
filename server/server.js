@@ -189,7 +189,7 @@ app.delete("/delete-project/:id", (req, res) => {
       throw err;
     }
   });
-  res.json("Employee deleted.");
+  res.json("Project deleted.");
 });
 
 app.listen(PORT, () => {
