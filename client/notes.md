@@ -36,10 +36,11 @@
  for each input change we are getting everything from the project to update (whic is empty on load) and setting new field
     we need to populate the project info for modal when we handle project to updates
 
-we need to update the projects state when the update btn is clicked so the changes show immediately and not only on refresh
+UPDATE PROJECT CARD STATE
+    we need to update the projects state when the update btn is clicked so the changes show immediately and not only on refresh
 
-find the project id that matches projectto update id then set projects with the project to update
- 
+    find the project id that matches projectto update id then set projects with the project to update
+    
  
  
  

@@ -12219,7 +12219,10 @@ fieldset {
 select {
   background: none;
   width: 100%;
-  border-radius: 0.4rem;
+}
+
+textarea {
+  width: 100%;
 }
 
 .form-control::-moz-placeholder {
@@ -12237,9 +12240,11 @@ select {
 }
 
 .form-control,
-select {
+select,
+textarea {
   padding: 0.6rem 2rem;
   border: solid rgba(128, 128, 128, 0.39) 1px;
+  border-radius: 0.4rem;
 }
 
 .form-control-container {
@@ -12885,6 +12890,9 @@ select {
   }
 }
 
+.all-projects {
+  flex: 1;
+}
 .all-projects-row {
   gap: 1.1rem;
   padding: 0 1.5rem;
@@ -12899,6 +12907,7 @@ select {
   position: relative;
 }
 .project-col {
+  flex: 0 1 340px;
   padding: 0;
 }
 .project-header-main {

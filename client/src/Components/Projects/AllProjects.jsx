@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Nav from "../Global/Nav";
 import ProjectCard from "./ProjectCard";
 import Container from "react-bootstrap/esm/Container";
 import { Row, Col } from "react-bootstrap";
@@ -11,7 +10,6 @@ const AllProjects = () => {
   const URL = "https://employee-management-app-rho.vercel.app/";
   const PATH = "projects";
   const [projects, setProjects] = useState([]);
-  console.log(projects);
 
   // get Project
   useEffect(() => {
@@ -24,39 +22,37 @@ const AllProjects = () => {
   const handleShowNow = () => setShowNow(!showNow);
   const [editMode, setEditMode] = useState(false);
   const handleEditMode = () => setEditMode(!editMode);
-  const [updated, setUpdated] = useState(false);
 
   const [projectInfoForModal, setprojectInfoForModal] = useState({});
-  // var projectInfoForModal = {};
 
   const handleProjectSet = (values) => {
     setprojectInfoForModal(values);
   };
 
-  //   let promise = new Promise((resolve, reject) => {
-  //     const finalInfo = handleProjectSet();
-  //     console.log(finalInfo);
-  //     resolve(finalInfo);
-  //     reject("ERROR");
-  //   });
+  const handleProjectStateUpdateDelete = (id) => {
+    setProjects(
+      projects.filter((project) => {
+        return project.projectID === id;
+      })
+    );
+  };
 
-  //   async function getProjectInfo() {
-  //     try {
-  //       const infoResponse = await promise();
-  //       console.log(infoResponse);
-  //     } catch {
-  //       (err) => {
-  //         console.log(err);
-  //       };
-  //     }
-  //   }
-
-  //   UPDATE PROJECT
+  // UPDATE PROJECT STATE (UI)
+  const handleProjectStateUpdate = (id, projectToUpdate) => {
+    setProjects(
+      projects.map((project) => {
+        if (project.projectID === id) {
+          return { ...projectToUpdate };
+        } else {
+          return { ...project };
+        }
+      })
+    );
+  };
+  //   UPDATE PROJECT (DB)
   async function handleProjectUpdate(e, id, projectToUpdate) {
     e.preventDefault();
-    // handleProjectToUpdate(values);
-    // **this isnt showing updated
-    // console.log(projectInfoForModal);
+    handleProjectStateUpdate(id, projectToUpdate);
 
     // Post options
     const options = {
@@ -154,6 +150,7 @@ const AllProjects = () => {
                   <ProjectCard
                     URL={URL}
                     handleProjectSet={handleProjectSet}
+                    onDelete={handleProjectStateUpdateDelete}
                     showNow={showNow}
                     handleShowNow={handleShowNow}
                     editMode={editMode}
@@ -216,59 +213,8 @@ const AllProjects = () => {
           team={projectInfoForModal.team}
           status={projectInfoForModal.status}
           description={projectInfoForModal.description}
-          // newTitle={projectInfoForModal.newTitle}
-          // setnewTitle={projectInfoForModal.setnewTitle}
-          // newDepartment={projectInfoForModal.newDepartment}
-          // setnewDepartment={projectInfoForModal.setnewDepartment}
-          // newPriority={projectInfoForModal.newPriority}
-          // setnewPriority={projectInfoForModal.setnewPriority}
-          // newStatus={projectInfoForModal.newStatus}
-          // setnewStatus={projectInfoForModal.setnewStatus}
-          // newTeam={projectInfoForModal.newTeam}
-          // setnewTeam={projectInfoForModal.setnewTeam}
-          // newTitleUpdated={projectInfoForModal.newTitleUpdated}
-          // setnewTitleUpdated={projectInfoForModal.setnewTitleUpdated}
-          // newDepartmentUpdated={projectInfoForModal.newDepartmentUpdated}
-          // setnewDepartmentUpdated={projectInfoForModal.setnewDepartmentUpdated}
-          // newPriorityUpdated={projectInfoForModal.newPriorityUpdated}
-          // setnewPriorityUpdated={projectInfoForModal.setnewPriorityUpdated}
-          // newStatusUpdated={projectInfoForModal.newStatusUpdated}
-          // setnewStatusUpdated={projectInfoForModal.setnewStatusUpdated}
-          // newTeamUpdated={projectInfoForModal.newTeamUpdated}
-          // setnewTeamUpdated={projectInfoForModal.setnewTeamUpdated}
           handleProjectUpdate={handleProjectUpdate}
         />
-        // <ProjectModal
-        //   handleShowNow={handleShowNow}
-        //   handleEditMode={handleEditMode}
-        //   projectID={projectID}
-        //   title={title}
-        //   department={department}
-        //   priority={priority}
-        //   team={team}
-        //   status={status}
-        //   newTitle={newTitle}
-        //   setnewTitle={setnewTitle}
-        //   newDepartment={newDepartment}
-        //   setnewDepartment={setnewDepartment}
-        //   newPriority={newPriority}
-        //   setnewPriority={setnewPriority}
-        //   newStatus={newStatus}
-        //   setnewStatus={setnewStatus}
-        //   newTeam={newTeam}
-        //   setnewTeam={setnewTeam}
-        //   newTitleUpdated={newTitleUpdated}
-        //   setnewTitleUpdated={setnewTitleUpdated}
-        //   newDepartmentUpdated={newDepartmentUpdated}
-        //   setnewDepartmentUpdated={setnewDepartmentUpdated}
-        //   newPriorityUpdated={newPriorityUpdated}
-        //   setnewPriorityUpdated={setnewPriorityUpdated}
-        //   newStatusUpdated={newStatusUpdated}
-        //   setnewStatusUpdated={setnewStatusUpdated}
-        //   newTeamUpdated={newTeamUpdated}
-        //   setnewTeamUpdated={setnewTeamUpdated}
-        //   handleProjectUpdate={handleProjectUpdate}
-        // />
       )}
     </section>
   );

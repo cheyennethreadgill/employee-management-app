@@ -1,5 +1,5 @@
 import { Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const ProjectModal = ({
   projectInfoForModal,
@@ -12,47 +12,45 @@ const ProjectModal = ({
   team,
   status,
   description,
-  projects,
-  setProjects,
-  // newTitle,
-  // setnewTitle,
-  // newDepartment,
-  // setnewDepartment,
-  // newPriority,
-  // setnewPriority,
-  // newStatus,
-  // setnewStatus,
-  // newTeam,
-  // setnewTeam,
-  // newTitleUpdated,
-  // setnewTitleUpdated,
-  // newDepartmentUpdated,
-  // setnewDepartmentUpdated,
-  // newPriorityUpdated,
-  // setnewPriorityUpdated,
-  // newStatusUpdated,
-  // setnewStatusUpdated,
-  // newTeamUpdated,
-  // setnewTeamUpdated,
   handleProjectUpdate,
 }) => {
-  // UpdatedInputs
-  const [newTitleUpdated, setnewTitleUpdated] = useState(false);
-  const [newDepartmentUpdated, setnewDepartmentUpdated] = useState(false);
-  const [newPriorityUpdated, setnewPriorityUpdated] = useState(false);
-  const [newStatusUpdated, setnewStatusUpdated] = useState(false);
-  const [newTeamUpdated, setnewTeamUpdated] = useState(false);
-  const [newDescriptionUpdated, setnewDescriptionUpdated] = useState(false);
+  // RADIOS
+  const workStatusOptions = ["Active", "completed", "running", "pending", "not started", "canceled"];
+  const priorityOptions = ["High", "Medium", "Low"];
+  const teamOptions = ["Sarah", "Michelle", "Kelly"];
+  const departmentOptions = ["development", "designing", "testing", "hr"];
+
+  // Updated Inputs
+  const [formUpdatedStatus, setFormUpdatedStatus] = useState({
+    newTitleUpdated: false,
+    newDepartmentUpdated: false,
+    newPriorityUpdated: false,
+    newStatusUpdated: false,
+    newTeamUpdated: false,
+    newDescriptionUpdated: false,
+  });
+
+  const handleFormUpdatedStatus = (key, value) => {
+    setFormUpdatedStatus({ ...formUpdatedStatus, [key]: value });
+  };
 
   // SET NEW FORM
-  const [newTitle, setnewTitle] = useState("");
-  const [newDepartment, setnewDepartment] = useState("");
-  const [newPriority, setnewPriority] = useState("");
-  const [newStatus, setnewStatus] = useState("");
-  const [newTeam, setnewTeam] = useState("");
-  const [newDescription, setnewDescription] = useState("");
+  const [formData, setFormData] = useState({
+    newTitle: "",
+    newDepartment: "",
+    newPriority: "",
+    newStatus: "",
+    newTeam: "",
+    newDescription: "",
+  });
 
-  const [projectToUpdate, setProjectToUpdate] = useState({ projectInfoForModal });
+  const handleFormData = (key, value) => {
+    setFormData({ ...formData, [key]: value });
+  };
+
+  // UPDATED PROJECT INFO
+  const [projectToUpdate, setProjectToUpdate] = useState(projectInfoForModal);
+
   const handleProjectToUpdate = (values) => setProjectToUpdate(values);
 
   return (
@@ -64,12 +62,13 @@ const ProjectModal = ({
           <div className="form-control-container ">
             <Form.Control
               className="form-control-container-input"
-              defaultValue={newTitleUpdated ? newTitle : title}
+              defaultValue={formUpdatedStatus.newTitleUpdated ? formData.newTitle : title}
               type="text"
               autoFocus
               onChange={(e) => {
-                setnewTitleUpdated(true);
-                setnewTitle(e.target.value);
+                handleFormUpdatedStatus("newTitleUpdated", true);
+                handleFormData("newTitle", e.target.value);
+                console.log(formUpdatedStatus.newTitleUpdated);
                 handleProjectToUpdate({
                   ...projectInfoForModal,
                   title: e.target.value,
@@ -89,13 +88,14 @@ const ProjectModal = ({
             <textarea
               className="form-control-container-input"
               onChange={(e) => {
-                setnewDescriptionUpdated(true);
-                setnewDescription(e.target.value);
+                handleFormUpdatedStatus("newDescriptionUpdated", true);
+                handleFormData("newDescription", e.target.value);
+                console.log(formData.newDescription);
                 handleProjectToUpdate({ ...projectInfoForModal, description: e.target.value });
               }}
               type="text"
               id="description"
-              defaultValue={newDescriptionUpdated ? newDescription : description}
+              defaultValue={formUpdatedStatus.newDescriptionUpdated ? formData.newDescription : description}
             />
             <span className="form-control-container-icon_end">
               <i className="fa-regular fa-user"></i>
@@ -111,18 +111,24 @@ const ProjectModal = ({
             id="select department"
             placeholder="Select Department"
             onChange={(e) => {
-              setnewDepartmentUpdated(true);
-              setnewDepartment(e.target.value);
-              console.log(` New Department: ${e.target.value}`);
+              handleFormUpdatedStatus("newDepartmentUpdated", true);
+              handleFormData("newDepartment", e.target.value);
+              console.log(formData.newDepartment);
               handleProjectToUpdate({ ...projectInfoForModal, department: e.target.value });
             }}
             required
-            defaultValue={newDepartmentUpdated ? newDepartment : department}
+            defaultValue={formUpdatedStatus.newDepartmentUpdated ? formData.newDepartment : department}
           >
-            <option value="development">Development</option>
-            <option value="designing">Designing</option>
-            <option value="testing">Testing</option>
-            <option value="hr">HR</option>
+            {departmentOptions.map((option) => {
+              return (
+                <option
+                  key={option}
+                  value={option}
+                >
+                  {option}
+                </option>
+              );
+            })}
           </select>
         </fieldset>
 
@@ -130,10 +136,10 @@ const ProjectModal = ({
         <Form.Label htmlFor="Team">Team</Form.Label>
         <select
           onChange={(e) => {
-            setnewTeamUpdated(true);
-            setnewTeam(e.target.value);
+            handleFormUpdatedStatus("newTeamUpdated", true);
+            handleFormData("newTeam", e.target.value);
+            console.log(formData.newTeam);
             handleProjectToUpdate({ ...projectInfoForModal, team: e.target.value });
-            console.log(projectInfoForModal);
           }}
           name="Team"
           id="Team"
@@ -141,10 +147,17 @@ const ProjectModal = ({
           required
           defaultValue="null"
         >
-          {newTeamUpdated ? newTeam : team}
-          <option value="sarah">Sarah</option>
-          <option value="michelle">Michelle</option>
-          <option value="kelly">Kelly</option>
+          {formUpdatedStatus.newTeamUpdated ? formData.newTeam : team}
+          {teamOptions.map((option) => {
+            return (
+              <option
+                key={option}
+                value={option}
+              >
+                {option}
+              </option>
+            );
+          })}
         </select>
 
         {/* *******************************Priority */}
@@ -155,102 +168,50 @@ const ProjectModal = ({
             id="priority"
             placeholder="priority"
             onChange={(e) => {
-              setnewPriorityUpdated(true);
-              setnewPriority(e.target.value);
+              handleFormUpdatedStatus("newPriorityUpdated", true);
+              handleFormData("newPriority", e.target.value);
+              console.log(formData.newPriority);
               handleProjectToUpdate({ ...projectInfoForModal, priority: e.target.value });
-              console.log(projectInfoForModal);
             }}
             required
             className="form-control-container-input"
-            defaultValue={newPriorityUpdated ? newPriority : priority}
+            defaultValue={formUpdatedStatus.newPriorityUpdated ? formData.newPriority : priority}
           >
-            <option value="high">high</option>
-            <option value="medium">medium</option>
-            <option value="low">low</option>
+            {priorityOptions.map((option) => {
+              return (
+                <option
+                  key={option}
+                  value={option}
+                >
+                  {option}
+                </option>
+              );
+            })}
           </select>
         </fieldset>
 
-        {/* *******************************Status */}
+        {/* *******************************WORK Status */}
         <fieldset className="work-status">
           <p>Work Status</p>
-          <input
-            className="radio"
-            type="radio"
-            name="status"
-            value="active"
-            onClick={(e) => {
-              setnewStatusUpdated(true);
-              setnewStatus(e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
-              console.log(projectInfoForModal);
-            }}
-          />
-          <Form.Label htmlFor="Active">Active </Form.Label>
-          <input
-            className="radio"
-            type="radio"
-            name="status"
-            onClick={(e) => {
-              setnewStatusUpdated(true);
-              setnewStatus(e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
-              console.log(projectInfoForModal);
-            }}
-            value="completed"
-          />
-          <Form.Label htmlFor="completed">completed</Form.Label>
-          <input
-            className="radio"
-            type="radio"
-            name="status"
-            onClick={(e) => {
-              setnewStatusUpdated(true);
-              setnewStatus(e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
-              console.log(projectInfoForModal);
-            }}
-            value="running"
-          />
-          <Form.Label htmlFor="">running</Form.Label>
-          <input
-            className="radio"
-            type="radio"
-            name="status"
-            onClick={(e) => {
-              setnewStatusUpdated(true);
-              setnewStatus(e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
-              console.log(projectInfoForModal);
-            }}
-            value="pending"
-          />
-          <Form.Label htmlFor="">pending</Form.Label>
-          <input
-            className="radio"
-            type="radio"
-            name="status"
-            onClick={(e) => {
-              setnewStatusUpdated(true);
-              setnewStatus(e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
-              console.log(projectInfoForModal);
-            }}
-            value="not started"
-          />
-          <Form.Label htmlFor="">not started</Form.Label>
-          <input
-            className="radio"
-            type="radio"
-            name="status"
-            onClick={(e) => {
-              setnewStatusUpdated(true);
-              setnewStatus(e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
-              console.log(projectInfoForModal);
-            }}
-            value="canceled"
-          />
-          <Form.Label htmlFor="">canceled</Form.Label>
+          {workStatusOptions.map((option) => {
+            return (
+              <React.Fragment key={option}>
+                <input
+                  className="radio"
+                  type="radio"
+                  name="status"
+                  value={option}
+                  onChange={(e) => {
+                    handleFormUpdatedStatus("newStatusUpdated", true);
+                    handleFormData("newStatus", e.target.value);
+                    console.log(formData.newStatus);
+                    handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+                  }}
+                />
+                <Form.Label htmlFor={option}>{option} </Form.Label>
+              </React.Fragment>
+            );
+          })}
         </fieldset>
 
         <Button
@@ -258,7 +219,6 @@ const ProjectModal = ({
           variant="secondary"
           onClick={() => {
             handleShowNow(false);
-            // console.log(projectInfoForModal);
           }}
         >
           Close
@@ -270,10 +230,6 @@ const ProjectModal = ({
             handleEditMode();
             handleProjectUpdate(e, projectID, projectToUpdate);
             handleShowNow(false);
-            console.log(`Department Updated Status: ${newDepartmentUpdated}`);
-
-            // setProjects([...holla, projectInfoForModal]);
-            // **this is showing updates
           }}
         >
           Save Changes

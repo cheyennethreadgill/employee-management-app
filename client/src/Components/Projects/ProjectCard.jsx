@@ -47,25 +47,13 @@ const ProjectCard = ({
   newTeamUpdated,
   handleProjectUpdate,
   deleteProjectFromDB,
+
+  onDelete,
 }) => {
   const PATH = "update-project";
   const [btnValue, setBtnValue] = useState(0);
 
   const handleBtnValue = (id) => setBtnValue(id);
-
-  // // UpdatedInputs
-  // const [newTitleUpdated, setnewTitleUpdated] = useState(false);
-  // const [newDepartmentUpdated, setnewDepartmentUpdated] = useState(false);
-  // const [newPriorityUpdated, setnewPriorityUpdated] = useState(false);
-  // const [newStatusUpdated, setnewStatusUpdated] = useState(false);
-  // const [newTeamUpdated, setnewTeamUpdated] = useState(false);
-
-  // // SET NEW FORM
-  // const [newTitle, setnewTitle] = useState("");
-  // const [newDepartment, setnewDepartment] = useState("");
-  // const [newPriority, setnewPriority] = useState("");
-  // const [newStatus, setnewStatus] = useState("");
-  // const [newTeam, setnewTeam] = useState("");
 
   // UI State
   const [optionsIconDisplay, setOptionsIconDisplay] = useState(false);
@@ -155,6 +143,7 @@ const ProjectCard = ({
               className="options-btns-link"
               onClick={() => {
                 deleteProjectFromDB(projectID);
+                onDelete(projectID);
               }}
             >
               <i className="fa-regular fa-trash-can fs-5"></i>
@@ -196,31 +185,32 @@ const ProjectCard = ({
         </Col>
         <Col lg="5">
           <p className="info calendar">
-            <i className="fa-regular fa-calendar-days"></i> {newStartDate ? newStartDate : "None"}{" "}
+            <i className="fa-regular fa-calendar-days"></i> {newStartDate ? newStartDate : "None"}
           </p>
           <p className="info">{newTeamUpdated ? newTeam : team ? team : "None"}</p>
+
           <div className="priority">
             <span className="priority-icon">
-              {priority === "high" ? (
+              {priority == "High" ? (
                 <div className="priority-icon-high">
                   <i className="fa-solid fa-angle-up "></i>
-                  {priority ? priority : "None"}{" "}
+                  {newPriorityUpdated ? newPriority : priority ? priority : "None"}
                 </div>
-              ) : priority === "medium" ? (
+              ) : priority == "Medium" ? (
                 <div className="priority-icon-medium">
                   <i className="fa-solid fa-greater-than "></i>
-                  {priority ? priority : "None"}{" "}
+                  {newPriorityUpdated ? newPriority : priority ? priority : "None"}
                 </div>
               ) : (
                 <div className="priority-icon-low">
                   <i className="fa-solid fa-angle-down "></i>
-                  {priority ? priority : "None"}{" "}
+                  {newPriorityUpdated ? newPriority : priority ? priority : "None"}
                 </div>
-              )}{" "}
-            </span>{" "}
+              )}
+            </span>
           </div>
           <p className="info calendar">
-            <i className="fa-regular fa-calendar-days"></i> {newEndDate ? newEndDate : "None"}{" "}
+            <i className="fa-regular fa-calendar-days"></i> {newEndDate ? newEndDate : "None"}
           </p>
           <p className="info">Bug</p>
           <p className="info">{newDepartmentUpdated ? newDepartment : department ? department : "None"}</p>
@@ -264,45 +254,10 @@ const ProjectCard = ({
                   ? "progress-bar-inner_canceled progress-bar-inner-bar"
                   : null
               }
-            ></span>{" "}
+            ></span>
           </span>
         </div>
       </div>
-
-      {/* ***************************************************SHOW MODAL */}
-      {/* {!showNow ? null : (
-        <ProjectModal
-          handleShowNow={handleShowNow}
-          handleEditMode={handleEditMode}
-          projectID={projectID}
-          title={title}
-          department={department}
-          priority={priority}
-          team={team}
-          status={status}
-          newTitle={newTitle}
-          setnewTitle={setnewTitle}
-          newDepartment={newDepartment}
-          setnewDepartment={setnewDepartment}
-          newPriority={newPriority}
-          setnewPriority={setnewPriority}
-          newStatus={newStatus}
-          setnewStatus={setnewStatus}
-          newTeam={newTeam}
-          setnewTeam={setnewTeam}
-          newTitleUpdated={newTitleUpdated}
-          setnewTitleUpdated={setnewTitleUpdated}
-          newDepartmentUpdated={newDepartmentUpdated}
-          setnewDepartmentUpdated={setnewDepartmentUpdated}
-          newPriorityUpdated={newPriorityUpdated}
-          setnewPriorityUpdated={setnewPriorityUpdated}
-          newStatusUpdated={newStatusUpdated}
-          setnewStatusUpdated={setnewStatusUpdated}
-          newTeamUpdated={newTeamUpdated}
-          setnewTeamUpdated={setnewTeamUpdated}
-          handleProjectUpdate={handleProjectUpdate}
-        />
-      )} */}
     </section>
   );
 };

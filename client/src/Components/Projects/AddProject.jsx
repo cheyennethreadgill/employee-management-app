@@ -278,7 +278,6 @@ const AddProject = () => {
                 id="Team"
                 placeholder="Team"
                 required
-                def
               >
                 <option
                   defaultValue={true}
