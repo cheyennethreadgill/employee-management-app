@@ -2,6 +2,10 @@ import { Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
 
 const ProjectModal = ({
+  workStatusOptions,
+  priorityOptions,
+  teamOptions,
+  departmentOptions,
   projectInfoForModal,
   handleEditMode,
   handleShowNow,
@@ -14,13 +18,7 @@ const ProjectModal = ({
   description,
   handleProjectUpdate,
 }) => {
-  // RADIOS
-  const workStatusOptions = ["Active", "completed", "running", "pending", "not started", "canceled"];
-  const priorityOptions = ["High", "Medium", "Low"];
-  const teamOptions = ["Sarah", "Michelle", "Kelly"];
-  const departmentOptions = ["development", "designing", "testing", "hr"];
-
-  // Updated Inputs
+  // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
     newTitleUpdated: false,
     newDepartmentUpdated: false,
@@ -30,11 +28,12 @@ const ProjectModal = ({
     newDescriptionUpdated: false,
   });
 
+  // Handle Form Update Status
   const handleFormUpdatedStatus = (key, value) => {
     setFormUpdatedStatus({ ...formUpdatedStatus, [key]: value });
   };
 
-  // SET NEW FORM
+  // Set Form Status
   const [formData, setFormData] = useState({
     newTitle: "",
     newDepartment: "",
@@ -98,7 +97,7 @@ const ProjectModal = ({
               defaultValue={formUpdatedStatus.newDescriptionUpdated ? formData.newDescription : description}
             />
             <span className="form-control-container-icon_end">
-              <i className="fa-regular fa-user"></i>
+              <i className="fa-regular fa-comment"></i>
             </span>
           </div>
         </Form.Group>

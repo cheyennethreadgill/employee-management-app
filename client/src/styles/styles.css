@@ -12991,6 +12991,10 @@ textarea {
 .project-card .priority-icon-low {
   color: rgb(113, 226, 117);
 }
+.project .description {
+  font-size: 1.03rem;
+  font-weight: 800;
+}
 .project .progress-container {
   margin: 1rem 0 0 0;
 }

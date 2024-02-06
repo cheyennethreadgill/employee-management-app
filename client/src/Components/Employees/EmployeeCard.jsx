@@ -1,11 +1,12 @@
-import { Container, Button, Row, Form, Col } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
-import MyModal from "../Global/MyModal";
+import { Row, Form, Col } from "react-bootstrap";
+import React, { useState } from "react";
 
 const EmployeeCard = ({
+  handleEditMode,
+  handleShowNow,
+  handleEmployeeSet,
   handleShow,
   onUpdateEmployeeState,
-  onDelete,
   URL,
   employees,
   employeeid,
@@ -18,42 +19,35 @@ const EmployeeCard = ({
   email,
   date,
   image,
+  newEmployeeid,
+  newFirstname,
+  newLastname,
+  newDepartment,
+  newDesignation,
+  newMobile,
+  newEmail,
+  newDegree,
+  newImage,
+  newEmployeeidUpdated,
+  newFirstnameUpdated,
+  newLastnameUpdated,
+  newDepartmentUpdated,
+  newDesignationUpdated,
+  newMobileUpdated,
+  newEmailUpdated,
+  newDegreeUpdated,
+  newImageUpdated,
+  handleEmployeeUpdate,
+  onDelete,
 }) => {
-  const PATH = "update-employee";
-  const IMG_URL = "../../../../client/src/images/";
   // EDIT MODE
-  const [editMode, setEditMode] = useState(false);
+
   const [btnValue, setBtnValue] = useState(0);
   const [employee, setEmployee] = useState([]);
   const [foundEmployee, setFoundEmployee] = useState([]);
-  const [showNow, setShowNow] = useState(false);
 
-  const handleShowNow = () => setShowNow(!showNow);
-  const handleEditMode = () => setEditMode(!editMode);
   // SHOW UPDATE MODAL
   const handleBtnValue = (id) => setBtnValue(id);
-
-  // SET UPDATED INPUTS
-  const [newDepartmentUpdated, setNewDepartmentUpdated] = useState(false);
-  const [newDesignationUpdated, setNewDesignationUpdated] = useState(false);
-  const [newEmailUpdated, setNewEmailUpdated] = useState(false);
-  const [newFirstnameUpdated, setNewFirstnameUpdated] = useState(false);
-  const [newLastnameUpdated, setNewLastnameUpdated] = useState(false);
-  const [newMobileUpdated, setNewMobileUpdated] = useState(false);
-  const [newDegreeUpdated, setNewDegreeUpdated] = useState(false);
-  const [newImageUpdated, setNewImageUpdated] = useState(false);
-
-  const [combinedName, setCombinedName] = useState("");
-  let splitName = combinedName.split(" ");
-  // SET NEW FORM
-  const [newDepartment, setNewDepartment] = useState("");
-  const [newDegree, setNewDegree] = useState("");
-  const [newDesignation, setNewDesignation] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newFirstname, setNewFirstname] = useState("");
-  const [newLastname, setNewLastname] = useState("");
-  const [newMobile, setNewMobile] = useState(0);
-  const [newImage, setNewImage] = useState("");
 
   // SEARCH EMPLOYEE
   const handleEmployeeSearch = (id) => {
@@ -79,44 +73,6 @@ const EmployeeCard = ({
     setFoundEmployee(found);
   };
 
-  // UPDATE EMPLOYEE
-  async function handleEmployeeUpdate(e, id) {
-    e.preventDefault();
-
-    // Post options
-    const options = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        employeeid: employeeid,
-        fname: `${newFirstnameUpdated ? newFirstname : firstname}`,
-        lname: `${newLastnameUpdated ? newLastname : lastname}`,
-        degree: `${newDegreeUpdated ? newDegree : degree}`,
-        mobile: `${newMobileUpdated ? newMobile : mobile}`,
-        designation: `${newDesignationUpdated ? newDesignation : designation}`,
-        department: `${newDepartmentUpdated ? newDepartment : department}`,
-        email: `${newEmailUpdated ? newEmail : email}`,
-        image: `${newImageUpdated ? newImage : image}`,
-      }),
-    };
-
-    try {
-      const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
-      if (!fetchPromiseResponse.ok) {
-        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
-      }
-      const jsonPromiseResponse = fetchPromiseResponse.json();
-
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
-    } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
-    }
-  }
-
   // Image Name extraction
   function extractFilename() {
     if (image) {
@@ -126,7 +82,6 @@ const EmployeeCard = ({
       x = image.lastIndexOf("\\");
       if (x >= 0) return image.substring(x + 1); // Windows-based image
     } else {
-      console.log("no path found");
       return;
     }
   }
@@ -199,6 +154,19 @@ const EmployeeCard = ({
                 </Col>
               </div>
             </Col>
+
+            <hr className="d-block d-lg-none" />
+            <Col lg="1">
+              <div className="employee-card-mobile-fields">
+                <Col lg="12">
+                  <h3>Degree: </h3>
+                </Col>
+                <Col lg="12">
+                  <p>{newDegreeUpdated ? newDegree : degree} </p>
+                </Col>
+              </div>
+            </Col>
+
             <hr className="d-block d-lg-none" />
             <Col lg="1">
               <div className="employee-card-mobile-fields">
@@ -214,7 +182,7 @@ const EmployeeCard = ({
             <Col lg="1">
               <div className="employee-card-mobile-fields">
                 <Col lg="12">
-                  <h3>Role</h3>
+                  <h3>Designation</h3>
                 </Col>
                 <Col lg="12">
                   <p>{newDesignationUpdated ? newDesignation : designation}</p>
@@ -267,10 +235,39 @@ const EmployeeCard = ({
                   <div className="form-btns">
                     <i
                       onClick={(e) => {
-                        // handleEmployeeSearch(employeeid);
-                        handleShow();
                         handleBtnValue(employeeid);
-                        handleEditMode(employeeid);
+                        handleEditMode();
+                        handleShowNow(true);
+                        handleEmployeeSet({
+                          employeeid,
+                          firstname,
+                          lastname,
+                          degree,
+                          department,
+                          designation,
+                          mobile,
+                          email,
+                          date,
+                          image,
+                          newEmployeeid,
+                          newFirstname,
+                          newLastname,
+                          newDepartment,
+                          newDesignation,
+                          newMobile,
+                          newEmail,
+                          newDegree,
+                          newImage,
+                          newEmployeeidUpdated,
+                          newFirstnameUpdated,
+                          newLastnameUpdated,
+                          newDepartmentUpdated,
+                          newDesignationUpdated,
+                          newMobileUpdated,
+                          newEmailUpdated,
+                          newDegreeUpdated,
+                          newImageUpdated,
+                        });
                       }}
                       type="button"
                       className="fa-regular fa-pen-to-square fs-5 edit-btn"
@@ -329,7 +326,7 @@ const EmployeeCard = ({
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            <p> {newDegreeUpdated ? newDegree : degree} </p>
+            <p> {newDegreeUpdated ? newDegree : degree ? degree : "none"} </p>
           </div>
 
           <div className="employee-card-desktop-form-fields">
@@ -355,12 +352,39 @@ const EmployeeCard = ({
           <div className="form-btns employee-card-desktop-form-fields">
             <i
               onClick={(e) => {
-                // handleEmployeeSearch(employeeid);
                 handleBtnValue(employeeid);
                 handleEditMode();
-                handleEmployeeSearch(employeeid);
-                handleFindEmployee(employeeid);
                 handleShowNow(true);
+                handleEmployeeSet({
+                  employeeid,
+                  firstname,
+                  lastname,
+                  degree,
+                  department,
+                  designation,
+                  mobile,
+                  email,
+                  date,
+                  image,
+                  newEmployeeid,
+                  newFirstname,
+                  newLastname,
+                  newDepartment,
+                  newDesignation,
+                  newMobile,
+                  newEmail,
+                  newDegree,
+                  newImage,
+                  newEmployeeidUpdated,
+                  newFirstnameUpdated,
+                  newLastnameUpdated,
+                  newDepartmentUpdated,
+                  newDesignationUpdated,
+                  newMobileUpdated,
+                  newEmailUpdated,
+                  newDegreeUpdated,
+                  newImageUpdated,
+                });
               }}
               type="button"
               className="fa-regular fa-pen-to-square fs-5 edit-btn"
@@ -377,60 +401,6 @@ const EmployeeCard = ({
           {/* END CONTAINER ROW */}
         </div>
       </Row>
-      <hr className="d-none d-md-block" />
-
-      {/* ***************************************************SHOW MODAL */}
-      {!showNow ? null : (
-        <MyModal
-          showNow={showNow}
-          degree={degree}
-          newDegreeUpdated={newDegreeUpdated}
-          setNewDegreeUpdated={setNewDegreeUpdated}
-          newDegree={newDegree}
-          setNewDegree={setNewDegree}
-          handleShowNow={handleShowNow}
-          setEditMode={setEditMode}
-          editMode={editMode}
-          employeeid={employeeid}
-          setNewFirstname={setNewFirstname}
-          setNewFirstnameUpdated={setNewFirstnameUpdated}
-          newFirstnameUpdated={newFirstnameUpdated}
-          newFirstname={newFirstname}
-          newLastname={newLastname}
-          firstname={firstname}
-          lastname={lastname}
-          setNewLastnameUpdated={setNewLastnameUpdated}
-          setNewLastname={setNewLastname}
-          setCombinedName={setCombinedName}
-          splitName={splitName}
-          department={department}
-          newDepartment={newDepartment}
-          setNewDepartment={setNewDepartment}
-          newDepartmentUpdated={newDepartmentUpdated}
-          setNewDepartmentUpdated={setNewDepartmentUpdated}
-          designation={designation}
-          newDesignationUpdated={newDesignationUpdated}
-          setNewDesignationUpdated={setNewDesignationUpdated}
-          newDesignation={newDesignation}
-          setNewDesignation={setNewDesignation}
-          handleEmployeeUpdate={handleEmployeeUpdate}
-          mobile={mobile}
-          newMobileUpdated={newMobileUpdated}
-          setNewMobileUpdated={setNewMobileUpdated}
-          newMobile={newMobile}
-          setNewMobile={setNewMobile}
-          email={email}
-          newEmailUpdated={newEmailUpdated}
-          setNewEmailUpdated={setNewEmailUpdated}
-          newEmail={newEmail}
-          setNewEmail={setNewEmail}
-          image={image}
-          newImageUpdated={newImageUpdated}
-          setNewImageUpdated={setNewImageUpdated}
-          newImage={newImage}
-          setNewImage={setNewImage}
-        />
-      )}
     </>
   );
 };

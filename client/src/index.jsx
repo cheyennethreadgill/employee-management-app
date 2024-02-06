@@ -11,53 +11,61 @@ import AllProjects from "./Components/Projects/AllProjects";
 import ErrorPage from "./Components/Errors/ErrorPage";
 import ProjectsDash from "./Components/Dashboard/ProjectsDash";
 
-// const handleFormValidation = (e) => {
-//   if (e.includes("a")) {
-//     console.log("fix");
-//   } else {
-//     console.log("done");
-// }
-// if (!e.target.value == "") {
-//   if (typeof e.target.value !== "number") {
-//     console.log("Must contain numbers");
-//     console.log(`ERROR: ${typeof e.target.value}`);
-//   }
-//   if (typeof e.target.value == "number") {
-//     console.log("checked");
-//     console.log(`Type After Check: ${typeof e.target.value}`);
-//   } else {
-//     console.log("Done");
-//   }
-// } else {
-//   console.log("Must enter something");
-// }
-// };
+// Form Select & Radios
+const workStatusOptions = ["active", "completed", "running", "pending", "not started", "canceled"];
+const priorityOptions = ["high", "medium", "low"];
+const teamOptions = ["Sarah", "Michelle", "Kelly"];
+const departmentOptions = ["development", "designing", "testing", "hr"];
+
+const URL = "http://localhost:8080/";
+// const URL = "https://employee-management-app-rho.vercel.app/";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <App URL={URL} />,
     errorElement: <ErrorPage />,
     children: [
       {
         path: "/all-employees",
-        element: <AllEmployees />,
+        element: <AllEmployees URL={URL} />,
       },
       {
         path: "/add-employee",
-        element: <AddEmployee />,
+        element: (
+          <AddEmployee
+            URL={URL}
+            departmentOptions={departmentOptions}
+          />
+        ),
       },
       {
         path: "/all-projects",
-        element: <AllProjects />,
+        element: (
+          <AllProjects
+            URL={URL}
+            workStatusOptions={workStatusOptions}
+            priorityOptions={priorityOptions}
+            teamOptions={teamOptions}
+            departmentOptions={departmentOptions}
+          />
+        ),
       },
       {
         path: "/add-projects",
-        element: <AddProject />,
+        element: (
+          <AddProject
+            URL={URL}
+            workStatusOptions={workStatusOptions}
+            priorityOptions={priorityOptions}
+            teamOptions={teamOptions}
+            departmentOptions={departmentOptions}
+          />
+        ),
       },
       {
         path: "/dashboard",
-        element: <ProjectsDash />,
+        element: <ProjectsDash URL={URL} />,
       },
     ],
   },

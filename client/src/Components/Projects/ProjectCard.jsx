@@ -1,15 +1,14 @@
-import { Row, Container, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import ProjectModal from "../Global/ProjectModal";
 
 const ProjectCard = ({
-  projectInfoForModal,
-  URL,
-  showNow,
+  workStatusOptions,
+  priorityOptions,
+  teamOptions,
+  departmentOptions,
   handleShowNow,
   handleProjectSet,
   handleEditMode,
-  editMode,
   projectID,
   title,
   department,
@@ -27,33 +26,21 @@ const ProjectCard = ({
   newStatus,
   newTeam,
   newDescription,
-  setnewTitle,
-  setnewDepartment,
-  setnewPriority,
-  setnewStatus,
-  setnewTeam,
-  setnewDescription,
   newDepartmentUpdated,
   newDescriptionUpdated,
-  setnewTitleUpdated,
-  setnewDepartmentUpdated,
-  setnewDescriptionUpdated,
-  setnewPriorityUpdated,
-  setnewTeamUpdated,
-  setnewStatusUpdated,
   newTitleUpdated,
   newStatusUpdated,
   newPriorityUpdated,
   newTeamUpdated,
   handleProjectUpdate,
   deleteProjectFromDB,
-
   onDelete,
 }) => {
-  const PATH = "update-project";
   const [btnValue, setBtnValue] = useState(0);
-
   const handleBtnValue = (id) => setBtnValue(id);
+
+  // Titles
+  const titles = ["Created", "Team Lead", "Priority", "Deadline", "Bug", "Team"];
 
   // UI State
   const [optionsIconDisplay, setOptionsIconDisplay] = useState(false);
@@ -85,6 +72,7 @@ const ProjectCard = ({
           onClick={handleOptionPanelDisplay}
           className={optionsIconDisplay ? "fa-solid fa-ellipsis-vertical fs-5 options-icon options-icon_visible" : null}
         ></i>
+        {/* ***Options Panel End */}
         {optionPanelDisplay ? (
           <div className="options-btns">
             <div
@@ -108,27 +96,16 @@ const ProjectCard = ({
                   description,
                   newTitleUpdated,
                   newDescriptionUpdated,
-                  setnewTitleUpdated,
-                  setnewDescriptionUpdated,
                   newDepartmentUpdated,
-                  setnewDepartmentUpdated,
                   newPriorityUpdated,
-                  setnewPriorityUpdated,
                   newStatusUpdated,
-                  setnewStatusUpdated,
                   newTeamUpdated,
-                  setnewTeamUpdated,
                   newTitle,
-                  setnewTitle,
                   newDepartment,
-                  setnewDepartment,
                   newDescription,
                   newPriority,
-                  setnewPriority,
                   newStatus,
-                  setnewStatus,
                   newTeam,
-                  setnewTeam,
                 });
               }}
             >
@@ -151,38 +128,43 @@ const ProjectCard = ({
             </div>
           </div>
         ) : null}
+        {/* ***Options Panel End */}
       </div>
+
       <div className="project-card-header">
         <div className="project-card-header-left">
           <i className="fa-regular fa-circle-check"></i>
-          <h3> {newTitleUpdated ? newTitle : title} </h3>
+          <h3> {newTitleUpdated ? newTitle : title ? title : "N/A"} </h3>
         </div>
-        {status == "active" ? (
-          <p className="project-card-header-status project-card-header-status_active info"> {status} </p>
-        ) : status == "running" ? (
-          <p className="project-card-header-status project-card-header-status_running info"> {status} </p>
-        ) : status == "completed" ? (
-          <p className="project-card-header-status project-card-header-status_completed info"> {status} </p>
-        ) : status == "pending" ? (
-          <p className="project-card-header-status project-card-header-status_pending info"> {status} </p>
-        ) : status == "not-started" ? (
-          <p className="project-card-header-status project-card-header-status_not info-started"> {status} </p>
-        ) : (
-          <p className="project-card-header-status project-card-header-status_canceled info"> {status} </p>
-        )}
+        {/* ******************************STATUS */}
+        {workStatusOptions.map((option) => {
+          if (status.includes(option)) {
+            return (
+              <p className={`project-card-header-status project-card-header-status_${option} info`}>
+                {" "}
+                {newStatusUpdated ? newStatus : status ? status : "N/A"}{" "}
+              </p>
+            );
+          } else return;
+        })}
       </div>
-      <p className="description"> {description}</p>
+
+      <p className="description"> {newDescriptionUpdated ? newDescription : description ? description : "N/A"}</p>
 
       <Row>
         <Col lg="4">
-          <p className="info">Created</p>
-          <p className="info">Team Lead</p>
-          <p className="info">Priority</p>
-          <p className="info">Dealine</p>
-
-          <p className="info">Bug</p>
-          <p className="info">Team</p>
+          {titles.map((title) => {
+            return (
+              <p
+                key={title}
+                className="info"
+              >
+                {title}
+              </p>
+            );
+          })}
         </Col>
+
         <Col lg="5">
           <p className="info calendar">
             <i className="fa-regular fa-calendar-days"></i> {newStartDate ? newStartDate : "None"}
@@ -191,22 +173,24 @@ const ProjectCard = ({
 
           <div className="priority">
             <span className="priority-icon">
-              {priority == "High" ? (
-                <div className="priority-icon-high">
-                  <i className="fa-solid fa-angle-up "></i>
-                  {newPriorityUpdated ? newPriority : priority ? priority : "None"}
-                </div>
-              ) : priority == "Medium" ? (
-                <div className="priority-icon-medium">
-                  <i className="fa-solid fa-greater-than "></i>
-                  {newPriorityUpdated ? newPriority : priority ? priority : "None"}
-                </div>
-              ) : (
-                <div className="priority-icon-low">
-                  <i className="fa-solid fa-angle-down "></i>
-                  {newPriorityUpdated ? newPriority : priority ? priority : "None"}
-                </div>
-              )}
+              {priorityOptions.map((option) => {
+                if (priority == option) {
+                  return (
+                    <div className={`priority-icon-${option}`}>
+                      <i
+                        className={
+                          priority == "high"
+                            ? "fa-solid fa-angle-up "
+                            : priority == "medium"
+                            ? "fa-solid fa-greater-than "
+                            : "fa-solid fa-angle-down"
+                        }
+                      ></i>
+                      {newPriorityUpdated ? newPriority : priority ? priority : "None"}
+                    </div>
+                  );
+                } else return;
+              })}
             </span>
           </div>
           <p className="info calendar">

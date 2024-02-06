@@ -1,11 +1,12 @@
-import Modal from "react-bootstrap/Modal";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const MyModal = ({
   editMode,
   setEditMode,
+  employeeInfoForModal,
+  handleEditMode,
   handleShowNow,
-
   employeeid,
   firstname,
   lastname,
@@ -14,51 +15,48 @@ const MyModal = ({
   degree,
   email,
   image,
-
-  newFirstname,
-  newLastname,
-  newDepartment,
-  newDesignation,
-
-  setNewLastname,
-  setNewFirstname,
-  setNewDepartment,
-  setNewDesignation,
-
-  newFirstnameUpdated,
-  setCombinedName,
-  splitName,
-  newDepartmentUpdated,
-  newDesignationUpdated,
-
-  setNewFirstnameUpdated,
-  setNewLastnameUpdated,
-  setNewDepartmentUpdated,
-  setNewDesignationUpdated,
-
   handleEmployeeUpdate,
-
   mobile,
-  newMobileUpdated,
-  setNewMobileUpdated,
-  newMobile,
-  setNewMobile,
-
-  newEmailUpdated,
-  setNewEmailUpdated,
-  newEmail,
-  setNewEmail,
-
-  newDegreeUpdated,
-  setNewDegreeUpdated,
-  newDegree,
-  setNewDegree,
-
-  newImageUpdated,
-  setNewImageUpdated,
-  newImage,
-  setNewImage,
 }) => {
+  console.log(employeeInfoForModal);
+  // Updated Form Status
+  const [formUpdatedStatus, setFormUpdatedStatus] = useState({
+    newFirstnameUpdated: false,
+    newLastnameUpdated: false,
+    newDepartmentUpdated: false,
+    newDesignationUpdated: false,
+    newEmailUpdated: false,
+    newMobileUpdated: false,
+    newDegreeUpdated: false,
+    newImageUpdated: false,
+  });
+  const handleFormUpdatedStatus = (key, value) => {
+    setFormUpdatedStatus({ ...formUpdatedStatus, [key]: value });
+  };
+
+  // SET NEW FORM
+  const [formData, setFormData] = useState({
+    newFirstname: "",
+    newLastname: "",
+    newDepartment: "",
+    newDegree: "",
+    newDesignation: "",
+    newEmail: "",
+    newMobile: 0,
+    newImage: "",
+    combinedName: "",
+  });
+  let ks = formData.combinedName;
+  var splitName = ks.split(" ");
+  const handleFormData = (key, value) => {
+    setFormData({ ...formData, [key]: value });
+  };
+
+  // UPDATED PROJECT INFO
+  const [employeeToUpdate, setEmployeeToUpdate] = useState(employeeInfoForModal);
+
+  const handleEmployeeToUpdate = (values) => setEmployeeToUpdate(values);
+
   return (
     <section className="my-modal">
       <Form className="my-modal-form">
@@ -72,20 +70,24 @@ const MyModal = ({
             <Form.Control
               className="form-control-container-input"
               defaultValue={
-                !newFirstnameUpdated
-                  ? firstname + " " + lastname
-                  : newFirstnameUpdated
-                  ? newFirstname + " " + newLastname
+                formUpdatedStatus.newFirstnameUpdated
+                  ? formData.newFirstname + " " + formData.newLastname
                   : firstname + " " + lastname
               }
               type="text"
               autoFocus
               onChange={(e) => {
-                setNewFirstnameUpdated(true);
-                setNewLastnameUpdated(true);
-                setCombinedName(e.target.value);
-                setNewFirstname(splitName[0]);
-                setNewLastname(splitName[1]);
+                handleFormUpdatedStatus("newFirstnameUpdated", true);
+                handleFormUpdatedStatus("newLastnameUpdated", true);
+
+                handleFormData("combinedName", e.target.value);
+
+                handleFormData("newFirstname", splitName[0]);
+                handleFormData("newLastname", splitName[1]);
+
+                handleEmployeeToUpdate({ ...employeeInfoForModal, firstname: splitName[0] });
+                handleEmployeeToUpdate({ ...employeeInfoForModal, lastname: splitName[1] });
+                // console.log(formData.newFirstname);
               }}
             />
             <span className="form-control-container-icon_end">
@@ -103,12 +105,14 @@ const MyModal = ({
           <div className="form-control-container ">
             <Form.Control
               className="form-control-container-input"
-              defaultValue={!newDegreeUpdated ? newDegree : degree}
+              defaultValue={formUpdatedStatus.newDegreeUpdated ? formData.newDegree : degree}
               type="text"
               autoFocus
               onChange={(e) => {
-                setNewDegreeUpdated(true);
-                setNewDegree(e.target.value);
+                handleFormUpdatedStatus("newDegreeUpdated", true);
+                handleFormData("newDegree", e.target.value);
+                handleEmployeeToUpdate({ ...employeeInfoForModal, degree: e.target.value });
+                console.log(degree);
               }}
             />
             <span className="form-control-container-icon_end">
@@ -123,17 +127,13 @@ const MyModal = ({
             name="select department"
             id="select department"
             onChange={(e) => {
-              setNewDepartment(e.target.value);
-              setNewDepartmentUpdated(true);
+              handleFormUpdatedStatus("newDepartmentUpdated", true);
+              handleFormData("newDepartment", e.target.value);
+              handleEmployeeToUpdate({ ...employeeInfoForModal, department: e.target.value });
             }}
             required={true}
+            defaultValue={formUpdatedStatus.newDepartmentUpdated ? formData.newDepartment : department}
           >
-            <option
-              defaultValue={true}
-              value="null"
-            >
-              {!newDepartmentUpdated ? department : newDepartmentUpdated ? newDepartment : department}
-            </option>
             <option value="development">Development</option>
             <option value="designing">Designing</option>
             <option value="testing">Testing</option>
@@ -151,11 +151,12 @@ const MyModal = ({
             <Form.Control
               name="designation"
               className="form-control-container-input"
-              defaultValue={!newDesignationUpdated ? designation : newDesignationUpdated ? newDesignation : designation}
+              defaultValue={formUpdatedStatus.newDesignationUpdated ? formData.newDesignation : designation}
               type="text"
               onChange={(e) => {
-                setNewDesignation(e.target.value);
-                setNewDesignationUpdated(true);
+                handleFormData("newDesignation", e.target.value);
+                handleFormUpdatedStatus("newDesignationUpdated", true);
+                handleEmployeeToUpdate({ ...employeeInfoForModal, designation: e.target.value });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -174,11 +175,12 @@ const MyModal = ({
             <Form.Control
               name="mobile"
               className="form-control-container-input"
-              defaultValue={!newMobileUpdated ? mobile : newMobileUpdated ? newMobile : mobile}
+              defaultValue={formUpdatedStatus.newMobileUpdated ? formData.newMobile : mobile}
               type="text"
               onChange={(e) => {
-                setNewMobile(e.target.value);
-                setNewMobileUpdated(true);
+                handleFormData("newMobile", e.target.value);
+                handleFormUpdatedStatus("newMobileUpdated", true);
+                handleEmployeeToUpdate({ ...employeeInfoForModal, mobile: e.target.value });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -197,11 +199,12 @@ const MyModal = ({
             <Form.Control
               name="email"
               className="form-control-container-input"
-              defaultValue={!newEmailUpdated ? email : newEmailUpdated ? newEmail : email}
+              defaultValue={formUpdatedStatus.newEmailUpdated ? formData.newEmail : email}
               type="text"
               onChange={(e) => {
-                setNewEmail(e.target.value);
-                setNewEmailUpdated(true);
+                handleFormUpdatedStatus("newEmailUpdated", true);
+                handleFormData("newEmail", e.target.value);
+                handleEmployeeToUpdate({ ...employeeInfoForModal, email: e.target.value });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -215,8 +218,9 @@ const MyModal = ({
             type="file"
             accept=".png, .jpg, .jpeg"
             onChange={(e) => {
-              setNewImage(e.target.value);
-              setNewImageUpdated(true);
+              handleFormUpdatedStatus("newImageUpdated", true);
+              handleFormData("newImage", e.target.value);
+              handleEmployeeToUpdate({ ...employeeInfoForModal, image: e.target.value });
               console.log(e.target.value);
             }}
           />
@@ -233,9 +237,10 @@ const MyModal = ({
           className="update-btn"
           variant="primary"
           onClick={(e) => {
-            setEditMode(!editMode);
-            handleEmployeeUpdate(e, employeeid);
+            handleEditMode();
+            handleEmployeeUpdate(e, employeeid, employeeToUpdate);
             handleShowNow(false);
+            console.log(employeeInfoForModal);
           }}
         >
           Save Changes

@@ -1,27 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
-const AddProject = () => {
-  const [title, setTitle] = useState("");
-  const [projectID, setProjectID] = useState("");
-  const [department, setDepartment] = useState("");
-  const [priority, setPriority] = useState("");
-  const [client, setClient] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [team, setTeam] = useState("");
-  const [status, setStatus] = useState("");
-  const [description, setDescription] = useState("");
+const AddProject = ({ URL, workStatusOptions, priorityOptions, teamOptions, departmentOptions }) => {
+  const PATH = "add-project";
+
   const [formSubmitted, setFormSubmitted] = useState(false);
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
-  const PATH = "add-project";
+  // Sets Project form data
+  const [projectFormData, setProjectFormData] = useState({
+    title: "",
+    projectID: "",
+    department: "",
+    priority: "",
+    client: "",
+    price: "",
+    startDate: "",
+    endDate: "",
+    team: "",
+    status: "",
+    description: "",
+  });
+  const handleProjectFormData = (key, value) => {
+    setProjectFormData({ ...projectFormData, [key]: value });
+  };
 
-  // fetch for data
+  // fetch project
   async function handleProjectAdd(e) {
     e.preventDefault();
     // Post options
@@ -29,17 +34,17 @@ const AddProject = () => {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "*" },
       body: JSON.stringify({
-        title: title,
-        projectID: projectID,
-        department: department,
-        priority: priority,
-        client: client,
-        price: price,
-        startDate: startDate,
-        endDate: endDate,
-        team: team,
-        status: status,
-        description: description,
+        title: projectFormData.title,
+        projectID: projectFormData.projectID,
+        department: projectFormData.department,
+        priority: projectFormData.priority,
+        client: projectFormData.client,
+        price: projectFormData.price,
+        startDate: projectFormData.startDate,
+        endDate: projectFormData.endDate,
+        team: projectFormData.team,
+        status: projectFormData.status,
+        description: projectFormData.description,
       }),
     };
 
@@ -68,7 +73,6 @@ const AddProject = () => {
   const promise = (e) => {
     const form = e.currentTarget;
     let check = form.checkValidity();
-    // return check;
     if (check === false) {
       e.preventDefault();
       e.stopPropagation();
@@ -115,7 +119,7 @@ const AddProject = () => {
                 placeholder="Project Id *"
                 required
                 onChange={(e) => {
-                  setProjectID(e.target.value);
+                  handleProjectFormData("projectID", e.target.value);
                 }}
                 pattern="[0-9]{4}"
               />
@@ -131,7 +135,7 @@ const AddProject = () => {
             >
               <Form.Control
                 onChange={(e) => {
-                  setTitle(e.target.value);
+                  handleProjectFormData("title", e.target.value);
                 }}
                 type="text"
                 placeholder="Project title"
@@ -149,22 +153,21 @@ const AddProject = () => {
                 <select
                   name="select department"
                   id="select department"
-                  placeholder="Select Department"
                   onChange={(e) => {
-                    setDepartment(e.target.value);
+                    handleProjectFormData("department", e.target.value);
                   }}
                   required
                 >
-                  <option
-                    defaultValue={true}
-                    value="null"
-                  >
-                    Choose Option
-                  </option>
-                  <option value="development">Development</option>
-                  <option value="designing">Designing</option>
-                  <option value="testing">Testing</option>
-                  <option value="hr">HR</option>
+                  {departmentOptions.map((option) => {
+                    return (
+                      <option
+                        key={option}
+                        value={option}
+                      >
+                        {option}
+                      </option>
+                    );
+                  })}
                 </select>
               </fieldset>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -182,19 +185,13 @@ const AddProject = () => {
                   id="priority"
                   placeholder="priority"
                   onChange={(e) => {
-                    setPriority(e.target.value);
+                    handleProjectFormData("priority", e.target.value);
                   }}
                   required
                 >
-                  <option
-                    defaultValue={true}
-                    value="null"
-                  >
-                    Choose Option
-                  </option>
-                  <option value="high">high</option>
-                  <option value="medium">medium</option>
-                  <option value="low">low</option>
+                  {priorityOptions.map((option) => {
+                    return <option value={option}>{option}</option>;
+                  })}
                 </select>
               </fieldset>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -207,7 +204,7 @@ const AddProject = () => {
             >
               <Form.Control
                 onChange={(e) => {
-                  setClient(e.target.value);
+                  handleProjectFormData("client", e.target.value);
                 }}
                 type="text"
                 placeholder="client*"
@@ -223,7 +220,7 @@ const AddProject = () => {
             >
               <Form.Control
                 onChange={(e) => {
-                  setPrice(e.target.value);
+                  handleProjectFormData("price", e.target.value);
                 }}
                 type="number"
                 placeholder="price*"
@@ -239,7 +236,7 @@ const AddProject = () => {
             >
               <Form.Control
                 onChange={(e) => {
-                  setStartDate(e.target.value);
+                  handleProjectFormData("startDate", e.target.value);
                 }}
                 type="date"
                 placeholder="start date"
@@ -255,7 +252,7 @@ const AddProject = () => {
             >
               <Form.Control
                 onChange={(e) => {
-                  setEndDate(e.target.value);
+                  handleProjectFormData("endDate", e.target.value);
                 }}
                 type="date"
                 placeholder="end date"
@@ -272,6 +269,7 @@ const AddProject = () => {
               <Form.Label htmlFor="Team">Team</Form.Label>
               <select
                 onChange={(e) => {
+                  handleProjectFormData("team", e.target.value);
                   setTeam(e.target.value);
                 }}
                 name="Team"
@@ -279,15 +277,9 @@ const AddProject = () => {
                 placeholder="Team"
                 required
               >
-                <option
-                  defaultValue={true}
-                  value="null"
-                >
-                  Choose Option
-                </option>
-                <option value="sarah">sarah</option>
-                <option value="michelle">michelle</option>
-                <option value="kelly">kelly</option>
+                {teamOptions.map((option) => {
+                  return <option value={option}>{option}</option>;
+                })}
               </select>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter a team</Form.Control.Feedback>
@@ -300,67 +292,24 @@ const AddProject = () => {
             >
               <fieldset className="work-status">
                 <p>Work Status</p>
-                <input
-                  className="radio"
-                  type="radio"
-                  name="status"
-                  value="active"
-                  onClick={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                />
-                <Form.Label htmlFor="Active">Active </Form.Label>
-                <input
-                  className="radio"
-                  type="radio"
-                  name="status"
-                  onClick={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                  value="completed"
-                />
-                <Form.Label htmlFor="completed">completed</Form.Label>
-                <input
-                  className="radio"
-                  type="radio"
-                  name="status"
-                  onClick={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                  value="running"
-                />
-                <Form.Label htmlFor="">running</Form.Label>
-                <input
-                  className="radio"
-                  type="radio"
-                  name="status"
-                  onClick={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                  value="pending"
-                />
-                <Form.Label htmlFor="">pending</Form.Label>
-                <input
-                  className="radio"
-                  type="radio"
-                  name="status"
-                  onClick={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                  value="not started"
-                />
-                <Form.Label htmlFor="">not started</Form.Label>
-                <input
-                  className="radio"
-                  type="radio"
-                  name="status"
-                  onClick={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                  value="canceled"
-                />
-                <Form.Label htmlFor="">canceled</Form.Label>
+                {workStatusOptions.map((option) => {
+                  return (
+                    <React.Fragment key={option}>
+                      <input
+                        className="radio"
+                        type="radio"
+                        name="status"
+                        value={option}
+                        onClick={(e) => {
+                          handleProjectFormData("status", e.target.value);
+                        }}
+                      />
+                      <Form.Label htmlFor={option}>{option} </Form.Label>
+                    </React.Fragment>
+                  );
+                })}
               </fieldset>
+
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please select a work status.</Form.Control.Feedback>
             </Form.Group>
@@ -372,28 +321,13 @@ const AddProject = () => {
               <Form.Label htmlFor="description">Description</Form.Label>
               <Form.Control
                 onChange={(e) => {
-                  setDescription(e.target.value);
+                  handleProjectFormData("description", e.target.value);
                 }}
                 type="text"
                 id="description"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter a description</Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group
-              as={Col}
-              lg="12"
-            >
-              <div className="">
-                {" "}
-                <Form.Label>upload file</Form.Label>
-                <Form.Control
-                  className="upload-control"
-                  type="file"
-                  accept=".pdf,.doc"
-                />
-              </div>
             </Form.Group>
 
             <div className="form-btns">

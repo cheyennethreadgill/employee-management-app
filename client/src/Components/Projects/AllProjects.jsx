@@ -5,10 +5,9 @@ import { Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 import ProjectModal from "../Global/ProjectModal";
 
-const AllProjects = () => {
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+const AllProjects = ({ URL, workStatusOptions, priorityOptions, teamOptions, departmentOptions }) => {
   const PATH = "projects";
+  const UPDATE_PATH = "update-project";
   const [projects, setProjects] = useState([]);
 
   // get Project
@@ -25,19 +24,21 @@ const AllProjects = () => {
 
   const [projectInfoForModal, setprojectInfoForModal] = useState({});
 
+  // Set project info given by employee card
   const handleProjectSet = (values) => {
     setprojectInfoForModal(values);
   };
 
+  // // UPDATE PROJECT STATE DELETE (UI)
   const handleProjectStateUpdateDelete = (id) => {
     setProjects(
       projects.filter((project) => {
-        return project.projectID === id;
+        return project.projectID !== id;
       })
     );
   };
 
-  // UPDATE PROJECT STATE (UI)
+  // UPDATE Project STATE (UI)
   const handleProjectStateUpdate = (id, projectToUpdate) => {
     setProjects(
       projects.map((project) => {
@@ -49,6 +50,7 @@ const AllProjects = () => {
       })
     );
   };
+
   //   UPDATE PROJECT (DB)
   async function handleProjectUpdate(e, id, projectToUpdate) {
     e.preventDefault();
@@ -74,7 +76,7 @@ const AllProjects = () => {
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}update-project`, options);
+      const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}`, options);
       if (!fetchPromiseResponse.ok) {
         console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
       }
@@ -148,6 +150,10 @@ const AllProjects = () => {
                   md="1"
                 >
                   <ProjectCard
+                    workStatusOptions={workStatusOptions}
+                    priorityOptions={priorityOptions}
+                    teamOptions={teamOptions}
+                    departmentOptions={departmentOptions}
                     URL={URL}
                     handleProjectSet={handleProjectSet}
                     onDelete={handleProjectStateUpdateDelete}
@@ -168,27 +174,16 @@ const AllProjects = () => {
                     description={description}
                     newTitle={projectInfoForModal.newTitle}
                     newDescription={projectInfoForModal.newDescription}
-                    setnewTitle={projectInfoForModal.setnewTitle}
                     newDepartment={projectInfoForModal.newDepartment}
-                    setnewDepartment={projectInfoForModal.setnewDepartment}
                     newPriority={projectInfoForModal.newPriority}
-                    setnewPriority={projectInfoForModal.setnewPriority}
                     newStatus={projectInfoForModal.newStatus}
-                    setnewStatus={projectInfoForModal.setnewStatus}
                     newTeam={projectInfoForModal.newTeam}
-                    setnewTeam={projectInfoForModal.setnewTeam}
                     newTitleUpdated={projectInfoForModal.newTitleUpdated}
-                    setnewTitleUpdated={projectInfoForModal.setnewTitleUpdated}
-                    setnewDescription={projectInfoForModal.setnewDescription}
                     newDepartmentUpdated={projectInfoForModal.newDepartmentUpdated}
-                    setnewDepartmentUpdated={projectInfoForModal.setnewDepartmentUpdated}
                     newPriorityUpdated={projectInfoForModal.newPriorityUpdated}
-                    setnewPriorityUpdated={projectInfoForModal.setnewPriorityUpdated}
                     newStatusUpdated={projectInfoForModal.newStatusUpdated}
-                    setnewStatusUpdated={projectInfoForModal.setnewStatusUpdated}
                     newTeamUpdated={projectInfoForModal.newTeamUpdated}
                     newDescriptionUpdated={projectInfoForModal.newDescriptionUpdated}
-                    setnewTeamUpdated={projectInfoForModal.setnewTeamUpdated}
                     handleProjectUpdate={handleProjectUpdate}
                     deleteProjectFromDB={deleteProjectFromDB}
                   />
@@ -201,6 +196,10 @@ const AllProjects = () => {
       {/* ***************************************************SHOW MODAL */}
       {!showNow ? null : (
         <ProjectModal
+          workStatusOptions={workStatusOptions}
+          priorityOptions={priorityOptions}
+          teamOptions={teamOptions}
+          departmentOptions={departmentOptions}
           projects={projects}
           setProjects={setProjects}
           projectInfoForModal={projectInfoForModal}

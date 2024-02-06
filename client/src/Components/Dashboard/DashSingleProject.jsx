@@ -13,6 +13,7 @@ const DashSingleProject = ({
   team,
   status,
 }) => {
+  const UPDATE_PATH = "update-project";
   const [btnValue, setBtnValue] = useState(0);
   const [showNow, setShowNow] = useState(false);
 
@@ -52,7 +53,7 @@ const DashSingleProject = ({
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}update-project`, options);
+      const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}`, options);
       if (!fetchPromiseResponse.ok) {
         console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
       }
