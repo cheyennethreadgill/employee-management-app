@@ -4,10 +4,10 @@ import { Col, Row } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
 const AddEmployee = ({ URL, departmentOptions }) => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const handleFormSubmissionStatus = () => setFormSubmitted(true);
-
   const PATH = "add-employee";
+  const [validated, setValidated] = useState(false);
+  const [error, setFormError] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [employeeFormData, setEmployeeFormData] = useState({
     fname: "",
@@ -28,48 +28,30 @@ const AddEmployee = ({ URL, departmentOptions }) => {
     setEmployeeFormData({ ...employeeFormData, [key]: value });
   };
 
+  const handleFormSubmissionStatus = () => setFormSubmitted(true);
+
   // ADD EMPLOYEE TO DB
   async function addEmployeeNow() {
     // // Post options
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "*" },
-      body: JSON.stringify({
-        fname: employeeFormData.fname,
-        lname: employeeFormData.lname,
-        gender: employeeFormData.gender,
-        mobile: employeeFormData.mobile,
-        password: employeeFormData.password,
-        designation: employeeFormData.designation,
-        department: employeeFormData.department,
-        address: employeeFormData.address,
-        email: employeeFormData.email,
-        dateofbirth: employeeFormData.dob,
-        degree: employeeFormData.degree,
-        image: employeeFormData.image,
-      }),
+      body: JSON.stringify(employeeFormData),
     };
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
-      if (!fetchPromiseResponse.ok) {
-        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
-      }
-      const jsonPromiseResponse = fetchPromiseResponse.json();
+      !fetchPromiseResponse.ok
+        ? console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`)
+        : null;
 
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
+      const jsonPromiseResponse = fetchPromiseResponse.json();
+      jsonPromiseResponse.then((res) => console.log(res));
     } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
+      (err) => console.log(`FETCH FAILED: ${err}`);
     }
     setValidated(!validated);
   }
-
-  const [validated, setValidated] = useState(false);
-  const [error, setFormError] = useState(false);
 
   // get form validation response
   const promise = (e) => {
@@ -283,7 +265,6 @@ const AddEmployee = ({ URL, departmentOptions }) => {
               as={Col}
               lg="12"
             >
-              {" "}
               <Form.Control
                 type="text"
                 placeholder="Degree"
@@ -306,11 +287,8 @@ const AddEmployee = ({ URL, departmentOptions }) => {
               />
             </fieldset>
 
-            {formSubmitted ? (
-              <p className="fw-medium mt-2">Employee Added Successfully!</p>
-            ) : error ? (
-              <p className="fw-bold mt-2">Please correct errors above.</p>
-            ) : null}
+            {formSubmitted && <p className="fw-medium mt-2">Employee Added Successfully!</p>}
+            {error && <p className="fw-bold mt-2">Please correct errors above.</p>}
 
             <Button
               className="btn btn-success"
