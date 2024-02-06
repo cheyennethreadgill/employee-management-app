@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const MyModal = ({
-  editMode,
-  setEditMode,
   employeeInfoForModal,
   handleEditMode,
   handleShowNow,
@@ -18,7 +16,6 @@ const MyModal = ({
   handleEmployeeUpdate,
   mobile,
 }) => {
-  console.log(employeeInfoForModal);
   // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
     newFirstnameUpdated: false,
@@ -87,7 +84,6 @@ const MyModal = ({
 
                 handleEmployeeToUpdate({ ...employeeInfoForModal, firstname: splitName[0] });
                 handleEmployeeToUpdate({ ...employeeInfoForModal, lastname: splitName[1] });
-                // console.log(formData.newFirstname);
               }}
             />
             <span className="form-control-container-icon_end">
@@ -112,7 +108,6 @@ const MyModal = ({
                 handleFormUpdatedStatus("newDegreeUpdated", true);
                 handleFormData("newDegree", e.target.value);
                 handleEmployeeToUpdate({ ...employeeInfoForModal, degree: e.target.value });
-                console.log(degree);
               }}
             />
             <span className="form-control-container-icon_end">
@@ -221,7 +216,6 @@ const MyModal = ({
               handleFormUpdatedStatus("newImageUpdated", true);
               handleFormData("newImage", e.target.value);
               handleEmployeeToUpdate({ ...employeeInfoForModal, image: e.target.value });
-              console.log(e.target.value);
             }}
           />
         </Form.Group>
@@ -240,7 +234,6 @@ const MyModal = ({
             handleEditMode();
             handleEmployeeUpdate(e, employeeid, employeeToUpdate);
             handleShowNow(false);
-            console.log(employeeInfoForModal);
           }}
         >
           Save Changes

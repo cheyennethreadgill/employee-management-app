@@ -5,6 +5,16 @@ import DashSingleProject from "../Dashboard/DashSingleProject";
 const ProjectsDash = ({ URL }) => {
   const PATH = "projects";
   const [projects, setProjects] = useState([]);
+  const titles = [
+    "Project Name",
+    "Employees Team",
+    "Team Leader",
+    "Priority",
+    "Open Task",
+    "Completed Task",
+    "Status",
+    "Documents",
+  ];
 
   // get Project
   useEffect(() => {
@@ -14,26 +24,19 @@ const ProjectsDash = ({ URL }) => {
   }, []);
 
   const [editMode, setEditMode] = useState(false);
-  const [project, setProject] = useState([]);
-  const [foundEmployee, setFoundEmployee] = useState([]);
 
   const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
 
   const handleEditMode = () => setEditMode(!editMode);
   const [employeeTeam, setEmployeeTeam] = useState([]);
   const [employees, setEmployees] = useState([]);
+
   // get employees
   useEffect(() => {
     fetch(`${URL}${PATH}`)
       .then((res) => res.json())
       .then((json) => setEmployees(json));
   }, []);
-
-  // for each project we are getting a department
-  // we want to get all of the employees that have the same dept as the project department
-  //     filter through the employees and return all employees that have the same department as the current project
 
   useEffect(() => {
     projects.map((proj) => {
@@ -72,16 +75,9 @@ const ProjectsDash = ({ URL }) => {
       <section className="dash-projects-card">
         <h1>projects</h1>
         <div className="dash-projects-card-titles">
-          {" "}
-          <h3>Project Name</h3>
-          <h3>Employees Team</h3>
-          <h3>Team Leader</h3>
-          <h3>Priority</h3>
-          <h3>Open Task</h3>
-          <h3>Completed Task</h3>
-          <h3>Status</h3>
-          <h3>Documents</h3>
-          {/* <h3>Actions</h3> */}
+          {titles.map((title) => {
+            return <h3> {title} </h3>;
+          })}
         </div>
         {projectsMapContent}
         {/* ****************************************************END CARD */}

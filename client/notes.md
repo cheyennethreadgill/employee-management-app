@@ -4,7 +4,10 @@
         we can add the modal to the app section and only show modal when its clikcked
         but how will the information from the card get to the modal?
 
-
+PROJECTS DASH
+  // for each project we are getting a department
+  // we want to get all of the employees that have the same dept as the project department
+  //     filter through the employees and return all employees that have the same department as the current project
 
 
  -->
