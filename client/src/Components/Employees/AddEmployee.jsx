@@ -31,7 +31,8 @@ const AddEmployee = ({ URL, departmentOptions }) => {
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
   // ADD EMPLOYEE TO DB
-  async function addEmployeeNow() {
+  async function addEmployeeNow(e) {
+    e.preventDefault();
     // // Post options
     const options = {
       method: "POST",
@@ -77,7 +78,7 @@ const AddEmployee = ({ URL, departmentOptions }) => {
 
     if (promiseResponse === true) {
       {
-        addEmployeeNow();
+        addEmployeeNow(e);
         handleFormSubmissionStatus();
         setValidated(false);
       }
