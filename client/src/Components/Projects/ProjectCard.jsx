@@ -50,6 +50,11 @@ const ProjectCard = ({
   const handleOptionsIconLeave = () => setOptionsIconDisplay(false);
   const handleOptionPanelDisplay = () => setOptionPanelDisplay(!optionPanelDisplay);
 
+  const handleProjectDelete = (projectID) => {
+    deleteProjectFromDB(projectID);
+    onDelete(projectID);
+  };
+
   const startDateReformat = () => {
     let newStartDate = startDate.substring(0, 10);
     return newStartDate;
@@ -119,8 +124,7 @@ const ProjectCard = ({
             <div
               className="options-btns-link"
               onClick={() => {
-                deleteProjectFromDB(projectID);
-                onDelete(projectID);
+                handleProjectDelete(projectID);
               }}
             >
               <i className="fa-regular fa-trash-can fs-5"></i>
@@ -140,7 +144,10 @@ const ProjectCard = ({
         {workStatusOptions.map((option) => {
           if (status.includes(option)) {
             return (
-              <p className={`project-card-header-status project-card-header-status_${option} info`}>
+              <p
+                key={option}
+                className={`project-card-header-status project-card-header-status_${option} info`}
+              >
                 {" "}
                 {newStatusUpdated ? newStatus : status ? status : "N/A"}{" "}
               </p>
@@ -176,7 +183,10 @@ const ProjectCard = ({
               {priorityOptions.map((option) => {
                 if (priority == option) {
                   return (
-                    <div className={`priority-icon-${option}`}>
+                    <div
+                      key={option}
+                      className={`priority-icon-${option}`}
+                    >
                       <i
                         className={
                           priority == "high"
@@ -210,7 +220,7 @@ const ProjectCard = ({
               : status == "completed"
               ? "100%"
               : status == "running"
-              ? "25%"
+              ? "45%"
               : status == "pending"
               ? "0%"
               : status == "not-started"

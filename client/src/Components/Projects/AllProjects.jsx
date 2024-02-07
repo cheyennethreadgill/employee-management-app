@@ -5,7 +5,16 @@ import { Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 import ProjectModal from "../Global/ProjectModal";
 
-const AllProjects = ({ URL, workStatusOptions, priorityOptions, teamOptions, departmentOptions }) => {
+const AllProjects = ({
+  URL,
+  handleFetchPromiseError,
+  handleJsonPromiseResponseLog,
+  handleFetchErrorworkStatusOptions,
+  workStatusOptions,
+  priorityOptions,
+  teamOptions,
+  departmentOptions,
+}) => {
   const PATH = "projects";
   const UPDATE_PATH = "update-project";
   const [projects, setProjects] = useState([]);
@@ -77,18 +86,11 @@ const AllProjects = ({ URL, workStatusOptions, priorityOptions, teamOptions, dep
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}`, options);
-      if (!fetchPromiseResponse.ok) {
-        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
-      }
+      handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
-
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
+      handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
+      (err) => handleFetchError(err);
     }
   }
 
@@ -101,18 +103,11 @@ const AllProjects = ({ URL, workStatusOptions, priorityOptions, teamOptions, dep
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}delete-project/${id}`, options);
-      if (!fetchPromiseResponse.ok) {
-        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
-      }
+      handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
-
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
+      handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
+      (err) => handleFetchError(err);
     }
   }
 
@@ -123,7 +118,7 @@ const AllProjects = ({ URL, workStatusOptions, priorityOptions, teamOptions, dep
         <section className="project">
           <div className="project-header-main">
             <h2>New Projects</h2>
-            <p>{projects.length}projects</p>
+            <p>{projects.length} projects</p>
           </div>
 
           <Row className="all-projects-row">

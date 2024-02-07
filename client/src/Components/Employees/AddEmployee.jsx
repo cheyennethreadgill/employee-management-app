@@ -3,12 +3,19 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
-const AddEmployee = ({ URL, departmentOptions }) => {
+const AddEmployee = ({
+  URL,
+  departmentOptions,
+  handleFetchPromiseError,
+  handleJsonPromiseResponseLog,
+  handleFetchError,
+}) => {
   const PATH = "add-employee";
   const [validated, setValidated] = useState(false);
   const [error, setFormError] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  // Form Handling
   const [employeeFormData, setEmployeeFormData] = useState({
     fname: "",
     lname: "",
@@ -23,11 +30,9 @@ const AddEmployee = ({ URL, departmentOptions }) => {
     degree: "",
     image: "",
   });
-
   const handleEmployeeFormData = (key, value) => {
     setEmployeeFormData({ ...employeeFormData, [key]: value });
   };
-
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
   // ADD EMPLOYEE TO DB
@@ -42,14 +47,12 @@ const AddEmployee = ({ URL, departmentOptions }) => {
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
-      !fetchPromiseResponse.ok
-        ? console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`)
-        : null;
+      handleFetchPromiseError(fetchPromiseResponse);
 
       const jsonPromiseResponse = fetchPromiseResponse.json();
-      jsonPromiseResponse.then((res) => console.log(res));
+      handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch {
-      (err) => console.log(`FETCH FAILED: ${err}`);
+      (err) => handleFetchError(err);
     }
     setValidated(!validated);
   }

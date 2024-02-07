@@ -3,8 +3,18 @@ import { useState, useEffect } from "react";
 import DashSingleProject from "../Dashboard/DashSingleProject";
 
 const ProjectsDash = ({ URL }) => {
+  // set Employee team (tbw)
+  // useEffect(() => {
+  //   projects.map((proj) => {
+  //     const empl = employees.filter((employee) => {
+  //       if (employee.department == proj.department) {
+  //         return employee;
+  //       }
+  //     });
+  //     setEmployeeTeam([empl]);
+  //   });
+  // }, []);
   const PATH = "projects";
-  const [projects, setProjects] = useState([]);
   const titles = [
     "Project Name",
     "Employees Team",
@@ -16,20 +26,21 @@ const ProjectsDash = ({ URL }) => {
     "Documents",
   ];
 
-  // get Project
+  // State
+  const [show, setShow] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [employeeTeam, setEmployeeTeam] = useState([]);
+
+  const handleEditMode = () => setEditMode(!editMode);
+
+  // fetch Projects
   useEffect(() => {
     fetch(`${URL}${PATH}`)
       .then((res) => res.json())
       .then((json) => setProjects(json));
   }, []);
-
-  const [editMode, setEditMode] = useState(false);
-
-  const [show, setShow] = useState(false);
-
-  const handleEditMode = () => setEditMode(!editMode);
-  const [employeeTeam, setEmployeeTeam] = useState([]);
-  const [employees, setEmployees] = useState([]);
 
   // get employees
   useEffect(() => {
@@ -38,18 +49,7 @@ const ProjectsDash = ({ URL }) => {
       .then((json) => setEmployees(json));
   }, []);
 
-  useEffect(() => {
-    projects.map((proj) => {
-      const empl = employees.filter((employee) => {
-        if (employee.department == proj.department) {
-          return employee;
-        }
-      });
-      setEmployeeTeam([empl]);
-    });
-    console.log(employeeTeam);
-  }, []);
-
+  // Project Card Content
   const projectsMapContent = projects.map((project) => {
     const { projectID, title, department, priority, team, status } = project;
 
@@ -71,12 +71,11 @@ const ProjectsDash = ({ URL }) => {
 
   return (
     <Container>
-      {" "}
       <section className="dash-projects-card">
         <h1>projects</h1>
         <div className="dash-projects-card-titles">
           {titles.map((title) => {
-            return <h3> {title} </h3>;
+            return <h3 key={title}> {title} </h3>;
           })}
         </div>
         {projectsMapContent}

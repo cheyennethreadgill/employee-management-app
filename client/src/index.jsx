@@ -11,14 +11,30 @@ import AllProjects from "./Components/Projects/AllProjects";
 import ErrorPage from "./Components/Errors/ErrorPage";
 import ProjectsDash from "./Components/Dashboard/ProjectsDash";
 
+// URL
+// const URL = "http://localhost:8080/";
+const URL = "https://employee-management-app-rho.vercel.app/";
+
 // Form Select & Radios
 const workStatusOptions = ["active", "completed", "running", "pending", "not started", "canceled"];
 const priorityOptions = ["high", "medium", "low"];
 const teamOptions = ["Sarah", "Michelle", "Kelly"];
 const departmentOptions = ["development", "designing", "testing", "hr"];
 
-// const URL = "http://localhost:8080/";
-const URL = "https://employee-management-app-rho.vercel.app/";
+// ERROR HANDLING
+const handleFetchPromiseError = (response) => {
+  if (!response.ok) {
+    console.log(`Something went wrong with fetch from server ${response.status}`);
+  }
+};
+const handleJsonPromiseResponseLog = (response) => {
+  response.then((res) => {
+    console.log(res);
+  });
+};
+const handleFetchError = (err) => {
+  console.log(`FETCH FAILED: ${err}`);
+};
 
 const router = createBrowserRouter([
   {
@@ -28,13 +44,23 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/all-employees",
-        element: <AllEmployees URL={URL} />,
+        element: (
+          <AllEmployees
+            URL={URL}
+            handleFetchPromiseError={handleFetchPromiseError}
+            handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
+            handleFetchError={handleFetchError}
+          />
+        ),
       },
       {
         path: "/add-employee",
         element: (
           <AddEmployee
             URL={URL}
+            handleFetchPromiseError={handleFetchPromiseError}
+            handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
+            handleFetchError={handleFetchError}
             departmentOptions={departmentOptions}
           />
         ),
@@ -44,6 +70,9 @@ const router = createBrowserRouter([
         element: (
           <AllProjects
             URL={URL}
+            handleFetchPromiseError={handleFetchPromiseError}
+            handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
+            handleFetchError={handleFetchError}
             workStatusOptions={workStatusOptions}
             priorityOptions={priorityOptions}
             teamOptions={teamOptions}
@@ -56,6 +85,9 @@ const router = createBrowserRouter([
         element: (
           <AddProject
             URL={URL}
+            handleFetchPromiseError={handleFetchPromiseError}
+            handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
+            handleFetchError={handleFetchError}
             workStatusOptions={workStatusOptions}
             priorityOptions={priorityOptions}
             teamOptions={teamOptions}

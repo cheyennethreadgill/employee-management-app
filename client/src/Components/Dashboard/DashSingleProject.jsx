@@ -1,18 +1,8 @@
 import ProjectModal from "../Global/ProjectModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const DashSingleProject = ({
-  employeeTeam,
-  URL,
-  handleEditMode,
-  projectID,
-  title,
-  department,
-  priority,
-  team,
-  status,
-}) => {
+const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, priority, team, status }) => {
   const UPDATE_PATH = "update-project";
   const [btnValue, setBtnValue] = useState(0);
   const [showNow, setShowNow] = useState(false);

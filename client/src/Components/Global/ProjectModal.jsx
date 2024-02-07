@@ -67,7 +67,6 @@ const ProjectModal = ({
               onChange={(e) => {
                 handleFormUpdatedStatus("newTitleUpdated", true);
                 handleFormData("newTitle", e.target.value);
-                console.log(formUpdatedStatus.newTitleUpdated);
                 handleProjectToUpdate({
                   ...projectInfoForModal,
                   title: e.target.value,
@@ -89,7 +88,6 @@ const ProjectModal = ({
               onChange={(e) => {
                 handleFormUpdatedStatus("newDescriptionUpdated", true);
                 handleFormData("newDescription", e.target.value);
-                console.log(formData.newDescription);
                 handleProjectToUpdate({ ...projectInfoForModal, description: e.target.value });
               }}
               type="text"
@@ -112,7 +110,6 @@ const ProjectModal = ({
             onChange={(e) => {
               handleFormUpdatedStatus("newDepartmentUpdated", true);
               handleFormData("newDepartment", e.target.value);
-              console.log(formData.newDepartment);
               handleProjectToUpdate({ ...projectInfoForModal, department: e.target.value });
             }}
             required
@@ -137,7 +134,6 @@ const ProjectModal = ({
           onChange={(e) => {
             handleFormUpdatedStatus("newTeamUpdated", true);
             handleFormData("newTeam", e.target.value);
-            console.log(formData.newTeam);
             handleProjectToUpdate({ ...projectInfoForModal, team: e.target.value });
           }}
           name="Team"
@@ -169,7 +165,6 @@ const ProjectModal = ({
             onChange={(e) => {
               handleFormUpdatedStatus("newPriorityUpdated", true);
               handleFormData("newPriority", e.target.value);
-              console.log(formData.newPriority);
               handleProjectToUpdate({ ...projectInfoForModal, priority: e.target.value });
             }}
             required
@@ -203,7 +198,6 @@ const ProjectModal = ({
                   onChange={(e) => {
                     handleFormUpdatedStatus("newStatusUpdated", true);
                     handleFormData("newStatus", e.target.value);
-                    console.log(formData.newStatus);
                     handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
                   }}
                 />

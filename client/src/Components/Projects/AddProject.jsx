@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
-const AddProject = ({ URL, workStatusOptions, priorityOptions, teamOptions, departmentOptions }) => {
+const AddProject = ({
+  URL,
+  handleFetchPromiseError,
+  handleJsonPromiseResponseLog,
+  handleFetchError,
+  workStatusOptions,
+  priorityOptions,
+  teamOptions,
+  departmentOptions,
+}) => {
   const PATH = "add-project";
 
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -33,35 +42,16 @@ const AddProject = ({ URL, workStatusOptions, priorityOptions, teamOptions, depa
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "*" },
-      body: JSON.stringify({
-        title: projectFormData.title,
-        projectID: projectFormData.projectID,
-        department: projectFormData.department,
-        priority: projectFormData.priority,
-        client: projectFormData.client,
-        price: projectFormData.price,
-        startDate: projectFormData.startDate,
-        endDate: projectFormData.endDate,
-        team: projectFormData.team,
-        status: projectFormData.status,
-        description: projectFormData.description,
-      }),
+      body: JSON.stringify(projectFormData),
     };
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
-      if (!fetchPromiseResponse.ok) {
-        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
-      }
+      handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
-
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
+      handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
+      (err) => handleFetchError(err);
     }
     setValidated(!validated);
   }
@@ -190,7 +180,14 @@ const AddProject = ({ URL, workStatusOptions, priorityOptions, teamOptions, depa
                   required
                 >
                   {priorityOptions.map((option) => {
-                    return <option value={option}>{option}</option>;
+                    return (
+                      <option
+                        key={option}
+                        value={option}
+                      >
+                        {option}
+                      </option>
+                    );
                   })}
                 </select>
               </fieldset>
@@ -278,7 +275,14 @@ const AddProject = ({ URL, workStatusOptions, priorityOptions, teamOptions, depa
                 required
               >
                 {teamOptions.map((option) => {
-                  return <option value={option}>{option}</option>;
+                  return (
+                    <option
+                      key={option}
+                      value={option}
+                    >
+                      {option}
+                    </option>
+                  );
                 })}
               </select>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>

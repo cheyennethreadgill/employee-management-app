@@ -7,35 +7,59 @@ import PageHeaders from "../Global/PageHeaders";
 import { Link } from "react-router-dom";
 import MyModal from "../Global/MyModal";
 
-const AllEmployees = ({ URL }) => {
+const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseLog, handleFetchError }) => {
+  // const handleEmployeeStateUpdateDelete = (id) => {
+  //   setEmployees(
+  //     employees.filter((employee) => {
+  //       return employee.employeeid === id;
+  //     })
+  //   );
+  // };
+
   const PATH = "employees";
   const UPDATE_PATH = "update-employee";
-
-  const [employees, setEmployees] = useState([]);
+  const titles = [
+    "Image",
+    "Employee ID",
+    "Name",
+    "Degree",
+    "Department",
+    "Designation",
+    "Mobile",
+    "Email",
+    "Join Date",
+    "Actions",
+  ];
 
   // get Employees
   useEffect(() => {
     fetch(`${URL}${PATH}`)
       .then((res) => res.json())
       .then((json) => setEmployees(json));
+    handleLoadingState(false);
   }, []);
 
+  const [employees, setEmployees] = useState([]);
   const [show, setShow] = useState(false);
   const [showNow, setShowNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const handleLoadingState = (value) => setLoading(value);
+
+  const [employeeInfoForModal, setEmployeeInfoForModal] = useState({});
+
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const handleEditMode = () => setEditMode(!editMode);
   const handleShowNow = () => setShowNow(!showNow);
-
-  const [employeeInfoForModal, setEmployeeInfoForModal] = useState({});
 
   // Set employee info given by employee card
   const handleEmployeeSet = (values) => {
     setEmployeeInfoForModal(values);
   };
 
-  // UPDATE Employee STATE (UI)
+  // *******UI STATE
+  // UPDATE Employee (UI)
   const handleEmployeeStateUpdate = (id, employeeToUpdate) => {
     setEmployees(
       employees.map((employee) => {
@@ -48,15 +72,17 @@ const AllEmployees = ({ URL }) => {
     );
   };
 
-  // const handleEmployeeStateUpdateDelete = (id) => {
-  //   setEmployees(
-  //     employees.filter((employee) => {
-  //       return employee.employeeid === id;
-  //     })
-  //   );
-  // };
+  // Delete Employee (UI)
+  const handleEmployeeDelete = (id) => {
+    setEmployees(
+      employees.filter((employee) => {
+        const { employeeid } = employee;
+        return employeeid !== id;
+      })
+    );
+  };
 
-  //   UPDATE PROJECT (DB)
+  //   UPDATE EMPLOYEE (DB)
   async function handleEmployeeUpdate(e, id, employeeToUpdate) {
     e.preventDefault();
     handleEmployeeStateUpdate(id, employeeToUpdate);
@@ -84,18 +110,11 @@ const AllEmployees = ({ URL }) => {
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}`, options);
-      if (!fetchPromiseResponse.ok) {
-        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
-      }
+      handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
-
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
+      handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
+      (err) => handleFetchError(err);
     }
   }
 
@@ -108,30 +127,15 @@ const AllEmployees = ({ URL }) => {
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}delete-employee/${id}`, options);
-      if (!fetchPromiseResponse.ok) {
-        console.log(`Something went wrong with fetch from server ${fetchPromiseResponse.status}`);
-      }
+      handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
-
-      jsonPromiseResponse.then((res) => {
-        console.log(res);
-      });
+      handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch {
       (err) => {
-        console.log(`FETCH FAILED: ${err}`);
+        (err) => handleFetchError(err);
       };
     }
   }
-
-  // Delete Employee State
-  const handleEmployeeDelete = (id) => {
-    setEmployees(
-      employees.filter((employee) => {
-        const { employeeid } = employee;
-        return employeeid !== id;
-      })
-    );
-  };
 
   // GET FILTERED EMPLLOYEES
   const [filteredEmloyees, setfilteredEmloyees] = useState([]);
@@ -310,7 +314,6 @@ const AllEmployees = ({ URL }) => {
                       placeholder="Search"
                       onChange={(e) => {
                         handleFilteredEmployees(e.target.value);
-                        console.log(e.target.value);
                       }}
                     />
                   </div>
@@ -337,27 +340,19 @@ const AllEmployees = ({ URL }) => {
 
           <section className="employees-card-container">
             <div className="employees-card-titles-desktop d-none d-md-flex">
-              {" "}
-              <h3></h3>
-              <h3>Image</h3>
-              <h3>Employee ID</h3>
-              <h3>Name</h3>
-              <h3>Degree</h3>
-              <h3>Department</h3>
-              <h3>Designation</h3>
-              <h3>Mobile</h3>
-              <h3>Email</h3>
-              <h3>Join Date</h3>
-              <h3>Actions</h3>
+              {titles.map((title) => {
+                return <h3 key={title}>{title}</h3>;
+              })}
               <hr />
             </div>
 
             {/* {filterCount ? filteredEmloyeesContent : employeesContent} */}
-            {employeesContent}
+            {loading && <div className="loading"></div>}
+            {!loading && employeesContent}
           </section>
         </section>
       </Container>
-
+      )
       {!showNow ? null : (
         <MyModal
           employees={employees}
