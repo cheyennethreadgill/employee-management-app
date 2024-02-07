@@ -101,6 +101,7 @@ const AddProject = ({
         >
           <Row>
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -120,6 +121,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -135,6 +137,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -165,6 +168,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -196,6 +200,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -212,6 +217,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -228,6 +234,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -244,6 +251,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="6"
             >
@@ -260,6 +268,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="12"
             >
@@ -291,6 +300,7 @@ const AddProject = ({
 
             {/* *********WORK STATUS RADIOS */}
             <Form.Group
+              className="form-group"
               as={Col}
               lg="12"
             >
@@ -319,6 +329,7 @@ const AddProject = ({
             </Form.Group>
 
             <Form.Group
+              className="form-group"
               as={Col}
               lg="12"
             >
@@ -336,13 +347,13 @@ const AddProject = ({
 
             <div className="form-btns">
               <Button
-                className="btn-secondary"
+                className="btn btn-primary"
                 type="submit"
               >
                 Submit
               </Button>
               <Button
-                className="btn-danger"
+                className="btn-secondary"
                 type="button"
               >
                 Cancel

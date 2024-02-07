@@ -294,18 +294,20 @@ const AddEmployee = ({
             {formSubmitted && <p className="fw-medium mt-2">Employee Added Successfully!</p>}
             {error && <p className="fw-bold mt-2">Please correct errors above.</p>}
 
-            <Button
-              className="btn btn-success"
-              type="submit"
-            >
-              Submit
-            </Button>
-            <Button
-              className=" btn btn-danger"
-              type="button"
-            >
-              Cancel
-            </Button>
+            <div className="form-btns">
+              <Button
+                className="btn btn-primary"
+                type="submit"
+              >
+                Submit
+              </Button>
+              <Button
+                className=" btn btn-secondary"
+                type="button"
+              >
+                Cancel
+              </Button>
+            </div>
           </Row>
         </Form>
       </Container>

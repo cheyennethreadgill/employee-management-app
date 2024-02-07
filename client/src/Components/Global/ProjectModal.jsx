@@ -223,6 +223,7 @@ const ProjectModal = ({
             handleEditMode();
             handleProjectUpdate(e, projectID, projectToUpdate);
             handleShowNow(false);
+            console.log(projectToUpdate);
           }}
         >
           Save Changes
