@@ -44,19 +44,16 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   const [showNow, setShowNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
-  const handleLoadingState = (value) => setLoading(value);
-
   const [employeeInfoForModal, setEmployeeInfoForModal] = useState({});
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const handleEditMode = () => setEditMode(!editMode);
   const handleShowNow = () => setShowNow(!showNow);
+  const handleLoadingState = (value) => setLoading(value);
 
   // Set employee info given by employee card
-  const handleEmployeeSet = (values) => {
-    setEmployeeInfoForModal(values);
-  };
+  const handleEmployeeSet = (values) => setEmployeeInfoForModal(values);
 
   // *******UI STATE
   // UPDATE Employee (UI)
@@ -86,6 +83,8 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   async function handleEmployeeUpdate(e, id, employeeToUpdate) {
     e.preventDefault();
     handleEmployeeStateUpdate(id, employeeToUpdate);
+    console.log(employeeToUpdate.image);
+    console.log(employeeToUpdate);
 
     // Post options
     const options = {
@@ -104,7 +103,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
           employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department
         }`,
         email: `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`,
-        image: `${employeeToUpdate.newImageUpdated ? employeeToUpdate.newImage : employeeToUpdate.image}`,
+        image: `${employeeToUpdate.image}`,
       }),
     };
 
@@ -352,7 +351,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
           </section>
         </section>
       </Container>
-      )
+      ){/* Modal */}
       {!showNow ? null : (
         <MyModal
           employees={employees}

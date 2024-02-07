@@ -72,18 +72,18 @@ const EmployeeCard = ({
   };
 
   // Image Name extraction
-  function extractFilename() {
-    if (image) {
-      if (image.substring(0, 12) == "C:\\fakeimage\\") return image.substring(12); // modern browser
+  // function extractFilename() {
+  //   if (image) {
+  //     if (image.substring(0, 12) == "C:\\fakeimage\\") return image.substring(12); // modern browser
 
-      var x;
-      x = image.lastIndexOf("\\");
-      if (x >= 0) return image.substring(x + 1); // Windows-based image
-    } else {
-      return;
-    }
-  }
-  const fileName = extractFilename();
+  //     var x;
+  //     x = image.lastIndexOf("\\");
+  //     if (x >= 0) return image.substring(x + 1); // Windows-based image
+  //   } else {
+  //     return;
+  //   }
+  // }
+  // const fileName = extractFilename();
 
   return (
     <>
@@ -116,7 +116,7 @@ const EmployeeCard = ({
                   <h3>Image</h3>
                 </Col>
                 <Col lg="12">
-                  {fileName ? (
+                  {/* {fileName ? (
                     <img
                       src={fileName ? require(`../../../../client/src/images/${fileName}`) : null}
                       alt="desktop img"
@@ -126,7 +126,7 @@ const EmployeeCard = ({
                     />
                   ) : (
                     <i className="fa-solid fa-circle-user fs-1"></i>
-                  )}
+                  )} */}
                 </Col>
               </div>
             </Col>
@@ -302,7 +302,18 @@ const EmployeeCard = ({
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            {fileName ? (
+            {image ? (
+              <img
+                src={require(`../../../../client/src/images/${image}`)}
+                alt="desktop img"
+                height="35px"
+                width="35px"
+                className="employee-card-img"
+              />
+            ) : (
+              <i className="fa-solid fa-circle-user fs-2"></i>
+            )}
+            {/* {fileName ? (
               <img
                 src={fileName ? require(`../../../../client/src/images/${fileName}`) : null}
                 alt="desktop img"
@@ -312,7 +323,7 @@ const EmployeeCard = ({
               />
             ) : (
               <i className="fa-solid fa-circle-user fs-2"></i>
-            )}
+            )} */}
           </div>
 
           <div className="employee-card-desktop-form-fields">
@@ -350,6 +361,7 @@ const EmployeeCard = ({
           <div className="form-btns employee-card-desktop-form-fields">
             <i
               onClick={(e) => {
+                console.log(image);
                 handleBtnValue(employeeid);
                 handleEditMode();
                 handleShowNow(true);

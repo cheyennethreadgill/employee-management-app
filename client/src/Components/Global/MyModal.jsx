@@ -72,7 +72,7 @@ const MyModal = ({
   //   });
   // }
 
-  // UPDATED PROJECT INFO
+  // UPDATED PROJECT INFO (sent to all empployees)
   const [employeeToUpdate, setEmployeeToUpdate] = useState(employeeInfoForModal);
   // ****** works without code from name split
 
@@ -237,13 +237,17 @@ const MyModal = ({
         </Form.Group>
 
         <Form.Group className="form-group">
+          <label htmlFor="image-upload">Upload Image</label>
           <Form.Control
+            id="image-upload"
             type="file"
             accept=".png, .jpg, .jpeg"
             onChange={(e) => {
+              const file = e.target.files[0];
               handleFormUpdatedStatus("newImageUpdated", true);
               handleFormData("newImage", e.target.value);
-              handleEmployeeToUpdate({ ...employeeInfoForModal, image: e.target.value });
+              handleEmployeeToUpdate({ ...employeeInfoForModal, image: file.name });
+              console.log(file.name);
             }}
             placeholder={formUpdatedStatus.newImageUpdated ? formData.newImage : image}
           />
@@ -267,7 +271,7 @@ const MyModal = ({
               handleEmployeeUpdate(e, employeeid, employeeToUpdate);
               handleShowNow(false);
               // logs correctly when name split is commented out
-              console.log(employeeToUpdate);
+              console.log(employeeToUpdate.image);
 
               // ***combined name works
               // ***ks works

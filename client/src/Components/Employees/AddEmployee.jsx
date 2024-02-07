@@ -26,7 +26,7 @@ const AddEmployee = ({
     department: "",
     address: "",
     email: "",
-    dob: "",
+    dateofbirth: "",
     degree: "",
     image: "",
   });
@@ -258,7 +258,8 @@ const AddEmployee = ({
                 type="date"
                 placeholder="date of birth"
                 onChange={(e) => {
-                  handleEmployeeFormData("dob", e.target.value);
+                  handleEmployeeFormData("dateofbirth", e.target.value);
+                  console.log(employeeFormData.dateofbirth);
                 }}
                 required
               />
@@ -280,14 +281,15 @@ const AddEmployee = ({
             </Form.Group>
 
             <fieldset>
-              <label htmlFor="image upload">Upload Image</label>
+              <label htmlFor="image-upload">Upload Image</label>
               <Form.Control
                 type="file"
                 accept=".png, .jpg, .jpeg"
                 onChange={(e) => {
                   handleEmployeeFormData("image", e.target.value);
+                  console.log(e.target.value);
                 }}
-                id="image upload"
+                id="image-upload"
               />
             </fieldset>
 
