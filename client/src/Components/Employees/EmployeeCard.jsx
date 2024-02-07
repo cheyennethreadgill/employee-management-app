@@ -116,17 +116,17 @@ const EmployeeCard = ({
                   <h3>Image</h3>
                 </Col>
                 <Col lg="12">
-                  {/* {fileName ? (
+                  {image ? (
                     <img
-                      src={fileName ? require(`../../../../client/src/images/${fileName}`) : null}
+                      src={require(`../../../../client/src/images/${image}`)}
                       alt="desktop img"
                       height="35px"
                       width="35px"
                       className="employee-card-img"
                     />
                   ) : (
-                    <i className="fa-solid fa-circle-user fs-1"></i>
-                  )} */}
+                    <i className="fa-solid fa-circle-user fs-2"></i>
+                  )}
                 </Col>
               </div>
             </Col>
