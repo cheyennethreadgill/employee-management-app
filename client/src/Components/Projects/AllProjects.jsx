@@ -24,19 +24,19 @@ const AllProjects = ({
     fetch(`${URL}${PATH}`)
       .then((res) => res.json())
       .then((json) => setProjects(json));
+    handleLoadingState(false);
   }, []);
 
+  const [loading, setLoading] = useState(true);
   const [showNow, setShowNow] = useState(false);
-  const handleShowNow = () => setShowNow(!showNow);
   const [editMode, setEditMode] = useState(false);
-  const handleEditMode = () => setEditMode(!editMode);
-
   const [projectInfoForModal, setprojectInfoForModal] = useState({});
 
+  const handleLoadingState = (value) => setLoading(value);
+  const handleShowNow = () => setShowNow(!showNow);
+  const handleEditMode = () => setEditMode(!editMode);
   // Set project info given by employee card
-  const handleProjectSet = (values) => {
-    setprojectInfoForModal(values);
-  };
+  const handleProjectSet = (values) => setprojectInfoForModal(values);
 
   // // UPDATE PROJECT STATE DELETE (UI)
   const handleProjectStateUpdateDelete = (id) => {
@@ -120,72 +120,74 @@ const AllProjects = ({
             <h2>New Projects</h2>
             <p>{projects.length} projects</p>
           </div>
+          {loading && <div className="loading"></div>}
+          {!loading && (
+            <Row className="all-projects-row">
+              {projects.map((project) => {
+                const {
+                  projectID,
+                  title,
+                  department,
+                  priority,
+                  client,
+                  price,
+                  startDate,
+                  endDate,
+                  team,
+                  status,
+                  description,
+                } = project;
 
-          <Row className="all-projects-row">
-            {projects.map((project) => {
-              const {
-                projectID,
-                title,
-                department,
-                priority,
-                client,
-                price,
-                startDate,
-                endDate,
-                team,
-                status,
-                description,
-              } = project;
-
-              return (
-                <Col
-                  className="project-col"
-                  key={projectID}
-                  lg="3"
-                  md="1"
-                >
-                  <ProjectCard
-                    workStatusOptions={workStatusOptions}
-                    priorityOptions={priorityOptions}
-                    teamOptions={teamOptions}
-                    departmentOptions={departmentOptions}
-                    URL={URL}
-                    handleProjectSet={handleProjectSet}
-                    onDelete={handleProjectStateUpdateDelete}
-                    showNow={showNow}
-                    handleShowNow={handleShowNow}
-                    editMode={editMode}
-                    handleEditMode={handleEditMode}
-                    projectID={projectID}
-                    title={title}
-                    department={department}
-                    priority={priority}
-                    client={client}
-                    price={price}
-                    startDate={startDate}
-                    endDate={endDate}
-                    team={team}
-                    status={status}
-                    description={description}
-                    newTitle={projectInfoForModal.newTitle}
-                    newDescription={projectInfoForModal.newDescription}
-                    newDepartment={projectInfoForModal.newDepartment}
-                    newPriority={projectInfoForModal.newPriority}
-                    newStatus={projectInfoForModal.newStatus}
-                    newTeam={projectInfoForModal.newTeam}
-                    newTitleUpdated={projectInfoForModal.newTitleUpdated}
-                    newDepartmentUpdated={projectInfoForModal.newDepartmentUpdated}
-                    newPriorityUpdated={projectInfoForModal.newPriorityUpdated}
-                    newStatusUpdated={projectInfoForModal.newStatusUpdated}
-                    newTeamUpdated={projectInfoForModal.newTeamUpdated}
-                    newDescriptionUpdated={projectInfoForModal.newDescriptionUpdated}
-                    handleProjectUpdate={handleProjectUpdate}
-                    deleteProjectFromDB={deleteProjectFromDB}
-                  />
-                </Col>
-              );
-            })}
-          </Row>
+                return (
+                  <Col
+                    className="project-col"
+                    key={projectID}
+                    lg="3"
+                    md="1"
+                  >
+                    <ProjectCard
+                      workStatusOptions={workStatusOptions}
+                      priorityOptions={priorityOptions}
+                      teamOptions={teamOptions}
+                      departmentOptions={departmentOptions}
+                      URL={URL}
+                      handleProjectSet={handleProjectSet}
+                      onDelete={handleProjectStateUpdateDelete}
+                      showNow={showNow}
+                      handleShowNow={handleShowNow}
+                      editMode={editMode}
+                      handleEditMode={handleEditMode}
+                      projectID={projectID}
+                      title={title}
+                      department={department}
+                      priority={priority}
+                      client={client}
+                      price={price}
+                      startDate={startDate}
+                      endDate={endDate}
+                      team={team}
+                      status={status}
+                      description={description}
+                      newTitle={projectInfoForModal.newTitle}
+                      newDescription={projectInfoForModal.newDescription}
+                      newDepartment={projectInfoForModal.newDepartment}
+                      newPriority={projectInfoForModal.newPriority}
+                      newStatus={projectInfoForModal.newStatus}
+                      newTeam={projectInfoForModal.newTeam}
+                      newTitleUpdated={projectInfoForModal.newTitleUpdated}
+                      newDepartmentUpdated={projectInfoForModal.newDepartmentUpdated}
+                      newPriorityUpdated={projectInfoForModal.newPriorityUpdated}
+                      newStatusUpdated={projectInfoForModal.newStatusUpdated}
+                      newTeamUpdated={projectInfoForModal.newTeamUpdated}
+                      newDescriptionUpdated={projectInfoForModal.newDescriptionUpdated}
+                      handleProjectUpdate={handleProjectUpdate}
+                      deleteProjectFromDB={deleteProjectFromDB}
+                    />
+                  </Col>
+                );
+              })}
+            </Row>
+          )}
         </section>
       </Container>
       {/* ***************************************************SHOW MODAL */}

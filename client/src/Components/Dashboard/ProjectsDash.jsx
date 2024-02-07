@@ -32,7 +32,9 @@ const ProjectsDash = ({ URL }) => {
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [employeeTeam, setEmployeeTeam] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  const handleLoadingState = (value) => setLoading(value);
   const handleEditMode = () => setEditMode(!editMode);
 
   // fetch Projects
@@ -40,6 +42,7 @@ const ProjectsDash = ({ URL }) => {
     fetch(`${URL}${PATH}`)
       .then((res) => res.json())
       .then((json) => setProjects(json));
+    handleLoadingState(false);
   }, []);
 
   // get employees
@@ -78,7 +81,9 @@ const ProjectsDash = ({ URL }) => {
             return <h3 key={title}> {title} </h3>;
           })}
         </div>
-        {projectsMapContent}
+
+        {loading && <div className="loading"></div>}
+        {!loading && projectsMapContent}
         {/* ****************************************************END CARD */}
       </section>
     </Container>
