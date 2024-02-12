@@ -26,10 +26,11 @@ const AddEmployee = ({
     department: "",
     address: "",
     email: "",
-    dob: "",
+    dateofbirth: "",
     degree: "",
-    image: "",
+    image: null,
   });
+
   const handleEmployeeFormData = (key, value) => {
     setEmployeeFormData({ ...employeeFormData, [key]: value });
   };
@@ -38,13 +39,28 @@ const AddEmployee = ({
   // ADD EMPLOYEE TO DB
   async function addEmployeeNow(e) {
     e.preventDefault();
+
+    // use FormData Api to construct the body in request when handling multiform
+    const formData = new FormData();
+    for (const key in employeeFormData) {
+      formData.append(key, employeeFormData[key]);
+    }
+
     // // Post options
     const options = {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "*" },
-      body: JSON.stringify(employeeFormData),
+      // **multipart not needed (multiform header will set automatically with for data api)
+      headers: {
+        //   // "Content-Type":
+        //   //   "multipart/form-data; boundary=---------------------------974767299852498929531610575-----------------------------974767299852498929531610575",
+        Accept: "*",
+      },
+      // **use form data api to construct body instead of json
+      // body: JSON.stringify(employeeFormData),
+      body: formData,
     };
 
+    // try/catch endpoint
     try {
       const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
@@ -92,6 +108,8 @@ const AddEmployee = ({
     <>
       <Container>
         <PageHeaders name={PATH} />
+        {/* *****************************************TEST FORM */}
+
         <Form
           noValidate
           validated={validated}
@@ -99,6 +117,7 @@ const AddEmployee = ({
             handleSubmit(e);
           }}
           autoComplete="true"
+          encType="multipart/form-data"
         >
           <Row>
             <Form.Group
@@ -258,7 +277,7 @@ const AddEmployee = ({
                 type="date"
                 placeholder="date of birth"
                 onChange={(e) => {
-                  handleEmployeeFormData("dob", e.target.value);
+                  handleEmployeeFormData("dateofbirth", e.target.value);
                 }}
                 required
               />
@@ -284,10 +303,11 @@ const AddEmployee = ({
               <Form.Control
                 type="file"
                 accept=".png, .jpg, .jpeg"
-                onChange={(e) => {
-                  handleEmployeeFormData("image", e.target.value);
-                }}
                 id="image upload"
+                name="image"
+                onChange={(e) => {
+                  handleEmployeeFormData("image", e.target.files[0]);
+                }}
               />
             </fieldset>
 

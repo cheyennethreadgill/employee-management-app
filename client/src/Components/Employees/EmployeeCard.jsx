@@ -39,7 +39,6 @@ const EmployeeCard = ({
   onDelete,
 }) => {
   // EDIT MODE
-
   const [btnValue, setBtnValue] = useState(0);
   const [employee, setEmployee] = useState([]);
   const [foundEmployee, setFoundEmployee] = useState([]);
@@ -72,18 +71,18 @@ const EmployeeCard = ({
   };
 
   // Image Name extraction
-  function extractFilename() {
-    if (image) {
-      if (image.substring(0, 12) == "C:\\fakeimage\\") return image.substring(12); // modern browser
+  // function extractFilename() {
+  //   if (image) {
+  //     if (image.substring(0, 12) == "C:\\fakeimage\\") return image.substring(12); // modern browser
 
-      var x;
-      x = image.lastIndexOf("\\");
-      if (x >= 0) return image.substring(x + 1); // Windows-based image
-    } else {
-      return;
-    }
-  }
-  const fileName = extractFilename();
+  //     var x;
+  //     x = image.lastIndexOf("\\");
+  //     if (x >= 0) return image.substring(x + 1); // Windows-based image
+  //   } else {
+  //     return;
+  //   }
+  // }
+  // const fileName = extractFilename();
 
   return (
     <>
@@ -116,17 +115,17 @@ const EmployeeCard = ({
                   <h3>Image</h3>
                 </Col>
                 <Col lg="12">
-                  {fileName ? (
+                  {image && typeof image === "string" && image.trim() && (
                     <img
-                      src={fileName ? require(`../../../../client/src/images/${fileName}`) : null}
+                      src={require(`../../images/${image.trim()}`)}
                       alt="desktop img"
                       height="35px"
                       width="35px"
                       className="employee-card-img"
                     />
-                  ) : (
-                    <i className="fa-solid fa-circle-user fs-1"></i>
                   )}
+
+                  {!image && <i className="fa-solid fa-circle-user fs-2"></i>}
                 </Col>
               </div>
             </Col>
@@ -302,17 +301,17 @@ const EmployeeCard = ({
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            {fileName ? (
+            {image && typeof image === "string" && image.trim() && (
               <img
-                src={fileName ? require(`../../../../client/src/images/${fileName}`) : null}
+                src={require(`../../images/${image.trim()}`)}
                 alt="desktop img"
                 height="35px"
                 width="35px"
                 className="employee-card-img"
               />
-            ) : (
-              <i className="fa-solid fa-circle-user fs-2"></i>
             )}
+
+            {!image && <i className="fa-solid fa-circle-user fs-2"></i>}
           </div>
 
           <div className="employee-card-desktop-form-fields">

@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const MyModal = ({
-  employeeInfoForModal,
-  handleEditMode,
-  handleShowNow,
   employeeid,
   firstname,
   lastname,
@@ -13,8 +10,11 @@ const MyModal = ({
   degree,
   email,
   image,
-  handleEmployeeUpdate,
   mobile,
+  handleEditMode,
+  handleShowNow,
+  handleEmployeeUpdate,
+  employeeInfoForModal,
 }) => {
   // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
@@ -31,7 +31,7 @@ const MyModal = ({
     setFormUpdatedStatus({ ...formUpdatedStatus, [key]: value });
   };
 
-  // SET NEW FORM
+  // SET/HANDLE NEW FORM
   const [formData, setFormData] = useState({
     newFirstname: "",
     newLastname: "",
@@ -40,7 +40,7 @@ const MyModal = ({
     newDesignation: "",
     newEmail: "",
     newMobile: 0,
-    newImage: "",
+    newImage: null,
     combinedName: "",
   });
   const handleFormData = (key, value) => {
@@ -48,45 +48,59 @@ const MyModal = ({
   };
 
   // HANDLE NAME SPLIT
-  // const getPromiseResponse = (e) => {
-  //   return new Promise((resolve, reject) => {
-  //     // waiting on the combined name
-  //     handleFormData("combinedName", e);
-  //     let combined = formData.combinedName;
+  const getPromiseResponse = (e) => {
+    return new Promise((resolve, reject) => {
+      // waiting on the combined name
+      handleFormData("combinedName", e);
+      let combined = formData.combinedName;
+      resolve(combined);
+      reject("ERROR");
+    });
+  };
 
-  //     // logs/returns correctly
-  //     resolve(combined);
-  //     reject("ERROR");
-  //   });
-  // };
-  // async function handleNameSplit() {
-  //   const response = await getPromiseResponse();
-  //   const splitName = response.split(" ");
+  async function start() {
+    const response = await getPromiseResponse();
+    const splitName = response.split(" ");
 
-  //   handleFormData("newFirstname", splitName[0]);
-  //   handleFormData("newLastname", splitName[1]);
+    handleFormData("newFirstname", splitName[0]);
+    handleFormData("newLastname", splitName[1]);
 
-  //   handleInputForhandleEmployeeToUpdate({
-  //     name1: splitName[0],
-  //     name2: splitName[1],
-  //   });
-  // }
+    handleInputForhandleEmployeeToUpdate({
+      firstname: splitName[0],
+      lastname: splitName[1],
+    });
+  }
 
   // UPDATED PROJECT INFO
-  const [employeeToUpdate, setEmployeeToUpdate] = useState(employeeInfoForModal);
+
   // ****** works without code from name split
 
-  // handle plit nae for employee to update
+  // handle plit name for employee to update
   const handleInputForhandleEmployeeToUpdate = (names) => {
-    handleEmployeeToUpdate({ ...employeeInfoForModal, firstname: names.name1 });
-    handleEmployeeToUpdate({ ...employeeInfoForModal, lastname: names.name2 });
+    handleEmployeeToUpdate({ ...employeeToUpdate, ...names });
   };
+
   // HANDLE EMPLOYEE TO UPDATE
+  const [employeeToUpdate, setEmployeeToUpdate] = useState({
+    firstname: employeeInfoForModal.firstname,
+    lastname: employeeInfoForModal.lastname,
+    degree: employeeInfoForModal.degree,
+    department: employeeInfoForModal.department,
+    designation: employeeInfoForModal.designation,
+    email: employeeInfoForModal.email,
+    image: employeeInfoForModal.image,
+    mobile: employeeInfoForModal.mobile,
+  });
+
+  //handle EMPLOYEE UPDATE (EIFM from all empl)
   const handleEmployeeToUpdate = (values) => setEmployeeToUpdate(values);
 
   return (
     <section className="my-modal">
-      <Form className="my-modal-form">
+      <Form
+        className="my-modal-form"
+        encType="multiform/form-data"
+      >
         {/* *******************************NAME */}
         <Form.Group
           className="mb-3"
@@ -103,14 +117,14 @@ const MyModal = ({
               }
               type="text"
               autoFocus
-              onChange={(e) => {
+              onKeyDown={(e) => {
                 handleFormUpdatedStatus("newFirstnameUpdated", true);
                 handleFormUpdatedStatus("newLastnameUpdated", true);
-                // getPromiseResponse(e.target.value);
-
-                // ***combined name works
-                // ***ks works
-                // ***split name[0] works
+                // handleNameSplit(e.target.value);
+                getPromiseResponse(e.target.value);
+              }}
+              onBeforeInput={() => {
+                start();
               }}
             />
             <span className="form-control-container-icon_end">
@@ -134,7 +148,7 @@ const MyModal = ({
               onChange={(e) => {
                 handleFormUpdatedStatus("newDegreeUpdated", true);
                 handleFormData("newDegree", e.target.value);
-                handleEmployeeToUpdate({ ...employeeInfoForModal, degree: e.target.value });
+                handleEmployeeToUpdate({ ...employeeToUpdate, degree: e.target.value });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -152,7 +166,7 @@ const MyModal = ({
             onChange={(e) => {
               handleFormUpdatedStatus("newDepartmentUpdated", true);
               handleFormData("newDepartment", e.target.value);
-              handleEmployeeToUpdate({ ...employeeInfoForModal, department: e.target.value });
+              handleEmployeeToUpdate({ ...employeeToUpdate, department: e.target.value });
             }}
             required={true}
             defaultValue={formUpdatedStatus.newDepartmentUpdated ? formData.newDepartment : department}
@@ -179,7 +193,7 @@ const MyModal = ({
               onChange={(e) => {
                 handleFormData("newDesignation", e.target.value);
                 handleFormUpdatedStatus("newDesignationUpdated", true);
-                handleEmployeeToUpdate({ ...employeeInfoForModal, designation: e.target.value });
+                handleEmployeeToUpdate({ ...employeeToUpdate, designation: e.target.value });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -203,7 +217,7 @@ const MyModal = ({
               onChange={(e) => {
                 handleFormData("newMobile", e.target.value);
                 handleFormUpdatedStatus("newMobileUpdated", true);
-                handleEmployeeToUpdate({ ...employeeInfoForModal, mobile: e.target.value });
+                handleEmployeeToUpdate({ ...employeeToUpdate, mobile: e.target.value });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -227,7 +241,7 @@ const MyModal = ({
               onChange={(e) => {
                 handleFormUpdatedStatus("newEmailUpdated", true);
                 handleFormData("newEmail", e.target.value);
-                handleEmployeeToUpdate({ ...employeeInfoForModal, email: e.target.value });
+                handleEmployeeToUpdate({ ...employeeToUpdate, email: e.target.value });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -240,10 +254,11 @@ const MyModal = ({
           <Form.Control
             type="file"
             accept=".png, .jpg, .jpeg"
+            name="image"
             onChange={(e) => {
               handleFormUpdatedStatus("newImageUpdated", true);
-              handleFormData("newImage", e.target.value);
-              handleEmployeeToUpdate({ ...employeeInfoForModal, image: e.target.value });
+              handleFormData("newImage", e.target.files[0]);
+              handleEmployeeToUpdate({ ...employeeToUpdate, image: e.target.files[0] });
             }}
             placeholder={formUpdatedStatus.newImageUpdated ? formData.newImage : image}
           />
@@ -257,26 +272,21 @@ const MyModal = ({
           >
             Close
           </Button>
-          <Button
-            className="update-btn"
+          <input
+            value="Save Changes"
+            className="btn update-btn text-light"
             variant="primary"
             onClick={(e) => {
-              e.preventDefault();
               handleEditMode();
-              // handleNameSplit();
               handleEmployeeUpdate(e, employeeid, employeeToUpdate);
               handleShowNow(false);
               // logs correctly when name split is commented out
               console.log(employeeToUpdate);
-
-              // ***combined name works
-              // ***ks works
-              // ***split name[0] works
             }}
             type="submit"
-          >
-            Save Changes
-          </Button>
+          />
+          {/* Save Changes
+          </input> */}
         </div>
       </Form>
     </section>
