@@ -4,7 +4,7 @@ const PageHeaders = ({ name }) => {
     if (name.includes("-")) {
       return `${title[0]} ${title[1]}`;
     } else {
-      return `${title[0]}`;
+      return name;
     }
   }
 

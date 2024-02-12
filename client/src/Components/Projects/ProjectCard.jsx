@@ -56,13 +56,19 @@ const ProjectCard = ({
   };
 
   const startDateReformat = () => {
-    let newStartDate = startDate.substring(0, 10);
-    return newStartDate;
+    if (startDate) {
+      let newStartDate = startDate.substring(0, 10);
+      return newStartDate;
+    } else return null;
   };
+
   const endDateReformat = () => {
-    let newEndDate = endDate.substring(0, 10);
-    return newEndDate;
+    if (endDate) {
+      let newEndDate = endDate.substring(0, 10);
+      return newEndDate;
+    } else return null;
   };
+
   const newStartDate = startDateReformat();
   const newEndDate = endDateReformat();
 
@@ -142,7 +148,7 @@ const ProjectCard = ({
         </div>
         {/* ******************************STATUS */}
         {workStatusOptions.map((option) => {
-          if (status.includes(option)) {
+          if (status && status.includes(option)) {
             return (
               <p
                 key={option}

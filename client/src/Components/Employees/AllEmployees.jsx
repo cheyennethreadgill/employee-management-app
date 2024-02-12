@@ -84,28 +84,47 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
 
   //   UPDATE EMPLOYEE (DB)
   async function handleEmployeeUpdate(e, id, employeeToUpdate) {
-    e.preventDefault();
     handleEmployeeStateUpdate(id, employeeToUpdate);
+
+    // set up form data API to use for multiform post
+    const formData = new FormData();
+
+    // append keys in body to new form object
+    formData.append("employeeid", id);
+    formData.append(
+      "fname",
+      `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`
+    );
+    formData.append(
+      "lname",
+      `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`
+    );
+    formData.append(
+      "degree",
+      `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`
+    );
+    formData.append(
+      "mobile",
+      `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`
+    );
+    formData.append(
+      "designation",
+      `${employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation}`
+    );
+    formData.append(
+      "department",
+      `${employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department}`
+    );
+    formData.append(
+      "email",
+      `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`
+    );
+    formData.append("image", employeeToUpdate.newImageUpdated ? employeeToUpdate.newImage : employeeToUpdate.image);
 
     // Post options
     const options = {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        employeeid: id,
-        fname: `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`,
-        lname: `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`,
-        degree: `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`,
-        mobile: `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`,
-        designation: `${
-          employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation
-        }`,
-        department: `${
-          employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department
-        }`,
-        email: `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`,
-        image: `${employeeToUpdate.newImageUpdated ? employeeToUpdate.newImage : employeeToUpdate.image}`,
-      }),
+      body: formData,
     };
 
     try {
@@ -186,6 +205,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
 
     return (
       <EmployeeCard
+        key={employeeid}
         setShow={setShow}
         handleShow={handleShow}
         handleEditMode={handleEditMode}
@@ -197,7 +217,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
         URL={URL}
         onUpdateEmployeeState={handleEmployeeDelete}
         employees={employees}
-        key={employeeid}
         date={date}
         employeeid={employeeid}
         firstname={firstname}
@@ -237,13 +256,13 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
 
     return (
       <EmployeeCard
+        key={employeeid}
         setShow={setShow}
         handleShow={handleShow}
         handleEditMode={handleEditMode}
         handleShowNow={handleShowNow}
         employeeInfoForModal={employeeInfoForModal}
         handleEmployeeSet={handleEmployeeSet}
-        key={employeeid}
         PATH={PATH}
         show={show}
         handleClose={handleClose}

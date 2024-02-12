@@ -12,7 +12,7 @@ const Navigation = ({ handleNavToggle, handleMouseLeave, toggled }) => {
             : "main-nav-list"
         }
         onMouseLeave={handleMouseLeave}
-        // onMouseEnter={handleNavToggle}
+        onMouseEnter={handleNavToggle}
       >
         {pages.map((page) => {
           const { id, name, links, icon } = page;

@@ -2,25 +2,46 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const multer = require("multer");
 
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 8080;
+const db = mysql.createConnection({
+  user: "root",
+  host: "localhost",
+  password: "Cheyenne1234",
+  database: "employee-management",
+});
 
 // const db = mysql.createConnection({
-//   user: "root",
-//   host: "localhost",
-//   password: "Cheyenne1234",
-//   database: "employee-management",
+//   user: process.env.DBUser,
+//   host: process.env.DBHost,
+//   password: process.env.DBPassword,
+//   database: process.env.DBDatabase,
 // });
-const db = mysql.createConnection({
-  user: process.env.DBUser,
-  host: process.env.DBHost,
-  password: process.env.DBPassword,
-  database: process.env.DBDatabase,
+
+// Define storage options for uploaded files
+const storageInfo = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "../client/src/images/"),
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`);
+  },
 });
+
+const upload = multer({
+  storage: storageInfo,
+  limits: {
+    fileSize: 1024 * 1024 * 10, // 5MB max file size
+  },
+});
+
+app.use(cors());
+app.use(
+  bodyParser.json({
+    limit: 10000000,
+  })
+);
+app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 
 db.connect();
 
@@ -53,8 +74,10 @@ app.get("/projects", (req, res) => {
 
 // **********************************************POST
 // ADD EMPLOYEE
-app.post("/add-employee", (req, res) => {
+app.post("/add-employee", upload.single("image"), (req, res) => {
   console.log(req.body);
+  console.log(req.file);
+
   let fname = req.body.fname;
   let lname = req.body.lname;
   let gender = req.body.gender;
@@ -66,9 +89,10 @@ app.post("/add-employee", (req, res) => {
   let email = req.body.email;
   let dateofbirth = req.body.dateofbirth;
   let degree = req.body.degree;
-  let image = req.body.image;
+  let image = req.file.originalname;
 
   let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree, image) VALUES (?)`;
+
   let values = [
     fname,
     lname,
@@ -92,9 +116,12 @@ app.post("/add-employee", (req, res) => {
         status: "success",
         message: "Employee added successfully.",
         employee: req.body,
+        file: req.file,
       });
     }
   });
+
+  console.log(`IMAGE: ${values[11]}`);
 });
 
 // ADD PROJECT
@@ -130,10 +157,17 @@ app.post("/add-project", (req, res) => {
 
 // *****************************************UPDATES
 // UPDATE EMPLOYEE
-app.put("/update-employee", (req, res) => {
+app.put("/update-employee", upload.single("image"), (req, res) => {
   console.log(req.body);
+  console.log(req.file);
 
-  let sql = `UPDATE employees SET firstname = '${req.body.fname}', degree = '${req.body.degree}', lastname = '${req.body.lname}', mobile = '${req.body.mobile}', designation = '${req.body.designation}', department = '${req.body.department}', email = '${req.body.email}' WHERE employeeid = '${req.body.employeeid}'`;
+  let sql = `UPDATE employees SET firstname = '${req.body.fname}', degree = '${req.body.degree}', lastname = '${
+    req.body.lname
+  }', mobile = '${req.body.mobile}', designation = '${req.body.designation}', department = '${
+    req.body.department
+  }', email = '${req.body.email}', image = '${req.body.image || req.file.originalname} ' WHERE employeeid = '${
+    req.body.employeeid
+  }'`;
 
   db.query(sql, (err) => {
     if (err) {
@@ -143,6 +177,7 @@ app.put("/update-employee", (req, res) => {
         status: "success",
         message: "Employee updated successfully.",
         employee: req.body,
+        file: req.file,
       });
     }
   });
@@ -195,3 +230,5 @@ app.delete("/delete-project/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running on port 8080...");
 });
+
+console.log(process.env);

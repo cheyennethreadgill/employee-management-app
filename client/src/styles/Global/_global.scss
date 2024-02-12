@@ -10,9 +10,19 @@
 }
 .app-flex {
   display: flex;
+  justify-content: flex-end;
+  margin: 0 1rem 0 0;
+  padding: 0 0 2rem 0;
 
   @include breakpointDown(sm) {
     display: block;
+  }
+}
+.container-custom {
+  width: 94.5%;
+
+  &_toggled {
+    width: 82.5%;
   }
 }
 .container {

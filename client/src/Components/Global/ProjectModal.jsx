@@ -48,7 +48,14 @@ const ProjectModal = ({
   };
 
   // UPDATED PROJECT INFO
-  const [projectToUpdate, setProjectToUpdate] = useState(projectInfoForModal);
+  const [projectToUpdate, setProjectToUpdate] = useState({
+    title: projectInfoForModal.title,
+    department: projectInfoForModal.department,
+    priority: projectInfoForModal.priority,
+    status: projectInfoForModal.status,
+    team: projectInfoForModal.team,
+    description: projectInfoForModal.description,
+  });
 
   const handleProjectToUpdate = (values) => setProjectToUpdate(values);
 
@@ -68,7 +75,7 @@ const ProjectModal = ({
                 handleFormUpdatedStatus("newTitleUpdated", true);
                 handleFormData("newTitle", e.target.value);
                 handleProjectToUpdate({
-                  ...projectInfoForModal,
+                  ...projectToUpdate,
                   title: e.target.value,
                 });
               }}
@@ -88,7 +95,7 @@ const ProjectModal = ({
               onChange={(e) => {
                 handleFormUpdatedStatus("newDescriptionUpdated", true);
                 handleFormData("newDescription", e.target.value);
-                handleProjectToUpdate({ ...projectInfoForModal, description: e.target.value });
+                handleProjectToUpdate({ ...projectToUpdate, description: e.target.value });
               }}
               type="text"
               id="description"
@@ -110,7 +117,7 @@ const ProjectModal = ({
             onChange={(e) => {
               handleFormUpdatedStatus("newDepartmentUpdated", true);
               handleFormData("newDepartment", e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, department: e.target.value });
+              handleProjectToUpdate({ ...projectToUpdate, department: e.target.value });
             }}
             required
             defaultValue={formUpdatedStatus.newDepartmentUpdated ? formData.newDepartment : department}
@@ -134,7 +141,7 @@ const ProjectModal = ({
           onChange={(e) => {
             handleFormUpdatedStatus("newTeamUpdated", true);
             handleFormData("newTeam", e.target.value);
-            handleProjectToUpdate({ ...projectInfoForModal, team: e.target.value });
+            handleProjectToUpdate({ ...projectToUpdate, team: e.target.value });
           }}
           name="Team"
           id="Team"
@@ -165,7 +172,7 @@ const ProjectModal = ({
             onChange={(e) => {
               handleFormUpdatedStatus("newPriorityUpdated", true);
               handleFormData("newPriority", e.target.value);
-              handleProjectToUpdate({ ...projectInfoForModal, priority: e.target.value });
+              handleProjectToUpdate({ ...projectToUpdate, priority: e.target.value });
             }}
             required
             className="form-control-container-input"
@@ -198,7 +205,7 @@ const ProjectModal = ({
                   onChange={(e) => {
                     handleFormUpdatedStatus("newStatusUpdated", true);
                     handleFormData("newStatus", e.target.value);
-                    handleProjectToUpdate({ ...projectInfoForModal, status: e.target.value });
+                    handleProjectToUpdate({ ...projectToUpdate, status: e.target.value });
                   }}
                 />
                 <Form.Label htmlFor={option}>{option} </Form.Label>
@@ -223,7 +230,7 @@ const ProjectModal = ({
             handleEditMode();
             handleProjectUpdate(e, projectID, projectToUpdate);
             handleShowNow(false);
-            console.log(projectToUpdate);
+            console.log(projectInfoForModal);
           }}
         >
           Save Changes

@@ -17,26 +17,12 @@ const ListGroup = ({ toggled, name, links, icon }) => {
           >
             <div>
               <span className={icon}></span>
-              <p className="main-nav-list-linkHeader d-flex flex-column">
-                {name}
-              </p>
+              <p className="main-nav-list-linkHeader d-flex flex-column">{name}</p>
             </div>
 
-            <i
-              className={
-                toggleLinkSlide
-                  ? "fa-solid fa-angle-right"
-                  : "fa-solid fa-angle-down"
-              }
-            ></i>
+            <i className={toggleLinkSlide ? "fa-solid fa-angle-down" : "fa-solid fa-angle-right"}></i>
           </span>
-          <div
-            className={
-              toggleLinkSlide
-                ? "main-nav-list-links link-slide"
-                : "main-nav-list-links"
-            }
-          >
+          <div className={toggleLinkSlide ? "main-nav-list-links link-slide" : "main-nav-list-links"}>
             {links.map((item) => {
               const { name, link } = item;
               return (
