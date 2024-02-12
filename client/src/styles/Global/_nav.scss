@@ -151,6 +151,7 @@
   filter: $drop-shadow-right;
   z-index: 9;
   top: 32px;
+  position: fixed;
   transition: all ease-in-out 350ms;
 
   &:hover {
@@ -223,10 +224,9 @@
   @include breakpointUp(md) {
     float: left;
     top: 32px;
-    position: relative;
     transition: all ease-in-out 350ms;
-    position: relative;
     overflow: hidden;
+    position: fixed;
   }
 }
 

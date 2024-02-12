@@ -12023,11 +12023,20 @@ textarea.form-control-lg {
 
 .app-flex {
   display: flex;
+  justify-content: flex-end;
+  margin: 0 1rem 0 0;
 }
 @media screen and (max-width: 680px) {
   .app-flex {
     display: block;
   }
+}
+
+.container-custom {
+  width: 94.5%;
+}
+.container-custom_toggled {
+  width: 82.5%;
 }
 
 .container {
@@ -12541,6 +12550,7 @@ textarea {
   filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
   z-index: 9;
   top: 32px;
+  position: fixed;
   transition: all ease-in-out 350ms;
 }
 .main-nav-list:hover, .main-nav-list_toggled:hover {
@@ -12606,10 +12616,9 @@ textarea {
   .main-nav-list, .main-nav-list_toggled {
     float: left;
     top: 32px;
-    position: relative;
     transition: all ease-in-out 350ms;
-    position: relative;
     overflow: hidden;
+    position: fixed;
   }
 }
 

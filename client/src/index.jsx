@@ -5,7 +5,7 @@ import "../src/styles/styles.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AddEmployee from "./Components/Employees/AddEmployee";
 import AllEmployees from "./Components/Employees/AllEmployees";
-import App from "./Routes/App";
+import Root from "./Routes/Root";
 import AddProject from "./Components/Projects/AddProject";
 import AllProjects from "./Components/Projects/AllProjects";
 import ErrorPage from "./Components/Errors/ErrorPage";
@@ -39,7 +39,7 @@ const handleFetchError = (err) => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App URL={URL} />,
+    element: <Root URL={URL} />,
     errorElement: <ErrorPage />,
     children: [
       {

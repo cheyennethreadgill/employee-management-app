@@ -16,14 +16,15 @@ function Dashboard() {
         toggled={toggled}
       />
 
+      <Nav
+        toggled={toggled}
+        handleNavToggle={handleNavToggle}
+        handleMouseLeave={handleMouseLeave}
+      />
       <div className="app-flex">
-        <Nav
-          toggled={toggled}
-          handleNavToggle={handleNavToggle}
-          handleMouseLeave={handleMouseLeave}
-        />
-
-        <Outlet />
+        <div className="container-custom">
+          <Outlet />
+        </div>
       </div>
     </section>
   );

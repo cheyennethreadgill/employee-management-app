@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import DashSingleProject from "../Dashboard/DashSingleProject";
 
-const ProjectsDash = ({ URL }) => {
+const ProjectsDash = ({ URL, toggled }) => {
   // set Employee team (tbw)
   // useEffect(() => {
   //   projects.map((proj) => {
@@ -73,20 +73,20 @@ const ProjectsDash = ({ URL }) => {
   });
 
   return (
-    <Container>
-      <section className="dash-projects-card">
-        <h1>projects</h1>
-        <div className="dash-projects-card-titles">
-          {titles.map((title) => {
-            return <h3 key={title}> {title} </h3>;
-          })}
-        </div>
+    // <Container>
+    <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
+      <h1>projects</h1>
+      <div className="dash-projects-card-titles">
+        {titles.map((title) => {
+          return <h3 key={title}> {title} </h3>;
+        })}
+      </div>
 
-        {loading && <div className="loading"></div>}
-        {!loading && projectsMapContent}
-        {/* ****************************************************END CARD */}
-      </section>
-    </Container>
+      {loading && <div className="loading"></div>}
+      {!loading && projectsMapContent}
+      {/* ****************************************************END CARD */}
+    </section>
+    // </Container>
   );
 };
 
