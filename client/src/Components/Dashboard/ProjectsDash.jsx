@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import DashSingleProject from "../Dashboard/DashSingleProject";
+import PageHeaders from "../Global/PageHeaders";
 
 const ProjectsDash = ({ URL, toggled }) => {
   // set Employee team (tbw)
@@ -74,18 +75,21 @@ const ProjectsDash = ({ URL, toggled }) => {
 
   return (
     // <Container>
-    <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
-      <h1>projects</h1>
-      <div className="dash-projects-card-titles">
-        {titles.map((title) => {
-          return <h3 key={title}> {title} </h3>;
-        })}
-      </div>
+    <>
+      <PageHeaders name="Projects" />
+      <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
+        <div className="dash-projects-card-titles">
+          {titles.map((title) => {
+            return <h3 key={title}> {title} </h3>;
+          })}
+        </div>
 
-      {loading && <div className="loading"></div>}
-      {!loading && projectsMapContent}
-      {/* ****************************************************END CARD */}
-    </section>
+        {loading && <div className="loading"></div>}
+        {!loading && projectsMapContent}
+        {/* ****************************************************END CARD */}
+      </section>
+    </>
+
     // </Container>
   );
 };

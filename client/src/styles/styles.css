@@ -12379,7 +12379,7 @@ textarea {
 }
 
 .dash-projects-card {
-  margin: 6rem 0;
+  margin: 0 0 6rem 0;
   padding: 5rem;
   background-color: white;
   border-radius: 1rem;
