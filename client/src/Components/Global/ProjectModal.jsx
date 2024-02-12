@@ -49,14 +49,12 @@ const ProjectModal = ({
 
   // UPDATED PROJECT INFO
   const [projectToUpdate, setProjectToUpdate] = useState({
-    firstname: projectInfoForModal.firstname,
-    lastname: projectInfoForModal.lastname,
-    degree: projectInfoForModal.degree,
+    title: projectInfoForModal.title,
     department: projectInfoForModal.department,
-    designation: projectInfoForModal.designation,
-    email: projectInfoForModal.email,
-    image: projectInfoForModal.image,
-    mobile: projectInfoForModal.mobile,
+    priority: projectInfoForModal.priority,
+    status: projectInfoForModal.status,
+    team: projectInfoForModal.team,
+    description: projectInfoForModal.description,
   });
 
   const handleProjectToUpdate = (values) => setProjectToUpdate(values);
@@ -232,7 +230,7 @@ const ProjectModal = ({
             handleEditMode();
             handleProjectUpdate(e, projectID, projectToUpdate);
             handleShowNow(false);
-            console.log(projectToUpdate);
+            console.log(projectInfoForModal);
           }}
         >
           Save Changes
