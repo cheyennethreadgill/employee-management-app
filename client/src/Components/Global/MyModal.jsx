@@ -48,7 +48,7 @@ const MyModal = ({
   };
 
   // HANDLE NAME SPLIT
-  const getPromiseResponse = (e) => {
+  const getCombinedName = (e) => {
     return new Promise((resolve, reject) => {
       // waiting on the combined name
       handleFormData("combinedName", e);
@@ -58,8 +58,8 @@ const MyModal = ({
     });
   };
 
-  async function start() {
-    const response = await getPromiseResponse();
+  async function splitName() {
+    const response = await getCombinedName();
     const splitName = response.split(" ");
 
     handleFormData("newFirstname", splitName[0]);
@@ -117,14 +117,14 @@ const MyModal = ({
               }
               type="text"
               autoFocus
-              onKeyDown={(e) => {
+              onChange={(e) => {
                 handleFormUpdatedStatus("newFirstnameUpdated", true);
                 handleFormUpdatedStatus("newLastnameUpdated", true);
-                // handleNameSplit(e.target.value);
-                getPromiseResponse(e.target.value);
+                getCombinedName(e.target.value);
+                console.log(employeeToUpdate.firstname + employeeToUpdate.lastname);
               }}
               onBeforeInput={() => {
-                start();
+                splitName();
               }}
             />
             <span className="form-control-container-icon_end">
@@ -144,7 +144,6 @@ const MyModal = ({
               className="form-control-container-input"
               defaultValue={formUpdatedStatus.newDegreeUpdated ? formData.newDegree : degree}
               type="text"
-              autoFocus
               onChange={(e) => {
                 handleFormUpdatedStatus("newDegreeUpdated", true);
                 handleFormData("newDegree", e.target.value);
@@ -280,8 +279,6 @@ const MyModal = ({
               handleEditMode();
               handleEmployeeUpdate(e, employeeid, employeeToUpdate);
               handleShowNow(false);
-              // logs correctly when name split is commented out
-              console.log(employeeToUpdate);
             }}
             type="submit"
           />
