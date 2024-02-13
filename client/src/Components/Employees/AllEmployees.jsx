@@ -160,47 +160,30 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   }
 
   // GET FILTERED EMPLLOYEES
-  const [filteredEmloyees, setfilteredEmloyees] = useState([]);
+  // sets filtered employees initial state with employees
+  const [filteredEmloyees, setfilteredEmloyees] = useState(employees);
   const filterCount = filteredEmloyees.length > 0;
+  console.log(filteredEmloyees.length);
 
-  // const handleFilteredEmployees = (e) => {
-  //   // let found = employees.filter((employee) => {
-  //   //   const { firstname, lastname, department, employeeid, designation, email, date, mobile, degree } = employee;
-
-  //   //   if (
-  //   //     e.includes(firstname)
-  //   //     // e.includes(lastname) ||
-  //   //     // e.includes(department) ||
-  //   //     // e.includes(employeeid) ||
-  //   //     // e.includes(designation) ||
-  //   //     // e.includes(email) ||
-  //   //     // e.includes(date) ||
-  //   //     // e.includes(mobile) ||
-  //   //     // e.includes(degree)
-  //   //   ) {
-  //   //     return employee;
-  //   //   }
-  //   // });
-  //   // setfilteredEmloyees(found);
-  //   setEmployees(
-  //     employees.filter((employee) => {
-  //       const { firstname, lastname, department, employeeid, designation, email, date, mobile, degree } = employee;
-
-  //       if (
-  //         e.firstname == firstname
-  //         // e.includes(lastname) ||
-  //         // e.includes(department) ||
-  //         // e.includes(employeeid) ||
-  //         // e.includes(designation) ||
-  //         // e.includes(email) ||
-  //         // e.includes(date) ||
-  //         // e.includes(mobile) ||
-  //         // e.includes(degree)
-  //       )
-  //         return {...employee};
-  //     })
-  //   );
-  // };
+  const handleFilteredEmployees = (e) => {
+    // sets filtered employee with found employee from filter fn
+    let found = employees.filter((employee) => {
+      const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
+      if (
+        department == e ||
+        designation == e ||
+        email == e ||
+        employeeid == e ||
+        firstname == e ||
+        lastname == e ||
+        mobile == e ||
+        degree == e ||
+        image == e
+      )
+        return employee;
+    });
+    setfilteredEmloyees(found);
+  };
 
   // Employees Content
   const employeesContent = employees.map((employee) => {
@@ -336,6 +319,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
                       placeholder="Search"
                       onChange={(e) => {
                         handleFilteredEmployees(e.target.value);
+                        console.log(filteredEmloyees);
                       }}
                     />
                   </div>
@@ -368,9 +352,10 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
               <hr />
             </div>
 
-            {/* {filterCount ? filteredEmloyeesContent : employeesContent} */}
+            {!loading && filterCount && filteredEmloyeesContent}
+            {!loading && !filterCount && employeesContent}
             {loading && <div className="loading"></div>}
-            {!loading && employeesContent}
+            {/* {!loading && employeesContent} */}
           </section>
         </section>
       </Container>
