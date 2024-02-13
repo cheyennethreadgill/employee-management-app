@@ -85,6 +85,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   //   UPDATE EMPLOYEE (DB)
   async function handleEmployeeUpdate(e, id, employeeToUpdate) {
     handleEmployeeStateUpdate(id, employeeToUpdate);
+    console.log(employeeToUpdate.image);
 
     // set up form data API to use for multiform post
     const formData = new FormData();
@@ -119,7 +120,14 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
       "email",
       `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`
     );
-    formData.append("image", employeeToUpdate.newImageUpdated ? employeeToUpdate.newImage : employeeToUpdate.image);
+    formData.append(
+      "image",
+      employeeToUpdate.newImageUpdated
+        ? employeeToUpdate.newImage
+        : employeeToUpdate.image
+        ? employeeToUpdate.image
+        : null
+    );
 
     // Post options
     const options = {
