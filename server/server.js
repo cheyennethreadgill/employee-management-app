@@ -165,7 +165,7 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
     req.body.lname
   }', mobile = '${req.body.mobile}', designation = '${req.body.designation}', department = '${
     req.body.department
-  }', email = '${req.body.email}', image = '${req.body.image || req.file.originalname} ' WHERE employeeid = '${
+  }', email = '${req.body.email}', image = '${req.body.image || req.file.originalname || null} ' WHERE employeeid = '${
     req.body.employeeid
   }'`;
 
