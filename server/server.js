@@ -3,7 +3,6 @@ const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
-import d from "../server/images";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
