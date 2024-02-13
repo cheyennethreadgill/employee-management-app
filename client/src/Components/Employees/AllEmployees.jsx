@@ -371,7 +371,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
           </section>
         </section>
       </Container>
-      )
+
       {!showNow ? null : (
         <MyModal
           employees={employees}
