@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
+import d from "../server/images";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -22,7 +23,7 @@ const db = mysql.createConnection({
 
 // Define storage options for uploaded files
 const storageInfo = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "../client/src/images/"),
+  destination: (req, file, cb) => cb(null, "../server/images/"),
   filename: (req, file, cb) => {
     cb(null, `${file.originalname}`);
   },
