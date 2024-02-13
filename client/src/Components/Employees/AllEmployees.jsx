@@ -85,7 +85,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   //   UPDATE EMPLOYEE (DB)
   async function handleEmployeeUpdate(e, id, employeeToUpdate) {
     handleEmployeeStateUpdate(id, employeeToUpdate);
-    console.log(employeeToUpdate.image);
 
     // set up form data API to use for multiform post
     const formData = new FormData();
@@ -122,11 +121,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
     );
     formData.append(
       "image",
-      employeeToUpdate.newImageUpdated
-        ? employeeToUpdate.newImage
-        : employeeToUpdate.image
-        ? employeeToUpdate.image
-        : null
+      (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " "
     );
 
     // Post options
@@ -379,7 +374,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
           </section>
         </section>
       </Container>
-
+      )
       {!showNow ? null : (
         <MyModal
           employees={employees}

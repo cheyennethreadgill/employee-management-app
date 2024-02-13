@@ -7,10 +7,10 @@ const multer = require("multer");
 const app = express();
 const PORT = process.env.PORT || 8080;
 // const db = mysql.createConnection({
-//   user: "root",
-//   host: "localhost",
-//   password: "Cheyenne1234",
-//   database: "employee-management",
+// user: "root",
+// host: "localhost",
+// password: "Cheyenne1234",
+// database: "employee-management",
 // });
 
 const db = mysql.createConnection({
@@ -230,5 +230,3 @@ app.delete("/delete-project/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running on port 8080...");
 });
-
-console.log(process.env);

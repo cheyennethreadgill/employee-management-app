@@ -38,6 +38,24 @@ const EmployeeCard = ({
   handleEmployeeUpdate,
   onDelete,
 }) => {
+  function ImageComponent({ image }) {
+    if (!image || image === "  ") {
+      return <i className="fa-solid fa-circle-user fs-2"></i>;
+    }
+
+    if (image && typeof image === "string" && image.trim()) {
+      return (
+        <img
+          src={require(`../../images/${image.trim()}`)}
+          alt="desktop img"
+          height="35px"
+          width="35px"
+          className="employee-card-img"
+        />
+      );
+    }
+  }
+
   // EDIT MODE
   const [btnValue, setBtnValue] = useState(0);
   const [employee, setEmployee] = useState([]);
@@ -87,7 +105,7 @@ const EmployeeCard = ({
   return (
     <>
       {/* ***********************************************************MOBILE */}
-      <section className="employee-card-mobile ">
+      {/* <section className="employee-card-mobile ">
         <Form
           autoComplete="true"
           className="employee-card-form"
@@ -115,7 +133,7 @@ const EmployeeCard = ({
                   <h3>Image</h3>
                 </Col>
                 <Col lg="12">
-                  {image && typeof image === "string" && image.trim() && (
+                  {image && typeof image === "string" && image.length !== 'undefined' && image.trim() && (
                     <img
                       src={require(`../../images/${image.trim()}`)}
                       alt="desktop img"
@@ -124,7 +142,7 @@ const EmployeeCard = ({
                       className="employee-card-img"
                     />
                   )}
-
+                  {image && image === "undefined" && <i className="fa-solid fa-circle-user fs-2"></i>}
                   {!image && <i className="fa-solid fa-circle-user fs-2"></i>}
                 </Col>
               </div>
@@ -283,7 +301,7 @@ const EmployeeCard = ({
             </Col>
           </Row>
         </Form>
-      </section>
+      </section> */}
 
       {/* ******************************************************DESKTOP */}
       <Row className="employee-card-desktop d-none d-md-flex">
@@ -301,17 +319,9 @@ const EmployeeCard = ({
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            {image && typeof image === "string" && image.trim() && (
-              <img
-                src={require(`../../images/${image.trim()}`)}
-                alt="desktop img"
-                height="35px"
-                width="35px"
-                className="employee-card-img"
-              />
-            )}
+            <ImageComponent image={image} />
 
-            {!image && <i className="fa-solid fa-circle-user fs-2"></i>}
+            {/* {!image && <i className="fa-solid fa-circle-user fs-2"></i>} */}
           </div>
 
           <div className="employee-card-desktop-form-fields">

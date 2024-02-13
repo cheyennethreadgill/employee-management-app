@@ -121,7 +121,6 @@ const MyModal = ({
                 handleFormUpdatedStatus("newFirstnameUpdated", true);
                 handleFormUpdatedStatus("newLastnameUpdated", true);
                 getCombinedName(e.target.value);
-                console.log(employeeToUpdate.firstname + employeeToUpdate.lastname);
               }}
               onBeforeInput={() => {
                 splitName();
@@ -255,6 +254,7 @@ const MyModal = ({
             accept=".png, .jpg, .jpeg"
             name="image"
             onChange={(e) => {
+              console.log(e.target.files[0]);
               handleFormUpdatedStatus("newImageUpdated", true);
               handleFormData("newImage", e.target.files[0]);
               handleEmployeeToUpdate({ ...employeeToUpdate, image: e.target.files[0] });
