@@ -355,7 +355,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
             {!loading && filterCount && filteredEmloyeesContent}
             {!loading && !filterCount && employeesContent}
             {loading && <div className="loading"></div>}
-            {/* {!loading && employeesContent} */}
           </section>
         </section>
       </Container>
