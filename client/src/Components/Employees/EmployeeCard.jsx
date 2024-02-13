@@ -117,7 +117,7 @@ const EmployeeCard = ({
                 <Col lg="12">
                   {image && typeof image === "string" && image.trim() && (
                     <img
-                      src={require(`../../../../server/images/${image.trim()}`)}
+                      src={require(`../../images/${image.trim()}`)}
                       alt="desktop img"
                       height="35px"
                       width="35px"
@@ -303,7 +303,7 @@ const EmployeeCard = ({
           <div className="employee-card-desktop-form-fields">
             {image && typeof image === "string" && image.trim() && (
               <img
-                src={require(`../../../../server/images/${image.trim()}`)}
+                src={require(`../../images/${image.trim()}`)}
                 alt="desktop img"
                 height="35px"
                 width="35px"
