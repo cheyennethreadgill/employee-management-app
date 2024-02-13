@@ -12,8 +12,8 @@ import ErrorPage from "./Components/Errors/ErrorPage";
 import ProjectsDash from "./Components/Dashboard/ProjectsDash";
 
 // URL
-const URL = "http://localhost:8080/";
-// const URL = "https://employee-management-app-rho.vercel.app/";
+// const URL = "http://localhost:8080/";
+const URL = "https://employee-management-app-rho.vercel.app/";
 
 // Form Select & Radios
 const workStatusOptions = ["active", "completed", "running", "pending", "not started", "canceled"];
