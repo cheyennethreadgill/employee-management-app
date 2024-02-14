@@ -21,16 +21,16 @@ const db = mysql.createConnection({
 //   database: "employee-management",
 // });
 // Configure AWS SDK with environment variables
-const s3 = new aws.S3({
-  accessKeyId: "AKIAYS2NVW4T5SF6VFNI",
-  secretAccessKey: "KCO9g2T/NyoYxLqQp1tX3peXuUyE3gC4kbG3c+qL",
-  region: "us-east-2", // Specify the region where your S3 bucket is located
-});
 // const s3 = new aws.S3({
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//   region: process.env.AWS_REGION, // Specify the region where your S3 bucket is located
+//   accessKeyId: "AKIAYS2NVW4T5SF6VFNI",
+//   secretAccessKey: "KCO9g2T/NyoYxLqQp1tX3peXuUyE3gC4kbG3c+qL",
+//   region: "us-east-2", // Specify the region where your S3 bucket is located
 // });
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION, // Specify the region where your S3 bucket is located
+});
 // Define storage options for uploaded files
 // const storageInfo = multer.diskStorage({
 //   // destination: (req, file, cb) => cb(null, "../server/images/"),
