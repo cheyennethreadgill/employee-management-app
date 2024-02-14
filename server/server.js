@@ -119,7 +119,11 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
   let email = req.body.email;
   let dateofbirth = req.body.dateofbirth;
   let degree = req.body.degree;
-  let image = req.file.originalname || " ";
+  let image = "";
+
+  if (req.file) {
+    image = req.file.originalname;
+  }
 
   let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree, image) VALUES (?)`;
 
