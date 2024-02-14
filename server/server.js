@@ -7,17 +7,17 @@ const multer = require("multer");
 const app = express();
 const PORT = process.env.PORT || 8080;
 // const db = mysql.createConnection({
-// user: "root",
-// host: "localhost",
-// password: "Cheyenne1234",
-// database: "employee-management",
+  // user: "root",
+  // host: "localhost",
+  // password: "Cheyenne1234",
+  // database: "employee-management",
 // });
 
 const db = mysql.createConnection({
-  user: process.env.DBUser,
-  host: process.env.DBHost,
-  password: process.env.DBPassword,
-  database: process.env.DBDatabase,
+user: process.env.DBUser,
+host: process.env.DBHost,
+password: process.env.DBPassword,
+database: process.env.DBDatabase,
 });
 
 // Define storage options for uploaded files

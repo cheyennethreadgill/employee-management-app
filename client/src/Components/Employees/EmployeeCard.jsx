@@ -46,7 +46,8 @@ const EmployeeCard = ({
     if (image && typeof image === "string" && image.trim()) {
       return (
         <img
-          src={require(`../../images/${image.trim()}`)}
+          src={require(`../../../../server/images/${image.trim()}`)}
+          // src={require(`../../images/${image.trim()}`)}
           alt="desktop img"
           height="35px"
           width="35px"
@@ -87,20 +88,6 @@ const EmployeeCard = ({
     });
     setFoundEmployee(found);
   };
-
-  // Image Name extraction
-  // function extractFilename() {
-  //   if (image) {
-  //     if (image.substring(0, 12) == "C:\\fakeimage\\") return image.substring(12); // modern browser
-
-  //     var x;
-  //     x = image.lastIndexOf("\\");
-  //     if (x >= 0) return image.substring(x + 1); // Windows-based image
-  //   } else {
-  //     return;
-  //   }
-  // }
-  // const fileName = extractFilename();
 
   return (
     <>

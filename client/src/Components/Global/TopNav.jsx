@@ -1,3 +1,4 @@
+import logo from "logo.png";
 const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
   return (
     <>
@@ -15,7 +16,8 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
 
               <div className="brand-bar-mobile-brand">
                 <img
-                  src={require("../../images/logo.png")}
+                  // src={require("../../../../server/images/logo.png")}
+                  src={logo}
                   alt=""
                   className="brand-bar-mobile-brand-icon"
                 />
@@ -35,14 +37,16 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
           <div className="brand-bar-desktop-controls">
             {toggled ? (
               <img
-                src={require("../../images/logo.png")}
+                // src={require("../../../../server/images/logo.png")}
+                src={logo}
                 alt=""
                 className="me-5"
               />
             ) : (
               <div className="brand-bar-desktop-brand-left">
                 <img
-                  src={require("../../images/logo.png")}
+                  // src={require("../../../../server/images/logo.png")}
+                  src={logo}
                   alt=""
                   className="me-3"
                 />

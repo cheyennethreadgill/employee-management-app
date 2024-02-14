@@ -163,7 +163,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   // sets filtered employees initial state with employees
   const [filteredEmloyees, setfilteredEmloyees] = useState(employees);
   const filterCount = filteredEmloyees.length > 0;
-  console.log(filteredEmloyees.length);
 
   const handleFilteredEmployees = (e) => {
     // sets filtered employee with found employee from filter fn
@@ -319,7 +318,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
                       placeholder="Search"
                       onChange={(e) => {
                         handleFilteredEmployees(e.target.value);
-                        console.log(filteredEmloyees);
                       }}
                     />
                   </div>
