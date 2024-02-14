@@ -2,8 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const multer = require( "multer" );
-const path = require("path");
+const multer = require("multer");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -23,11 +22,7 @@ const db = mysql.createConnection({
 
 // Define storage options for uploaded files
 const storageInfo = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const destinationPath = path.join(__dirname, "images");
-    console.log("Destination Path:", destinationPath);
-    cb(null, destinationPath);
-  },
+  destination: (req, file, cb) => cb(null, "../server/images/"),
   filename: (req, file, cb) => {
     cb(null, `${file.originalname}`);
   },
