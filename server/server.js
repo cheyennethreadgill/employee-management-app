@@ -208,11 +208,11 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
   const uploadParams = {
     Bucket: "kuberemployeemanagementimages",
     Key: "", // Leave it empty for now
-    Body: req.file,
   };
 
   // Set the Key property using the generated key function
   uploadParams.Key = generateKey;
+  uploadParams.Body = req.file;
 
   // Upload file to S3
   s3.upload(uploadParams, (err, data) => {
