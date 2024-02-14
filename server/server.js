@@ -22,7 +22,7 @@ const db = mysql.createConnection({
 
 // Define storage options for uploaded files
 const storageInfo = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "./images/"),
+  destination: (req, file, cb) => cb(null, "./server/images/"),
   filename: (req, file, cb) => {
     cb(null, `${file.originalname}`);
   },
