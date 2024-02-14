@@ -119,7 +119,7 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
   let email = req.body.email;
   let dateofbirth = req.body.dateofbirth;
   let degree = req.body.degree;
-  let image = "";
+  let image = " ";
 
   if (req.file) {
     image = req.file.originalname;
