@@ -3,44 +3,67 @@ const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const aws = require("aws-sdk");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-// const db = mysql.createConnection({
-//   user: "root",
-//   host: "localhost",
-//   password: "Cheyenne1234",
-//   database: "employee-management",
-// });
-
 const db = mysql.createConnection({
   user: process.env.DBUser,
   host: process.env.DBHost,
   password: process.env.DBPassword,
   database: process.env.DBDatabase,
 });
-
+// const db = mysql.createConnection({
+//   user: "root",
+//   host: "localhost",
+//   password: "Cheyenne1234",
+//   database: "employee-management",
+// });
+// Configure AWS SDK with environment variables
+const s3 = new aws.S3({
+  accessKeyId: "AKIAYS2NVW4T5SF6VFNI",
+  secretAccessKey: "KCO9g2T/NyoYxLqQp1tX3peXuUyE3gC4kbG3c+qL",
+  region: "us-east-2", // Specify the region where your S3 bucket is located
+});
+// const s3 = new aws.S3({
+//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//   region: process.env.AWS_REGION, // Specify the region where your S3 bucket is located
+// });
 // Define storage options for uploaded files
-const storageInfo = multer.diskStorage({
-  // destination: (req, file, cb) => cb(null, "../server/images/"),
-  // destination: (req, file, cb) => cb(null, "./server/images/"),
-  // destination: (req, file, cb) => cb(null, "/server/images/"),
-  destination: (req, file, cb) => {
-    const imagesDirectory = `${process.cwd()}/server/images/`;
-    cb(null, imagesDirectory);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${file.originalname}`);
-  },
-});
-console.log(__dirname);
+// const storageInfo = multer.diskStorage({
+//   // destination: (req, file, cb) => cb(null, "../server/images/"),
+//   // destination: (req, file, cb) => cb(null, "./server/images/"),
+//   // destination: (req, file, cb) => cb(null, "/server/images/"),
+//   destination: (req, file, cb) => {
+//     const imagesDirectory = `${process.cwd()}/server/images/`;
+//     cb(null, imagesDirectory);
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, `${file.originalname}`);
+//   },
+// });
 
+// upload to local folder
+// const upload = multer({
+//   storage: storageInfo,
+//   limits: {
+//     fileSize: 1024 * 1024 * 10, // 5MB max file size
+//   },
+// });
+
+// upload to multer memory storage
 const upload = multer({
-  storage: storageInfo,
-  limits: {
-    fileSize: 1024 * 1024 * 10, // 5MB max file size
-  },
+  storage: multer.memoryStorage(),
 });
+
+// const uploadParams = {
+//   Bucket: process.env.AWS_BUCKET_NAME,
+//   Key: function (req, file, cb) {
+//     cb(null, file.originalname); // Use current timestamp as the key
+//   },
+// };
 
 app.use(cors());
 app.use(
@@ -175,18 +198,52 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
   }', email = '${req.body.email}', image = '${req.body.image || req.file.originalname} ' WHERE employeeid = '${
     req.body.employeeid
   }'`;
+  // Define the generateKey function to generate a unique key based on the file's original name
+  function generateKey(req, file, cb) {
+    const origname = file.originalname;
+    cb(null, `${origname}`); // Use the original filename as the key
+  }
+
+  // Define uploadParams with the Bucket and an empty Key
+  const uploadParams = {
+    Bucket: "kuberemployeemanagementimages",
+    Key: "", // Leave it empty for now
+  };
+
+  // Generate a key based on the file's original name and set it to the Key property of uploadParams
+  generateKey(null, req.file, (err, key) => {
+    if (err) {
+      console.error("Error generating key:", err);
+      return;
+    }
+    uploadParams.Key = key;
+  });
+
+  uploadParams.Body = req.file.buffer;
+
+  // Upload file to S3
+  s3.upload(uploadParams, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Failed to upload file to S3" });
+    }
+    // File uploaded successfully, return URL or other relevant info
+    // res.end({ url: data.Location });
+    console.log({ url: data.Location });
+  });
 
   db.query(sql, (err) => {
     if (err) {
       throw err;
-    } else {
-      res.json({
-        status: "success",
-        message: "Employee updated successfully.",
-        employee: req.body,
-        file: req.file,
-      });
     }
+    // else {
+    //   res.json({
+    //     status: "success",
+    //     message: "Employee updated successfully.",
+    //     employee: req.body,
+    //     // file: req.file,
+    //   });
+    // }
   });
 });
 
