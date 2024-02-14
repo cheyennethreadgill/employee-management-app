@@ -204,17 +204,16 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
     cb(null, `${origname}`); // Use current timestamp as the key
   }
 
-  // Define uploadParams with a static key
-  const uploadParams = {
-    Bucket: "kuberemployeemanagementimages",
-    Key: "", // Leave it empty for now
-  };
-
-  // Set the Key property using the generated key function
-  uploadParams.Key = generateKey;
-  uploadParams.Body = req.file.buffer;
-
   if (req.file) {
+    // Define uploadParams with a static key
+    const uploadParams = {
+      Bucket: "kuberemployeemanagementimages",
+      Key: "", // Leave it empty for now
+    };
+
+    // Set the Key property using the generated key function
+    uploadParams.Key = generateKey;
+    uploadParams.Body = req.file.buffer;
     // Upload file to S3
     s3.upload(uploadParams, (err, data) => {
       if (err) {
