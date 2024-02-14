@@ -25,7 +25,10 @@ const storageInfo = multer.diskStorage({
   // destination: (req, file, cb) => cb(null, "../server/images/"),
   // destination: (req, file, cb) => cb(null, "./server/images/"),
   // destination: (req, file, cb) => cb(null, "/server/images/"),
-  destination: (req, file, cb) => cb(null, `${__dirname}/images/`),
+  destination: (req, file, cb) => {
+    const imagesDirectory = `${process.cwd()}/server/images/`;
+    cb(null, imagesDirectory);
+  },
   filename: (req, file, cb) => {
     cb(null, `${file.originalname}`);
   },
