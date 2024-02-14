@@ -198,26 +198,20 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
   }', email = '${req.body.email}', image = '${req.body.image || req.file.originalname} ' WHERE employeeid = '${
     req.body.employeeid
   }'`;
-  // Define the generateKey function to generate a unique key based on the file's original name
+  // Generate a unique key based on the file's original name
   function generateKey(req, file, cb) {
     const origname = file.originalname;
-    cb(null, `${origname}`); // Use the original filename as the key
+    cb(null, `${origname}`); // Use current timestamp as the key
   }
 
-  // Define uploadParams with the Bucket and an empty Key
+  // Define uploadParams with a static key
   const uploadParams = {
     Bucket: "kuberemployeemanagementimages",
     Key: "", // Leave it empty for now
   };
 
-  // Generate a key based on the file's original name and set it to the Key property of uploadParams
-  generateKey(null, req.file, (err, key) => {
-    if (err) {
-      console.error("Error generating key:", err);
-      return;
-    }
-    uploadParams.Key = key;
-  });
+  // Set the Key property using the generated key function
+  uploadParams.Key = generateKey;
 
   uploadParams.Body = req.file.buffer;
 
