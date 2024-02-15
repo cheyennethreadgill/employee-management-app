@@ -12024,7 +12024,7 @@ textarea.form-control-lg {
 .app-flex {
   display: flex;
   justify-content: flex-end;
-  margin: 0 1rem 0 0;
+  margin: 0;
   padding: 0 0 2rem 0;
 }
 @media screen and (max-width: 680px) {
@@ -12032,9 +12032,20 @@ textarea.form-control-lg {
     display: block;
   }
 }
+@media screen and (min-width: 1600px) {
+  .app-flex {
+    margin: 0 3rem 0 0;
+  }
+}
 
 .container-custom {
   width: 94.5%;
+}
+@media screen and (max-width: 1024px) {
+  .container-custom {
+    margin: 0 auto;
+    width: 100%;
+  }
 }
 .container-custom_toggled {
   width: 82.5%;
@@ -12042,7 +12053,6 @@ textarea.form-control-lg {
 
 .container {
   max-width: 1425px;
-  width: min(100% - 2rem);
 }
 @media screen and (max-width: 1024px) {
   .container {
@@ -12751,7 +12761,6 @@ textarea {
 
 .employees {
   background-color: white;
-  height: 100vh;
   margin: 0 auto;
   position: relative;
   z-index: 3;
@@ -12858,6 +12867,11 @@ textarea {
   .employees {
     overflow-y: scroll;
     max-height: 755px;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .employees {
+    height: 100vh;
   }
 }
 

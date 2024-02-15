@@ -1,6 +1,5 @@
 .employees {
   background-color: white;
-  height: 100vh;
   margin: 0 auto;
   position: relative;
   z-index: 3;
@@ -115,6 +114,9 @@
   @include breakpointUp(sm) {
     overflow-y: scroll;
     max-height: $height-body;
+  }
+  @include breakpointUp(lg) {
+    height: 100vh;
   }
 }
 
