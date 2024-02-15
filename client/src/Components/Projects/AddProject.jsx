@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
@@ -12,6 +12,7 @@ const AddProject = ({
   teamOptions,
   departmentOptions,
 }) => {
+  const form = useRef();
   const PATH = "add-project";
 
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -54,6 +55,7 @@ const AddProject = ({
       (err) => handleFetchError(err);
     }
     setValidated(!validated);
+    handleProjectFormData("description", "");
   }
 
   // get form validation response
@@ -98,6 +100,7 @@ const AddProject = ({
           onSubmit={(e) => {
             handleSubmit(e);
           }}
+          ref={form}
         >
           <Row>
             <Form.Group
@@ -345,6 +348,7 @@ const AddProject = ({
               <Form.Control.Feedback type="invalid">Please enter a description</Form.Control.Feedback>
             </Form.Group>
 
+            {/* *******************************************************FORM BUTTONS */}
             <div className="form-btns">
               <Button
                 className="btn btn-primary"
