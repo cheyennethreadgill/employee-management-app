@@ -12907,6 +12907,8 @@ textarea {
 
 .employee-card-img {
   border-radius: 10rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .employee-card-mobile,

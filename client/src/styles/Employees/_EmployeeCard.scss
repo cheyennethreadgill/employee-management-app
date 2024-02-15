@@ -1,6 +1,7 @@
 .employee-card {
   &-img {
     border-radius: 10rem;
+    object-fit: cover;
   }
 }
 .employee-card-mobile,
