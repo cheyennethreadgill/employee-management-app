@@ -40,7 +40,7 @@ const EmployeeCard = ({
 }) => {
   function ImageComponent({ image }) {
     const AWS_S3_BUCKET_URL = `https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/${image}`;
-    if (!image || image === "  ") {
+    if (!image || image === " ") {
       return <i className="fa-solid fa-circle-user fs-2"></i>;
     }
 
