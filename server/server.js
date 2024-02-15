@@ -62,13 +62,6 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-// const uploadParams = {
-//   Bucket: process.env.AWS_BUCKET_NAME,
-//   Key: function (req, file, cb) {
-//     cb(null, file.originalname); // Use current timestamp as the key
-//   },
-// };
-
 app.use(cors());
 app.use(
   bodyParser.json({
@@ -215,11 +208,14 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
       return `${origname}`; // Use current timestamp as the key
     }
     // Define uploadParams with a static key
+    // const uploadParams = {
+    //   Bucket: "kuberemployeemanagementimages",
+    //   Key: "", // Leave it empty for now
+    // };
     const uploadParams = {
-      Bucket: "kuberemployeemanagementimages",
+      Bucket: process.env.AWS_BUCKET_NAME,
       Key: "", // Leave it empty for now
     };
-
     // Set the Key property using the generated key function
     uploadParams.Key = generateKey();
     uploadParams.Body = req.file.buffer;
