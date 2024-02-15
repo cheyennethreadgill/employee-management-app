@@ -8,6 +8,12 @@ form {
 .form-btns {
   display: flex;
   gap: 1rem;
+
+  i {
+    @include breakpointDown(sm) {
+      font-size: 1.2rem;
+    }
+  }
 }
 fieldset {
   margin: 0 0 2.5rem 0;

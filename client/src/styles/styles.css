@@ -12264,6 +12264,11 @@ form {
   display: flex;
   gap: 1rem;
 }
+@media screen and (max-width: 680px) {
+  .form-btns i {
+    font-size: 1.2rem;
+  }
+}
 
 fieldset {
   margin: 0 0 2.5rem 0;
@@ -12758,6 +12763,11 @@ textarea {
 .my-modal-form {
   max-width: 800px;
 }
+@media screen and (max-width: 680px) {
+  .my-modal-form {
+    margin: 0 1rem;
+  }
+}
 
 .employees {
   background-color: white;
@@ -12936,6 +12946,11 @@ textarea {
 
 .employee-card-mobile {
   display: none;
+}
+@media screen and (max-width: 680px) {
+  .employee-card-mobile h3, .employee-card-mobile .h3 {
+    font-size: 0.875rem;
+  }
 }
 .employee-card-mobile-fields {
   display: flex;

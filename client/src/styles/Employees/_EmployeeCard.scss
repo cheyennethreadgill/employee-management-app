@@ -37,6 +37,12 @@
 .employee-card-mobile {
   display: none;
 
+  h3 {
+    @include breakpointDown(sm) {
+      font-size: 0.875rem;
+    }
+  }
+
   &-fields {
     display: flex;
     justify-content: space-between;

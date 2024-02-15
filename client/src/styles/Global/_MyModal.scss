@@ -13,5 +13,9 @@
 
   &-form {
     max-width: 800px;
+
+    @include breakpointDown(sm) {
+      margin: 0 1rem;
+    }
   }
 }
