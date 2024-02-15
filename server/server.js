@@ -8,6 +8,8 @@ const aws = require("aws-sdk");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+// connect to mysql
 const db = mysql.createConnection({
   user: process.env.DBUser,
   host: process.env.DBHost,
@@ -20,6 +22,7 @@ const db = mysql.createConnection({
 //   password: "Cheyenne1234",
 //   database: "employee-management",
 // });
+
 // Configure AWS SDK with environment variables
 // const s3 = new aws.S3({
 //   accessKeyId: "AKIAYS2NVW4T5SF6VFNI",
@@ -31,6 +34,7 @@ const s3 = new aws.S3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_REGION, // Specify the region where your S3 bucket is located
 });
+
 // Define storage options for uploaded files
 // const storageInfo = multer.diskStorage({
 //   // destination: (req, file, cb) => cb(null, "../server/images/"),
@@ -45,7 +49,7 @@ const s3 = new aws.S3({
 //   },
 // });
 
-// upload to local folder
+// ---upload to local folder
 // const upload = multer({
 //   storage: storageInfo,
 //   limits: {
@@ -199,16 +203,17 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
     req.body.lname
   }', mobile = '${req.body.mobile}', designation = '${req.body.designation}', department = '${
     req.body.department
-  }', email = '${req.body.email}', image = '${req.body.image || req.file.originalname} ' WHERE employeeid = '${
+  }', email = '${req.body.email}', image = '${req.body.image || req.file.originalname}' WHERE employeeid = '${
     req.body.employeeid
   }'`;
-  // Generate a unique key based on the file's original name
-  function generateKey(req, file, cb) {
-    const origname = file.originalname;
-    cb(null, `${origname}`); // Use current timestamp as the key
-  }
 
+  // If a file is selected by client...
   if (req.file) {
+    // Generate a unique key based on the file's original name
+    function generateKey() {
+      const origname = req.file.originalname;
+      return `${origname}`; // Use current timestamp as the key
+    }
     // Define uploadParams with a static key
     const uploadParams = {
       Bucket: "kuberemployeemanagementimages",
@@ -216,7 +221,7 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
     };
 
     // Set the Key property using the generated key function
-    uploadParams.Key = generateKey;
+    uploadParams.Key = generateKey();
     uploadParams.Body = req.file.buffer;
 
     // Upload file to S3
@@ -226,7 +231,7 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
         return res.status(500).json({ error: "Failed to upload file to S3" });
       }
       // File uploaded successfully, return URL or other relevant info
-      // res.end({ url: data.Location });
+      // res.json({ "s3-object-url": data.Location });
       console.log({ url: data.Location });
     });
   }
@@ -234,15 +239,15 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
   db.query(sql, (err) => {
     if (err) {
       throw err;
+    } else {
+      res.json({
+        status: "success",
+        message: "Employee updated successfully.",
+        employee: req.body,
+        fileToMYSQL: req.file,
+        // s3ObjectUrl: data.Location,
+      });
     }
-    // else {
-    //   res.json({
-    //     status: "success",
-    //     message: "Employee updated successfully.",
-    //     employee: req.body,
-    //     // file: req.file,
-    //   });
-    // }
   });
 });
 

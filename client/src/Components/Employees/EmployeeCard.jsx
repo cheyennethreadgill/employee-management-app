@@ -39,6 +39,7 @@ const EmployeeCard = ({
   onDelete,
 }) => {
   function ImageComponent({ image }) {
+    const AWS_S3_BUCKET_URL = `https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/${image}`;
     if (!image || image === "  ") {
       return <i className="fa-solid fa-circle-user fs-2"></i>;
     }
@@ -46,8 +47,10 @@ const EmployeeCard = ({
     if (image && typeof image === "string" && image.trim()) {
       return (
         <img
-          src={require(`../../../../server/images/${image.trim()}`)}
+          // src={require(`../../../../server/images/${image.trim()}`)}
+          src={AWS_S3_BUCKET_URL}
           // src={require(`../../images/${image.trim()}`)}
+          // src="https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/corporate_headshots_tampa_006.jpg"
           alt="desktop img"
           height="35px"
           width="35px"
