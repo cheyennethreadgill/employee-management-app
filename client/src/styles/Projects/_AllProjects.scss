@@ -3,8 +3,12 @@
 
   &-row {
     gap: 1.1rem;
-    padding: 0 1.5rem;
     margin: 0 auto;
     align-items: flex-start;
+    
+    @include breakpointUp(md) {
+      padding: 0 1.5rem;
+
+    }
   }
 }
