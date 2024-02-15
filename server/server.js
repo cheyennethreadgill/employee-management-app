@@ -10,18 +10,18 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // connect to mysql
-const db = mysql.createConnection({
-  user: process.env.DBUser,
-  host: process.env.DBHost,
-  password: process.env.DBPassword,
-  database: process.env.DBDatabase,
-});
 // const db = mysql.createConnection({
-//   user: "root",
-//   host: "localhost",
-//   password: "Cheyenne1234",
-//   database: "employee-management",
+//   user: process.env.DBUser,
+//   host: process.env.DBHost,
+//   password: process.env.DBPassword,
+//   database: process.env.DBDatabase,
 // });
+const db = mysql.createConnection({
+  user: "root",
+  host: "localhost",
+  password: "Cheyenne1234",
+  database: "employee-management",
+});
 
 // Configure AWS SDK with environment variables
 // const s3 = new aws.S3({
@@ -34,28 +34,6 @@ const s3 = new aws.S3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_REGION, // Specify the region where your S3 bucket is located
 });
-
-// Define storage options for uploaded files
-// const storageInfo = multer.diskStorage({
-//   // destination: (req, file, cb) => cb(null, "../server/images/"),
-//   // destination: (req, file, cb) => cb(null, "./server/images/"),
-//   // destination: (req, file, cb) => cb(null, "/server/images/"),
-//   destination: (req, file, cb) => {
-//     const imagesDirectory = `${process.cwd()}/server/images/`;
-//     cb(null, imagesDirectory);
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, `${file.originalname}`);
-//   },
-// });
-
-// ---upload to local folder
-// const upload = multer({
-//   storage: storageInfo,
-//   limits: {
-//     fileSize: 1024 * 1024 * 10, // 5MB max file size
-//   },
-// });
 
 // upload to multer memory storage
 const upload = multer({
@@ -205,13 +183,8 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
     // Generate a unique key based on the file's original name
     function generateKey() {
       const origname = req.file.originalname;
-      return `${origname}`; // Use current timestamp as the key
+      return `${origname}`;
     }
-    // Define uploadParams with a static key
-    // const uploadParams = {
-    //   Bucket: "kuberemployeemanagementimages",
-    //   Key: "", // Leave it empty for now
-    // };
     const uploadParams = {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: "", // Leave it empty for now
@@ -227,7 +200,6 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
         return res.status(500).json({ error: "Failed to upload file to S3" });
       }
       // File uploaded successfully, return URL or other relevant info
-      // res.json({ "s3-object-url": data.Location });
       console.log({ url: data.Location });
     });
   }
