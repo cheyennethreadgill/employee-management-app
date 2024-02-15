@@ -18,6 +18,7 @@ function Dashboard() {
 
       <Nav
         toggled={toggled}
+        setToggled={setToggled}
         handleNavToggle={handleNavToggle}
         handleMouseLeave={handleMouseLeave}
       />

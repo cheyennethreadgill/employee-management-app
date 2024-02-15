@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const ListGroup = ({ toggled, name, links, icon }) => {
+const ListGroup = ({ toggled, setToggled, name, links, icon }) => {
   const [toggleLinkSlide, setToggleLinkSlide] = useState(false);
   const handleLinkSlide = () => setToggleLinkSlide(!toggleLinkSlide);
 
@@ -29,6 +29,7 @@ const ListGroup = ({ toggled, name, links, icon }) => {
                 <Link
                   key={link}
                   to={link}
+                  onClick={() => setToggled(true)}
                 >
                   {name}
                 </Link>
