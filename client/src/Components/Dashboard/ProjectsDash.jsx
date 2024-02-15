@@ -77,18 +77,21 @@ const ProjectsDash = ({ URL, toggled }) => {
     // <Container>
 
     <>
-      <PageHeaders name="Projects" />
-      <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
-        <div className="dash-projects-card-titles">
-          {titles.map((title) => {
-            return <h3 key={title}> {title} </h3>;
-          })}
-        </div>
+      <Container>
+        {" "}
+        <PageHeaders name="Projects" />
+        <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
+          <div className="dash-projects-card-titles">
+            {titles.map((title) => {
+              return <h3 key={title}> {title} </h3>;
+            })}
+          </div>
 
-        {loading && <div className="loading"></div>}
-        {!loading && projectsMapContent}
-        {/* ****************************************************END CARD */}
-      </section>
+          {loading && <div className="loading"></div>}
+          {!loading && projectsMapContent}
+          {/* ****************************************************END CARD */}
+        </section>
+      </Container>
     </>
 
     // </Container>
