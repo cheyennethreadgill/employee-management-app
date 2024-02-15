@@ -19,6 +19,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   const PATH = "employees";
   const UPDATE_PATH = "update-employee";
   const titles = [
+    "",
     "Image",
     "Employee ID",
     "Name",
