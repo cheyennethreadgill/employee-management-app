@@ -115,8 +115,8 @@
     overflow-y: scroll;
     max-height: $height-body;
   }
-  @include breakpointUp(lg) {
-    height: 100vh;
+  @include breakpointUp(md) {
+    height: 75vh;
   }
 }
 

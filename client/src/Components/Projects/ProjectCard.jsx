@@ -2,6 +2,8 @@ import { Row, Col } from "react-bootstrap";
 import { useState } from "react";
 
 const ProjectCard = ({
+  DeleteNotification,
+  setDeleteNotif,
   workStatusOptions,
   priorityOptions,
   teamOptions,
@@ -53,6 +55,9 @@ const ProjectCard = ({
   const handleProjectDelete = (projectID) => {
     deleteProjectFromDB(projectID);
     onDelete(projectID);
+    setTimeout(() => {
+      setDeleteNotif(false);
+    }, 3000);
   };
 
   const startDateReformat = () => {
@@ -77,6 +82,7 @@ const ProjectCard = ({
       className="project-card"
       onMouseEnter={handleOptionsIconEnter}
       onMouseLeave={handleOptionsIconLeave}
+      onClick={handleOptionPanelDisplay}
     >
       <div className="options">
         <i
@@ -131,6 +137,7 @@ const ProjectCard = ({
               className="options-btns-link"
               onClick={() => {
                 handleProjectDelete(projectID);
+                setDeleteNotif(true);
               }}
             >
               <i className="fa-regular fa-trash-can fs-5"></i>

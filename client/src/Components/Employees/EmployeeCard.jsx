@@ -38,28 +38,6 @@ const EmployeeCard = ({
   handleEmployeeUpdate,
   onDelete,
 }) => {
-  function ImageComponent({ image }) {
-    const AWS_S3_BUCKET_URL = `https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/${image}`;
-    if (!image || image === " ") {
-      return <i className="fa-solid fa-circle-user fs-2"></i>;
-    }
-
-    if (image && typeof image === "string" && image.trim()) {
-      return (
-        <img
-          // src={require(`../../../../server/images/${image.trim()}`)}
-          src={AWS_S3_BUCKET_URL}
-          // src={require(`../../images/${image.trim()}`)}
-          // src="https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/corporate_headshots_tampa_006.jpg"
-          alt="desktop img"
-          height="35px"
-          width="35px"
-          className="employee-card-img"
-        />
-      );
-    }
-  }
-
   // EDIT MODE
   const [btnValue, setBtnValue] = useState(0);
   const [employee, setEmployee] = useState([]);
@@ -91,6 +69,28 @@ const EmployeeCard = ({
     });
     setFoundEmployee(found);
   };
+
+  function ImageComponent({ image }) {
+    const AWS_S3_BUCKET_URL = `https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/${image}`;
+    if (!image || image === " ") {
+      return <i className="fa-solid fa-circle-user fs-2"></i>;
+    }
+
+    if (image && typeof image === "string" && image.trim()) {
+      return (
+        <img
+          // src={require(`../../../../server/images/${image.trim()}`)}
+          src={AWS_S3_BUCKET_URL}
+          // src={require(`../../images/${image.trim()}`)}
+          // src="https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/corporate_headshots_tampa_006.jpg"
+          alt="desktop img"
+          height="35px"
+          width="35px"
+          className="employee-card-img"
+        />
+      );
+    }
+  }
 
   return (
     <>
@@ -311,23 +311,23 @@ const EmployeeCard = ({
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            <p> {newDegreeUpdated ? newDegree : degree ? degree : "none"} </p>
+            <p> {newDegreeUpdated ? newDegree : degree ? degree : "N/A"} </p>
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            <p>{newDepartmentUpdated ? newDepartment : department}</p>
+            <p>{newDepartmentUpdated ? newDepartment : department ? department : "N/A"}</p>
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            <p>{newDesignationUpdated ? newDesignation : designation}</p>
+            <p>{newDesignationUpdated ? newDesignation : designation ? designation : "N/A"}</p>
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            <p> {newMobileUpdated ? newMobile : mobile} </p>
+            <p> {newMobileUpdated ? newMobile : mobile ? mobile : "N/A"} </p>
           </div>
 
           <div className="employee-card-desktop-form-fields">
-            <p> {newEmailUpdated ? newEmail : email} </p>
+            <p> {newEmailUpdated ? newEmail : email ? email : "N/A"} </p>
           </div>
 
           <div className="employee-card-desktop-form-fields">

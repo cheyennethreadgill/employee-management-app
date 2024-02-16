@@ -12879,9 +12879,9 @@ textarea {
     max-height: 755px;
   }
 }
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1024px) {
   .employees {
-    height: 100vh;
+    height: 75vh;
   }
 }
 
@@ -13175,6 +13175,25 @@ textarea {
 .project .options-btns p {
   margin: 0;
   font-size: 1rem;
+}
+
+.project-card_delete-notification_show {
+  opacity: 1;
+  position: sticky;
+  bottom: 2rem;
+  margin: 0 auto;
+  background-color: rgb(221, 54, 54);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+  width: 15rem;
+  text-align: center;
+  transition: opacity ease-n-out 300ms;
+}
+
+.project-card_delete-notification_remove {
+  opacity: 0;
 }
 
 .work-status {

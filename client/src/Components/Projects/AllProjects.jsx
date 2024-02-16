@@ -30,6 +30,7 @@ const AllProjects = ({
   const [loading, setLoading] = useState(true);
   const [showNow, setShowNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [deleteNotif, setDeleteNotif] = useState(false);
   const [projectInfoForModal, setprojectInfoForModal] = useState({});
 
   const handleLoadingState = (value) => setLoading(value);
@@ -37,6 +38,17 @@ const AllProjects = ({
   const handleEditMode = () => setEditMode(!editMode);
   // Set project info given by employee card
   const handleProjectSet = (values) => setprojectInfoForModal(values);
+
+  // Deleted Notification
+  function DeleteNotification() {
+    return (
+      <div
+        className={deleteNotif ? "project-card_delete-notification_show" : "project-card_delete-notification_remove"}
+      >
+        <p>Project deleted!</p>
+      </div>
+    );
+  }
 
   // // UPDATE PROJECT STATE DELETE (UI)
   const handleProjectStateUpdateDelete = (id) => {
@@ -146,6 +158,8 @@ const AllProjects = ({
                     md="1"
                   >
                     <ProjectCard
+                      DeleteNotification={DeleteNotification}
+                      setDeleteNotif={setDeleteNotif}
                       workStatusOptions={workStatusOptions}
                       priorityOptions={priorityOptions}
                       teamOptions={teamOptions}
@@ -212,6 +226,8 @@ const AllProjects = ({
           handleProjectUpdate={handleProjectUpdate}
         />
       )}
+      {deleteNotif && <DeleteNotification />}
+      {/* {deleteNotif && <div className="project-card_delete-notification">Project deleted!</div>} */}
     </section>
   );
 };

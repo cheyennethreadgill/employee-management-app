@@ -54,7 +54,6 @@ const AddProject = ({
       (err) => handleFetchError(err);
     }
     setValidated(!validated);
-    currentTarget.reset();
   }
 
   // get form validation response
@@ -83,11 +82,14 @@ const AddProject = ({
 
     if (promiseResponse === true) {
       {
-        handleProjectAdd(e, currentTarget);
+        handleProjectAdd(e);
         handleFormSubmissionStatus();
         setValidated(false);
+        currentTarget.reset();
       }
-    } else setFormError(true);
+    } else {
+      setFormError(true);
+    }
   }
 
   return (
