@@ -42,6 +42,7 @@ const router = createBrowserRouter([
     element: <Root URL={URL} />,
     errorElement: <ErrorPage />,
     children: [
+      { index: true, element: <ProjectsDash URL={URL} /> },
       {
         path: "/all-employees",
         element: (

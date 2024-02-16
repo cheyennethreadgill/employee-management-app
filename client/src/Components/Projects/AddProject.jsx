@@ -12,7 +12,6 @@ const AddProject = ({
   teamOptions,
   departmentOptions,
 }) => {
-  const form = useRef();
   const PATH = "add-project";
 
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -37,7 +36,7 @@ const AddProject = ({
   };
 
   // fetch project
-  async function handleProjectAdd(e) {
+  async function handleProjectAdd(e, currentTarget) {
     e.preventDefault();
     // Post options
     const options = {
@@ -55,7 +54,7 @@ const AddProject = ({
       (err) => handleFetchError(err);
     }
     setValidated(!validated);
-    handleProjectFormData("description", "");
+    currentTarget.reset();
   }
 
   // get form validation response
@@ -79,17 +78,18 @@ const AddProject = ({
   };
 
   // handle form submission after form validation response is ok
-  async function handleSubmit(e) {
+  async function handleSubmit(e, currentTarget) {
     const promiseResponse = await promise(e);
 
     if (promiseResponse === true) {
       {
-        handleProjectAdd(e);
+        handleProjectAdd(e, currentTarget);
         handleFormSubmissionStatus();
         setValidated(false);
       }
     } else setFormError(true);
   }
+
   return (
     <>
       <Container>
@@ -98,9 +98,8 @@ const AddProject = ({
           noValidate
           validated={validated}
           onSubmit={(e) => {
-            handleSubmit(e);
+            handleSubmit(e, e.currentTarget);
           }}
-          ref={form}
         >
           <Row>
             <Form.Group

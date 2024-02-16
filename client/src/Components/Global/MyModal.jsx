@@ -47,16 +47,28 @@ const MyModal = ({
     setFormData({ ...formData, [key]: value });
   };
 
+  console.log(formData.combinedName);
+  // cutting off last name here
   // HANDLE NAME SPLIT
   const getCombinedName = (e) => {
+    handleFormData("combinedName", e);
+    // only works when you hit space
+    console.log(formData.combinedName);
+    // the e works but combined name
+    console.log(e);
     return new Promise((resolve, reject) => {
       // waiting on the combined name
-      handleFormData("combinedName", e);
+      console.log(formData.combinedName);
       let combined = formData.combinedName;
+      console.log(e);
+      // cutting off last name here
+      console.log(combined);
       resolve(combined);
       reject("ERROR");
     });
   };
+
+  console.log(formData.combinedName);
 
   async function splitName() {
     const response = await getCombinedName();
@@ -69,6 +81,8 @@ const MyModal = ({
       firstname: splitName[0],
       lastname: splitName[1],
     });
+
+    console.log(splitName[0] + splitName[1]);
   }
 
   // UPDATED PROJECT INFO
@@ -117,10 +131,11 @@ const MyModal = ({
               }
               type="text"
               autoFocus
-              onChange={(e) => {
+              onKeyDown={(e) => {
                 handleFormUpdatedStatus("newFirstnameUpdated", true);
                 handleFormUpdatedStatus("newLastnameUpdated", true);
                 getCombinedName(e.target.value);
+                console.log(e.target.value);
               }}
               onBeforeInput={() => {
                 splitName();
@@ -279,6 +294,7 @@ const MyModal = ({
               handleEditMode();
               handleEmployeeUpdate(e, employeeid, employeeToUpdate);
               handleShowNow(false);
+              console.log(formData.newFirstname + formData.newLastname);
             }}
             type="submit"
           />

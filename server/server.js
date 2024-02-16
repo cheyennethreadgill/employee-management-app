@@ -11,10 +11,10 @@ const PORT = process.env.PORT || 8080;
 
 // connect to mysql
 const db = mysql.createConnection({
-  user: process.env.DBUser,
-  host: process.env.DBHost,
-  password: process.env.DBPassword,
-  database: process.env.DBDatabase,
+user: process.env.DBUser,
+host: process.env.DBHost,
+password: process.env.DBPassword,
+database: process.env.DBDatabase,
 });
 // const db = mysql.createConnection({
 //   user: "root",

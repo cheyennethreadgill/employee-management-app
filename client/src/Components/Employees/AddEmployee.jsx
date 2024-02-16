@@ -15,6 +15,9 @@ const AddEmployee = ({
   const [error, setFormError] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  const passwordInputOne = useRef();
+  const passwordInputTwo = useRef();
+
   // Form Handling
   const [employeeFormData, setEmployeeFormData] = useState({
     fname: "",
@@ -37,7 +40,7 @@ const AddEmployee = ({
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
   // ADD EMPLOYEE TO DB
-  async function addEmployeeNow(e) {
+  async function addEmployeeNow(e, currentTarget) {
     e.preventDefault();
 
     // use FormData Api to construct the body in request when handling multiform
@@ -71,7 +74,21 @@ const AddEmployee = ({
       (err) => handleFetchError(err);
     }
     setValidated(!validated);
+    currentTarget.reset();
   }
+
+  // const [passwordMatch, setPasswordMatch] = useState(false);
+  // console.log(`After useStae: ${passwordMatch}`);
+
+  // const handlePasswordMatchCheck = (e) => {
+  //   if (passwordInputOne.current.value === e) {
+  //     console.log("password match");
+  //     setPasswordMatch(true);
+  //   } else {
+  //     console.log("error: passwords must match");
+  //     setPasswordMatch(false);
+  //   }
+  // };
 
   // get form validation response
   const promise = (e) => {
@@ -92,12 +109,12 @@ const AddEmployee = ({
   };
 
   // handle form submission after form validation response is ok
-  async function handleSubmit(e) {
+  async function handleSubmit(e, currentTarget) {
     const promiseResponse = await promise(e);
 
     if (promiseResponse === true) {
       {
-        addEmployeeNow(e);
+        addEmployeeNow(e, currentTarget);
         handleFormSubmissionStatus();
         setValidated(false);
       }
@@ -107,14 +124,13 @@ const AddEmployee = ({
   return (
     <>
       <Container>
-        {" "}
         <PageHeaders name={PATH} />
         {/* *****************************************TEST FORM */}
         <Form
           noValidate
           validated={validated}
           onSubmit={(e) => {
-            handleSubmit(e);
+            handleSubmit(e, e.currentTarget);
           }}
           autoComplete="true"
           encType="multipart/form-data"
@@ -188,13 +204,32 @@ const AddEmployee = ({
               lg="6"
             >
               <Form.Control
-                type="text"
+                type="password"
                 placeholder="enter password*"
+                required
+                ref={passwordInputOne}
+              />
+            </Form.Group>
+            <Form.Group
+              className="form-group"
+              as={Col}
+              lg="6"
+            >
+              <Form.Control
+                type="password"
+                placeholder="re-enter password*"
                 onChange={(e) => {
                   handleEmployeeFormData("password", e.target.value);
+                  // handlePasswordMatchCheck(e.target.value);
+
+                  // console.log(` Input ${passwordMatch}`);
                 }}
+                ref={passwordInputTwo}
                 required
               />
+
+              {/* <Form.Control.Feedback type="invalid">Password must match.</Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
             </Form.Group>
 
             <Form.Group
@@ -312,7 +347,7 @@ const AddEmployee = ({
             </fieldset>
 
             {formSubmitted && <p className="fw-medium mt-2">Employee Added Successfully!</p>}
-            {error && <p className="fw-bold mt-2">Please correct errors above.</p>}
+            {error && !formSubmitted && <p className="fw-bold mt-2">Please correct errors above.</p>}
 
             <div className="form-btns">
               <Button

@@ -170,15 +170,15 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
     let found = employees.filter((employee) => {
       const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
       if (
-        department == e ||
-        designation == e ||
-        email == e ||
-        employeeid == e ||
-        firstname == e ||
-        lastname == e ||
-        mobile == e ||
-        degree == e ||
-        image == e
+        e.includes(department) ||
+        e.includes(designation) ||
+        e.includes(email) ||
+        e.includes(employeeid) ||
+        e.includes(firstname) ||
+        e.includes(lastname) ||
+        e.includes(mobile) ||
+        e.includes(degree) ||
+        e.includes(image)
       )
         return employee;
     });
