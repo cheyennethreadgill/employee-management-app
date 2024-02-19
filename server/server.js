@@ -10,25 +10,21 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // connect to mysql
-const db = mysql.createConnection({
-  user: process.env.DBUser,
-  host: process.env.DBHost,
-  password: process.env.DBPassword,
-  database: process.env.DBDatabase,
-});
 // const db = mysql.createConnection({
-//   user: "root",
-//   host: "localhost",
-//   password: "Cheyenne1234",
-//   database: "employee-management",
+//   user: process.env.DBUser,
+//   host: process.env.DBHost,
+//   password: process.env.DBPassword,
+//   database: process.env.DBDatabase,
 // });
+const db = mysql.createConnection({
+  user: "root",
+  host: "localhost",
+  password: "Cheyenne1234",
+  database: "employee-management",
+});
 
 // Configure AWS SDK with environment variables
-// const s3 = new aws.S3({
-//   accessKeyId: "AKIAYS2NVW4T5SF6VFNI",
-//   secretAccessKey: "KCO9g2T/NyoYxLqQp1tX3peXuUyE3gC4kbG3c+qL",
-//   region: "us-east-2", // Specify the region where your S3 bucket is located
-// });
+
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,

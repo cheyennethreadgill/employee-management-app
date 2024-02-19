@@ -35,6 +35,8 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   const [employees, setEmployees] = useState([]);
   const [show, setShow] = useState(false);
   const [showNow, setShowNow] = useState(false);
+  const [deletePrompt, setDeletePrompt] = useState(false);
+  const [deletePromptNow, setDeletePromptNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const handleLoadingState = (value) => setLoading(value);
@@ -42,9 +44,11 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   const [employeeInfoForModal, setEmployeeInfoForModal] = useState({});
 
   const handleShow = () => setShow(true);
+  const handleShowDeletePrompt = () => setDeletePrompt(true);
   const handleClose = () => setShow(false);
   const handleEditMode = () => setEditMode(!editMode);
   const handleShowNow = () => setShowNow(!showNow);
+  const handleShowDeletePromptNow = () => setDeletePromptNow(!deletePromptNow);
 
   // Set employee info given by employee card
   const handleEmployeeSet = (values) => {
@@ -184,6 +188,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
     return (
       <EmployeeCard
         key={employeeid}
+        handleShowDeletePrompt={handleShowDeletePrompt}
         setShow={setShow}
         handleShow={handleShow}
         handleEditMode={handleEditMode}
@@ -235,6 +240,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
     return (
       <EmployeeCard
         key={employeeid}
+        handleShowDeletePrompt={handleShowDeletePrompt}
         setShow={setShow}
         handleShow={handleShow}
         handleEditMode={handleEditMode}

@@ -2,6 +2,7 @@ import { Row, Form, Col } from "react-bootstrap";
 import React, { useState } from "react";
 
 const EmployeeCard = ({
+  handleShowDeletePrompt,
   handleEditMode,
   handleShowNow,
   handleEmployeeSet,
@@ -38,6 +39,13 @@ const EmployeeCard = ({
   handleEmployeeUpdate,
   onDelete,
 }) => {
+  const employeeCardConditionals = [
+    { updateStatus: newDegreeUpdated, newEntry: newDegree, originalEntry: degree },
+    { updateStatus: newDepartmentUpdated, newEntry: newDepartment, originalEntry: department },
+    { updateStatus: newDesignationUpdated, newEntry: newDesignation, originalEntry: designation },
+    { updateStatus: newMobileUpdated, newEntry: newMobile, originalEntry: mobile },
+    { updateStatus: newEmailUpdated, newEntry: newEmail, originalEntry: email },
+  ];
   // EDIT MODE
   const [btnValue, setBtnValue] = useState(0);
   const [employee, setEmployee] = useState([]);
@@ -46,30 +54,7 @@ const EmployeeCard = ({
   // SHOW UPDATE MODAL
   const handleBtnValue = (id) => setBtnValue(id);
 
-  // SEARCH EMPLOYEE
-  const handleEmployeeSearch = (id) => {
-    setEmployee(
-      employees.filter((empl) => {
-        const { employeeid } = empl;
-        if (employeeid === id) {
-          setEmployee(empl);
-          return empl;
-        }
-      })
-    );
-  };
-
-  // Find Employee
-  const handleFindEmployee = (id) => {
-    let found = employees.find((empl) => {
-      const { employeeid } = empl;
-      if (employeeid === id) {
-        return empl;
-      }
-    });
-    setFoundEmployee(found);
-  };
-
+  // IMAGE COMPONENT
   function ImageComponent({ image }) {
     const AWS_S3_BUCKET_URL = `https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/${image}`;
     if (!image || image === " ") {
@@ -79,10 +64,7 @@ const EmployeeCard = ({
     if (image && typeof image === "string" && image.trim()) {
       return (
         <img
-          // src={require(`../../../../server/images/${image.trim()}`)}
           src={AWS_S3_BUCKET_URL}
-          // src={require(`../../images/${image.trim()}`)}
-          // src="https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/corporate_headshots_tampa_006.jpg"
           alt="desktop img"
           height="35px"
           width="35px"
@@ -120,7 +102,7 @@ const EmployeeCard = ({
             <Col lg="1">
               <div className="employee-card-mobile-fields">
                 <Col lg="12">
-                  <h3>Image</h3>
+                  <h3>YOOO</h3>
                 </Col>
                 <Col lg="12">
                   <ImageComponent image={image} />
@@ -310,26 +292,14 @@ const EmployeeCard = ({
             <p>{newFirstnameUpdated ? newFirstname + " " + newLastname : firstname + " " + lastname} </p>
           </div>
 
-          <div className="employee-card-desktop-form-fields">
-            <p> {newDegreeUpdated ? newDegree : degree ? degree : "N/A"} </p>
-          </div>
-
-          <div className="employee-card-desktop-form-fields">
-            <p>{newDepartmentUpdated ? newDepartment : department ? department : "N/A"}</p>
-          </div>
-
-          <div className="employee-card-desktop-form-fields">
-            <p>{newDesignationUpdated ? newDesignation : designation ? designation : "N/A"}</p>
-          </div>
-
-          <div className="employee-card-desktop-form-fields">
-            <p> {newMobileUpdated ? newMobile : mobile ? mobile : "N/A"} </p>
-          </div>
-
-          <div className="employee-card-desktop-form-fields">
-            <p> {newEmailUpdated ? newEmail : email ? email : "N/A"} </p>
-          </div>
-
+          {employeeCardConditionals.map((condition) => {
+            const { updateStatus, newEntry, originalEntry } = condition;
+            return (
+              <div className="employee-card-desktop-form-fields">
+                <p> {updateStatus ? newEntry : originalEntry ? originalEntry : "N/A"} </p>
+              </div>
+            );
+          })}
           <div className="employee-card-desktop-form-fields">
             <p> {date} </p>
           </div>
@@ -378,6 +348,7 @@ const EmployeeCard = ({
               onClick={() => {
                 onDelete(employeeid);
                 onUpdateEmployeeState(employeeid);
+                // handleShowDeletePrompt(true);
               }}
               type="submit"
               className="fa-solid fa-trash delete-btn"
