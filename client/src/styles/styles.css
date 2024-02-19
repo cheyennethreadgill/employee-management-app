@@ -12784,6 +12784,7 @@ textarea {
   width: 100%;
   margin: 0 auto;
   height: 56px;
+  padding: 0 1rem;
 }
 .employees-header-search-input {
   position: relative;
@@ -12853,12 +12854,14 @@ textarea {
     flex: 0 0 154px;
   }
 }
-.employees-card-titles-desktop h3, .employees-card-titles-desktop .h3 {
-  flex: 0 0 154px;
-}
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1600px) {
   .employees-card-titles-desktop h3, .employees-card-titles-desktop .h3 {
     flex: 0 0 110px;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .employees-card-titles-desktop h3, .employees-card-titles-desktop .h3 {
+    flex: 0 0 154px;
   }
 }
 .employees-card-container {
@@ -12927,15 +12930,10 @@ textarea {
   padding: 0 0 0 3rem;
   justify-content: space-around;
 }
-@media screen and (max-width: 1024px) {
-  .employee-card-desktop-form {
-    padding: 0 0 0 3rem;
-  }
-}
 .employee-card-desktop-form-fields {
   overflow-x: hidden;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1600px) {
   .employee-card-desktop-form-fields {
     flex: 0 0 110px;
   }

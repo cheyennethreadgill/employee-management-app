@@ -8,14 +8,6 @@ import { Link } from "react-router-dom";
 import MyModal from "../Global/MyModal";
 
 const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseLog, handleFetchError }) => {
-  // const handleEmployeeStateUpdateDelete = (id) => {
-  //   setEmployees(
-  //     employees.filter((employee) => {
-  //       return employee.employeeid === id;
-  //     })
-  //   );
-  // };
-
   const PATH = "employees";
   const UPDATE_PATH = "update-employee";
   const titles = [
@@ -160,7 +152,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
     }
   }
 
-  // GET FILTERED EMPLLOYEES
+  // SEARCH EMPLLOYEES
   // sets filtered employees initial state with employees
   const [filteredEmloyees, setfilteredEmloyees] = useState(employees);
   const filterCount = filteredEmloyees.length > 0;
@@ -168,19 +160,19 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   const handleFilteredEmployees = (e) => {
     // sets filtered employee with found employee from filter fn
     let found = employees.filter((employee) => {
-      const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
+      const { department, designation, email, employeeid, firstname, lastname, mobile, degree } = employee;
       if (
-        e.includes(department) ||
-        e.includes(designation) ||
-        e.includes(email) ||
-        e.includes(employeeid) ||
-        e.includes(firstname) ||
-        e.includes(lastname) ||
-        e.includes(mobile) ||
-        e.includes(degree) ||
-        e.includes(image)
-      )
+        department.toLowerCase().includes(e.toLowerCase()) ||
+        designation.toLowerCase().includes(e.toLowerCase()) ||
+        email.toLowerCase().includes(e.toLowerCase()) ||
+        employeeid.toString().includes(e) ||
+        firstname.toLowerCase().includes(e.toLowerCase()) ||
+        lastname.toLowerCase().includes(e.toLowerCase()) ||
+        mobile.toString().includes(e) ||
+        degree.toLowerCase().includes(e.toLowerCase())
+      ) {
         return employee;
+      }
     });
     setfilteredEmloyees(found);
   };

@@ -53,7 +53,6 @@ const AddProject = ({
     } catch {
       (err) => handleFetchError(err);
     }
-    setValidated(!validated);
   }
 
   // get form validation response
@@ -349,6 +348,8 @@ const AddProject = ({
               <Form.Control.Feedback type="invalid">Please enter a description</Form.Control.Feedback>
             </Form.Group>
 
+            {formSubmitted ? <p className=" fw-medium mt-2">Project Added Successfully!</p> : null}
+
             {/* *******************************************************FORM BUTTONS */}
             <div className="form-btns">
               <Button
@@ -364,8 +365,6 @@ const AddProject = ({
                 Cancel
               </Button>
             </div>
-
-            {formSubmitted ? <p className=" fw-medium mt-2">Project Added Successfully!</p> : null}
           </Row>
         </Form>
       </Container>

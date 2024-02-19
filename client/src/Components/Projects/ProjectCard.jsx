@@ -55,6 +55,7 @@ const ProjectCard = ({
   const handleProjectDelete = (projectID) => {
     deleteProjectFromDB(projectID);
     onDelete(projectID);
+    // show delete for 3 secs
     setTimeout(() => {
       setDeleteNotif(false);
     }, 3000);

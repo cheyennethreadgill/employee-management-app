@@ -227,7 +227,6 @@ const AllProjects = ({
         />
       )}
       {deleteNotif && <DeleteNotification />}
-      {/* {deleteNotif && <div className="project-card_delete-notification">Project deleted!</div>} */}
     </section>
   );
 };
