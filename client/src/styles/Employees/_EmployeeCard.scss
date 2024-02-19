@@ -19,13 +19,10 @@
     padding: 0 0 0 3rem;
     justify-content: space-around;
 
-    @include breakpointDown(md) {
-      padding: 0 0 0 3rem;
-    }
     &-fields {
       overflow-x: hidden;
 
-      @include breakpointDown(md) {
+      @include breakpointDown(lg) {
         flex: 0 0 110px;
       }
       @include breakpointUp(lg) {
