@@ -1,5 +1,6 @@
 import { Row, Form, Col } from "react-bootstrap";
 import React, { useState } from "react";
+import ImageComponent from "./EmployeeImageComponent";
 
 const EmployeeCard = ({
   handleShowDeletePrompt,
@@ -40,11 +41,28 @@ const EmployeeCard = ({
   onDelete,
 }) => {
   const employeeCardConditionals = [
-    { updateStatus: newDegreeUpdated, newEntry: newDegree, originalEntry: degree },
-    { updateStatus: newDepartmentUpdated, newEntry: newDepartment, originalEntry: department },
-    { updateStatus: newDesignationUpdated, newEntry: newDesignation, originalEntry: designation },
-    { updateStatus: newMobileUpdated, newEntry: newMobile, originalEntry: mobile },
-    { updateStatus: newEmailUpdated, newEntry: newEmail, originalEntry: email },
+    { updateStatus: null, newEntry: null, originalEntry: [image, "Image"] },
+    {
+      updateStatus: null,
+      newEntry: null,
+      originalEntry: [employeeid, "Employee ID"],
+    },
+    {
+      updateStatus: newFirstnameUpdated,
+      newEntry: +" " + newLastname,
+      originalEntry: [firstname + " " + lastname, "Name"],
+    },
+    { updateStatus: newDegreeUpdated, newEntry: newDegree, originalEntry: [degree, "Degree"] },
+    { updateStatus: newDepartmentUpdated, newEntry: newDepartment, originalEntry: [department, "Deparment"] },
+    { updateStatus: newDesignationUpdated, newEntry: newDesignation, originalEntry: [designation, "Designation"] },
+    { updateStatus: newMobileUpdated, newEntry: newMobile, originalEntry: [mobile, "Mobile"] },
+    { updateStatus: newEmailUpdated, newEntry: newEmail, originalEntry: [email, "Email"] },
+
+    {
+      updateStatus: null,
+      newEntry: null,
+      originalEntry: [date, "Join Date"],
+    },
   ];
   // EDIT MODE
   const [btnValue, setBtnValue] = useState(0);
@@ -54,30 +72,10 @@ const EmployeeCard = ({
   // SHOW UPDATE MODAL
   const handleBtnValue = (id) => setBtnValue(id);
 
-  // IMAGE COMPONENT
-  function ImageComponent({ image }) {
-    const AWS_S3_BUCKET_URL = `https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/${image}`;
-    if (!image || image === " ") {
-      return <i className="fa-solid fa-circle-user fs-2"></i>;
-    }
-
-    if (image && typeof image === "string" && image.trim()) {
-      return (
-        <img
-          src={AWS_S3_BUCKET_URL}
-          alt="desktop img"
-          height="35px"
-          width="35px"
-          className="employee-card-img"
-        />
-      );
-    }
-  }
-
   return (
     <>
       {/* ***********************************************************MOBILE */}
-      <section className="employee-card-mobile ">
+      <section className="employee-card-mobile">
         <Form
           autoComplete="true"
           className="employee-card-form"
@@ -98,170 +96,111 @@ const EmployeeCard = ({
                 </Col>
               </Row>
             </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>YOOO</h3>
-                </Col>
-                <Col lg="12">
-                  <ImageComponent image={image} />
-                </Col>
-              </div>
-            </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>Employee ID: </h3>
-                </Col>
-                <Col lg="12">
-                  <p> {employeeid} </p>
-                </Col>
-              </div>
-            </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>Name: </h3>
-                </Col>
-                <Col lg="12">
-                  <p>{newFirstnameUpdated ? newFirstname + " " + newLastname : firstname + " " + lastname} </p>
-                </Col>
-              </div>
-            </Col>
 
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>Degree: </h3>
-                </Col>
-                <Col lg="12">
-                  <p>{newDegreeUpdated ? newDegree : degree} </p>
-                </Col>
-              </div>
-            </Col>
-
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>Department </h3>
-                </Col>
-                <Col lg="12">
-                  <p>{newDepartmentUpdated ? newDepartment : department}</p>
-                </Col>
-              </div>
-            </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>Designation</h3>
-                </Col>
-                <Col lg="12">
-                  <p>{newDesignationUpdated ? newDesignation : designation}</p>
-                </Col>
-              </div>
-            </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>Mobile</h3>
-                </Col>
-                <Col lg="12">
-                  <p> {newMobileUpdated ? newMobile : mobile} </p>
-                </Col>
-              </div>
-            </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>email</h3>
-                </Col>
-                <Col lg="12">
-                  <p> {newEmailUpdated ? newEmail : email} </p>
-                </Col>
-              </div>
-            </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col lg="12">
-                  <h3>join date</h3>
-                </Col>
-                <Col lg="12">
-                  <p> {date} </p>
-                </Col>
-              </div>
-            </Col>
-            <hr className="d-block d-lg-none" />
-            <Col lg="1">
-              <div className="employee-card-mobile-fields">
-                <Col
-                  lg="12"
-                  className="col-6 d-none d-lg-block"
-                >
-                  <p>Actions</p>
-                </Col>
-                <Col lg="12">
-                  <div className="form-btns">
-                    <i
-                      onClick={(e) => {
-                        handleBtnValue(employeeid);
-                        handleEditMode();
-                        handleShowNow(true);
-                        handleEmployeeSet({
-                          employeeid,
-                          firstname,
-                          lastname,
-                          degree,
-                          department,
-                          designation,
-                          mobile,
-                          email,
-                          date,
-                          image,
-                          newEmployeeid,
-                          newFirstname,
-                          newLastname,
-                          newDepartment,
-                          newDesignation,
-                          newMobile,
-                          newEmail,
-                          newDegree,
-                          newImage,
-                          newEmployeeidUpdated,
-                          newFirstnameUpdated,
-                          newLastnameUpdated,
-                          newDepartmentUpdated,
-                          newDesignationUpdated,
-                          newMobileUpdated,
-                          newEmailUpdated,
-                          newDegreeUpdated,
-                          newImageUpdated,
-                        });
-                      }}
-                      type="button"
-                      className="fa-regular fa-pen-to-square fs-5 edit-btn"
-                    ></i>
-                    <i
-                      onClick={() => {
-                        onDelete(employeeid);
-                        onUpdateEmployeeState(employeeid);
-                      }}
-                      type="submit"
-                      className="fa-solid fa-trash delete-btn"
-                    ></i>
-                  </div>
-                </Col>
-              </div>
-            </Col>
+            {/* **********************************CARD INFO */}
+            {employeeCardConditionals.map((condition) => {
+              const { updateStatus, newEntry, originalEntry } = condition;
+              if (originalEntry[0] == image) {
+                return (
+                  <Col
+                    lg="1"
+                    xs={{ order: 1 }}
+                  >
+                    <hr className="d-block d-lg-none" />
+                    <div className="employee-card-mobile-fields">
+                      <Col lg="12">
+                        <h3> {originalEntry[1]} </h3>
+                      </Col>
+                      <Col lg="12">
+                        <ImageComponent image={originalEntry[0]} />
+                      </Col>
+                    </div>
+                  </Col>
+                );
+              } else {
+                return (
+                  <Col
+                    lg="1"
+                    xs={{ order: 2 }}
+                  >
+                    <hr className="d-block d-lg-none" />
+                    <div className="employee-card-mobile-fields">
+                      <Col lg="12">
+                        <h3>{originalEntry[1]}</h3>
+                      </Col>
+                      <Col lg="12">
+                        <p> {updateStatus ? newEntry : originalEntry[0]} </p>
+                      </Col>
+                    </div>
+                  </Col>
+                );
+              }
+            })}
           </Row>
+
+          {/* **********************************ACTIONS */}
+          <hr className="d-block d-lg-none" />
+          <Col lg="1">
+            <div className="employee-card-mobile-fields">
+              <Col
+                lg="12"
+                className="col-6 d-none d-lg-block"
+              >
+                <p>Actions</p>
+              </Col>
+              <Col lg="12">
+                <div className="form-btns">
+                  <i
+                    onClick={(e) => {
+                      handleBtnValue(employeeid);
+                      handleEditMode();
+                      handleShowNow(true);
+                      handleEmployeeSet({
+                        employeeid,
+                        firstname,
+                        lastname,
+                        degree,
+                        department,
+                        designation,
+                        mobile,
+                        email,
+                        date,
+                        image,
+                        newEmployeeid,
+                        newFirstname,
+                        newLastname,
+                        newDepartment,
+                        newDesignation,
+                        newMobile,
+                        newEmail,
+                        newDegree,
+                        newImage,
+                        newEmployeeidUpdated,
+                        newFirstnameUpdated,
+                        newLastnameUpdated,
+                        newDepartmentUpdated,
+                        newDesignationUpdated,
+                        newMobileUpdated,
+                        newEmailUpdated,
+                        newDegreeUpdated,
+                        newImageUpdated,
+                      });
+                    }}
+                    type="button"
+                    className="fa-regular fa-pen-to-square fs-5 edit-btn"
+                  ></i>
+                  <i
+                    onClick={() => {
+                      onDelete(employeeid);
+                      onUpdateEmployeeState(employeeid);
+                    }}
+                    type="submit"
+                    className="fa-solid fa-trash delete-btn"
+                  ></i>
+                </div>
+              </Col>
+            </div>
+          </Col>
         </Form>
       </section>
 
@@ -280,30 +219,26 @@ const EmployeeCard = ({
             />
           </div>
 
-          <div className="employee-card-desktop-form-fields">
-            <ImageComponent image={image} />
-          </div>
-
-          <div className="employee-card-desktop-form-fields">
-            <p> {employeeid} </p>
-          </div>
-
-          <div className="employee-card-desktop-form-fields">
-            <p>{newFirstnameUpdated ? newFirstname + " " + newLastname : firstname + " " + lastname} </p>
-          </div>
-
+          {/* **********************************CARD INFO */}
           {employeeCardConditionals.map((condition) => {
             const { updateStatus, newEntry, originalEntry } = condition;
-            return (
-              <div className="employee-card-desktop-form-fields">
-                <p> {updateStatus ? newEntry : originalEntry ? originalEntry : "N/A"} </p>
-              </div>
-            );
-          })}
-          <div className="employee-card-desktop-form-fields">
-            <p> {date} </p>
-          </div>
 
+            if (originalEntry[0] == image) {
+              return (
+                <div className="employee-card-desktop-form-fields">
+                  <ImageComponent image={originalEntry[0]} />
+                </div>
+              );
+            } else {
+              return (
+                <div className="employee-card-desktop-form-fields">
+                  <p> {updateStatus ? newEntry : originalEntry ? originalEntry[0] : "N/A"} </p>
+                </div>
+              );
+            }
+          })}
+
+          {/* **********************************ACTIONS */}
           <div className="form-btns employee-card-desktop-form-fields">
             <i
               onClick={(e) => {
@@ -348,7 +283,6 @@ const EmployeeCard = ({
               onClick={() => {
                 onDelete(employeeid);
                 onUpdateEmployeeState(employeeid);
-                // handleShowDeletePrompt(true);
               }}
               type="submit"
               className="fa-solid fa-trash delete-btn"

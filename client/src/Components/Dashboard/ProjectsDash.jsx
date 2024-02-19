@@ -79,7 +79,7 @@ const ProjectsDash = ({ URL, toggled }) => {
     <>
       <Container>
         {" "}
-        <PageHeaders name="Projects" />
+        <PageHeaders name="Dashboard" />
         <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
           <div className="dash-projects-card-titles">
             {titles.map((title) => {

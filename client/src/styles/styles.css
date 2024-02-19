@@ -12389,6 +12389,15 @@ textarea {
   z-index: 99;
 }
 
+.invalid,
+form-select:is-invalid {
+  border: solid 1.2px #dc3545;
+}
+
+.valid {
+  border: solid 1.2px green;
+}
+
 .app {
   position: relative;
 }
@@ -13199,4 +13208,8 @@ textarea {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
+}
+
+.add-project-form fieldset {
+  margin: 0;
 }/*# sourceMappingURL=styles.css.map */

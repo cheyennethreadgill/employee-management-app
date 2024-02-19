@@ -162,8 +162,7 @@ const ProjectCard = ({
                 key={option}
                 className={`project-card-header-status project-card-header-status_${option} info`}
               >
-                {" "}
-                {newStatusUpdated ? newStatus : status ? status : "N/A"}{" "}
+                {newStatusUpdated ? newStatus : status ? status : "N/A"}
               </p>
             );
           } else return;

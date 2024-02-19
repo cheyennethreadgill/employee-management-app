@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 
@@ -13,9 +13,42 @@ const AddProject = ({
   departmentOptions,
 }) => {
   const PATH = "add-project";
+  const [projects, setProjects] = useState([]);
 
+  // get Projects
+  useEffect(() => {
+    fetch(`${URL}projects`)
+      .then((res) => res.json())
+      .then((json) => setProjects(json));
+  }, []);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [projectExists, setProjectExists] = useState(false);
+
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
+
+  async function handleProjectIDValidation(id) {
+    if (id.length < 4) {
+      return setProjectExists(false);
+    }
+
+    if (id.length === 4) {
+      const findProject = await new Promise((resolve, reject) => {
+        const found = projects.find((project) => {
+          return id == project.projectID;
+        });
+        resolve(found);
+        reject("ERROR with finding project match.");
+      });
+      const found = await findProject;
+
+      if (found && found.projectID == id) {
+        console.log(found.projectID);
+        setProjectExists(!projectExists);
+      } else {
+        return null;
+      }
+    }
+  }
 
   // Sets Project form data
   const [projectFormData, setProjectFormData] = useState({
@@ -65,6 +98,7 @@ const AddProject = ({
     if (check === false) {
       e.preventDefault();
       e.stopPropagation();
+      setProjectExists(true);
     }
 
     setValidated(true);
@@ -96,6 +130,7 @@ const AddProject = ({
       <Container>
         <PageHeaders name={PATH} />
         <Form
+          className="add-project-form"
           noValidate
           validated={validated}
           onSubmit={(e) => {
@@ -114,9 +149,11 @@ const AddProject = ({
                 required
                 onChange={(e) => {
                   handleProjectFormData("projectID", e.target.value);
+                  handleProjectIDValidation(e.target.value);
                 }}
                 pattern="[0-9]{4}"
               />
+              {projectExists && <p className="text-danger">Project already exists.</p>}
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
                 Please enter valid ID. <br></br> ID Must Ccontain 4 numbers.
@@ -134,11 +171,13 @@ const AddProject = ({
                 }}
                 type="text"
                 placeholder="Project title"
+                required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter valid title.</Form.Control.Feedback>
             </Form.Group>
 
+            {/* *************************************DEPT */}
             <Form.Group
               className="form-group"
               as={Col}
@@ -146,7 +185,7 @@ const AddProject = ({
             >
               <fieldset>
                 <Form.Label htmlFor="select department">Select Department</Form.Label>
-                <select
+                <Form.Select
                   name="select department"
                   id="select department"
                   onChange={(e) => {
@@ -158,13 +197,13 @@ const AddProject = ({
                     return (
                       <option
                         key={option}
-                        value={option}
+                        value={option === "" ? "" : option}
                       >
-                        {option}
+                        {option === "" ? "--Select Option--" : option}
                       </option>
                     );
                   })}
-                </select>
+                </Form.Select>
               </fieldset>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please select department</Form.Control.Feedback>
@@ -177,7 +216,7 @@ const AddProject = ({
             >
               <fieldset>
                 <Form.Label htmlFor="priority">Priority</Form.Label>
-                <select
+                <Form.Select
                   name="priority"
                   id="priority"
                   placeholder="priority"
@@ -189,14 +228,14 @@ const AddProject = ({
                   {priorityOptions.map((option) => {
                     return (
                       <option
-                        key={option}
-                        value={option}
+                        key={option === "" ? null : option}
+                        value={option === "" ? "" : option}
                       >
-                        {option}
+                        {option === "" ? "--Select Option--" : option}
                       </option>
                     );
                   })}
-                </select>
+                </Form.Select>
               </fieldset>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please select priority.</Form.Control.Feedback>
@@ -276,10 +315,9 @@ const AddProject = ({
               lg="12"
             >
               <Form.Label htmlFor="Team">Team</Form.Label>
-              <select
+              <Form.Select
                 onChange={(e) => {
                   handleProjectFormData("team", e.target.value);
-                  setTeam(e.target.value);
                 }}
                 name="Team"
                 id="Team"
@@ -289,14 +327,14 @@ const AddProject = ({
                 {teamOptions.map((option) => {
                   return (
                     <option
-                      key={option}
-                      value={option}
+                      key={option === "" ? null : option}
+                      value={option === "" ? "" : option}
                     >
-                      {option}
+                      {option === "" ? "--Select Option--" : option}
                     </option>
                   );
                 })}
-              </select>
+              </Form.Select>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter a team</Form.Control.Feedback>
             </Form.Group>
@@ -320,6 +358,7 @@ const AddProject = ({
                         onClick={(e) => {
                           handleProjectFormData("status", e.target.value);
                         }}
+                        defaultChecked={option == "active"}
                       />
                       <Form.Label htmlFor={option}>{option} </Form.Label>
                     </React.Fragment>

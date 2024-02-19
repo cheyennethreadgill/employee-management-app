@@ -19,7 +19,7 @@ const AllProjects = ({
   const UPDATE_PATH = "update-project";
   const [projects, setProjects] = useState([]);
 
-  // get Project
+  // get Projects
   useEffect(() => {
     fetch(`${URL}${PATH}`)
       .then((res) => res.json())

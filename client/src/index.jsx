@@ -17,9 +17,9 @@ const URL = "https://employee-management-app-rho.vercel.app/";
 
 // Form Select & Radios
 const workStatusOptions = ["active", "completed", "running", "pending", "not started", "canceled"];
-const priorityOptions = ["high", "medium", "low"];
-const teamOptions = ["Sarah", "Michelle", "Kelly"];
-const departmentOptions = ["development", "designing", "testing", "hr"];
+const priorityOptions = ["", "high", "medium", "low"];
+const teamOptions = ["", "Sarah", "Michelle", "Kelly"];
+const departmentOptions = ["", "development", "designing", "testing", "hr"];
 
 // ERROR HANDLING
 const handleFetchPromiseError = (response) => {

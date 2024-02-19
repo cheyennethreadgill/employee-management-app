@@ -142,9 +142,10 @@ textarea {
 // input:valid {
 //   border: solid 1.2px green;
 // }
-// .invalid {
-//   border: solid 1.2px rgb(180, 39, 39);
-// }
-// .valid {
-//   border: solid 1.2px green;
-// }
+.invalid,
+form-select:is-invalid {
+  border: solid 1.2px #dc3545;
+}
+.valid {
+  border: solid 1.2px green;
+}

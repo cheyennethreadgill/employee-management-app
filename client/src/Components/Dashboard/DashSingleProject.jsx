@@ -66,13 +66,13 @@ const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, 
     >
       <div className="dash-projects-card-project-entry">
         <div className="overflow-hidden">
-          <p> {newTitleUpdated ? newTitle : title} </p>
+          <p> {newTitleUpdated ? newTitle : title ? title : "N/A"} </p>
         </div>
         <div className="overflow-hidden">
-          <p> {newDepartmentUpdated ? newDepartment : department} </p>
+          <p> {newDepartmentUpdated ? newDepartment : department ? department : "N/A"} </p>
         </div>
         <div className="overflow-hidden">
-          <p> {newTeamUpdated ? newTeam : team} </p>
+          <p> {newTeamUpdated ? newTeam : team ? team : "N/A"} </p>
         </div>
         <div className="overflow-hidden">
           <p
@@ -83,10 +83,10 @@ const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, 
                 ? "priority priority-medium"
                 : priority == "low"
                 ? "priority priority-low"
-                : null
+                : "N/A"
             }
           >
-            {newPriorityUpdated ? newPriority : priority}
+            {newPriorityUpdated ? newPriority : priority ? priority : "N/A"}
           </p>
         </div>
         <div className="overflow-hidden">
@@ -97,7 +97,6 @@ const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, 
         </div>
         <div className="overflow-hidden">
           <p className="status-bar">
-            {" "}
             <span className="status-bar-inner status-bar">
               <span
                 className={
