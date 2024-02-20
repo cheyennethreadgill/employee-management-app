@@ -1,5 +1,6 @@
 import { Row, Col } from "react-bootstrap";
 import { useState } from "react";
+import { toSentenceCase } from '../../Helpers/strings';
 
 const ProjectCard = ({
   DeleteNotification,
@@ -209,7 +210,7 @@ const ProjectCard = ({
                             : "fa-solid fa-angle-down"
                         }
                       ></i>
-                      {newPriorityUpdated ? newPriority : priority ? priority : "None"}
+                      {newPriorityUpdated ? newPriority : toSentenceCase(priority) ? toSentenceCase(priority) : "None"}
                     </div>
                   );
                 } else return;
@@ -220,7 +221,7 @@ const ProjectCard = ({
             <i className="fa-regular fa-calendar-days"></i> {newEndDate ? newEndDate : "None"}
           </p>
           <p className="info">Bug</p>
-          <p className="info">{newDepartmentUpdated ? newDepartment : department ? department : "None"}</p>
+          <p className="info">{newDepartmentUpdated ? newDepartment : toSentenceCase(department) ? toSentenceCase(department) : "None"}</p>
         </Col>
       </Row>
 

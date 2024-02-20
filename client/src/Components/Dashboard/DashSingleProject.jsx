@@ -1,6 +1,7 @@
 import ProjectModal from "../Global/ProjectModal";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toSentenceCase } from "../../Helpers/strings";
 
 const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, priority, team, status }) => {
   const UPDATE_PATH = "update-project";
@@ -66,13 +67,20 @@ const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, 
     >
       <div className="dash-projects-card-project-entry">
         <div className="overflow-hidden">
-          <p> {newTitleUpdated ? newTitle : title ? title : "N/A"} </p>
+          <p> {newTitleUpdated ? newTitle : toSentenceCase(title) ? toSentenceCase(title) : "N/A"} </p>
         </div>
         <div className="overflow-hidden">
-          <p> {newDepartmentUpdated ? newDepartment : department ? department : "N/A"} </p>
+          <p>
+            {" "}
+            {newDepartmentUpdated
+              ? newDepartment
+              : toSentenceCase(department)
+              ? toSentenceCase(department)
+              : "N/A"}{" "}
+          </p>
         </div>
         <div className="overflow-hidden">
-          <p> {newTeamUpdated ? newTeam : team ? team : "N/A"} </p>
+          <p> {newTeamUpdated ? newTeam : toSentenceCase(team) ? toSentenceCase(team) : "N/A"} </p>
         </div>
         <div className="overflow-hidden">
           <p
@@ -119,7 +127,7 @@ const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, 
           </p>
         </div>
         <div className="overflow-hidden">
-          <p> docs </p>
+          <p> Docs </p>
         </div>
         {/* <div className="form-btns employee-card-desktop-form-fields overflow-hidden">
           <i

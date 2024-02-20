@@ -18,6 +18,60 @@ const ProjectModal = ({
   description,
   handleProjectUpdate,
 }) => {
+  function SelectComponent({ updateStatus, originalEntryString, originalEntry, newEntry }) {
+    return (
+      <fieldset>
+        <label htmlFor={originalEntryString}>Select {originalEntryString}</label>
+        <select
+          className="form-control-container-input"
+          name={originalEntryString}
+          id={originalEntryString}
+          onChange={(e) => {
+            handleFormUpdatedStatus(updateStatus, true);
+            handleFormData(newEntry, e.target.value);
+            handleProjectToUpdate({ ...projectToUpdate, [originalEntryString]: e.target.value });
+          }}
+          required
+          defaultValue={formUpdatedStatus[updateStatus] ? formData[newEntry] : originalEntry}
+        >
+          {originalEntryString == "department" &&
+            departmentOptions.map((option) => {
+              return (
+                <option
+                  key={option}
+                  value={option}
+                >
+                  {option}
+                </option>
+              );
+            })}
+          {originalEntryString == "team" &&
+            teamOptions.map((option) => {
+              return (
+                <option
+                  key={option}
+                  value={option}
+                >
+                  {option}
+                </option>
+              );
+            })}
+          {originalEntryString == "priority" &&
+            priorityOptions.map((option) => {
+              return (
+                <option
+                  key={option}
+                  value={option}
+                >
+                  {option}
+                </option>
+              );
+            })}
+        </select>
+      </fieldset>
+    );
+  }
+
   // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
     newTitleUpdated: false,
@@ -108,88 +162,28 @@ const ProjectModal = ({
         </Form.Group>
 
         {/* *******************************Team */}
-        <fieldset>
-          <label htmlFor="select department">Select Department</label>
-          <select
-            name="select department"
-            id="select department"
-            placeholder="Select Department"
-            onChange={(e) => {
-              handleFormUpdatedStatus("newDepartmentUpdated", true);
-              handleFormData("newDepartment", e.target.value);
-              handleProjectToUpdate({ ...projectToUpdate, department: e.target.value });
-            }}
-            required
-            defaultValue={formUpdatedStatus.newDepartmentUpdated ? formData.newDepartment : department}
-          >
-            {departmentOptions.map((option) => {
-              return (
-                <option
-                  key={option}
-                  value={option}
-                >
-                  {option}
-                </option>
-              );
-            })}
-          </select>
-        </fieldset>
+        <SelectComponent
+          updateStatus="newDepartmentUpdated"
+          newEntry="newDepartment"
+          originalEntryString="department"
+          originalEntry={department}
+        />
 
         {/* *******************************Team Leader */}
-        <Form.Label htmlFor="Team">Team</Form.Label>
-        <select
-          onChange={(e) => {
-            handleFormUpdatedStatus("newTeamUpdated", true);
-            handleFormData("newTeam", e.target.value);
-            handleProjectToUpdate({ ...projectToUpdate, team: e.target.value });
-          }}
-          name="Team"
-          id="Team"
-          placeholder="Team"
-          required
-          defaultValue="null"
-        >
-          {formUpdatedStatus.newTeamUpdated ? formData.newTeam : team}
-          {teamOptions.map((option) => {
-            return (
-              <option
-                key={option}
-                value={option}
-              >
-                {option}
-              </option>
-            );
-          })}
-        </select>
+        <SelectComponent
+          updateStatus="newTeamUpdated"
+          newEntry="newTeam"
+          originalEntryString="team"
+          originalEntry={team}
+        />
 
         {/* *******************************Priority */}
-        <fieldset>
-          <label htmlFor="priority">Priority</label>
-          <select
-            name="priority"
-            id="priority"
-            placeholder="priority"
-            onChange={(e) => {
-              handleFormUpdatedStatus("newPriorityUpdated", true);
-              handleFormData("newPriority", e.target.value);
-              handleProjectToUpdate({ ...projectToUpdate, priority: e.target.value });
-            }}
-            required
-            className="form-control-container-input"
-            defaultValue={formUpdatedStatus.newPriorityUpdated ? formData.newPriority : priority}
-          >
-            {priorityOptions.map((option) => {
-              return (
-                <option
-                  key={option}
-                  value={option}
-                >
-                  {option}
-                </option>
-              );
-            })}
-          </select>
-        </fieldset>
+        <SelectComponent
+          updateStatus="newPriorityUpdated"
+          newEntry="newPriority"
+          originalEntryString="priority"
+          originalEntry={priority}
+        />
 
         {/* *******************************WORK Status */}
         <fieldset className="work-status">
@@ -230,7 +224,6 @@ const ProjectModal = ({
             handleEditMode();
             handleProjectUpdate(e, projectID, projectToUpdate);
             handleShowNow(false);
-            console.log(projectInfoForModal);
           }}
         >
           Save Changes

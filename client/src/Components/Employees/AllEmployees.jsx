@@ -81,7 +81,8 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
 
   //   UPDATE EMPLOYEE (DB)
   async function handleEmployeeUpdate(e, id, employeeToUpdate) {
-    handleEmployeeStateUpdate(id, employeeToUpdate);
+    handleEmployeeStateUpdate( id, employeeToUpdate );
+    console.log(employeeToUpdate)
 
     // set up form data API to use for multiform post
     const formData = new FormData();

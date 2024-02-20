@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
+import { toSentenceCase } from "../../Helpers/strings";
 
 const AddEmployee = ({
   URL,
@@ -145,7 +146,7 @@ const AddEmployee = ({
                 type="text"
                 placeholder="first name *"
                 onChange={(e) => {
-                  handleEmployeeFormData("fname", e.target.value);
+                  handleEmployeeFormData("fname", toSentenceCase(e.target.value));
                 }}
                 required
               />
@@ -162,7 +163,7 @@ const AddEmployee = ({
                 type="text"
                 placeholder="last name"
                 onChange={(e) => {
-                  handleEmployeeFormData("lname", e.target.value);
+                  handleEmployeeFormData("lname", toSentenceCase(e.target.value));
                 }}
                 required
               />
@@ -177,7 +178,7 @@ const AddEmployee = ({
                 type="text"
                 placeholder="gender"
                 onChange={(e) => {
-                  handleEmployeeFormData("gender", e.target.value);
+                  handleEmployeeFormData("gender", toSentenceCase(e.target.value));
                 }}
               />
             </Form.Group>
@@ -191,7 +192,7 @@ const AddEmployee = ({
                 type="tel"
                 placeholder="mobile*"
                 onChange={(e) => {
-                  handleEmployeeFormData("mobile", e.target.value);
+                  handleEmployeeFormData("mobile", toSentenceCase(e.target.value));
                 }}
                 pattern="[0-9]{10}"
                 required
@@ -219,8 +220,8 @@ const AddEmployee = ({
                 type="password"
                 placeholder="re-enter password*"
                 onChange={(e) => {
-                  handleEmployeeFormData("password", e.target.value);
-                  // handlePasswordMatchCheck(e.target.value);
+                  handleEmployeeFormData("password", toSentenceCase(e.target.value));
+                  // handlePasswordMatchCheck(toSentenceCase(e.target.value));
 
                   // console.log(` Input ${passwordMatch}`);
                 }}
@@ -241,7 +242,7 @@ const AddEmployee = ({
                 type="text"
                 placeholder="designation"
                 onChange={(e) => {
-                  handleEmployeeFormData("designation", e.target.value);
+                  handleEmployeeFormData("designation", toSentenceCase(e.target.value));
                 }}
                 required
               />
@@ -254,7 +255,7 @@ const AddEmployee = ({
                   name="select department"
                   id="select department"
                   onChange={(e) => {
-                    handleEmployeeFormData("department", e.target.value);
+                    handleEmployeeFormData("department", toSentenceCase(e.target.value));
                   }}
                   required
                 >
@@ -264,7 +265,7 @@ const AddEmployee = ({
                         key={option}
                         value={option}
                       >
-                        {option}
+                        {toSentenceCase(option)}
                       </option>
                     );
                   })}
@@ -281,7 +282,7 @@ const AddEmployee = ({
                 type="text"
                 placeholder="address"
                 onChange={(e) => {
-                  handleEmployeeFormData("address", e.target.value);
+                  handleEmployeeFormData("address", toSentenceCase(e.target.value));
                 }}
                 required
               />
@@ -296,7 +297,7 @@ const AddEmployee = ({
                 type="text"
                 placeholder="email"
                 onChange={(e) => {
-                  handleEmployeeFormData("email", e.target.value);
+                  handleEmployeeFormData("email", toSentenceCase(e.target.value));
                 }}
                 required
               />
@@ -312,7 +313,7 @@ const AddEmployee = ({
                 type="date"
                 placeholder="date of birth"
                 onChange={(e) => {
-                  handleEmployeeFormData("dateofbirth", e.target.value);
+                  handleEmployeeFormData("dateofbirth", toSentenceCase(e.target.value));
                 }}
                 required
               />
@@ -327,7 +328,7 @@ const AddEmployee = ({
                 type="text"
                 placeholder="Degree"
                 onChange={(e) => {
-                  handleEmployeeFormData("degree", e.target.value);
+                  handleEmployeeFormData("degree", toSentenceCase(e.target.value));
                 }}
               />
               <Form.Control.Feedback>Looks good</Form.Control.Feedback>

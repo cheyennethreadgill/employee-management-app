@@ -1,6 +1,7 @@
 import { Row, Form, Col } from "react-bootstrap";
 import React, { useState } from "react";
 import ImageComponent from "./EmployeeImageComponent";
+import { toSentenceCase } from "../../Helpers/strings";
 
 const EmployeeCard = ({
   handleShowDeletePrompt,
@@ -52,11 +53,19 @@ const EmployeeCard = ({
       newEntry: +" " + newLastname,
       originalEntry: [firstname + " " + lastname, "Name"],
     },
-    { updateStatus: newDegreeUpdated, newEntry: newDegree, originalEntry: [degree, "Degree"] },
-    { updateStatus: newDepartmentUpdated, newEntry: newDepartment, originalEntry: [department, "Deparment"] },
-    { updateStatus: newDesignationUpdated, newEntry: newDesignation, originalEntry: [designation, "Designation"] },
-    { updateStatus: newMobileUpdated, newEntry: newMobile, originalEntry: [mobile, "Mobile"] },
-    { updateStatus: newEmailUpdated, newEntry: newEmail, originalEntry: [email, "Email"] },
+    { updateStatus: newDegreeUpdated, newEntry: newDegree, originalEntry: [toSentenceCase(degree), "Degree"] },
+    {
+      updateStatus: newDepartmentUpdated,
+      newEntry: newDepartment,
+      originalEntry: [toSentenceCase(department), "Deparment"],
+    },
+    {
+      updateStatus: newDesignationUpdated,
+      newEntry: newDesignation,
+      originalEntry: [toSentenceCase(designation), "Designation"],
+    },
+    { updateStatus: newMobileUpdated, newEntry: newMobile, originalEntry: [toSentenceCase(mobile), "Mobile"] },
+    { updateStatus: newEmailUpdated, newEntry: newEmail, originalEntry: [toSentenceCase(email), "Email"] },
 
     {
       updateStatus: null,
@@ -100,9 +109,13 @@ const EmployeeCard = ({
             {/* **********************************CARD INFO */}
             {employeeCardConditionals.map((condition) => {
               const { updateStatus, newEntry, originalEntry } = condition;
+
+              // const letter = originalEntry[0].charAt(1);
+
               if (originalEntry[0] == image) {
                 return (
                   <Col
+                    key={originalEntry}
                     lg="1"
                     xs={{ order: 1 }}
                   >
@@ -117,9 +130,28 @@ const EmployeeCard = ({
                     </div>
                   </Col>
                 );
+              } else if (originalEntry[0] == employeeid) {
+                return (
+                  <Col
+                    key={originalEntry}
+                    lg="1"
+                    xs={{ order: 2 }}
+                  >
+                    <hr className="d-block d-lg-none" />
+                    <div className="employee-card-mobile-fields">
+                      <Col lg="12">
+                        <h3>{originalEntry[1]}</h3>
+                      </Col>
+                      <Col lg="12">
+                        <p> {originalEntry[0]} </p>
+                      </Col>
+                    </div>
+                  </Col>
+                );
               } else {
                 return (
                   <Col
+                    key={originalEntry}
                     lg="1"
                     xs={{ order: 2 }}
                   >
@@ -228,6 +260,17 @@ const EmployeeCard = ({
                 <div className="employee-card-desktop-form-fields">
                   <ImageComponent image={originalEntry[0]} />
                 </div>
+              );
+            } else if (originalEntry[0] == employeeid) {
+              return (
+                <Col lg="1">
+                  <hr className="d-block d-lg-none" />
+                  <div className="employee-card-mobile-fields">
+                    <Col lg="12">
+                      <p> {employeeid} </p>
+                    </Col>
+                  </div>
+                </Col>
               );
             } else {
               return (

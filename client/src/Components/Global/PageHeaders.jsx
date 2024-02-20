@@ -1,3 +1,5 @@
+import { toSentenceCase } from "../../Helpers/strings";
+
 const PageHeaders = ({ name }) => {
   function fullTitle() {
     const title = name.split("-");
@@ -30,7 +32,7 @@ const PageHeaders = ({ name }) => {
         <i className="fa-solid fa-angle-right"></i>
         <p className="page-headers-breadcrumbs-crumb">Dashboard</p>
         <i className="fa-solid fa-angle-right"></i>
-        <p className="page-headers-breadcrumbs-crumb"> {name} </p>
+        <p className="page-headers-breadcrumbs-crumb"> {toSentenceCase(name)} </p>
       </div>
     </section>
   );

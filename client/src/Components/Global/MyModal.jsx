@@ -15,7 +15,9 @@ const MyModal = ({
   handleShowNow,
   handleEmployeeUpdate,
   employeeInfoForModal,
-}) => {
+} ) => {
+
+  
   // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
     newFirstnameUpdated: false,
@@ -95,7 +97,8 @@ const MyModal = ({
   };
 
   // HANDLE EMPLOYEE TO UPDATE
-  const [employeeToUpdate, setEmployeeToUpdate] = useState({
+  const [employeeToUpdate, setEmployeeToUpdate] = useState( {
+    employeeid: employeeInfoForModal.employeeid,
     firstname: employeeInfoForModal.firstname,
     lastname: employeeInfoForModal.lastname,
     degree: employeeInfoForModal.degree,
@@ -292,7 +295,8 @@ const MyModal = ({
             variant="primary"
             onClick={(e) => {
               handleEditMode();
-              handleEmployeeUpdate(e, employeeid, employeeToUpdate);
+              handleEmployeeUpdate( e, employeeid, employeeToUpdate );
+              console.log(`my modal: ${employeeToUpdate.firstname}}`)
               handleShowNow(false);
               console.log(formData.newFirstname + formData.newLastname);
             }}

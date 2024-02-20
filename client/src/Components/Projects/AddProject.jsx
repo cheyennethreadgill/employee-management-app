@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
+import { toSentenceCase } from "../../Helpers/strings";
 
 const AddProject = ({
   URL,
@@ -21,10 +22,9 @@ const AddProject = ({
       .then((res) => res.json())
       .then((json) => setProjects(json));
   }, []);
+
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [projectExists, setProjectExists] = useState(false);
-
-  const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
   async function handleProjectIDValidation(id) {
     if (id.length < 4) {
@@ -61,12 +61,14 @@ const AddProject = ({
     startDate: "",
     endDate: "",
     team: "",
-    status: "",
+    status: "active",
     description: "",
   });
+
   const handleProjectFormData = (key, value) => {
     setProjectFormData({ ...projectFormData, [key]: value });
   };
+  const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
   // fetch project
   async function handleProjectAdd(e, currentTarget) {
@@ -95,6 +97,7 @@ const AddProject = ({
   const promise = (e) => {
     const form = e.currentTarget;
     let check = form.checkValidity();
+
     if (check === false) {
       e.preventDefault();
       e.stopPropagation();
@@ -111,6 +114,7 @@ const AddProject = ({
 
   // handle form submission after form validation response is ok
   async function handleSubmit(e, currentTarget) {
+    setProjectExists(false);
     const promiseResponse = await promise(e);
 
     if (promiseResponse === true) {
@@ -145,16 +149,19 @@ const AddProject = ({
             >
               <Form.Control
                 type="text"
-                placeholder="Project Id *"
+                placeholder="Project ID *"
                 required
                 onChange={(e) => {
-                  handleProjectFormData("projectID", e.target.value);
-                  handleProjectIDValidation(e.target.value);
+                  handleProjectFormData("projectID", toSentenceCase(e.target.value));
+                  handleProjectIDValidation(toSentenceCase(e.target.value));
                 }}
                 pattern="[0-9]{4}"
               />
-              {projectExists && <p className="text-danger">Project already exists.</p>}
+              {console.log(projectExists)}
+              {/* {projectExists && <p className="text-danger">Project already exists.</p>} */}
+              {projectExists && <Form.Control.Feedback type="invalid">Project already exists.</Form.Control.Feedback>}
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Project already exists.</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
                 Please enter valid ID. <br></br> ID Must Ccontain 4 numbers.
               </Form.Control.Feedback>
@@ -167,17 +174,17 @@ const AddProject = ({
             >
               <Form.Control
                 onChange={(e) => {
-                  handleProjectFormData("title", e.target.value);
+                  handleProjectFormData("title", toSentenceCase(e.target.value));
                 }}
                 type="text"
-                placeholder="Project title"
+                placeholder="Project Title *"
                 required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter valid title.</Form.Control.Feedback>
             </Form.Group>
 
-            {/* *************************************DEPT */}
+            {/* ************************************************************DEPT */}
             <Form.Group
               className="form-group"
               as={Col}
@@ -189,7 +196,7 @@ const AddProject = ({
                   name="select department"
                   id="select department"
                   onChange={(e) => {
-                    handleProjectFormData("department", e.target.value);
+                    handleProjectFormData("department", toSentenceCase(e.target.value));
                   }}
                   required
                 >
@@ -199,7 +206,7 @@ const AddProject = ({
                         key={option}
                         value={option === "" ? "" : option}
                       >
-                        {option === "" ? "--Select Option--" : option}
+                        {option === "" ? "--Select Option--" : toSentenceCase(option)}
                       </option>
                     );
                   })}
@@ -209,6 +216,7 @@ const AddProject = ({
               <Form.Control.Feedback type="invalid">Please select department</Form.Control.Feedback>
             </Form.Group>
 
+            {/* *********************************************************PRIORITY */}
             <Form.Group
               className="form-group"
               as={Col}
@@ -221,7 +229,7 @@ const AddProject = ({
                   id="priority"
                   placeholder="priority"
                   onChange={(e) => {
-                    handleProjectFormData("priority", e.target.value);
+                    handleProjectFormData("priority", toSentenceCase(e.target.value));
                   }}
                   required
                 >
@@ -231,7 +239,7 @@ const AddProject = ({
                         key={option === "" ? null : option}
                         value={option === "" ? "" : option}
                       >
-                        {option === "" ? "--Select Option--" : option}
+                        {option === "" ? "--Select Option--" : toSentenceCase(option)}
                       </option>
                     );
                   })}
@@ -248,10 +256,10 @@ const AddProject = ({
             >
               <Form.Control
                 onChange={(e) => {
-                  handleProjectFormData("client", e.target.value);
+                  handleProjectFormData("client", toSentenceCase(e.target.value));
                 }}
                 type="text"
-                placeholder="client*"
+                placeholder="Client *"
                 required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -265,10 +273,10 @@ const AddProject = ({
             >
               <Form.Control
                 onChange={(e) => {
-                  handleProjectFormData("price", e.target.value);
+                  handleProjectFormData("price", toSentenceCase(e.target.value));
                 }}
                 type="number"
-                placeholder="price*"
+                placeholder="Price *"
                 required
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -282,7 +290,7 @@ const AddProject = ({
             >
               <Form.Control
                 onChange={(e) => {
-                  handleProjectFormData("startDate", e.target.value);
+                  handleProjectFormData("startDate", toSentenceCase(e.target.value));
                 }}
                 type="date"
                 placeholder="start date"
@@ -299,7 +307,7 @@ const AddProject = ({
             >
               <Form.Control
                 onChange={(e) => {
-                  handleProjectFormData("endDate", e.target.value);
+                  handleProjectFormData("endDate", toSentenceCase(e.target.value));
                 }}
                 type="date"
                 placeholder="end date"
@@ -317,7 +325,7 @@ const AddProject = ({
               <Form.Label htmlFor="Team">Team</Form.Label>
               <Form.Select
                 onChange={(e) => {
-                  handleProjectFormData("team", e.target.value);
+                  handleProjectFormData("team", toSentenceCase(e.target.value));
                 }}
                 name="Team"
                 id="Team"
@@ -356,7 +364,7 @@ const AddProject = ({
                         name="status"
                         value={option}
                         onClick={(e) => {
-                          handleProjectFormData("status", e.target.value);
+                          handleProjectFormData("status", toSentenceCase(e.target.value));
                         }}
                         defaultChecked={option == "active"}
                       />
@@ -378,7 +386,7 @@ const AddProject = ({
               <Form.Label htmlFor="description">Description</Form.Label>
               <Form.Control
                 onChange={(e) => {
-                  handleProjectFormData("description", e.target.value);
+                  handleProjectFormData("description", toSentenceCase(e.target.value));
                 }}
                 type="text"
                 id="description"
