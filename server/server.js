@@ -20,10 +20,10 @@ const db = mysql.createConnection({
 
 // connect to Localhost mysql
 // const db = mysql.createConnection({
-//   user: process.env.MYSQL_ROOT,
-//   host: process.env.MYSQL_HOST,
-//   password: process.env.MYSQL_PASSWORD,
-//   database: process.env.MYSQL_DATABASE,
+  // user: process.env.MYSQL_ROOT,
+  // host: process.env.MYSQL_HOST,
+  // password: process.env.MYSQL_PASSWORD,
+  // database: process.env.MYSQL_DATABASE,
 // });
 
 // configure .ENV file

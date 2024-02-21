@@ -2,12 +2,11 @@ import { toSentenceCase } from "../../Helpers/strings";
 
 const PageHeaders = ({ name }) => {
   function fullTitle() {
-    const title = name.split("-");
-    if (name.includes("-")) {
-      return `${title[0]} ${title[1]}`;
-    } else {
-      return name;
-    }
+    let index = name.lastIndexOf("-");
+    let firstWord = name.substring(0, index);
+    let secondWord = name.substring(index + 1);
+
+    return `${firstWord} ${secondWord}`;
   }
 
   return (
@@ -32,7 +31,7 @@ const PageHeaders = ({ name }) => {
         <i className="fa-solid fa-angle-right"></i>
         <p className="page-headers-breadcrumbs-crumb">Dashboard</p>
         <i className="fa-solid fa-angle-right"></i>
-        <p className="page-headers-breadcrumbs-crumb"> {toSentenceCase(name)} </p>
+        <p className="page-headers-breadcrumbs-crumb"> {toSentenceCase(fullTitle())} </p>
       </div>
     </section>
   );

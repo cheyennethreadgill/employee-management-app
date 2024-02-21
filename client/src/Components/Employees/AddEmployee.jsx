@@ -3,6 +3,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 import { toSentenceCase } from "../../Helpers/strings";
+import { handlePasswordValidation } from "../../private/passwordValidation";
 
 const AddEmployee = ({
   URL,
@@ -119,7 +120,9 @@ const AddEmployee = ({
         handleFormSubmissionStatus();
         setValidated(false);
       }
-    } else setFormError(true);
+    } else {
+      setFormError(true);
+    }
   }
 
   return (
@@ -149,9 +152,11 @@ const AddEmployee = ({
                   handleEmployeeFormData("fname", toSentenceCase(e.target.value));
                 }}
                 required
+                maxLength={45}
+                pattern="^[a-zA-Z]+$"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">Please enter valid name.</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter valid first name.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -161,12 +166,16 @@ const AddEmployee = ({
             >
               <Form.Control
                 type="text"
-                placeholder="last name"
+                placeholder="last name *"
                 onChange={(e) => {
                   handleEmployeeFormData("lname", toSentenceCase(e.target.value));
                 }}
                 required
+                maxLength={45}
+                pattern="^[a-zA-Z]+$"
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter valid last name.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -180,7 +189,10 @@ const AddEmployee = ({
                 onChange={(e) => {
                   handleEmployeeFormData("gender", toSentenceCase(e.target.value));
                 }}
+                maxLength={45}
+                pattern="^[a-zA-Z]+$"
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -193,10 +205,12 @@ const AddEmployee = ({
                 placeholder="mobile*"
                 onChange={(e) => {
                   handleEmployeeFormData("mobile", toSentenceCase(e.target.value));
+                  console.log(typeof e.target.value);
                 }}
                 pattern="[0-9]{10}"
                 required
               />
+              <Form.Control.Feedback type="invalid">Please enter a valid phone number.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -205,32 +219,22 @@ const AddEmployee = ({
               lg="6"
             >
               <Form.Control
+                id="userPassword"
                 type="password"
-                placeholder="enter password*"
-                required
-                ref={passwordInputOne}
-              />
-            </Form.Group>
-            <Form.Group
-              className="form-group"
-              as={Col}
-              lg="6"
-            >
-              <Form.Control
-                type="password"
-                placeholder="re-enter password*"
+                placeholder="Password *"
                 onChange={(e) => {
                   handleEmployeeFormData("password", toSentenceCase(e.target.value));
-                  // handlePasswordMatchCheck(toSentenceCase(e.target.value));
-
-                  // console.log(` Input ${passwordMatch}`);
+                  handlePasswordValidation(e.target.value);
                 }}
                 ref={passwordInputTwo}
                 required
+                minLength={6}
+                maxLength={30}
+                autoComplete="current-password"
               />
 
-              {/* <Form.Control.Feedback type="invalid">Password must match.</Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+              <Form.Control.Feedback type="invalid">Password must be at least 6 characters.</Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -245,7 +249,11 @@ const AddEmployee = ({
                   handleEmployeeFormData("designation", toSentenceCase(e.target.value));
                 }}
                 required
+                maxLength={45}
+                pattern="^[a-zA-Z]+$"
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter valid designation.</Form.Control.Feedback>
             </Form.Group>
 
             <Col lg="6">
@@ -258,6 +266,7 @@ const AddEmployee = ({
                     handleEmployeeFormData("department", toSentenceCase(e.target.value));
                   }}
                   required
+                  maxLength={45}
                 >
                   {departmentOptions.map((option) => {
                     return (
@@ -270,6 +279,8 @@ const AddEmployee = ({
                     );
                   })}
                 </select>
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Please select department.</Form.Control.Feedback>
               </fieldset>
             </Col>
 
@@ -285,7 +296,10 @@ const AddEmployee = ({
                   handleEmployeeFormData("address", toSentenceCase(e.target.value));
                 }}
                 required
+                pattern="^[a-zA-Z0-9-]+$"
               />
+              <Form.Control.Feedback type="invalid">Please enter a valid address.</Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -300,7 +314,10 @@ const AddEmployee = ({
                   handleEmployeeFormData("email", toSentenceCase(e.target.value));
                 }}
                 required
+                maxLength={45}
               />
+              <Form.Control.Feedback type="invalid">Please enter a valid email address.</Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -317,6 +334,8 @@ const AddEmployee = ({
                 }}
                 required
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please select date of birth.</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group
@@ -330,6 +349,7 @@ const AddEmployee = ({
                 onChange={(e) => {
                   handleEmployeeFormData("degree", toSentenceCase(e.target.value));
                 }}
+                maxLength={45}
               />
               <Form.Control.Feedback>Looks good</Form.Control.Feedback>
             </Form.Group>
@@ -349,6 +369,7 @@ const AddEmployee = ({
 
             {formSubmitted && <p className="fw-medium mt-2">Employee Added Successfully!</p>}
             {error && !formSubmitted && <p className="fw-bold mt-2">Please correct errors above.</p>}
+            {error && formSubmitted && <p className="fw-bold mt-2">Please correct errors above.</p>}
 
             <div className="form-btns">
               <Button
