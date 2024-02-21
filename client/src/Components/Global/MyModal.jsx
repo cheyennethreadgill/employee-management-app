@@ -102,11 +102,11 @@ const MyModal = ({
               onChange={(e) => {
                 handleNameStatus("newFirstnameUpdated", "newLastnameUpdated");
 
+                // handle name split(last char append)
                 let nameInput = e.target.value;
                 let splitIndex = nameInput.lastIndexOf(" ");
                 let fname = nameInput.substring(0, splitIndex);
                 let lname = nameInput.substring(splitIndex + 1);
-                let name = fname + " " + lname;
 
                 handleNameForFormData(fname, lname);
                 handleEmployeeToUpdate({ ...employeeToUpdate, firstname: fname, lastname: lname });

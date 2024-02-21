@@ -5,26 +5,31 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 const aws = require("aws-sdk");
+const dotenv = require("dotenv");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// connect to mysql
+// connect to Vercel
 const db = mysql.createConnection({
   user: process.env.DBUser,
   host: process.env.DBHost,
   password: process.env.DBPassword,
   database: process.env.DBDatabase,
 });
+
+// connect to Localhost mysql
 // const db = mysql.createConnection({
-//   user: "root",
-//   host: "localhost",
-//   password: "Cheyenne1234",
-//   database: "employee-management",
+//   user: process.env.MYSQL_ROOT,
+//   host: process.env.MYSQL_HOST,
+//   password: process.env.MYSQL_PASSWORD,
+//   database: process.env.MYSQL_DATABASE,
 // });
 
-// Configure AWS SDK with environment variables
+// configure .ENV file
+dotenv.config();
 
+// Configure AWS SDK with environment variables
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,

@@ -28,7 +28,7 @@ const AddProject = ({
 
   async function handleProjectIDValidation(id) {
     if (id.length < 4) {
-      return setProjectExists(false);
+      setProjectExists(false);
     }
 
     if (id.length === 4) {
@@ -115,6 +115,7 @@ const AddProject = ({
   // handle form submission after form validation response is ok
   async function handleSubmit(e, currentTarget) {
     setProjectExists(false);
+
     const promiseResponse = await promise(e);
 
     if (promiseResponse === true) {
@@ -123,10 +124,16 @@ const AddProject = ({
         handleFormSubmissionStatus();
         setValidated(false);
         currentTarget.reset();
+        setProjectExists(false);
       }
     } else {
       setFormError(true);
     }
+  }
+
+  // mini components
+  function AddSuccessful() {
+    return <p className="fw-medium mt-2">Project Added Successfully!</p>;
   }
 
   return (
@@ -138,7 +145,8 @@ const AddProject = ({
           noValidate
           validated={validated}
           onSubmit={(e) => {
-            handleSubmit(e, e.currentTarget);
+            !projectExists && handleSubmit(e, e.currentTarget);
+            e.preventDefault();
           }}
         >
           <Row>
@@ -153,15 +161,13 @@ const AddProject = ({
                 required
                 onChange={(e) => {
                   handleProjectFormData("projectID", toSentenceCase(e.target.value));
-                  handleProjectIDValidation(toSentenceCase(e.target.value));
+                  handleProjectIDValidation(e.target.value);
                 }}
                 pattern="[0-9]{4}"
               />
-              {console.log(projectExists)}
-              {/* {projectExists && <p className="text-danger">Project already exists.</p>} */}
-              {projectExists && <Form.Control.Feedback type="invalid">Project already exists.</Form.Control.Feedback>}
+
+              {projectExists && <p className="text-danger">Project already exists.</p>}
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">Project already exists.</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
                 Please enter valid ID. <br></br> ID Must Ccontain 4 numbers.
               </Form.Control.Feedback>
@@ -395,13 +401,14 @@ const AddProject = ({
               <Form.Control.Feedback type="invalid">Please enter a description</Form.Control.Feedback>
             </Form.Group>
 
-            {formSubmitted ? <p className=" fw-medium mt-2">Project Added Successfully!</p> : null}
+            {projectExists && <p>Please Correct Error Above</p>}
+            {formSubmitted && <AddSuccessful />}
 
             {/* *******************************************************FORM BUTTONS */}
             <div className="form-btns">
               <Button
                 className="btn btn-primary"
-                type="submit"
+                type={projectExists ? null : "submit"}
               >
                 Submit
               </Button>
