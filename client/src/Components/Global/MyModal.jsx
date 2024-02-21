@@ -15,9 +15,7 @@ const MyModal = ({
   handleShowNow,
   handleEmployeeUpdate,
   employeeInfoForModal,
-} ) => {
-
-  
+}) => {
   // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
     newFirstnameUpdated: false,
@@ -35,6 +33,7 @@ const MyModal = ({
 
   // SET/HANDLE NEW FORM
   const [formData, setFormData] = useState({
+    combinedName: "",
     newFirstname: "",
     newLastname: "",
     newDepartment: "",
@@ -43,61 +42,27 @@ const MyModal = ({
     newEmail: "",
     newMobile: 0,
     newImage: null,
-    combinedName: "",
   });
+
   const handleFormData = (key, value) => {
     setFormData({ ...formData, [key]: value });
   };
 
-  console.log(formData.combinedName);
-  // cutting off last name here
-  // HANDLE NAME SPLIT
-  const getCombinedName = (e) => {
-    handleFormData("combinedName", e);
-    // only works when you hit space
-    console.log(formData.combinedName);
-    // the e works but combined name
-    console.log(e);
-    return new Promise((resolve, reject) => {
-      // waiting on the combined name
-      console.log(formData.combinedName);
-      let combined = formData.combinedName;
-      console.log(e);
-      // cutting off last name here
-      console.log(combined);
-      resolve(combined);
-      reject("ERROR");
+  // handle names for form data
+  const handleNameForFormData = (fname, lname) => {
+    setFormData({ ...formData, newFirstname: fname, newLastname: lname, combinedName: fname + " " + lname });
+  };
+  const handleNameStatus = (fnamestatus, lnamestatus) => {
+    setFormUpdatedStatus({
+      ...formUpdatedStatus,
+      [fnamestatus]: true,
+      [lnamestatus]: true,
     });
   };
-
-  console.log(formData.combinedName);
-
-  async function splitName() {
-    const response = await getCombinedName();
-    const splitName = response.split(" ");
-
-    handleFormData("newFirstname", splitName[0]);
-    handleFormData("newLastname", splitName[1]);
-
-    handleInputForhandleEmployeeToUpdate({
-      firstname: splitName[0],
-      lastname: splitName[1],
-    });
-
-    console.log(splitName[0] + splitName[1]);
-  }
 
   // UPDATED PROJECT INFO
-
-  // ****** works without code from name split
-
-  // handle plit name for employee to update
-  const handleInputForhandleEmployeeToUpdate = (names) => {
-    handleEmployeeToUpdate({ ...employeeToUpdate, ...names });
-  };
-
   // HANDLE EMPLOYEE TO UPDATE
-  const [employeeToUpdate, setEmployeeToUpdate] = useState( {
+  const [employeeToUpdate, setEmployeeToUpdate] = useState({
     employeeid: employeeInfoForModal.employeeid,
     firstname: employeeInfoForModal.firstname,
     lastname: employeeInfoForModal.lastname,
@@ -134,14 +99,17 @@ const MyModal = ({
               }
               type="text"
               autoFocus
-              onKeyDown={(e) => {
-                handleFormUpdatedStatus("newFirstnameUpdated", true);
-                handleFormUpdatedStatus("newLastnameUpdated", true);
-                getCombinedName(e.target.value);
-                console.log(e.target.value);
-              }}
-              onBeforeInput={() => {
-                splitName();
+              onChange={(e) => {
+                handleNameStatus("newFirstnameUpdated", "newLastnameUpdated");
+
+                let nameInput = e.target.value;
+                let splitIndex = nameInput.lastIndexOf(" ");
+                let fname = nameInput.substring(0, splitIndex);
+                let lname = nameInput.substring(splitIndex + 1);
+                let name = fname + " " + lname;
+
+                handleNameForFormData(fname, lname);
+                handleEmployeeToUpdate({ ...employeeToUpdate, firstname: fname, lastname: lname });
               }}
             />
             <span className="form-control-container-icon_end">
@@ -272,7 +240,6 @@ const MyModal = ({
             accept=".png, .jpg, .jpeg"
             name="image"
             onChange={(e) => {
-              console.log(e.target.files[0]);
               handleFormUpdatedStatus("newImageUpdated", true);
               handleFormData("newImage", e.target.files[0]);
               handleEmployeeToUpdate({ ...employeeToUpdate, image: e.target.files[0] });
@@ -295,10 +262,8 @@ const MyModal = ({
             variant="primary"
             onClick={(e) => {
               handleEditMode();
-              handleEmployeeUpdate( e, employeeid, employeeToUpdate );
-              console.log(`my modal: ${employeeToUpdate.firstname}}`)
+              handleEmployeeUpdate(e, employeeid, employeeToUpdate);
               handleShowNow(false);
-              console.log(formData.newFirstname + formData.newLastname);
             }}
             type="submit"
           />

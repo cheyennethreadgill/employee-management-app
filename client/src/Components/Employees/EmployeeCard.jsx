@@ -50,7 +50,7 @@ const EmployeeCard = ({
     },
     {
       updateStatus: newFirstnameUpdated,
-      newEntry: +" " + newLastname,
+      newEntry: newFirstname + " " + newLastname,
       originalEntry: [firstname + " " + lastname, "Name"],
     },
     { updateStatus: newDegreeUpdated, newEntry: newDegree, originalEntry: [toSentenceCase(degree), "Degree"] },
@@ -257,13 +257,19 @@ const EmployeeCard = ({
 
             if (originalEntry[0] == image) {
               return (
-                <div className="employee-card-desktop-form-fields">
+                <div
+                  key={originalEntry}
+                  className="employee-card-desktop-form-fields"
+                >
                   <ImageComponent image={originalEntry[0]} />
                 </div>
               );
             } else if (originalEntry[0] == employeeid) {
               return (
-                <Col lg="1">
+                <Col
+                  lg="1"
+                  key={originalEntry}
+                >
                   <hr className="d-block d-lg-none" />
                   <div className="employee-card-mobile-fields">
                     <Col lg="12">
@@ -274,7 +280,10 @@ const EmployeeCard = ({
               );
             } else {
               return (
-                <div className="employee-card-desktop-form-fields">
+                <div
+                  key={originalEntry}
+                  className="employee-card-desktop-form-fields"
+                >
                   <p> {updateStatus ? newEntry : originalEntry ? originalEntry[0] : "N/A"} </p>
                 </div>
               );
