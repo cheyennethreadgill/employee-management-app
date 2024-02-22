@@ -24,15 +24,23 @@ const departmentOptions = ["", "development", "designing", "testing", "hr"];
 // ERROR HANDLING
 const handleFetchPromiseError = (response) => {
   if (!response.ok) {
-    console.log(`Something went wrong with fetch from server ${response.status}`);
+    console.log(`Something went wrong with fetch from server ${response.status} `);
   }
 };
-const handleJsonPromiseResponseLog = (response) => {
+const handleJsonPromiseResponseLog = (response, setFormError, ServerErrorComponent) => {
   response.then((res) => {
-    console.log(res);
+    if (res.error) {
+      setFormError(true);
+      console.log(res.error);
+      return ServerErrorComponent();
+    } else {
+      setFormError(false);
+      console.log(res);
+    }
   });
 };
 const handleFetchError = (err) => {
+  console.log(err.status);
   console.log(`FETCH FAILED: ${err}`);
 };
 

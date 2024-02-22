@@ -78,7 +78,7 @@ app.get("/projects", (req, res) => {
   });
 });
 
-// **********************************************POST
+// **********************************************ADD
 // ADD EMPLOYEE
 app.post("/add-employee", upload.single("image"), (req, res) => {
   console.log(req.body);
@@ -97,11 +97,11 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
   let degree = req.body.degree;
   let image = " ";
 
-  if (req.file) {
-    image = req.file.originalname;
-  }
+  // if req file isnt present, continue with query
+  // if req file is present want to send error if req file is uploaded, else continue with query
 
   let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree, image) VALUES (?)`;
+  // let sql = `INSERT into employees ( image) VALUES (?)`;
 
   let values = [
     fname,
@@ -117,19 +117,64 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
     degree,
     image,
   ];
+  if (!req.file) {
+    db.query(sql, [values], (err) => {
+      if (err) {
+        throw err;
+      } else {
+        res.json({
+          status: "success",
+          message: "Employee added successfully.",
+          employee: req.body,
+          file: req.file,
+        });
+      }
+    });
+  } else if (req.file) {
+    //*********************************if file exists
 
-  db.query(sql, [values], (err) => {
-    if (err) {
-      throw err;
+    //SET REQ FILE FOR ABOVE
+    image = req.file.originalname;
+
+    // SERVER HANDLE FILE CHECK
+    let index = image.lastIndexOf(".");
+    let extension = image.substring(-1 + index + 1);
+
+    if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
+      //if file exists but extension is wrong
+      res.status(500).json({ error: `Please give valid extension: ${extension}` });
+      console.log(`Please give valid extension. File entered: ${extension}`);
     } else {
-      res.json({
-        status: "success",
-        message: "Employee added successfully.",
-        employee: req.body,
-        file: req.file,
+      //if file exists but extension is correct
+      db.query(sql, [values], (err) => {
+        if (err) {
+          throw err;
+        } else {
+          res.json({
+            status: "success",
+            message: "Employee added successfully.",
+            employee: req.body,
+            file: req.file,
+          });
+        }
       });
+      console.log(` valid extension: ${extension}`);
     }
-  });
+  } else {
+    //if nothing is wrong, execute general query
+    db.query(sql, [values], (err) => {
+      if (err) {
+        throw err;
+      } else {
+        res.json({
+          status: "success",
+          message: "Employee added successfully.",
+          employee: req.body,
+          file: req.file,
+        });
+      }
+    });
+  }
 
   console.log(`IMAGE: ${values[11]}`);
 });

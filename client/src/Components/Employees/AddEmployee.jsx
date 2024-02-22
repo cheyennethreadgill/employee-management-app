@@ -41,6 +41,28 @@ const AddEmployee = ({
   };
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
+  // CLIENT HANDLE FILE CHECK
+  function handleFileTypeCheck(fileName) {
+    let index = fileName.lastIndexOf(".");
+    let extension = fileName.substring(-1 + index + 1);
+
+    if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
+      setFormError(true);
+      console.log(`Please give valid extension: ${extension}`);
+    } else {
+      setFormError(false);
+      console.log(` valid extension: ${extension}`);
+    }
+  }
+
+  // function Server Erro component
+  const ServerErrorComponent = () => {
+    return (
+      <div className="text-danger">
+        <p>Please give valid filetype. File Types accepted: .jpg, .png, .jpeg</p>
+      </div>
+    );
+  };
   // ADD EMPLOYEE TO DB
   async function addEmployeeNow(e, currentTarget) {
     e.preventDefault();
@@ -71,11 +93,14 @@ const AddEmployee = ({
       handleFetchPromiseError(fetchPromiseResponse);
 
       const jsonPromiseResponse = fetchPromiseResponse.json();
-      handleJsonPromiseResponseLog(jsonPromiseResponse);
+      // if theres an error, set state, udate ui to log response
+      handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, ServerErrorComponent);
     } catch {
-      (err) => handleFetchError(err);
+      (err) => {
+        handleFetchError(err);
+      };
     }
-    setValidated(!validated);
+    // setValidated(!validated);
     currentTarget.reset();
   }
 
@@ -130,6 +155,7 @@ const AddEmployee = ({
       <Container>
         <PageHeaders name={PATH} />
         {/* *****************************************TEST FORM */}
+
         <Form
           noValidate
           validated={validated}
@@ -153,7 +179,7 @@ const AddEmployee = ({
                 }}
                 required
                 maxLength={45}
-                pattern="^[a-zA-Z]+$"
+                // pattern="^[a-zA-Z]+$"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter valid first name.</Form.Control.Feedback>
@@ -172,7 +198,7 @@ const AddEmployee = ({
                 }}
                 required
                 maxLength={45}
-                pattern="^[a-zA-Z]+$"
+                // pattern="^[a-zA-Z]+$"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter valid last name.</Form.Control.Feedback>
@@ -190,7 +216,7 @@ const AddEmployee = ({
                   handleEmployeeFormData("gender", toSentenceCase(e.target.value));
                 }}
                 maxLength={45}
-                pattern="^[a-zA-Z]+$"
+                // pattern="^[a-zA-Z]+$"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
@@ -209,6 +235,7 @@ const AddEmployee = ({
                 }}
                 pattern="[0-9]{10}"
                 required
+                maxLength={10}
               />
               <Form.Control.Feedback type="invalid">Please enter a valid phone number.</Form.Control.Feedback>
             </Form.Group>
@@ -250,7 +277,7 @@ const AddEmployee = ({
                 }}
                 required
                 maxLength={45}
-                pattern="^[a-zA-Z]+$"
+                // pattern="^[a-zA-Z]+$"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter valid designation.</Form.Control.Feedback>
@@ -296,7 +323,8 @@ const AddEmployee = ({
                   handleEmployeeFormData("address", toSentenceCase(e.target.value));
                 }}
                 required
-                pattern="^[a-zA-Z0-9-]+$"
+                // pattern="^[a-zA-Z0-9-]+$"
+                maxLength={255}
               />
               <Form.Control.Feedback type="invalid">Please enter a valid address.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -308,7 +336,7 @@ const AddEmployee = ({
               lg="6"
             >
               <Form.Control
-                type="text"
+                type="email"
                 placeholder="email"
                 onChange={(e) => {
                   handleEmployeeFormData("email", toSentenceCase(e.target.value));
@@ -333,6 +361,8 @@ const AddEmployee = ({
                   handleEmployeeFormData("dateofbirth", toSentenceCase(e.target.value));
                 }}
                 required
+                min="1900-01-01"
+                max="2003-01-01"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please select date of birth.</Form.Control.Feedback>
@@ -363,18 +393,26 @@ const AddEmployee = ({
                 name="image"
                 onChange={(e) => {
                   handleEmployeeFormData("image", e.target.files[0]);
+                  let name = e.target.files[0].name;
+                  handleFileTypeCheck(name);
+                  console.log(e.target.files[0].name);
                 }}
               />
+              {error && (
+                <>
+                  <p className="text-danger">Please upload .jpeg, .jpg and .png files only.</p> <ServerErrorComponent />
+                </>
+              )}
             </fieldset>
 
             {formSubmitted && <p className="fw-medium mt-2">Employee Added Successfully!</p>}
-            {error && !formSubmitted && <p className="fw-bold mt-2">Please correct errors above.</p>}
-            {error && formSubmitted && <p className="fw-bold mt-2">Please correct errors above.</p>}
+            {error && !formSubmitted && <p className="text-danger fw-bold mt-2">Please correct errors above.</p>}
+            {error && formSubmitted && <p className="text-danger fw-bold mt-2">Please correct errors above.</p>}
 
             <div className="form-btns">
               <Button
                 className="btn btn-primary"
-                type="submit"
+                type={error ? "button" : "submit"}
               >
                 Submit
               </Button>
