@@ -81,9 +81,6 @@ app.get("/projects", (req, res) => {
 // **********************************************ADD
 // ADD EMPLOYEE
 app.post("/add-employee", upload.single("image"), (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-
   let fname = req.body.fname;
   let lname = req.body.lname;
   let gender = req.body.gender;
@@ -95,13 +92,10 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
   let email = req.body.email;
   let dateofbirth = req.body.dateofbirth;
   let degree = req.body.degree;
-  let image = " ";
+  let image = (req.file && req.file.originalname) || " ";
 
   // if req file isnt present, continue with query
   // if req file is present want to send error if req file is uploaded, else continue with query
-
-  let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree, image) VALUES (?)`;
-  // let sql = `INSERT into employees ( image) VALUES (?)`;
 
   let values = [
     fname,
@@ -117,21 +111,14 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
     degree,
     image,
   ];
-  if (!req.file) {
-    db.query(sql, [values], (err) => {
-      if (err) {
-        throw err;
-      } else {
-        res.json({
-          status: "success",
-          message: "Employee added successfully.",
-          employee: req.body,
-          file: req.file,
-        });
-      }
-    });
-  } else if (req.file) {
+
+  let sql = `INSERT into employees (firstname, lastname, gender, mobile, password, designation, department, address, email, dateofbirth, degree, image) VALUES (?)`;
+  // let sql = `INSERT into employees ( image) VALUES (?)`;
+
+  if (req.file) {
     //*********************************if file exists
+    console.log(values);
+    console.log(`^^^^values logged inside of req.file cnditional`);
 
     //SET REQ FILE FOR ABOVE
     image = req.file.originalname;
@@ -140,12 +127,34 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
     let index = image.lastIndexOf(".");
     let extension = image.substring(-1 + index + 1);
 
+    // Generate a unique key based on the file's original name
+    function generateKey() {
+      const origname = req.file.originalname;
+      return `${origname}`;
+    }
+    const uploadParams = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: "", // Leave it empty for now
+    };
+    // Set the Key property using the generated key function
+    uploadParams.Key = generateKey();
+    uploadParams.Body = req.file.buffer;
+
+    // Upload file to S3
+    s3.upload(uploadParams, (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Failed to upload file to S3" });
+      }
+      // File uploaded successfully, return URL or other relevant info
+      console.log({ url: data.Location });
+    });
+
     if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
-      //if file exists but extension is wrong
+      //if file exists and extension is wrong
       res.status(500).json({ error: `Please give valid extension: ${extension}` });
       console.log(`Please give valid extension. File entered: ${extension}`);
     } else {
-      //if file exists but extension is correct
       db.query(sql, [values], (err) => {
         if (err) {
           throw err;
@@ -154,14 +163,19 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
             status: "success",
             message: "Employee added successfully.",
             employee: req.body,
-            file: req.file,
           });
         }
       });
       console.log(` valid extension: ${extension}`);
+      console.log(`IMAGE UPLOADED (req file else conditional): ${image}`);
+      console.log(req.file);
+      console.log({ body: req.body });
     }
   } else {
-    //if nothing is wrong, execute general query
+    //**WORKS */
+    console.log("else ran");
+    // //if file exists and extension is correct
+
     db.query(sql, [values], (err) => {
       if (err) {
         throw err;
@@ -170,13 +184,27 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
           status: "success",
           message: "Employee added successfully.",
           employee: req.body,
-          file: req.file,
         });
       }
     });
+
+    console.log({ body: req.body });
   }
 
-  console.log(`IMAGE: ${values[11]}`);
+  // else {
+  //   //if nothing is wrong, execute general query
+  //   db.query(sql, [values], (err) => {
+  //     if (err) {
+  //       throw err;
+  //     } else {
+  //       res.json({
+  //         status: "success",
+  //         message: "Employee added successfully.",
+  //         employee: req.body,
+  //       });
+  //     }
+  //   });
+  // }
 });
 
 // ADD PROJECT

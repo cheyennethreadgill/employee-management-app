@@ -20,7 +20,104 @@ const AddEmployee = ({
   const passwordInputOne = useRef();
   const passwordInputTwo = useRef();
 
-  // Form Handling
+  const [inputErrors, setInputErrors] = useState({
+    fileType: false,
+    email: false,
+    password: false,
+  });
+
+  // regex
+  const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*()-_=+{};:'",<.>/?`~\\|]).{6,}$/;
+
+  // ****************************************************************INPUT CHECKS BEFORE VALIDATION
+
+  const handleInputErrors = (key, value) => {
+    setInputErrors({ ...inputErrors, [key]: value });
+  };
+
+  // ****************************************************INPUT CHECKS Components
+
+  // function Input Error component
+  const InputErrorComponent = ({ errorType, errorPContent }) => {
+    if (errorType == "fileType") {
+      return (
+        <div className="text-danger">
+          <p> {errorPContent} </p>
+        </div>
+      );
+    }
+    if (errorType == "email") {
+      return (
+        <div className="text-danger">
+          <p> {errorPContent} </p>
+        </div>
+      );
+    }
+
+    if (errorType == "password") {
+      return (
+        <div className="text-danger">
+          <p> {errorPContent} </p>
+        </div>
+      );
+    } else {
+      console.log("errorType not found");
+    }
+  };
+
+  const handlePasswordMatchCheck = (e) => {
+    switch (e) {
+      case e.length < 10:
+        handleInputErrors("password", true);
+        console.log("SUCCESS: password contains number");
+        break;
+      default:
+        handleInputErrors("password", false);
+        console.log("password case check done");
+    }
+    // if (!e.includes(typeof number)) {
+    //   console.log("password must containe number");
+    //   handleInputErrors("password", true);
+    // } else {
+    //   console.log("SUCCESS: password contains number");
+    //   handleInputErrors("password", false);
+    // }
+  };
+
+  // ********************************************************check functions
+  // CLIENT HANDLE FILE CHECK
+  const handleFileTypeCheck = (fileName) => {
+    let index = fileName.lastIndexOf(".");
+    let extension = fileName.substring(-1 + index + 1);
+
+    if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
+      handleInputErrors("fileType", true);
+      console.log(`Please give valid extension: ${extension}`);
+    } else {
+      handleInputErrors("fileType", false);
+      console.log(` valid extension: ${extension}`);
+    }
+  };
+
+  const handleEmailCheck = (input) => {
+    let atindex = input.lastIndexOf("@");
+    let dotindex = input.lastIndexOf(".");
+
+    let domain = input.substring(atindex + 1, dotindex);
+    let beforeAt = input.substring(0, atindex);
+    // console.log(input);
+    console.log(beforeAt);
+
+    if (!input.endsWith(".com") || !input.includes("@") || domain === "" || beforeAtIndex === "") {
+      handleInputErrors("email", true);
+      console.log("Please enter valid email");
+    } else {
+      handleInputErrors("email", false);
+      console.log("correct email with domain");
+    }
+  };
+
+  // ***********************************************************************************Form Handling
   const [employeeFormData, setEmployeeFormData] = useState({
     fname: "",
     lname: "",
@@ -41,28 +138,7 @@ const AddEmployee = ({
   };
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
-  // CLIENT HANDLE FILE CHECK
-  function handleFileTypeCheck(fileName) {
-    let index = fileName.lastIndexOf(".");
-    let extension = fileName.substring(-1 + index + 1);
-
-    if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
-      setFormError(true);
-      console.log(`Please give valid extension: ${extension}`);
-    } else {
-      setFormError(false);
-      console.log(` valid extension: ${extension}`);
-    }
-  }
-
-  // function Server Erro component
-  const ServerErrorComponent = () => {
-    return (
-      <div className="text-danger">
-        <p>Please give valid filetype. File Types accepted: .jpg, .png, .jpeg</p>
-      </div>
-    );
-  };
+  // ********************************************************************************HANLDE UPLOAD
   // ADD EMPLOYEE TO DB
   async function addEmployeeNow(e, currentTarget) {
     e.preventDefault();
@@ -94,7 +170,7 @@ const AddEmployee = ({
 
       const jsonPromiseResponse = fetchPromiseResponse.json();
       // if theres an error, set state, udate ui to log response
-      handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, ServerErrorComponent);
+      handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, InputErrorComponent);
     } catch {
       (err) => {
         handleFetchError(err);
@@ -103,19 +179,6 @@ const AddEmployee = ({
     // setValidated(!validated);
     currentTarget.reset();
   }
-
-  // const [passwordMatch, setPasswordMatch] = useState(false);
-  // console.log(`After useStae: ${passwordMatch}`);
-
-  // const handlePasswordMatchCheck = (e) => {
-  //   if (passwordInputOne.current.value === e) {
-  //     console.log("password match");
-  //     setPasswordMatch(true);
-  //   } else {
-  //     console.log("error: passwords must match");
-  //     setPasswordMatch(false);
-  //   }
-  // };
 
   // get form validation response
   const promise = (e) => {
@@ -128,6 +191,7 @@ const AddEmployee = ({
     }
 
     setValidated(true);
+    console.log(`promise: ${error}`);
 
     return new Promise((resolve, reject) => {
       resolve(check);
@@ -144,9 +208,11 @@ const AddEmployee = ({
         addEmployeeNow(e, currentTarget);
         handleFormSubmissionStatus();
         setValidated(false);
+        setFormError(false);
       }
     } else {
       setFormError(true);
+      console.log(`handle submit error: ${error}`);
     }
   }
 
@@ -231,7 +297,6 @@ const AddEmployee = ({
                 placeholder="mobile*"
                 onChange={(e) => {
                   handleEmployeeFormData("mobile", toSentenceCase(e.target.value));
-                  console.log(typeof e.target.value);
                 }}
                 pattern="[0-9]{10}"
                 required
@@ -240,6 +305,7 @@ const AddEmployee = ({
               <Form.Control.Feedback type="invalid">Please enter a valid phone number.</Form.Control.Feedback>
             </Form.Group>
 
+            {/* **********************************PASSWORD */}
             <Form.Group
               className="form-group"
               as={Col}
@@ -247,21 +313,29 @@ const AddEmployee = ({
             >
               <Form.Control
                 id="userPassword"
-                type="password"
+                type="text"
                 placeholder="Password *"
                 onChange={(e) => {
                   handleEmployeeFormData("password", toSentenceCase(e.target.value));
                   handlePasswordValidation(e.target.value);
+                  handlePasswordMatchCheck(e.target.value);
                 }}
                 ref={passwordInputTwo}
                 required
                 minLength={6}
                 maxLength={30}
                 autoComplete="current-password"
+                //  pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*()-_=+{};:'\",<.>/?`~\\|]).{6,}$"
               />
 
               <Form.Control.Feedback type="invalid">Password must be at least 6 characters.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              {inputErrors.password && (
+                <InputErrorComponent
+                  errorType="password"
+                  errorPContent="Please enter valid email (below input)"
+                />
+              )}
             </Form.Group>
 
             <Form.Group
@@ -330,6 +404,7 @@ const AddEmployee = ({
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
+            {/* *************************************************EMAIL */}
             <Form.Group
               className="form-group"
               as={Col}
@@ -340,12 +415,19 @@ const AddEmployee = ({
                 placeholder="email"
                 onChange={(e) => {
                   handleEmployeeFormData("email", toSentenceCase(e.target.value));
+                  handleEmailCheck(e.target.value);
                 }}
                 required
                 maxLength={45}
               />
-              <Form.Control.Feedback type="invalid">Please enter a valid email address.</Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              {/* <Form.Control.Feedback type="invalid">Please enter a valid email address.</Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+              {inputErrors.email && (
+                <InputErrorComponent
+                  errorType="email"
+                  errorPContent="Please enter a valid email"
+                />
+              )}
             </Form.Group>
 
             <Form.Group
@@ -395,13 +477,14 @@ const AddEmployee = ({
                   handleEmployeeFormData("image", e.target.files[0]);
                   let name = e.target.files[0].name;
                   handleFileTypeCheck(name);
-                  console.log(e.target.files[0].name);
                 }}
               />
-              {error && (
-                <>
-                  <p className="text-danger">Please upload .jpeg, .jpg and .png files only.</p> <ServerErrorComponent />
-                </>
+
+              {inputErrors.fileType && (
+                <InputErrorComponent
+                  errorType="fileType"
+                  errorPContent="Please give valid filetype. File Types accepted: .jpg, .png, .jpeg"
+                />
               )}
             </fieldset>
 
@@ -412,7 +495,7 @@ const AddEmployee = ({
             <div className="form-btns">
               <Button
                 className="btn btn-primary"
-                type={error ? "button" : "submit"}
+                type="submit"
               >
                 Submit
               </Button>
