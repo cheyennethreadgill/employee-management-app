@@ -6,7 +6,7 @@ import TopNav from "../Components/Global/TopNav";
 function Root() {
   const [toggled, setToggled] = useState(true);
   const handleNavToggle = () => setToggled(!toggled);
-  const handleMouseLeave = () => setToggled(!toggled);
+  const handleMouseLeave = () => setToggled(true);
 
   return (
     <section className="app">

@@ -8,7 +8,6 @@ const Navigation = ({ handleNavToggle, handleMouseLeave, toggled, setToggled }) 
       <nav
         className={toggled ? "main-nav-list_toggled main-nav-list_toggled_mobile" : "main-nav-list"}
         onMouseLeave={handleMouseLeave}
-        onMouseEnter={handleNavToggle}
       >
         {pages.map((page) => {
           const { id, name, links, icon } = page;
