@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 // configure .ENV file
 dotenv.config();
 
-// connect to Vercel
+// connect to Clever CLoud
 const db = mysql.createConnection({
   user: process.env.DBUser,
   host: process.env.DBHost,
@@ -225,17 +225,24 @@ app.post("/add-project", (req, res) => {
   let sql = `INSERT into projects (title, projectID, department, priority, client, price, startDate, endDate, team, status, description) VALUES (?)`;
   let values = [title, projectID, department, priority, client, price, startDate, endDate, team, status, description];
 
-  db.query(sql, [values], (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json({
-        status: "success",
-        message: "Project added successfully.",
-        project: req.body,
-      });
-    }
-  });
+  let idLength = projectID.length > 4;
+
+  // check id length send 500 error if length check failed
+  if (idLength) {
+    res.json({ message: "Form Error: Project ID must be 4 characters." });
+  } else {
+    db.query(sql, [values], (err) => {
+      if (err) {
+        console.log(`QUERY ERROR: ${err}`);
+      } else {
+        res.json({
+          status: "success",
+          message: "Project added successfully.",
+          project: req.body,
+        });
+      }
+    });
+  }
 });
 
 // *****************************************UPDATES

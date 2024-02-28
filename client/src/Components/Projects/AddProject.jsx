@@ -5,6 +5,7 @@ import { toSentenceCase } from "../../Helpers/strings";
 
 const AddProject = ({
   URL,
+  ServerErrorComponent,
   handleFetchPromiseError,
   handleJsonPromiseResponseLog,
   handleFetchError,
@@ -26,6 +27,7 @@ const AddProject = ({
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [projectExists, setProjectExists] = useState(false);
 
+  // handle Project id check
   async function handleProjectIDValidation(id) {
     if (id.length < 4) {
       setProjectExists(false);
@@ -42,7 +44,6 @@ const AddProject = ({
       const found = await findProject;
 
       if (found && found.projectID == id) {
-        console.log(found.projectID);
         setProjectExists(!projectExists);
       } else {
         return null;
@@ -84,7 +85,7 @@ const AddProject = ({
       const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
-      handleJsonPromiseResponseLog(jsonPromiseResponse);
+      handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError);
     } catch {
       (err) => handleFetchError(err);
     }
@@ -148,7 +149,9 @@ const AddProject = ({
             !projectExists && handleSubmit(e, e.currentTarget);
             e.preventDefault();
           }}
+          autoComplete="true"
         >
+          {error && <ServerErrorComponent />}
           <Row>
             <Form.Group
               className="form-group"
@@ -164,6 +167,7 @@ const AddProject = ({
                   handleProjectIDValidation(e.target.value);
                 }}
                 pattern="[0-9]{4}"
+                maxLength={4}
               />
 
               {projectExists && <p className="text-danger">Project already exists.</p>}
@@ -185,6 +189,7 @@ const AddProject = ({
                 type="text"
                 placeholder="Project Title *"
                 required
+                maxLength={255}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter valid title.</Form.Control.Feedback>
@@ -267,6 +272,7 @@ const AddProject = ({
                 type="text"
                 placeholder="Client *"
                 required
+                maxLength={255}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">Please enter valid name.</Form.Control.Feedback>
@@ -294,6 +300,7 @@ const AddProject = ({
               as={Col}
               lg="6"
             >
+              <Form.Label>Start Date:</Form.Label>
               <Form.Control
                 onChange={(e) => {
                   handleProjectFormData("startDate", toSentenceCase(e.target.value));
@@ -311,6 +318,7 @@ const AddProject = ({
               as={Col}
               lg="6"
             >
+              <Form.Label>End Date:</Form.Label>
               <Form.Control
                 onChange={(e) => {
                   handleProjectFormData("endDate", toSentenceCase(e.target.value));
@@ -409,6 +417,7 @@ const AddProject = ({
               <Button
                 className="btn btn-primary"
                 type={projectExists ? null : "submit"}
+                role="button"
               >
                 Submit
               </Button>

@@ -1,10 +1,15 @@
+import { useContext } from "react";
+import { CustomContext } from "../Employees/AddEmployee";
 import { toSentenceCase } from "../../Helpers/strings";
 
-const PageHeaders = ({ name }) => {
+const PageHeaders = () => {
+  const contextValue = useContext(CustomContext);
+  let title = contextValue["pageTitle"];
+
   function fullTitle() {
-    let index = name.lastIndexOf("-");
-    let firstWord = name.substring(0, index);
-    let secondWord = name.substring(index + 1);
+    let index = title.lastIndexOf("-");
+    let firstWord = title.substring(0, index);
+    let secondWord = title.substring(index + 1);
 
     return `${firstWord} ${secondWord}`;
   }

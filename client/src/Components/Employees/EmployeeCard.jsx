@@ -83,7 +83,7 @@ const EmployeeCard = ({
 
   return (
     <>
-      {/* ***********************************************************MOBILE */}
+      {/* ******************************************************************************MOBILE */}
       <section className="employee-card-mobile">
         <Form
           autoComplete="true"
@@ -236,7 +236,7 @@ const EmployeeCard = ({
         </Form>
       </section>
 
-      {/* ******************************************************DESKTOP */}
+      {/* *********************************************************************************DESKTOP */}
       <Row className="employee-card-desktop d-none d-md-flex">
         <div
           autoComplete="true"

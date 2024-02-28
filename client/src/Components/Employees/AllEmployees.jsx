@@ -309,7 +309,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
                   sm="1"
                   lg="4"
                 >
-                  {" "}
                   <div className="employees-header-search form-control-container">
                     <span className="gg-search"></span>
                     <Form.Control
