@@ -1,3 +1,7 @@
+<!--
+loading errors
+ -->
+
 <!-- NEED TO MAKE MODAL ABSOLUTE TO BODY ELEMENT:
     The modal element will need to be the child of the body
     the modal will have to get info from the  project card somehow

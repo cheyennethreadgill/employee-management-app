@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 import { toSentenceCase } from "../../Helpers/strings";
+import { AddSuccessful } from "../Global/Notifications";
 
 const AddProject = ({
   URL,
+  projects,
   ServerErrorComponent,
   handleFetchPromiseError,
   handleJsonPromiseResponseLog,
@@ -14,15 +16,7 @@ const AddProject = ({
   teamOptions,
   departmentOptions,
 }) => {
-  const PATH = "add-project";
-  const [projects, setProjects] = useState([]);
-
-  // get Projects
-  useEffect(() => {
-    fetch(`${URL}projects`)
-      .then((res) => res.json())
-      .then((json) => setProjects(json));
-  }, []);
+  const ADDPROJECT_PATH = "add-project";
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [projectExists, setProjectExists] = useState(false);
@@ -72,7 +66,7 @@ const AddProject = ({
   const handleFormSubmissionStatus = () => setFormSubmitted(true);
 
   // fetch project
-  async function handleProjectAdd(e, currentTarget) {
+  async function handleProjectAdd(e) {
     e.preventDefault();
     // Post options
     const options = {
@@ -82,7 +76,7 @@ const AddProject = ({
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}${ADDPROJECT_PATH}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError);
@@ -132,15 +126,10 @@ const AddProject = ({
     }
   }
 
-  // mini components
-  function AddSuccessful() {
-    return <p className="fw-medium mt-2">Project Added Successfully!</p>;
-  }
-
   return (
     <>
       <Container>
-        <PageHeaders name={PATH} />
+        <PageHeaders title={ADDPROJECT_PATH} />
         <Form
           className="add-project-form"
           noValidate
@@ -410,7 +399,7 @@ const AddProject = ({
             </Form.Group>
 
             {projectExists && <p>Please Correct Error Above</p>}
-            {formSubmitted && <AddSuccessful />}
+            {formSubmitted && <AddSuccessful thingAdded="project" />}
 
             {/* *******************************************************FORM BUTTONS */}
             <div className="form-btns">

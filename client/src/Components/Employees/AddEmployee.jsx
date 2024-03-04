@@ -5,17 +5,18 @@ import { handlePasswordValidation } from "../../private/passwordValidation";
 import { handleFileTypeCheck } from "../../Helpers/formValidation";
 import { handleEmailCheck } from "../../Helpers/formValidation";
 import AddEmployeeForm from "./AddEmployeeForm";
+import InputErrorComponent from "./InputErrorComponent";
 
 export const CustomContext = createContext();
 
 const AddEmployee = ({
   URL,
+  ADDEMPLOYEE_PATH,
   departmentOptions,
   handleFetchPromiseError,
   handleJsonPromiseResponseLog,
   handleFetchError,
 }) => {
-  // const PATH = "add-employee";
   const [validated, setValidated] = useState(false);
   const [error, setFormError] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -30,26 +31,6 @@ const AddEmployee = ({
     setInputErrors({ ...inputErrors, [key]: value });
   };
 
-  // ****************************************************INPUT CHECKS Components
-
-  function handlePasswordMatchCheck(e) {
-    switch (e) {
-      case e.length < 10:
-        handleInputErrors("password", true);
-        console.log("SUCCESS: password contains number");
-        break;
-      default:
-        handleInputErrors("password", false);
-        console.log("password case check done");
-    }
-    // if (!e.includes(typeof number)) {
-    //   console.log("password must containe number");
-    //   handleInputErrors("password", true);
-    // } else {
-    //   console.log("SUCCESS: password contains number");
-    //   handleInputErrors("password", false);
-    // }
-  }
   // ***********************************************************************************Form Handling
   const [employeeFormData, setEmployeeFormData] = useState({
     fname: "",
@@ -93,17 +74,16 @@ const AddEmployee = ({
     };
     // try/catch endpoint
     try {
-      const fetchPromiseResponse = await fetch(`${URL}${PATH}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}${ADDEMPLOYEE_PATH}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
       // if theres an error, set state, udate ui to log response
       handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, InputErrorComponent);
-    } catch {
-      (err) => {
-        handleFetchError(err);
-      };
+      console.log(jsonPromiseResponse);
+    } catch (err) {
+      console.log(`Error in Add employee fetch:`);
+      handleFetchError(err);
     }
-    // setValidated(!validated);
     currentTarget.reset();
   }
   // get form validation response
@@ -116,7 +96,6 @@ const AddEmployee = ({
       e.stopPropagation();
     }
     setValidated(true);
-    console.log(`promise: ${error}`);
     return new Promise((resolve, reject) => {
       resolve(check);
       reject("ERROR");
@@ -141,7 +120,6 @@ const AddEmployee = ({
 
   // ****************************************************Context Values
   const contextValues = {
-    pageTitle: "add-employee",
     validated,
     handleInputErrors,
     inputErrors,
@@ -152,14 +130,13 @@ const AddEmployee = ({
     handleEmailCheck,
     handleEmployeeFormData,
     handlePasswordValidation,
-    handlePasswordMatchCheck,
     handleFileTypeCheck,
   };
 
   return (
     <Container>
+      <PageHeaders title={ADDEMPLOYEE_PATH} />
       <CustomContext.Provider value={contextValues}>
-        <PageHeaders />
         <AddEmployeeForm />
       </CustomContext.Provider>
     </Container>

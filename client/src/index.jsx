@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import ReactDOM from "react-dom/client";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../src/styles/styles.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AddEmployee from "./Components/Employees/AddEmployee";
-import AllEmployees from "./Components/Employees/AllEmployees";
 import Root from "./Routes/Root";
-import AddProject from "./Components/Projects/AddProject";
-import AllProjects from "./Components/Projects/AllProjects";
 import ErrorPage from "./Components/Errors/ErrorPage";
 import ProjectsDash from "./Components/Dashboard/ProjectsDash";
+import AddEmployee from "./Components/Employees/AddEmployee";
+import AllEmployees from "./Components/Employees/AllEmployees";
+import AddProject from "./Components/Projects/AddProject";
+import AllProjects from "./Components/Projects/AllProjects";
+import { getEmployees } from "./Hooks/getResources";
+import { getProjects } from "./Hooks/getResources";
 
-const Hello = () => {
+export const CustomContext = createContext();
+
+const Index = () => {
   // URL
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  const URL = "http://localhost:8080/";
+  // const URL = "https://employee-management-app-rho.vercel.app/";
+
+  const EMPLOYEE_PATH = "employees";
+  const ADDEMPLOYEE_PATH = "add-employee";
+  const ALLPROJECTS_PATH = "all-projects";
 
   // Form Select & Radios
   const workStatusOptions = ["active", "completed", "running", "pending", "not started", "canceled"];
@@ -22,7 +30,12 @@ const Hello = () => {
   const teamOptions = ["", "Sarah", "Michelle", "Kelly"];
   const departmentOptions = ["", "development", "designing", "testing", "hr"];
 
-  // ERROR HANDLING
+  // **********************************************************************loading states
+
+  const [loading, setLoading] = useState(true);
+  const handleLoadingState = (value) => setLoading(value);
+
+  // *********************************************************************ERROR HANDLING
   const handleFetchPromiseError = (response) => {
     if (!response.ok) {
       console.log(`Something went wrong with fetch from server ${response.status} `);
@@ -33,18 +46,18 @@ const Hello = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   // response log
-  const handleJsonPromiseResponseLog = (response, setFormError) => {
-    response.then((res) => {
-      if (!res.ok) {
-        let message = res.message;
+  const handleJsonPromiseResponseLog = (res, setFormError) => {
+    if (!res.ok) {
+      let message = res.message;
+      if (setFormError) {
         setFormError(true);
-        setResponseMessage(message);
-        return ServerErrorComponent();
-      } else {
-        setFormError(false);
-        console.log(res);
       }
-    });
+      setResponseMessage(message);
+      return ServerErrorComponent();
+    } else {
+      setFormError(false);
+      console.log(res);
+    }
   };
   // fetch error
   const handleFetchError = (err) => {
@@ -52,10 +65,42 @@ const Hello = () => {
     console.log(`FETCH FAILED: ${err}`);
   };
 
+  // *************************************************************************Resources
+  const [employees, setEmployees] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const handleSetEmployees = (data) => setEmployees(data);
+  const handleSetProjects = (data) => setProjects(data);
+
+  // get Employees
+  useEffect(
+    () =>
+      getEmployees(
+        URL,
+        EMPLOYEE_PATH,
+        handleLoadingState,
+        handleSetEmployees,
+        handleFetchPromiseError,
+        handleJsonPromiseResponseLog,
+        handleFetchError
+      ),
+    []
+  );
+
+  // get Projects
+  useEffect(() => {
+    getProjects(
+      URL,
+      ALLPROJECTS_PATH,
+      handleSetProjects,
+      handleLoadingState,
+      handleFetchPromiseError,
+      handleJsonPromiseResponseLog,
+      handleFetchError
+    );
+  }, []);
+
   // server error component
   function ServerErrorComponent() {
-    console.log(`Server component jsx: ${responseMessage}`);
-    console.log(`Server component jsx length: ${responseMessage}`);
     return <p className="text-danger"> {responseMessage} </p>;
   }
 
@@ -66,12 +111,29 @@ const Hello = () => {
       element: <Root URL={URL} />,
       errorElement: <ErrorPage />,
       children: [
-        { index: true, element: <ProjectsDash URL={URL} /> },
+        {
+          index: true,
+          element: (
+            <ProjectsDash
+              URL={URL}
+              projects={projects}
+              handleSetProjects={handleSetProjects}
+              handleLoadingState={handleLoadingState}
+              handleFetchPromiseError={handleFetchPromiseError}
+              handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
+              handleFetchError={handleFetchError}
+            />
+          ),
+        },
         {
           path: "/all-employees",
           element: (
             <AllEmployees
               URL={URL}
+              EMPLOYEE_PATH={EMPLOYEE_PATH}
+              loading={loading}
+              employees={employees}
+              handleSetEmployees={handleSetEmployees}
               handleFetchPromiseError={handleFetchPromiseError}
               handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
               handleFetchError={handleFetchError}
@@ -83,6 +145,8 @@ const Hello = () => {
           element: (
             <AddEmployee
               URL={URL}
+              ADDEMPLOYEE_PATH={ADDEMPLOYEE_PATH}
+              employees={employees}
               handleFetchPromiseError={handleFetchPromiseError}
               handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
               handleFetchError={handleFetchError}
@@ -95,13 +159,16 @@ const Hello = () => {
           element: (
             <AllProjects
               URL={URL}
-              handleFetchPromiseError={handleFetchPromiseError}
-              handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
-              handleFetchError={handleFetchError}
+              projects={projects}
+              handleSetProjects={handleSetProjects}
+              ALLPROJECTS_PATH={ALLPROJECTS_PATH}
               workStatusOptions={workStatusOptions}
               priorityOptions={priorityOptions}
               teamOptions={teamOptions}
               departmentOptions={departmentOptions}
+              handleFetchPromiseError={handleFetchPromiseError}
+              handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
+              handleFetchError={handleFetchError}
             />
           ),
         },
@@ -110,6 +177,10 @@ const Hello = () => {
           element: (
             <AddProject
               URL={URL}
+              projects={projects}
+              handleSetProjects={handleSetProjects}
+              handleLoadingState={handleLoadingState}
+              ALLPROJECTS_PATH={ALLPROJECTS_PATH}
               ServerErrorComponent={ServerErrorComponent}
               handleFetchPromiseError={handleFetchPromiseError}
               handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
@@ -123,18 +194,39 @@ const Hello = () => {
         },
         {
           path: "/dashboard",
-          element: <ProjectsDash URL={URL} />,
+          element: (
+            <ProjectsDash
+              URL={URL}
+              projects={projects}
+              handleSetProjects={handleSetProjects}
+              handleLoadingState={handleLoadingState}
+              handleFetchPromiseError={handleFetchPromiseError}
+              handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
+              handleFetchError={handleFetchError}
+            />
+          ),
         },
       ],
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  const contextValues = {
+    AddEmployeeTitle: ADDEMPLOYEE_PATH,
+    AllEmployeesTitle: EMPLOYEE_PATH,
+    AllProjectsTitle: ALLPROJECTS_PATH,
+    loading,
+  };
+
+  return (
+    <CustomContext.Provider value={contextValues}>
+      <RouterProvider router={router} />
+    </CustomContext.Provider>
+  );
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-  <Hello />
+  <Index />
   // </React.StrictMode>
 );

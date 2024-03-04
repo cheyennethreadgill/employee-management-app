@@ -1,58 +1,43 @@
-import React, { useEffect, useState } from "react";
-import ProjectCard from "./ProjectCard";
-import Container from "react-bootstrap/esm/Container";
+import React, { useContext, useState } from "react";
 import { Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/esm/Container";
+import ProjectCard from "./ProjectCard";
 import PageHeaders from "../Global/PageHeaders";
 import ProjectModal from "../Global/ProjectModal";
+import { DeleteNotification } from "../Global/Notifications";
+import { CustomContext } from "../../index";
+import { deleteProjectFromDB } from "../../Helpers/apiCalls";
 
 const AllProjects = ({
   URL,
-  handleFetchPromiseError,
-  handleJsonPromiseResponseLog,
-  handleFetchErrorworkStatusOptions,
+  projects,
+  handleSetProjects,
   workStatusOptions,
   priorityOptions,
   teamOptions,
   departmentOptions,
+  handleFetchError,
+  handleFetchPromiseError,
+  handleJsonPromiseResponseLog,
+  handleFetchErrorworkStatusOptions,
 }) => {
-  const PATH = "projects";
+  const { AllProjectsTitle, loading, handleLoadingState } = useContext(CustomContext);
+
   const UPDATE_PATH = "update-project";
-  const [projects, setProjects] = useState([]);
+  const DELETEPROJECT_PATH = "delete-project/";
 
-  // get Projects
-  useEffect(() => {
-    fetch(`${URL}${PATH}`)
-      .then((res) => res.json())
-      .then((json) => setProjects(json));
-    handleLoadingState(false);
-  }, []);
-
-  const [loading, setLoading] = useState(true);
   const [showNow, setShowNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [deleteNotif, setDeleteNotif] = useState(false);
   const [projectInfoForModal, setprojectInfoForModal] = useState({});
 
-  const handleLoadingState = (value) => setLoading(value);
   const handleShowNow = () => setShowNow(!showNow);
   const handleEditMode = () => setEditMode(!editMode);
-  // Set project info given by employee card
-  const handleProjectSet = (values) => setprojectInfoForModal(values);
-
-  // Deleted Notification
-  function DeleteNotification() {
-    return (
-      <div
-        className={deleteNotif ? "project-card_delete-notification_show" : "project-card_delete-notification_remove"}
-      >
-        <p>Project deleted!</p>
-      </div>
-    );
-  }
+  const handleProjectSetForModal = (values) => setprojectInfoForModal(values); // Set project info given by employee card
 
   // // UPDATE PROJECT STATE DELETE (UI)
   const handleProjectStateUpdateDelete = (id) => {
-    setProjects(
+    handleSetProjects(
       projects.filter((project) => {
         return project.projectID !== id;
       })
@@ -61,7 +46,7 @@ const AllProjects = ({
 
   // UPDATE Project STATE (UI)
   const handleProjectStateUpdate = (id, projectToUpdate) => {
-    setProjects(
+    handleSetProjects(
       projects.map((project) => {
         if (project.projectID === id) {
           return { ...projectToUpdate };
@@ -72,6 +57,15 @@ const AllProjects = ({
     );
   };
 
+  const handleDeleteProjectFromDB = (id) =>
+    deleteProjectFromDB(
+      id,
+      URL,
+      DELETEPROJECT_PATH,
+      handleFetchPromiseError,
+      handleJsonPromiseResponseLog,
+      handleFetchError
+    );
   //   UPDATE PROJECT (DB)
   async function handleProjectUpdate(e, id, projectToUpdate) {
     e.preventDefault();
@@ -98,26 +92,9 @@ const AllProjects = ({
 
     try {
       const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}`, options);
-      handleFetchPromiseError(fetchPromiseResponse);
+      // handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
-      handleJsonPromiseResponseLog(jsonPromiseResponse);
-    } catch {
-      (err) => handleFetchError(err);
-    }
-  }
-
-  // DELETE EMPLOYEE From DB
-  async function deleteProjectFromDB(id) {
-    // Post options
-    const options = {
-      method: "DELETE",
-    };
-
-    try {
-      const fetchPromiseResponse = await fetch(`${URL}delete-project/${id}`, options);
-      handleFetchPromiseError(fetchPromiseResponse);
-      const jsonPromiseResponse = fetchPromiseResponse.json();
-      handleJsonPromiseResponseLog(jsonPromiseResponse);
+      // handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch {
       (err) => handleFetchError(err);
     }
@@ -126,7 +103,7 @@ const AllProjects = ({
   return (
     <section className="all-projects">
       <Container>
-        <PageHeaders name={PATH} />
+        <PageHeaders title={AllProjectsTitle} />
         <section className="project">
           <div className="project-header-main">
             <h2>New Projects</h2>
@@ -158,14 +135,13 @@ const AllProjects = ({
                     md="1"
                   >
                     <ProjectCard
-                      DeleteNotification={DeleteNotification}
                       setDeleteNotif={setDeleteNotif}
                       workStatusOptions={workStatusOptions}
                       priorityOptions={priorityOptions}
                       teamOptions={teamOptions}
                       departmentOptions={departmentOptions}
                       URL={URL}
-                      handleProjectSet={handleProjectSet}
+                      handleProjectSetForModal={handleProjectSetForModal}
                       onDelete={handleProjectStateUpdateDelete}
                       showNow={showNow}
                       handleShowNow={handleShowNow}
@@ -195,7 +171,7 @@ const AllProjects = ({
                       newTeamUpdated={projectInfoForModal.newTeamUpdated}
                       newDescriptionUpdated={projectInfoForModal.newDescriptionUpdated}
                       handleProjectUpdate={handleProjectUpdate}
-                      deleteProjectFromDB={deleteProjectFromDB}
+                      handleDeleteProjectFromDB={handleDeleteProjectFromDB}
                     />
                   </Col>
                 );
@@ -211,8 +187,6 @@ const AllProjects = ({
           priorityOptions={priorityOptions}
           teamOptions={teamOptions}
           departmentOptions={departmentOptions}
-          projects={projects}
-          setProjects={setProjects}
           projectInfoForModal={projectInfoForModal}
           handleShowNow={handleShowNow}
           handleEditMode={handleEditMode}
@@ -226,7 +200,12 @@ const AllProjects = ({
           handleProjectUpdate={handleProjectUpdate}
         />
       )}
-      {deleteNotif && <DeleteNotification />}
+      {deleteNotif && (
+        <DeleteNotification
+          deleteNotif={deleteNotif}
+          thingDeleted="Project"
+        />
+      )}
     </section>
   );
 };

@@ -7,7 +7,7 @@ const EmployeeCard = ({
   handleShowDeletePrompt,
   handleEditMode,
   handleShowNow,
-  handleEmployeeSet,
+  handleEmployeeSetForModal,
   onUpdateEmployeeState,
   employees,
   employeeid,
@@ -75,7 +75,6 @@ const EmployeeCard = ({
   ];
   // EDIT MODE
   const [btnValue, setBtnValue] = useState(0);
-  const [employee, setEmployee] = useState([]);
   const [foundEmployee, setFoundEmployee] = useState([]);
 
   // SHOW UPDATE MODAL
@@ -187,7 +186,7 @@ const EmployeeCard = ({
                       handleBtnValue(employeeid);
                       handleEditMode();
                       handleShowNow(true);
-                      handleEmployeeSet({
+                      handleEmployeeSetForModal({
                         employeeid,
                         firstname,
                         lastname,
@@ -297,7 +296,7 @@ const EmployeeCard = ({
                 handleBtnValue(employeeid);
                 handleEditMode();
                 handleShowNow(true);
-                handleEmployeeSet({
+                handleEmployeeSetForModal({
                   employeeid,
                   firstname,
                   lastname,

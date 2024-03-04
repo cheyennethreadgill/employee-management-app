@@ -1,6 +1,6 @@
 import { Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import { toSentenceCase } from '../../Helpers/strings';
+import { toSentenceCase } from "../../Helpers/strings";
 
 const ProjectCard = ({
   DeleteNotification,
@@ -10,7 +10,7 @@ const ProjectCard = ({
   teamOptions,
   departmentOptions,
   handleShowNow,
-  handleProjectSet,
+  handleProjectSetForModal,
   handleEditMode,
   projectID,
   title,
@@ -36,7 +36,7 @@ const ProjectCard = ({
   newPriorityUpdated,
   newTeamUpdated,
   handleProjectUpdate,
-  deleteProjectFromDB,
+  handleDeleteProjectFromDB,
   onDelete,
 }) => {
   const [btnValue, setBtnValue] = useState(0);
@@ -54,7 +54,7 @@ const ProjectCard = ({
   const handleOptionPanelDisplay = () => setOptionPanelDisplay(!optionPanelDisplay);
 
   const handleProjectDelete = (projectID) => {
-    deleteProjectFromDB(projectID);
+    handleDeleteProjectFromDB(projectID);
     onDelete(projectID);
     // show delete for 3 secs
     setTimeout(() => {
@@ -101,7 +101,7 @@ const ProjectCard = ({
                 handleBtnValue(projectID);
                 handleEditMode();
                 handleShowNow(true);
-                handleProjectSet({
+                handleProjectSetForModal({
                   projectID,
                   title,
                   department,
@@ -221,7 +221,9 @@ const ProjectCard = ({
             <i className="fa-regular fa-calendar-days"></i> {newEndDate ? newEndDate : "None"}
           </p>
           <p className="info">Bug</p>
-          <p className="info">{newDepartmentUpdated ? newDepartment : toSentenceCase(department) ? toSentenceCase(department) : "None"}</p>
+          <p className="info">
+            {newDepartmentUpdated ? newDepartment : toSentenceCase(department) ? toSentenceCase(department) : "None"}
+          </p>
         </Col>
       </Row>
 

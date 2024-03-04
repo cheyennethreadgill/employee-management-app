@@ -1,21 +1,12 @@
 import { Container } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
+import { CustomContext } from "../../index";
 import DashSingleProject from "../Dashboard/DashSingleProject";
 import PageHeaders from "../Global/PageHeaders";
 
-const ProjectsDash = ({ URL, toggled }) => {
-  // set Employee team (tbw)
-  // useEffect(() => {
-  //   projects.map((proj) => {
-  //     const empl = employees.filter((employee) => {
-  //       if (employee.department == proj.department) {
-  //         return employee;
-  //       }
-  //     });
-  //     setEmployeeTeam([empl]);
-  //   });
-  // }, []);
-  const PATH = "projects";
+const ProjectsDash = ({ URL, toggled, projects }) => {
+  const { loading } = useContext(CustomContext);
+
   const titles = [
     "Project Name",
     "Employees Team",
@@ -30,28 +21,7 @@ const ProjectsDash = ({ URL, toggled }) => {
   // State
   const [show, setShow] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [projects, setProjects] = useState([]);
-  const [employees, setEmployees] = useState([]);
-  const [employeeTeam, setEmployeeTeam] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const handleLoadingState = (value) => setLoading(value);
   const handleEditMode = () => setEditMode(!editMode);
-
-  // fetch Projects
-  useEffect(() => {
-    fetch(`${URL}${PATH}`)
-      .then((res) => res.json())
-      .then((json) => setProjects(json));
-    handleLoadingState(false);
-  }, []);
-
-  // get employees
-  useEffect(() => {
-    fetch(`${URL}${PATH}`)
-      .then((res) => res.json())
-      .then((json) => setEmployees(json));
-  }, []);
 
   // Project Card Content
   const projectsMapContent = projects.map((project) => {
@@ -59,7 +29,6 @@ const ProjectsDash = ({ URL, toggled }) => {
 
     return (
       <DashSingleProject
-        employeeTeam={employeeTeam}
         URL={URL}
         key={projectID}
         handleEditMode={handleEditMode}
@@ -74,27 +43,20 @@ const ProjectsDash = ({ URL, toggled }) => {
   });
 
   return (
-    // <Container>
+    <Container>
+      <PageHeaders title="Dashboard" />
+      <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
+        <div className="dash-projects-card-titles">
+          {titles.map((title) => {
+            return <h3 key={title}> {title} </h3>;
+          })}
+        </div>
 
-    <>
-      <Container>
-        {" "}
-        <PageHeaders name="Dashboard" />
-        <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
-          <div className="dash-projects-card-titles">
-            {titles.map((title) => {
-              return <h3 key={title}> {title} </h3>;
-            })}
-          </div>
-
-          {loading && <div className="loading"></div>}
-          {!loading && projectsMapContent}
-          {/* ****************************************************END CARD */}
-        </section>
-      </Container>
-    </>
-
-    // </Container>
+        {loading && <div className="loading"></div>}
+        {!loading && projectsMapContent}
+        {/* ****************************************************END CARD */}
+      </section>
+    </Container>
   );
 };
 

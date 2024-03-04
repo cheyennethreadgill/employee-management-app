@@ -3,19 +3,29 @@ import { Col, Row } from "react-bootstrap";
 import { Button, Form } from "react-bootstrap";
 import { CustomContext } from "./AddEmployee";
 import { toSentenceCase } from "../../Helpers/strings";
-
 import InputErrorComponent from "../Employees/InputErrorComponent";
 
 const AddEmployeeForm = () => {
-  const contextValue = useContext(CustomContext);
-  let validated = contextValue.validated;
+  const {
+    validated,
+    handleInputErrors,
+    inputErrors,
+    error,
+    formSubmitted,
+    departmentOptions,
+    handleSubmit,
+    handleEmailCheck,
+    handleEmployeeFormData,
+    handlePasswordValidation,
+    handleFileTypeCheck,
+  } = useContext(CustomContext);
 
   return (
     <Form
       noValidate
       validated={validated}
       onSubmit={(e) => {
-        contextValue.handleSubmit(e, e.currentTarget);
+        handleSubmit(e, e.currentTarget);
       }}
       autoComplete="true"
       encType="multipart/form-data"
@@ -30,7 +40,7 @@ const AddEmployeeForm = () => {
             type="text"
             placeholder="first name *"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("fname", toSentenceCase(e.target.value));
+              handleEmployeeFormData("fname", toSentenceCase(e.target.value));
             }}
             required
             maxLength={45}
@@ -47,7 +57,7 @@ const AddEmployeeForm = () => {
             type="text"
             placeholder="last name *"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("lname", toSentenceCase(e.target.value));
+              handleEmployeeFormData("lname", toSentenceCase(e.target.value));
             }}
             required
             maxLength={45}
@@ -64,7 +74,7 @@ const AddEmployeeForm = () => {
             type="text"
             placeholder="gender"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("gender", toSentenceCase(e.target.value));
+              handleEmployeeFormData("gender", toSentenceCase(e.target.value));
             }}
             maxLength={45}
           />
@@ -79,7 +89,7 @@ const AddEmployeeForm = () => {
             type="tel"
             placeholder="mobile*"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("mobile", toSentenceCase(e.target.value));
+              handleEmployeeFormData("mobile", toSentenceCase(e.target.value));
             }}
             pattern="[0-9]{10}"
             required
@@ -98,9 +108,9 @@ const AddEmployeeForm = () => {
             type="text"
             placeholder="Password *"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("password", toSentenceCase(e.target.value));
-              contextValue.handlePasswordValidation(e.target.value);
-              contextValue.handlePasswordMatchCheck(e.target.value);
+              handleEmployeeFormData("password", toSentenceCase(e.target.value));
+              handlePasswordValidation(e.target.value);
+              // handlePasswordMatchCheck(e.target.value);
             }}
             required
             minLength={6}
@@ -109,7 +119,7 @@ const AddEmployeeForm = () => {
           />
           <Form.Control.Feedback type="invalid">Password must be at least 6 characters.</Form.Control.Feedback>
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          {contextValue.inputErrors.password && (
+          {inputErrors.password && (
             <InputErrorComponent
               errorType="password"
               errorPContent="Please enter valid email (below input)"
@@ -125,7 +135,7 @@ const AddEmployeeForm = () => {
             type="text"
             placeholder="designation"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("designation", toSentenceCase(e.target.value));
+              handleEmployeeFormData("designation", toSentenceCase(e.target.value));
             }}
             required
             maxLength={45}
@@ -140,12 +150,12 @@ const AddEmployeeForm = () => {
               name="select department"
               id="select department"
               onChange={(e) => {
-                contextValue.handleEmployeeFormData("department", toSentenceCase(e.target.value));
+                handleEmployeeFormData("department", toSentenceCase(e.target.value));
               }}
               required
               maxLength={45}
             >
-              {contextValue.departmentOptions.map((option) => {
+              {departmentOptions.map((option) => {
                 return (
                   <option
                     key={option}
@@ -169,7 +179,7 @@ const AddEmployeeForm = () => {
             type="text"
             placeholder="address"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("address", toSentenceCase(e.target.value));
+              handleEmployeeFormData("address", toSentenceCase(e.target.value));
             }}
             required
             maxLength={255}
@@ -188,15 +198,15 @@ const AddEmployeeForm = () => {
             placeholder="email"
             onChange={(e) => {
               let val = e.target.value;
-              contextValue.handleEmployeeFormData("email", toSentenceCase(e.target.value));
-              contextValue.handleEmailCheck(val, contextValue.handleInputErrors);
+              handleEmployeeFormData("email", toSentenceCase(e.target.value));
+              handleEmailCheck(val, handleInputErrors);
             }}
             required
             maxLength={45}
           />
           {/* <Form.Control.Feedback type="invalid">Please enter a valid email address.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
-          {contextValue.inputErrors.email && (
+          {inputErrors.email && (
             <InputErrorComponent
               errorType="email"
               errorPContent="Please enter a valid email"
@@ -213,7 +223,7 @@ const AddEmployeeForm = () => {
             type="date"
             placeholder="date of birth"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("dateofbirth", toSentenceCase(e.target.value));
+              handleEmployeeFormData("dateofbirth", toSentenceCase(e.target.value));
             }}
             required
             min="1900-01-01"
@@ -231,7 +241,7 @@ const AddEmployeeForm = () => {
             type="text"
             placeholder="Degree"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("degree", toSentenceCase(e.target.value));
+              handleEmployeeFormData("degree", toSentenceCase(e.target.value));
             }}
             maxLength={45}
           />
@@ -245,25 +255,21 @@ const AddEmployeeForm = () => {
             id="image upload"
             name="image"
             onChange={(e) => {
-              contextValue.handleEmployeeFormData("image", e.target.files[0]);
+              handleEmployeeFormData("image", e.target.files[0]);
               let name = e.target.files[0].name;
-              contextValue.handleFileTypeCheck(name, contextValue.contextValue.handleInputErrors);
+              handleFileTypeCheck(name, handleInputErrors);
             }}
           />
-          {contextValue.inputErrors.fileType && (
+          {inputErrors.fileType && (
             <InputErrorComponent
               errorType="fileType"
               errorPContent="Please give valid filetype. File Types accepted: .jpg, .png, .jpeg"
             />
           )}
         </fieldset>
-        {contextValue.formSubmitted && <p className="fw-medium mt-2">Employee Added Successfully!</p>}
-        {contextValue.error && !contextValue.formSubmitted && (
-          <p className="text-danger fw-bold mt-2">Please correct errors above.</p>
-        )}
-        {contextValue.error && contextValue.formSubmitted && (
-          <p className="text-danger fw-bold mt-2">Please correct errors above.</p>
-        )}
+        {formSubmitted && <p className="fw-medium mt-2">Employee Added Successfully!</p>}
+        {error && !formSubmitted && <p className="text-danger fw-bold mt-2">Please correct errors above.</p>}
+        {error && formSubmitted && <p className="text-danger fw-bold mt-2">Please correct errors above.</p>}
         <div className="form-btns">
           <Button
             className="btn btn-primary"

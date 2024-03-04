@@ -1,9 +1,11 @@
 import ProjectModal from "../Global/ProjectModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { toSentenceCase } from "../../Helpers/strings";
+import { CustomContext } from "../../index";
 
 const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, priority, team, status }) => {
+  const { ALLPROJECTS_PATH } = useContext(CustomContext);
   const UPDATE_PATH = "update-project";
   const [btnValue, setBtnValue] = useState(0);
   const [showNow, setShowNow] = useState(false);
@@ -53,16 +55,15 @@ const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, 
       jsonPromiseResponse.then((res) => {
         console.log(res);
       });
-    } catch {
-      (err) => {
-        console.log(`FETCH FAILED: ${err}`);
-      };
+    } catch (err) {
+      console.log(`Dash Single Project fetch error: ${err}`);
+      console.log(`FETCH FAILED: ${err}`);
     }
   }
 
   return (
     <Link
-      to="/all-projects"
+      to="all-projects"
       className="dash-projects-card-project"
     >
       <div className="dash-projects-card-project-entry">
@@ -71,12 +72,7 @@ const DashSingleProject = ({ URL, handleEditMode, projectID, title, department, 
         </div>
         <div className="overflow-hidden">
           <p>
-            {" "}
-            {newDepartmentUpdated
-              ? newDepartment
-              : toSentenceCase(department)
-              ? toSentenceCase(department)
-              : "N/A"}{" "}
+            {newDepartmentUpdated ? newDepartment : toSentenceCase(department) ? toSentenceCase(department) : "N/A"}
           </p>
         </div>
         <div className="overflow-hidden">

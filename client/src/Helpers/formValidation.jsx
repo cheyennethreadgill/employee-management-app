@@ -39,3 +39,22 @@ export function handleEmailCheck(input, handleInputErrors) {
     return false;
   }
 }
+
+export function handlePasswordMatchCheck(e) {
+  switch (e) {
+    case e.length < 10:
+      handleInputErrors("password", true);
+      console.log("SUCCESS: password contains number");
+      break;
+    default:
+      handleInputErrors("password", false);
+      console.log("password case check done");
+  }
+  // if (!e.includes(typeof number)) {
+  //   console.log("password must containe number");
+  //   handleInputErrors("password", true);
+  // } else {
+  //   console.log("SUCCESS: password contains number");
+  //   handleInputErrors("password", false);
+  // }
+}

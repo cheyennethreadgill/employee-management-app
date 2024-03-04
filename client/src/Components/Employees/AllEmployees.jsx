@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { Container, Form } from "react-bootstrap";
 import EmployeeCard from "./EmployeeCard";
 import { date } from "../../Helpers/date";
@@ -7,8 +7,16 @@ import PageHeaders from "../Global/PageHeaders";
 import { Link } from "react-router-dom";
 import MyModal from "../Global/MyModal";
 
-const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseLog, handleFetchError }) => {
-  const PATH = "employees";
+const AllEmployees = ({
+  URL,
+  EMPLOYEE_PATH,
+  loading,
+  employees,
+  handleSetEmployees,
+  handleFetchError,
+  handleFetchPromiseError,
+  handleJsonPromiseResponseLog,
+}) => {
   const UPDATE_PATH = "update-employee";
   const titles = [
     "",
@@ -24,22 +32,11 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
     "Actions",
   ];
 
-  // get Employees
-  useEffect(() => {
-    fetch(`${URL}${PATH}`)
-      .then((res) => res.json())
-      .then((json) => setEmployees(json));
-    handleLoadingState(false);
-  }, []);
-
-  const [employees, setEmployees] = useState([]);
   const [show, setShow] = useState(false);
   const [showNow, setShowNow] = useState(false);
   const [deletePrompt, setDeletePrompt] = useState(false);
   const [deletePromptNow, setDeletePromptNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const handleLoadingState = (value) => setLoading(value);
 
   const [employeeInfoForModal, setEmployeeInfoForModal] = useState({});
 
@@ -51,14 +48,14 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   const handleShowDeletePromptNow = () => setDeletePromptNow(!deletePromptNow);
 
   // Set employee info given by employee card
-  const handleEmployeeSet = (values) => {
+  const handleEmployeeSetForModal = (values) => {
     setEmployeeInfoForModal(values);
   };
 
   // *******UI STATE
   // UPDATE Employee (UI)
   const handleEmployeeStateUpdate = (id, employeeToUpdate) => {
-    setEmployees(
+    handleSetEmployees(
       employees.map((employee) => {
         if (employee.employeeid === id) {
           return { ...employeeToUpdate };
@@ -71,7 +68,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
 
   // Delete Employee (UI)
   const handleEmployeeDelete = (id) => {
-    setEmployees(
+    handleSetEmployees(
       employees.filter((employee) => {
         const { employeeid } = employee;
         return employeeid !== id;
@@ -150,10 +147,8 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
-    } catch {
-      (err) => {
-        (err) => handleFetchError(err);
-      };
+    } catch (err) {
+      handleFetchError(err);
     }
   }
 
@@ -194,8 +189,8 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
         handleShow={handleShow}
         handleEditMode={handleEditMode}
         handleShowNow={handleShowNow}
-        handleEmployeeSet={handleEmployeeSet}
-        PATH={PATH}
+        handleEmployeeSetForModal={handleEmployeeSetForModal}
+        EMPLOYEE_PATH={EMPLOYEE_PATH}
         show={show}
         handleClose={handleClose}
         URL={URL}
@@ -234,7 +229,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
       />
     );
   });
-
   const filteredEmloyeesContent = filteredEmloyees.map((employee) => {
     const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
 
@@ -247,8 +241,8 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
         handleEditMode={handleEditMode}
         handleShowNow={handleShowNow}
         employeeInfoForModal={employeeInfoForModal}
-        handleEmployeeSet={handleEmployeeSet}
-        PATH={PATH}
+        handleEmployeeSetForModal={handleEmployeeSetForModal}
+        EMPLOYEE_PATH={EMPLOYEE_PATH}
         show={show}
         handleClose={handleClose}
         URL={URL}
@@ -291,7 +285,7 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
   return (
     <>
       <Container>
-        <PageHeaders name={PATH} />
+        <PageHeaders title={EMPLOYEE_PATH} />
         <section className="employees">
           <Row className="employees-header">
             <Col
@@ -359,7 +353,6 @@ const AllEmployees = ({ URL, handleFetchPromiseError, handleJsonPromiseResponseL
       {!showNow ? null : (
         <MyModal
           employees={employees}
-          setEmployees={setEmployees}
           handleEditMode={handleEditMode}
           handleShowNow={handleShowNow}
           employeeInfoForModal={employeeInfoForModal}
