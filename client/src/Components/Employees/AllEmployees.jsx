@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import EmployeeCard from "./EmployeeCard";
 import { date } from "../../Helpers/date";
@@ -130,8 +130,8 @@ const AllEmployees = ({
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
-    } catch {
-      (err) => handleFetchError(err);
+    } catch (err) {
+      handleFetchError(err);
     }
   }
 

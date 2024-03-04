@@ -80,8 +80,8 @@ const AddProject = ({
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError);
-    } catch {
-      (err) => handleFetchError(err);
+    } catch (err) {
+      handleFetchError(err);
     }
   }
 

@@ -1,33 +1,12 @@
 const express = require("express");
-const mysql = require("mysql");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
-const multerS3 = require("multer-s3");
 const aws = require("aws-sdk");
-const dotenv = require("dotenv");
+const database = require("./database");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-
-// configure .ENV file
-dotenv.config();
-
-// connect to Clever CLoud
-const db = mysql.createConnection({
-  user: process.env.DBUser,
-  host: process.env.DBHost,
-  password: process.env.DBPassword,
-  database: process.env.DBDatabase,
-});
-
-// connect to Localhost mysql
-// const db = mysql.createConnection({
-//   user: process.env.MYSQL_ROOT,
-//   host: process.env.MYSQL_HOST,
-//   password: process.env.MYSQL_PASSWORD,
-//   database: process.env.MYSQL_DATABASE,
-// });
 
 // Configure AWS SDK with environment variables
 const s3 = new aws.S3({
@@ -49,7 +28,13 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 
-db.connect();
+database.connect((err) => {
+  if (err) {
+    console.log(`ERROR with database connection in ${__filename}`);
+  } else {
+    console.log(`Database connection active in ${__filename}...`);
+  }
+});
 
 app.get("/employees", (req, res) => {
   (err) => {
@@ -58,7 +43,7 @@ app.get("/employees", (req, res) => {
 
   let sql = "SELECT * FROM employees";
 
-  db.query(sql, (err, result) => {
+  database.query(sql, (err, result) => {
     if (err) {
       throw err;
     } else res.json(result);
@@ -71,7 +56,7 @@ app.get("/all-projects", (req, res) => {
 
   let sql = "SELECT * FROM projects";
 
-  db.query(sql, (err, result) => {
+  database.query(sql, (err, result) => {
     if (err) {
       throw err;
     } else res.json(result);
@@ -155,7 +140,7 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
       res.status(500).json({ error: `Please give valid extension: ${extension}` });
       console.log(`Please give valid extension. File entered: ${extension}`);
     } else {
-      db.query(sql, [values], (err) => {
+      database.query(sql, [values], (err) => {
         if (err) {
           throw err;
         } else {
@@ -176,7 +161,7 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
     console.log("else ran");
     // //if file exists and extension is correct
 
-    db.query(sql, [values], (err) => {
+    database.query(sql, [values], (err) => {
       if (err) {
         throw err;
       } else {
@@ -193,7 +178,7 @@ app.post("/add-employee", upload.single("image"), (req, res) => {
 
   // else {
   //   //if nothing is wrong, execute general query
-  //   db.query(sql, [values], (err) => {
+  //   database.query(sql, [values], (err) => {
   //     if (err) {
   //       throw err;
   //     } else {
@@ -231,7 +216,7 @@ app.post("/add-project", (req, res) => {
   if (idLength) {
     res.json({ message: "Form Error: Project ID must be 4 characters." });
   } else {
-    db.query(sql, [values], (err) => {
+    database.query(sql, [values], (err) => {
       if (err) {
         console.log(`QUERY ERROR: ${err}`);
       } else {
@@ -285,7 +270,7 @@ app.put("/update-employee", upload.single("image"), (req, res) => {
     });
   }
 
-  db.query(sql, (err) => {
+  database.query(sql, (err) => {
     if (err) {
       throw err;
     } else {
@@ -305,7 +290,7 @@ app.put("/update-project", (req, res) => {
 
   let sql = `UPDATE projects SET title = '${req.body.title}', department = '${req.body.department}', priority = '${req.body.priority}', status = '${req.body.status}', team = '${req.body.team}', description = '${req.body.description}' WHERE projectID = '${req.body.projectID}'`;
 
-  db.query(sql, (err) => {
+  database.query(sql, (err) => {
     if (err) {
       throw err;
     } else {
@@ -323,7 +308,7 @@ app.delete("/delete-employee/:id", (req, res) => {
 
   let vals = [req.params.id];
 
-  db.query(sql, [vals], (err, res) => {
+  database.query(sql, [vals], (err, res) => {
     if (err) {
       throw err;
     }
@@ -336,7 +321,7 @@ app.delete("/delete-project/:id", (req, res) => {
 
   let vals = [req.params.id];
 
-  db.query(sql, [vals], (err, res) => {
+  database.query(sql, [vals], (err, res) => {
     if (err) {
       throw err;
     }
