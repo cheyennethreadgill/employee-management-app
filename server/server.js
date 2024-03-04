@@ -14,20 +14,20 @@ const PORT = process.env.PORT || 8080;
 dotenv.config();
 
 // connect to Clever CLoud
-// const db = mysql.createConnection({
-//   user: process.env.DBUser,
-//   host: process.env.DBHost,
-//   password: process.env.DBPassword,
-//   database: process.env.DBDatabase,
-// });
+const db = mysql.createConnection({
+  user: process.env.DBUser,
+  host: process.env.DBHost,
+  password: process.env.DBPassword,
+  database: process.env.DBDatabase,
+});
 
 // connect to Localhost mysql
-const db = mysql.createConnection({
-  user: process.env.MYSQL_ROOT,
-  host: process.env.MYSQL_HOST,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-});
+// const db = mysql.createConnection({
+//   user: process.env.MYSQL_ROOT,
+//   host: process.env.MYSQL_HOST,
+//   password: process.env.MYSQL_PASSWORD,
+//   database: process.env.MYSQL_DATABASE,
+// });
 
 // Configure AWS SDK with environment variables
 const s3 = new aws.S3({
