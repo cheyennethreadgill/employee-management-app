@@ -211,10 +211,14 @@ const Index = () => {
   ]);
 
   const contextValues = {
-    AddEmployeeTitle: ADDEMPLOYEE_PATH,
-    AllEmployeesTitle: EMPLOYEE_PATH,
-    AllProjectsTitle: ALLPROJECTS_PATH,
+    ADDEMPLOYEE_PATH,
+    EMPLOYEE_PATH,
+    ALLPROJECTS_PATH,
     loading,
+    workStatusOptions,
+    priorityOptions,
+    teamOptions,
+    departmentOptions,
   };
 
   return (

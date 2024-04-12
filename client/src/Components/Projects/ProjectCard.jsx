@@ -3,12 +3,9 @@ import { useState } from "react";
 import { toSentenceCase } from "../../Helpers/strings";
 
 const ProjectCard = ({
-  DeleteNotification,
   setDeleteNotif,
   workStatusOptions,
   priorityOptions,
-  teamOptions,
-  departmentOptions,
   handleShowNow,
   handleProjectSetForModal,
   handleEditMode,
@@ -35,7 +32,6 @@ const ProjectCard = ({
   newStatusUpdated,
   newPriorityUpdated,
   newTeamUpdated,
-  handleProjectUpdate,
   handleDeleteProjectFromDB,
   onDelete,
 }) => {

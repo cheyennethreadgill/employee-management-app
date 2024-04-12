@@ -13,12 +13,12 @@ function connectToDatabase() {
     database: process.env.DBDatabase,
   });
 
-  // return mysql.createConnection({
-  //   user: process.env.MYSQL_ROOT,
-  //   host: process.env.MYSQL_HOST,
-  //   password: process.env.MYSQL_PASSWORD,
-  //   database: process.env.MYSQL_DATABASE,
-  // });
+  return mysql.createConnection({
+    user: process.env.MYSQL_ROOT,
+    host: process.env.MYSQL_HOST,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+  });
 }
 
 const database = connectToDatabase();
