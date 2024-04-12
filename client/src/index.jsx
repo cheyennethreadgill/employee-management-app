@@ -17,8 +17,8 @@ export const CustomContext = createContext();
 
 const Index = () => {
   // URL
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  const URL = "http://localhost:8080/";
+  // const URL = "https://employee-management-app-rho.vercel.app/";
 
   const EMPLOYEE_PATH = "employees";
   const ADDEMPLOYEE_PATH = "add-employee";
