@@ -1,0 +1,45 @@
+// .sign-up {
+
+// }
+.sign-up,
+.login {
+  &-right-info {
+    height: 100%;
+    padding: 0 11rem;
+  }
+  form {
+    padding: 0;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+.login {
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+.col-container {
+  height: 100vh;
+  background-color: white;
+  padding: 0;
+}
+
+@media screen and (min-width: 800px) {
+  // .sign-up {
+  //   padding: 0 11rem;
+  // }
+}

@@ -95,9 +95,18 @@
       flex-grow: 1;
       justify-content: end;
       height: 50px;
-      gap: 3rem;
+      gap: 1rem;
       width: 145px;
       transition: all ease-in-out 350ms;
+      align-items: center;
+
+      &-name {
+        margin: 0;
+        letter-spacing: 0.1rem;
+      }
+      &-img {
+        margin: 0;
+      }
 
       @include breakpointDown(md) {
         gap: 5rem;
@@ -121,7 +130,7 @@
     top: 0;
     width: 100vw;
     height: 100%;
-    padding: 0 1rem;
+    padding: 2.2rem;
     transition: all ease-in-out 350ms;
 
     @include breakpointDown(md) {

@@ -1,26 +1,25 @@
-const mysql = require("mysql");
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
 
 // configure .ENV file
 dotenv.config();
 
-// connect to Localhost mysql OR Clever CLoud Database
-function connectToDatabase() {
-  // return mysql.createConnection({
-  //   user: process.env.DBUser,
-  //   host: process.env.DBHost,
-  //   password: process.env.DBPassword,
-  //   database: process.env.DBDatabase,
-  // });
+export const URI = process.env.MONGODB_URI;
 
-  return mysql.createConnection({
-    user: process.env.MYSQL_ROOT,
-    host: process.env.MYSQL_HOST,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-  });
-}
+// set up new client
+const client = new MongoClient(URI);
 
-const database = connectToDatabase();
+// connect to database
 
-module.exports = database;
+export const database = client.db("Kuber_Employee_Management_DB");
+
+// make a query from employees that shows all employees
+export const employees = database.collection("employees");
+export const projects = database.collection("projects");
+export const users = database.collection("users");
+export const sessions = database.collection("sessions");
+
+// const foundEmployee = await employees.findOne({ fname: "test" });
+// console.log(foundEmployee);
+
+// export { URI, database, employees, projects, users, sessions };

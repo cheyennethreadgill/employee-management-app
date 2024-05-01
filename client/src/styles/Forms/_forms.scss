@@ -1,8 +1,16 @@
 //  FORM
+.auth-links {
+  font-size: 0.85rem;
+}
 form {
   background-color: white;
   padding: 2rem 2rem 6rem 2rem;
-  border-radius: 0.8rem;
+  border-radius: $border-radius;
+}
+
+.form-check-input[type="checkbox"] {
+  margin: 0;
+  border: $border;
 }
 
 .form-btns {
@@ -22,28 +30,35 @@ fieldset {
 select {
   background: none;
   width: 100%;
+  padding: $form-control-padding;
+  border: $border;
+  border-radius: $border-radius;
 }
 
 textarea {
   width: 100%;
 }
 
-.form-control {
+.form-select {
+  padding: $form-control-padding;
+  border: $border;
+  border-radius: $border-radius;
+}
+.form-control,
+textarea {
+  padding: $form-control-padding;
+  border: $border;
+  border-radius: $border-radius;
+
   &::placeholder {
+    color: #21252973;
     position: relative;
     z-index: 3;
   }
 }
+
 .form-group {
   margin: 0 0 2.5rem 0;
-}
-.form-control,
-select,
-textarea {
-  padding: 0.6rem 2rem;
-  border: solid rgba(128, 128, 128, 0.39) 1px;
-
-  border-radius: 0.4rem;
 }
 
 .form-control-container {
@@ -62,7 +77,26 @@ textarea {
     &_end {
       position: absolute;
       right: 0;
-      padding: 0 2rem 0 0;
+      padding: 0.3rem 2rem 0 0;
+
+      &_password {
+        cursor: pointer;
+      }
+    }
+  }
+  &-input {
+    padding: $form-control-padding;
+  }
+}
+.sign-up,
+.login {
+  .form-control-container {
+    &-icon {
+      &_end {
+        position: absolute;
+        right: 0;
+        padding: 1rem 2rem 0 0;
+      }
     }
   }
 }

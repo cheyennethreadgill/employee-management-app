@@ -2,7 +2,7 @@ import { toSentenceCase } from "../../Helpers/strings";
 
 const PageHeaders = ({ title }) => {
   function fullTitle() {
-    if (title.includes("-")) {
+    if ( title.includes("-")) {
       let index = title.lastIndexOf("-");
       let firstWord = title.substring(0, index);
       let secondWord = title.substring(index + 1);

@@ -41,7 +41,12 @@ const EmployeeCard = ({
   handleEmployeeUpdate,
   onDelete,
 }) => {
-  const employeeCardConditionals = [
+  interface Conditionals {
+    updateStatus: boolean;
+    newEntry: string | null;
+    originalEntry: string[];
+  }
+  const employeeCardConditionals: Conditionals[] = [
     { updateStatus: null, newEntry: null, originalEntry: [image, "Image"] },
     {
       updateStatus: null,
@@ -53,19 +58,31 @@ const EmployeeCard = ({
       newEntry: newFirstname + " " + newLastname,
       originalEntry: [firstname + " " + lastname, "Name"],
     },
-    { updateStatus: newDegreeUpdated, newEntry: newDegree, originalEntry: [toSentenceCase(degree), "Degree"] },
+    {
+      updateStatus: newDegreeUpdated,
+      newEntry: newDegree,
+      originalEntry: [degree ? toSentenceCase(degree) : " N/A"],
+    },
     {
       updateStatus: newDepartmentUpdated,
       newEntry: newDepartment,
-      originalEntry: [toSentenceCase(department), "Deparment"],
+      originalEntry: [department ? toSentenceCase(department) : department ? "Deparment" : "N/A"],
     },
     {
       updateStatus: newDesignationUpdated,
       newEntry: newDesignation,
-      originalEntry: [toSentenceCase(designation), "Designation"],
+      originalEntry: [designation ? toSentenceCase(designation) : designation ? "Designation" : "N/A"],
     },
-    { updateStatus: newMobileUpdated, newEntry: newMobile, originalEntry: [toSentenceCase(mobile), "Mobile"] },
-    { updateStatus: newEmailUpdated, newEntry: newEmail, originalEntry: [toSentenceCase(email), "Email"] },
+    {
+      updateStatus: newMobileUpdated,
+      newEntry: newMobile,
+      originalEntry: [mobile ? mobile : mobile ? "Mobile" : "N/A"],
+    },
+    {
+      updateStatus: newEmailUpdated,
+      newEntry: newEmail,
+      originalEntry: [email ? toSentenceCase(email) : email ? "Email" : "N/A"],
+    },
 
     {
       updateStatus: null,
@@ -114,7 +131,7 @@ const EmployeeCard = ({
               if (originalEntry[0] == image) {
                 return (
                   <Col
-                    key={originalEntry}
+                    key={"img-id-1"}
                     lg="1"
                     xs={{ order: 1 }}
                   >
@@ -124,7 +141,10 @@ const EmployeeCard = ({
                         <h3> {originalEntry[1]} </h3>
                       </Col>
                       <Col lg="12">
-                        <ImageComponent image={originalEntry[0]} />
+                        <ImageComponent
+                          navImage={false}
+                          image={originalEntry[0]}
+                        />
                       </Col>
                     </div>
                   </Col>
@@ -132,7 +152,7 @@ const EmployeeCard = ({
               } else if (originalEntry[0] == employeeid) {
                 return (
                   <Col
-                    key={originalEntry}
+                    key={Math.random()}
                     lg="1"
                     xs={{ order: 2 }}
                   >
@@ -150,7 +170,7 @@ const EmployeeCard = ({
               } else {
                 return (
                   <Col
-                    key={originalEntry}
+                    key={Math.random()}
                     lg="1"
                     xs={{ order: 2 }}
                   >
@@ -181,8 +201,11 @@ const EmployeeCard = ({
               </Col>
               <Col lg="12">
                 <div className="form-btns">
-                  <i
+                  <button
                     onClick={(e) => {
+                      console.log(image);
+                      console.log("employee imgage for modal via edit btn in employe card^^^^^^^^^^^^^^^^^^^^^^^");
+
                       handleBtnValue(employeeid);
                       handleEditMode();
                       handleShowNow(true);
@@ -219,15 +242,15 @@ const EmployeeCard = ({
                     }}
                     type="button"
                     className="fa-regular fa-pen-to-square fs-5 edit-btn"
-                  ></i>
-                  <i
+                  ></button>
+                  <button
                     onClick={() => {
                       onDelete(employeeid);
                       onUpdateEmployeeState(employeeid);
                     }}
                     type="submit"
                     className="fa-solid fa-trash delete-btn"
-                  ></i>
+                  ></button>
                 </div>
               </Col>
             </div>
@@ -237,10 +260,7 @@ const EmployeeCard = ({
 
       {/* *********************************************************************************DESKTOP */}
       <Row className="employee-card-desktop d-none d-md-flex">
-        <div
-          autoComplete="true"
-          className="employee-card-desktop-form"
-        >
+        <div className="employee-card-desktop-form">
           <div className="employee-card-desktop-form-fields">
             <Form.Control
               style={{ margin: "0" }}
@@ -257,30 +277,35 @@ const EmployeeCard = ({
             if (originalEntry[0] == image) {
               return (
                 <div
-                  key={originalEntry}
+                  key={originalEntry[1]}
                   className="employee-card-desktop-form-fields"
                 >
-                  <ImageComponent image={originalEntry[0]} />
+                  <ImageComponent
+                    navImage={false}
+                    image={originalEntry[0]}
+                  />
                 </div>
               );
-            } else if (originalEntry[0] == employeeid) {
-              return (
-                <Col
-                  lg="1"
-                  key={originalEntry}
-                >
-                  <hr className="d-block d-lg-none" />
-                  <div className="employee-card-mobile-fields">
-                    <Col lg="12">
-                      <p> {employeeid} </p>
-                    </Col>
-                  </div>
-                </Col>
-              );
-            } else {
+            }
+            // else if ( originalEntry[0] == employeeid ) {
+            //   return (
+            //     <Col
+            //       lg="1"
+            //       key={originalEntry[0]}
+            //     >
+            //       <hr className="d-block d-lg-none" />
+            //       <div className="employee-card-mobile-fields">
+            //         <Col lg="12">
+            //           <p> {employeeid} </p>
+            //         </Col>
+            //       </div>
+            //     </Col>
+            //   );
+            // }
+            else {
               return (
                 <div
-                  key={originalEntry}
+                  key={Math.random()}
                   className="employee-card-desktop-form-fields"
                 >
                   <p> {updateStatus ? newEntry : originalEntry ? originalEntry[0] : "N/A"} </p>
@@ -291,7 +316,7 @@ const EmployeeCard = ({
 
           {/* **********************************ACTIONS */}
           <div className="form-btns employee-card-desktop-form-fields">
-            <i
+            <button
               onClick={(e) => {
                 handleBtnValue(employeeid);
                 handleEditMode();
@@ -327,17 +352,17 @@ const EmployeeCard = ({
                   newImageUpdated,
                 });
               }}
-              type="button"
-              className="fa-regular fa-pen-to-square fs-5 edit-btn"
-            ></i>
-            <i
+              type="submit"
+              className="fa-regular fa-pen-to-square fs-5 edit-btn employee-card-form-btns"
+            ></button>
+            <button
               onClick={() => {
-                onDelete(employeeid);
+                onDelete(email);
                 onUpdateEmployeeState(employeeid);
               }}
-              type="submit"
-              className="fa-solid fa-trash delete-btn"
-            ></i>
+              type="button"
+              className="fa-solid fa-trash delete-btn employee-card-form-btns"
+            ></button>
           </div>
           {/* END CONTAINER ROW */}
         </div>

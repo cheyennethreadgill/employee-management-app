@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Nav from "../Components/Global/Nav";
+import Nav from "./Components/Global/Nav";
 import { Outlet } from "react-router-dom";
-import TopNav from "../Components/Global/TopNav";
+import TopNav from "./Components/Global/TopNav";
 
-function Root() {
+function App() {
   const [toggled, setToggled] = useState(true);
   const handleNavToggle = () => setToggled(!toggled);
   const handleMouseLeave = () => setToggled(true);
@@ -31,4 +31,4 @@ function Root() {
   );
 }
 
-export default Root;
+export default App;

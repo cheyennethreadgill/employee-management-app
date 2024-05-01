@@ -1,3 +1,14 @@
+need to login, this login info from database should generate a account/empl ID
+
+its something wrong with sumbitting with the id
+
+not the ui but its likely how to server is reciving the info
+the server is writing over the last id with the input from frontend
+
+modal writes over the first employee
+
+its updating the first employee
+
 <!--
 loading errors
  -->

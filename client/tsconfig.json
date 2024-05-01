@@ -9,6 +9,6 @@
     "outDir": "public",
     "esModuleInterop": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "../server/views/successPage.jsx"],
   "exclude": ["node_modules"]
 }

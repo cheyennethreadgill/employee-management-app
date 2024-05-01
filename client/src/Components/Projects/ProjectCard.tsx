@@ -124,10 +124,10 @@ const ProjectCard = ({
                 });
               }}
             >
-              <i
+              <button
                 type="button"
                 className="fa-regular fa-pen-to-square fs-5 edit-btn"
-              ></i>
+              ></button>
               <p>Edit Project</p>
             </div>
 
