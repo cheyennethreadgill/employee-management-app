@@ -58,8 +58,3 @@ const LocalStrategy = strategy.Strategy;
 //   saveUninitialized: true,
 // };
 
-// aws
-// upload to multer memory storage
-export const upload = multer({
-  storage: multer.memoryStorage(),
-});

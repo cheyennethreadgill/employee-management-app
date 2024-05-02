@@ -7,13 +7,13 @@ import { useToken } from "../../Hooks/useToken";
 import { useUser } from "../../Hooks/useUser";
 const loginimg = require("../../images/login.png");
 
-const LoginPage = () => {
+const LoginPage = ({ URL }) => {
   // interface FormDataInterface {
   //   username: string;
   //   password: string;
   // }
-  const URL = "http://localhost:8080/auth/";
-  const LOGIN_PATH = "login";
+  // const URL = "http://localhost:8080/auth/";
+  const LOGIN_PATH = "auth/login";
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 

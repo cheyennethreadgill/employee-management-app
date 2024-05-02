@@ -6,9 +6,9 @@ import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 const loginimg = require("../../images/sign-up-img.png");
 import { useToken } from "../../Hooks/useToken";
 
-const SignUpPage = () => {
-  const URL = "http://localhost:8080/auth/";
-  const SIGNUP_PATH = "sign-up";
+const SignUpPage = ({ URL }) => {
+  // const URL = "http://localhost:8080/auth/";
+  const SIGNUP_PATH = "auth/sign-up";
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 

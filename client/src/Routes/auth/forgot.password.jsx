@@ -7,13 +7,13 @@ import { useToken } from "../../Hooks/useToken";
 import { useUser } from "../../Hooks/useUser";
 const loginimg = require("../../images/login.png");
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage = ({ URL }) => {
   // interface FormDataInterface {
   //   username: string;
   //   password: string;
   // }
-  const URL = "http://localhost:8080/auth/";
-  const FORGOTPASSWORD_URL = "forgot-password/:";
+  // const URL = "http://localhost:8080/auth/";
+  const FORGOTPASSWORD_URL = "auth/forgot-password/";
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -42,7 +42,7 @@ const ForgotPasswordPage = () => {
         method: "PUT",
       };
       console.log(email);
-      const fetchresponse = await fetch(`http://localhost:8080/auth/forgot-password/${email}`, options);
+      const fetchresponse = await fetch(`${URL}${FORGOTPASSWORD_URL}${email}`, options);
       const jsonResponse = await fetchresponse.json();
 
       if (!fetchresponse.ok) {
