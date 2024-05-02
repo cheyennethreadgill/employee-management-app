@@ -118,22 +118,22 @@ const Index = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LoginPage />,
+      element: <LoginPage URL={URL} />,
       errorElement: <ErrorPage />,
     },
     {
       path: "/forgot-password",
-      element: <ForgotPasswordPage />,
+      element: <ForgotPasswordPage URL={URL} />,
       errorElement: <ErrorPage />,
     },
     {
       path: "/auth/login",
-      element: <LoginPage />,
+      element: <LoginPage URL={URL} />,
       errorElement: <ErrorPage />,
     },
     {
       path: "/auth/sign-up",
-      element: <SignUpPage />,
+      element: <SignUpPage URL={URL} />,
     },
     // {
     //   path: "/sign-up/success",
@@ -141,7 +141,7 @@ const Index = () => {
     // },
     {
       path: "/admin",
-      element: <App URL={URL} />,
+      element: <App />,
       errorElement: <ErrorPage />,
       children: [
         {
