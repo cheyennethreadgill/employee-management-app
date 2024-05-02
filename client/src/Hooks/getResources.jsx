@@ -1,4 +1,5 @@
-export async function getEmployees(
+export async function getEmployees (
+  employees,
   URL,
   PATH,
   handleLoadingState,
@@ -8,12 +9,16 @@ export async function getEmployees(
   handleFetchError
 ) {
   try {
-    const fetchPromise = await fetch(`${URL}${PATH}`);
+    const fetchPromise = await fetch( `${URL}${PATH}` );
     handleFetchPromiseError(fetchPromise);
-    const jsonResponse = await fetchPromise.json();
-    handleJsonPromiseResponseLog(jsonResponse);
-    handleSetEmployees(jsonResponse);
-    handleLoadingState(false);
+    if (!fetchPromise.ok) {
+      console.log(await fetchPromise.text());
+    } else {
+      const jsonResponse = await fetchPromise.json();
+      handleJsonPromiseResponseLog(jsonResponse);
+      handleSetEmployees(jsonResponse);
+      handleLoadingState(false);
+    }
   } catch (err) {
     handleFetchError(err);
     console.log(`error in resource file, problem with fetching projects in getEmployees function: ${err}`);
@@ -32,10 +37,14 @@ export async function getProjects(
   try {
     const promise = await fetch(`${URL}${PATH}`);
     handleFetchPromiseError(promise);
-    const jsonResponse = await promise.json();
-    handleJsonPromiseResponseLog(jsonResponse);
-    handleSetProjects( jsonResponse );
-    handleLoadingState(false);
+    if (!promise.ok) {
+      console.log(await promise.text());
+    } else {
+      const jsonResponse = await promise.json();
+      handleJsonPromiseResponseLog(jsonResponse);
+      handleSetProjects(jsonResponse);
+      handleLoadingState(false);
+    }
   } catch (err) {
     handleFetchError(err);
     console.log(`error in resource file, problem with fetching projects in getProjects function: ${err}`);

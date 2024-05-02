@@ -98,7 +98,7 @@ const AddEmployeeForm = () => {
           <Form.Control.Feedback type="invalid">Please enter a valid phone number.</Form.Control.Feedback>
         </Form.Group>
         {/* **********************************PASSWORD */}
-        <Form.Group
+        {/* <Form.Group
           className="form-group"
           as={Col}
           lg="6"
@@ -125,7 +125,8 @@ const AddEmployeeForm = () => {
               errorPContent="Please enter valid email (below input)"
             />
           )}
-        </Form.Group>
+        </Form.Group> */}
+
         <Form.Group
           className="form-group"
           as={Col}
@@ -153,7 +154,6 @@ const AddEmployeeForm = () => {
                 handleEmployeeFormData("department", toSentenceCase(e.target.value));
               }}
               required
-              maxLength={45}
             >
               {departmentOptions.map((option) => {
                 return (
@@ -255,8 +255,8 @@ const AddEmployeeForm = () => {
             id="image upload"
             name="image"
             onChange={(e) => {
-              handleEmployeeFormData("image", e.target.files[0]);
-              let name = e.target.files[0].name;
+              handleEmployeeFormData("image", (e.target as HTMLInputElement).files[0]);
+              let name = (e.target as HTMLInputElement).files[0].name;
               handleFileTypeCheck(name, handleInputErrors);
             }}
           />

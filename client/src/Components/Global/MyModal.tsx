@@ -241,8 +241,9 @@ const MyModal = ({
             name="image"
             onChange={(e) => {
               handleFormUpdatedStatus("newImageUpdated", true);
-              handleFormData("newImage", e.target.files[0]);
-              handleEmployeeToUpdate({ ...employeeToUpdate, image: e.target.files[0] });
+              handleFormData("newImage", (e.target as HTMLInputElement).files[0]);
+              handleEmployeeToUpdate({ ...employeeToUpdate, image: (e.target as HTMLInputElement).files[0] });
+              console.log((e.target as HTMLInputElement).files[0]);
             }}
             placeholder={formUpdatedStatus.newImageUpdated ? formData.newImage : image}
           />
@@ -256,13 +257,12 @@ const MyModal = ({
           >
             Close
           </Button>
-          <input
+          <Form.Control
             value="Save Changes"
             className="btn update-btn text-light"
-            variant="primary"
             onClick={(e) => {
               handleEditMode();
-              handleEmployeeUpdate(e, employeeid, employeeToUpdate);
+              handleEmployeeUpdate(employeeid, employeeToUpdate);
               handleShowNow(false);
             }}
             type="submit"

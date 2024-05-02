@@ -76,10 +76,14 @@ const AddEmployee = ({
     try {
       const fetchPromiseResponse = await fetch(`${URL}${ADDEMPLOYEE_PATH}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
-      const jsonPromiseResponse = fetchPromiseResponse.json();
-      // if theres an error, set state, udate ui to log response
-      handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, InputErrorComponent);
-      console.log(jsonPromiseResponse);
+      if (!fetchPromiseResponse.ok) {
+        console.log(await fetchPromiseResponse.text());
+      } else {
+        const jsonPromiseResponse = fetchPromiseResponse.json();
+        // if theres an error, set state, udate ui to log response
+        handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, InputErrorComponent);
+        console.log(jsonPromiseResponse);
+      }
     } catch (err) {
       console.log(`Error in Add employee fetch:`);
       handleFetchError(err);
@@ -136,7 +140,7 @@ const AddEmployee = ({
 
   return (
     <Container>
-      <PageHeaders title={ADDEMPLOYEE_PATH} />
+      <PageHeaders title="Add Employee" />
       <CustomContext.Provider value={contextValues}>
         <AddEmployeeForm />
       </CustomContext.Provider>

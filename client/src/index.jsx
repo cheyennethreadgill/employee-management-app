@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import React, { useEffect, useState, createContext } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "./Routes/Root";
+import App from "./App";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../src/styles/styles.css";
 import ErrorPage from "./Components/Errors/ErrorPage";
@@ -12,6 +12,10 @@ import AddProject from "./Components/Projects/AddProject";
 import AllProjects from "./Components/Projects/AllProjects";
 import { getEmployees } from "./Hooks/getResources";
 import { getProjects } from "./Hooks/getResources";
+import LoginPage from "./Routes/auth/LoginPage";
+import SignUpPage from "./Routes/auth/SignUpPage";
+import ForgotPasswordPage from "./Routes/auth/forgot.password";
+// import SuccessPage from "../../server/views/successPage";
 
 export const CustomContext = createContext();
 
@@ -20,9 +24,11 @@ const Index = () => {
   // const URL = "http://localhost:8080/";
   const URL = "https://employee-management-app-rho.vercel.app/";
 
-  const EMPLOYEE_PATH = "employees";
-  const ADDEMPLOYEE_PATH = "add-employee";
+  const EMPLOYEE_PATH = "admin/employees";
+  const ADDEMPLOYEE_PATH = "admin/add-employee";
   const ALLPROJECTS_PATH = "all-projects";
+  const UPDATE_PATH = "update-employee";
+  const ADDPROJECT_PATH = "add-project";
 
   // Form Select & Radios
   const workStatusOptions = ["active", "completed", "running", "pending", "not started", "canceled"];
@@ -38,7 +44,7 @@ const Index = () => {
   // *********************************************************************ERROR HANDLING
   const handleFetchPromiseError = (response) => {
     if (!response.ok) {
-      console.log(`Something went wrong with fetch from server ${response.status} `);
+      console.log(`Something went wrong with fetch from server ${response.message} `);
     }
   };
 
@@ -61,8 +67,11 @@ const Index = () => {
   };
   // fetch error
   const handleFetchError = (err) => {
-    console.log(err.status);
-    console.log(`FETCH FAILED: ${err}`);
+    if (err) {
+      console.log(`FETCH FAILED: ${err.status}`);
+    } else {
+      return;
+    }
   };
 
   // *************************************************************************Resources
@@ -75,6 +84,7 @@ const Index = () => {
   useEffect(
     () =>
       getEmployees(
+        employees,
         URL,
         EMPLOYEE_PATH,
         handleLoadingState,
@@ -108,7 +118,30 @@ const Index = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Root URL={URL} />,
+      element: <LoginPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPasswordPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/auth/login",
+      element: <LoginPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/auth/sign-up",
+      element: <SignUpPage />,
+    },
+    // {
+    //   path: "/sign-up/success",
+    //   element: <SuccessPage />,
+    // },
+    {
+      path: "/admin",
+      element: <App URL={URL} />,
       errorElement: <ErrorPage />,
       children: [
         {
@@ -126,11 +159,13 @@ const Index = () => {
           ),
         },
         {
-          path: "/all-employees",
+          path: "/admin/all-employees",
           element: (
             <AllEmployees
               URL={URL}
               EMPLOYEE_PATH={EMPLOYEE_PATH}
+              UPDATE_PATH={UPDATE_PATH}
+              handleLoadingState={handleLoadingState}
               loading={loading}
               employees={employees}
               handleSetEmployees={handleSetEmployees}
@@ -141,7 +176,7 @@ const Index = () => {
           ),
         },
         {
-          path: "/add-employee",
+          path: "/admin/add-employee",
           element: (
             <AddEmployee
               URL={URL}
@@ -155,7 +190,7 @@ const Index = () => {
           ),
         },
         {
-          path: "/all-projects",
+          path: "/admin/all-projects",
           element: (
             <AllProjects
               URL={URL}
@@ -173,7 +208,7 @@ const Index = () => {
           ),
         },
         {
-          path: "/add-projects",
+          path: "/admin/add-projects",
           element: (
             <AddProject
               URL={URL}
@@ -193,7 +228,7 @@ const Index = () => {
           ),
         },
         {
-          path: "/dashboard",
+          path: "/admin/dashboard",
           element: (
             <ProjectsDash
               URL={URL}
@@ -214,6 +249,7 @@ const Index = () => {
     ADDEMPLOYEE_PATH,
     EMPLOYEE_PATH,
     ALLPROJECTS_PATH,
+    ADDPROJECT_PATH,
     loading,
     workStatusOptions,
     priorityOptions,

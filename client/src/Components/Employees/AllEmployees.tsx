@@ -6,10 +6,14 @@ import { Row, Col } from "react-bootstrap";
 import PageHeaders from "../Global/PageHeaders";
 import { Link } from "react-router-dom";
 import MyModal from "../Global/MyModal";
+import { useToken } from "../../Hooks/useToken";
+import { json } from "express";
 
 const AllEmployees = ({
   URL,
   EMPLOYEE_PATH,
+  UPDATE_PATH,
+  handleLoadingState,
   loading,
   employees,
   handleSetEmployees,
@@ -17,32 +21,14 @@ const AllEmployees = ({
   handleFetchPromiseError,
   handleJsonPromiseResponseLog,
 }) => {
-  const UPDATE_PATH = "update-employee";
-  const titles = [
-    "",
-    "Image",
-    "Employee ID",
-    "Name",
-    "Degree",
-    "Department",
-    "Designation",
-    "Mobile",
-    "Email",
-    "Join Date",
-    "Actions",
-  ];
-
-  const [show, setShow] = useState(false);
-  const [showNow, setShowNow] = useState(false);
-  const [deletePrompt, setDeletePrompt] = useState(false);
-  const [deletePromptNow, setDeletePromptNow] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-
   interface EmployeeObjectInterface {
-    id: number;
-    employeeid: number;
-    firstname: string;
-    lastname: string;
+    employeeid: string;
+    id: string;
+    _id: string;
+    fname?: string;
+    firstname?: string;
+    lname?: string;
+    lastname?: string;
     department: string;
     designation: string;
     mobile: string;
@@ -69,9 +55,31 @@ const AllEmployees = ({
     newImageUpdated: boolean;
   }
 
+  const titles = [
+    "",
+    "Image",
+    "Employee ID",
+    "Name",
+    "Degree",
+    "Department",
+    "Designation",
+    "Mobile",
+    "Email",
+    "Join Date",
+    "Actions",
+  ];
+
+  const [show, setShow] = useState(false);
+  const [showNow, setShowNow] = useState(false);
+  const [deletePrompt, setDeletePrompt] = useState(false);
+  const [deletePromptNow, setDeletePromptNow] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [token, setToken] = useToken();
+
   const [employeeInfoForModal, setEmployeeInfoForModal] = useState<EmployeeObjectInterface>({
+    employeeid: "",
     id: null,
-    employeeid: null,
+    _id: null,
     firstname: "",
     lastname: "",
     department: "",
@@ -107,18 +115,20 @@ const AllEmployees = ({
   const handleShowNow = () => setShowNow(!showNow);
   const handleShowDeletePromptNow = () => setDeletePromptNow(!deletePromptNow);
 
-  // Set employee info given by employee card
+  // Set employee info for modal given by employee card
   const handleEmployeeSetForModal = (employeeObject: EmployeeObjectInterface) => {
     setEmployeeInfoForModal(employeeObject);
   };
 
   // *******UI STATE
   // UPDATE Employee (UI)
-  const handleEmployeeStateUpdate = (id: number, employeeToUpdate: EmployeeObjectInterface) => {
+  const handleEmployeeStateUpdate = (id: string, employeeToUpdate: EmployeeObjectInterface) => {
+    console.log("handleEmployeeStateUpdate function ran");
+    console.log(`ID in handleEmployeeStateUpdate ${id}`);
     handleSetEmployees(
-      employees.map((employee: { employeeid: number }) => {
-        const { employeeid } = employee;
-        if (employeeid === id) {
+      employees.map((employee: { _id: string }) => {
+        const { _id } = employee;
+        if (_id === id) {
           return { ...employeeToUpdate };
         } else {
           return { ...employee };
@@ -128,85 +138,69 @@ const AllEmployees = ({
   };
 
   // Delete Employee (UI)
-  const handleEmployeeDelete = (id: number) => {
+  const handleEmployeeDelete = (id: string) => {
     handleSetEmployees(
       employees.filter((employee: EmployeeObjectInterface) => {
-        const { employeeid } = employee;
-        return employeeid !== id;
+        const { _id } = employee;
+        return _id !== id;
       })
     );
   };
 
   //   UPDATE EMPLOYEE (DB)
-  async function handleEmployeeUpdate(e: React.FormEvent, id: number, employeeToUpdate: EmployeeObjectInterface) {
-    handleEmployeeStateUpdate(id, employeeToUpdate);
-    console.log(employeeToUpdate);
+  async function handleEmployeeUpdate(id: string, employeeToUpdate: EmployeeObjectInterface) {
+    // handleEmployeeStateUpdate(id, employeeToUpdate);
+    console.log(id);
 
-    // set up form data API to use for multiform post
-    const formData = new FormData();
-
-    // append keys in body to new form object
-    formData.append("employeeid", id.toString());
-    formData.append(
-      "fname",
-      `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`
-    );
-    formData.append(
-      "lname",
-      `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`
-    );
-    formData.append(
-      "degree",
-      `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`
-    );
-    formData.append(
-      "mobile",
-      `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`
-    );
-    formData.append(
-      "designation",
-      `${employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation}`
-    );
-    formData.append(
-      "department",
-      `${employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department}`
-    );
-    formData.append(
-      "email",
-      `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`
-    );
-    formData.append(
-      "image",
-      (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " "
-    );
+    const dataToUpload = {
+      _id: employeeToUpdate.employeeid,
+      fname: `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`,
+      lname: `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`,
+      degree: `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`,
+      mobile: `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`,
+      designation: `${
+        employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation
+      }`,
+      department: `${
+        employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department
+      }`,
+      email: `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`,
+      image: (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " ",
+    };
 
     // Post options
     const options = {
       method: "PUT",
-      body: formData,
+      body: JSON.stringify(dataToUpload),
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmQzNDgxYzQ5OGRmNDRiNWIzNWUxNCIsImZuYW1lIjoia2VsbHkiLCJsbmFtZSI6ImtlbGx5IiwidXNlcm5hbWUiOiJrZWxseSIsImVtYWlsIjoia2VsbHlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkREYxalRRelNXWTlYZzlzRGJXalBKT1FmelVRWjlXM2xMN3ZVTmg1NEFZb3YxeG4wby43eEciLCJpYXQiOjE3MTQyNDA2MDIsImV4cCI6MTcxNDI0NDIwMn0.uzli4hYFVa7webRHjykYEYXSYOne5dudkFDgx3a6Bd0`,
+        Authorization: `Bearer ${token}`,
+      },
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}admin/${UPDATE_PATH}/${token}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
-      const jsonPromiseResponse = fetchPromiseResponse.json();
+      const jsonPromiseResponse = await fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
+      console.log(jsonPromiseResponse.message);
     } catch (err) {
       handleFetchError(err);
     }
   }
 
   // DELETE EMPLOYEE From DB
-  async function deleteEmployeeFromDB(id: number) {
+  async function deleteEmployeeFromDB(id: string) {
     // Post options
     const options = {
       method: "DELETE",
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}delete-employee/${id}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}admin/delete-employee/${id}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
-      const jsonPromiseResponse = fetchPromiseResponse.json();
+      const jsonPromiseResponse = fetchPromiseResponse.json() || fetchPromiseResponse.text();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
     } catch (err) {
       handleFetchError(err);
@@ -217,20 +211,21 @@ const AllEmployees = ({
   // sets filtered employees initial state with employees
   const [filteredEmloyees, setfilteredEmloyees] = useState(employees);
   const filterCount = filteredEmloyees.length > 0;
+  const employeeCount = employees.length > 0;
 
   const handleFilteredEmployees = (e: string) => {
     let searchValue = e.toString().toLowerCase(); // Ensure value is a string
 
     // sets filtered employee with found employee from filter fn
     let found = employees.filter((employee: EmployeeObjectInterface) => {
-      const { department, designation, email, employeeid, firstname, lastname, mobile, degree } = employee;
+      const { department, designation, email, _id, fname, lname, mobile, degree } = employee;
       if (
         department.toLowerCase().includes(searchValue) ||
         designation.toLowerCase().includes(searchValue) ||
         email.toLowerCase().includes(searchValue) ||
-        employeeid.toString().includes(searchValue) ||
-        firstname.toLowerCase().includes(searchValue) ||
-        lastname.toLowerCase().includes(searchValue) ||
+        _id.toString().includes(searchValue) ||
+        fname.toLowerCase().includes(searchValue) ||
+        lname.toLowerCase().includes(searchValue) ||
         mobile.toString().includes(searchValue) ||
         degree.toLowerCase().includes(searchValue)
       ) {
@@ -242,11 +237,11 @@ const AllEmployees = ({
 
   // Employees Content
   const employeesContent = employees.map((employee: EmployeeObjectInterface) => {
-    const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
+    const { department, designation, email, _id, fname, lname, mobile, degree, image } = employee;
 
     return (
       <EmployeeCard
-        key={employeeid}
+        key={_id}
         handleShowDeletePrompt={handleShowDeletePrompt}
         handleEditMode={handleEditMode}
         handleShowNow={handleShowNow}
@@ -254,9 +249,9 @@ const AllEmployees = ({
         onUpdateEmployeeState={handleEmployeeDelete}
         employees={employees}
         date={date}
-        employeeid={employeeid}
-        firstname={firstname}
-        lastname={lastname}
+        employeeid={_id}
+        firstname={fname}
+        lastname={lname}
         department={department}
         designation={designation}
         mobile={mobile}
@@ -287,20 +282,20 @@ const AllEmployees = ({
     );
   });
   const filteredEmloyeesContent = filteredEmloyees.map((employee: EmployeeObjectInterface) => {
-    const { department, designation, email, employeeid, firstname, lastname, mobile, degree, image } = employee;
+    const { department, designation, email, _id, fname, lname, mobile, degree, image } = employee;
 
     return (
       <EmployeeCard
-        key={employeeid}
+        key={_id}
         handleShowDeletePrompt={handleShowDeletePrompt}
         handleEditMode={handleEditMode}
         handleShowNow={handleShowNow}
         handleEmployeeSetForModal={handleEmployeeSetForModal}
         onUpdateEmployeeState={handleEmployeeDelete}
         employees={employees}
-        employeeid={employeeid}
-        firstname={firstname}
-        lastname={lastname}
+        employeeid={_id}
+        firstname={fname}
+        lastname={lname}
         department={department}
         designation={designation}
         mobile={mobile}
@@ -335,7 +330,7 @@ const AllEmployees = ({
   return (
     <>
       <Container>
-        <PageHeaders title={EMPLOYEE_PATH} />
+        <PageHeaders title="employees" />
         <section className="employees">
           <Row className="employees-header">
             <Col
@@ -397,6 +392,9 @@ const AllEmployees = ({
             {!loading && filterCount && filteredEmloyeesContent}
             {!loading && !filterCount && employeesContent}
             {loading && <div className="loading"></div>}
+            {!employeeCount && handleLoadingState(false) && <button className="btn btn-lg">Add Employees</button>}
+            {/* if there isnt any employees, set loading to false
+            if there is employees, set loading to true && filtercount */}
           </section>
         </section>
       </Container>

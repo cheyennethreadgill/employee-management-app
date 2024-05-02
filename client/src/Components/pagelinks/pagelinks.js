@@ -6,7 +6,7 @@ export default [
     links: [
       {
         name: "Dashboard",
-        link: "/dashboard",
+        link: "/admin/dashboard",
       },
     ],
   },
@@ -17,11 +17,11 @@ export default [
     links: [
       {
         name: "Add Projects",
-        link: "/add-projects",
+        link: "/admin/add-projects",
       },
       {
         name: "All Projects",
-        link: "/all-projects",
+        link: "/admin/all-projects",
       },
     ],
   },
@@ -32,11 +32,11 @@ export default [
     links: [
       {
         name: "All Employees",
-        link: "/all-employees",
+        link: "/admin/all-employees",
       },
       {
         name: "Add Employee",
-        link: "/add-employee",
+        link: "/admin/add-employee",
       },
     ],
   },

@@ -1,8 +1,18 @@
-import logo from "../../images/logo.png";
+import { useUser } from "../../Hooks/useUser";
+import { toSentenceCase } from "../../Helpers/strings";
+import ImageComponent from "../Employees/EmployeeImageComponent";
+import { Image } from "react-bootstrap";
+const logo = require("../../images/logo.png");
+const profileImg = require("../../images/admin.jpg");
 
 const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
+  const [user] = useUser();
+
+  const { username, fname } = user;
+
   return (
     <>
+      {/* ******************************MOBILE */}
       <div className="brand-bar-mobile d-md-block d-lg-none">
         <div className="brand-bar-mobile-controls-container">
           <div className="brand-bar-mobile-controls">
@@ -26,11 +36,17 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
             </>
 
             <div className="brand-bar-mobile-brand-right">
-              <p>Ella Jones</p>
+              <p>{fname}</p>
+              <ImageComponent
+                image="../../images/logo.png"
+                navImage={false}
+              />
             </div>
           </div>
         </div>
       </div>
+
+      {/* ******************************DESKTOP */}
 
       <div className="brand-bar-desktop d-none d-lg-block">
         <div className="brand-bar-desktop-controls-container">
@@ -57,7 +73,18 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
               onClick={handleNavToggle}
             ></i>
             <div className="brand-bar-desktop-brand-right">
-              <p>Ella Jones</p>
+              <i className="fa-regular fa-bell"></i>
+              {/* <i className="fa-solid fa-bell"></i> */}
+              <button className="d-flex gap-3 btn-none align-items-center">
+                {" "}
+                <p className="brand-bar-desktop-brand-right-name fw-medium text-dark">{toSentenceCase(fname)}</p>
+                <div className="brand-bar-desktop-brand-right-img">
+                  <ImageComponent
+                    image={profileImg}
+                    navImage={false}
+                  />
+                </div>
+              </button>
             </div>
           </div>
         </div>

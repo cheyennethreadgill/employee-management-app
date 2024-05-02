@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
 }
+
 .overflow-hidden {
   overflow-x: hidden;
 }
@@ -34,7 +35,7 @@
   }
 }
 .container {
-  max-width: 1425px;
+  max-width: 1350px;
 
   @include breakpointDown(md) {
     max-width: 965px;
@@ -55,6 +56,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
+.btn-none {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 
 body {
   background-color: #ecf0f4;
@@ -65,6 +71,7 @@ body {
 p {
   font-size: 14px;
 }
+
 h1 {
   font-size: 1.2rem;
   font-weight: 500;
@@ -90,6 +97,7 @@ h3 {
 }
 
 //  **************************FORMS
+
 .header-search {
   &-input {
     &::placeholder {
