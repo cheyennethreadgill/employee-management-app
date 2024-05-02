@@ -2,6 +2,7 @@ import { Router } from "express";
 import { employees, users } from "../database.js";
 import jwt from "jsonwebtoken";
 import { awsHandler } from "../Middleware/Employee/aws.handler.js";
+
 export const employeeRouter = new Router();
 
 employeeRouter.get("/employees", async (req, res, next) => {
