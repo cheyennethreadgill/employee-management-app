@@ -75,6 +75,7 @@ const AllEmployees = ({
   const [deletePromptNow, setDeletePromptNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [token, setToken] = useToken();
+  console.log(token)
 
   const [employeeInfoForModal, setEmployeeInfoForModal] = useState<EmployeeObjectInterface>({
     employeeid: "",
@@ -219,17 +220,19 @@ const AllEmployees = ({
     // sets filtered employee with found employee from filter fn
     let found = employees.filter((employee: EmployeeObjectInterface) => {
       const { department, designation, email, _id, fname, lname, mobile, degree } = employee;
-      if (
-        department.toLowerCase().includes(searchValue) ||
-        designation.toLowerCase().includes(searchValue) ||
-        email.toLowerCase().includes(searchValue) ||
-        _id.toString().includes(searchValue) ||
-        fname.toLowerCase().includes(searchValue) ||
-        lname.toLowerCase().includes(searchValue) ||
-        mobile.toString().includes(searchValue) ||
-        degree.toLowerCase().includes(searchValue)
-      ) {
-        return employee;
+      if (department || designation || email || _id || fname || lname || mobile || degree) {
+        if (
+          department.toLowerCase().includes(searchValue) ||
+          designation.toLowerCase().includes(searchValue) ||
+          email.toLowerCase().includes(searchValue) ||
+          _id.toString().includes(searchValue) ||
+          fname.toLowerCase().includes(searchValue) ||
+          lname.toLowerCase().includes(searchValue) ||
+          mobile.toString().includes(searchValue) ||
+          degree.toLowerCase().includes(searchValue)
+        ) {
+          return employee;
+        }
       }
     });
     setfilteredEmloyees(found);

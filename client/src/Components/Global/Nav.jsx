@@ -15,7 +15,13 @@ const Navigation = ({ handleNavToggle, handleMouseLeave, toggled, setToggled }) 
         className={toggled ? "main-nav-list_toggled main-nav-list_toggled_mobile" : "main-nav-list"}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="m-0 m-auto my-0 pb-5">
+        <div
+          className={
+            toggled
+              ? " left-nav-account-info_none m-0 m-auto my-0 pb-5"
+              : " left-nav-account-info_display m-0 m-auto my-0 pb-5"
+          }
+        >
           <ImageComponent
             image=""
             navImage={true}

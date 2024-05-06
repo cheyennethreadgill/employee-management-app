@@ -1,3 +1,17 @@
+.left-nav {
+  &-account-info {
+    &_none {
+      opacity: 0;
+      height: 0;
+      transition: all ease-in-out 350ms;
+    }
+    &_display {
+      opacity: 1;
+      height: initial;
+      transition: all ease-in-out 350ms;
+    }
+  }
+}
 .brand-bar-mobile {
   position: fixed;
   top: 0;
@@ -214,7 +228,7 @@
     gap: 1rem;
 
     @include breakpointDown(md) {
-      transform: translateX(-63px);
+      transform: translateX(-90px);
       transition: all ease-in-out 350ms;
     }
   }
