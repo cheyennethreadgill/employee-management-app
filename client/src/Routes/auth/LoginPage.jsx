@@ -85,12 +85,14 @@ const LoginPage = ({ URL }) => {
       <Row>
         <Col
           lg="6"
+          md="12"
           className="p-0 m-0"
         >
           <img src={loginimg} />
         </Col>
         <Col
           lg="6"
+          md="12"
           className="col-container"
         >
           <div className="login-right-info flex-column d-flex justify-content-center">

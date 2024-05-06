@@ -12894,6 +12894,12 @@ form-select:is-invalid {
   padding: 0;
 }
 
+@media screen and (max-width: 580px) {
+  .sign-up-right-info,
+  .login-right-info {
+    padding: 0 2rem;
+  }
+}
 .employees {
   background-color: white;
   margin: 0 auto;

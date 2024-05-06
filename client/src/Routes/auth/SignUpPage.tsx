@@ -83,16 +83,16 @@ const SignUpPage = ({ URL }) => {
       <Row>
         <Col
           lg="6"
-          md="6"
-          sm="6"
+          md="12"
+          sm="12"
           className="p-0 m-0"
         >
           <img src={loginimg} />
         </Col>
         <Col
           lg="6"
-          md="6"
-          sm="6"
+          md="12"
+          sm="12"
           className="col-container"
         >
           <div className="sign-up-right-info flex-column d-flex justify-content-center">
