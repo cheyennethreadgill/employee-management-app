@@ -3,7 +3,6 @@ import multer from "multer";
 import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
-// import { sessionOptions, passportMware } from "./Middleware/middleware.options.js";
 import { findUserRoute, deleteUserRoute } from "../server/Routes/user.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "../server/Routes/project.routes.js";
 import { employeeRouter } from "../server/Routes/employee.routes.js";
