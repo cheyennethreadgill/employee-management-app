@@ -31,7 +31,7 @@ export const signUpHandler = async (req, res) => {
 
       // create web token
       jwt.sign(
-        { id: _id, fname, lname, username, email },
+        { id: _id, fname, lname, username, email, password },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
         function (err, token) {
@@ -85,7 +85,6 @@ export const loginHandler = async (req, res) => {
               if (err) {
                 res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
               }
-              // res.status(200).json({ token });
               res.status(200).json({ token });
             }
           );
@@ -110,7 +109,7 @@ export const forgotPasswordHandler = async (req, res) => {
     },
     { $set: { passwordResetCode } }
   );
-console.log(modifiedCount)
+  console.log(modifiedCount);
   if (modifiedCount > 0) {
     try {
       await sendEmail({

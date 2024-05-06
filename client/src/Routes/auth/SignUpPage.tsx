@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 const loginimg = require("../../images/sign-up-img.png");
 import { useToken } from "../../Hooks/useToken";
+import { useUser } from "../../Hooks/useUser";
 
 const SignUpPage = ({ URL }) => {
   // const URL = "http://localhost:8080/auth/";
@@ -13,6 +14,7 @@ const SignUpPage = ({ URL }) => {
   const navigate = useNavigate();
 
   const [token, setToken] = useToken();
+  const [user, setUser] = useUser();
 
   const [passwordToggle, setPasswordToggle] = useState(false);
 
@@ -65,9 +67,7 @@ const SignUpPage = ({ URL }) => {
         form.reset();
       } else {
         navigate("/auth/login");
-        console.log(jsonResonse.token);
         setToken(jsonResonse.token);
-
         setSignUpAuth({ signUpError: false, response: "" });
         form.reset();
       }
@@ -83,16 +83,16 @@ const SignUpPage = ({ URL }) => {
       <Row>
         <Col
           lg="6"
-          md="6"
-          sm="6"
+          md="12"
+          sm="12"
           className="p-0 m-0"
         >
           <img src={loginimg} />
         </Col>
         <Col
           lg="6"
-          md="6"
-          sm="6"
+          md="12"
+          sm="12"
           className="col-container"
         >
           <div className="sign-up-right-info flex-column d-flex justify-content-center">
@@ -126,7 +126,6 @@ const SignUpPage = ({ URL }) => {
                     onChange={(e) => {
                       const targetValue = e.target.value;
                       handleFormData("fname", targetValue);
-                      console.log(targetValue);
                     }}
                   />
                   <span className="form-control-container-icon_end">

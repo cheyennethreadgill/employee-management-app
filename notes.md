@@ -1,3 +1,9 @@
+login form accepting form data correctly
+but login cedential check isnt working
+
+
+
+
 sign up will post to emplyo coll
 
 account upd will post to empl

@@ -1,6 +1,5 @@
 // IMAGE COMPONENT
 function ImageComponent({ image, navImage }) {
-  console.log(navImage);
   const AWS_S3_BUCKET_URL = `https://kuberemployeemanagementimages.s3.us-east-2.amazonaws.com/${image}`;
   if (!image || image === " ") {
     if (navImage === true) {

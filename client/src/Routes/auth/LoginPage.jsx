@@ -18,13 +18,13 @@ const LoginPage = ({ URL }) => {
   const navigate = useNavigate();
 
   const [token, setToken] = useToken();
-  const user = useUser();
+  const [user] = useUser();
 
   // ******************PASSWORD
   const [passwordToggle, setPasswordToggle] = useState(false);
   const [loginInfoAuto, setLoginInfoAuto] = useState({
-    username: "",
-    password: "",
+    username: user.username || "admin",
+    password: user.password || "admin123*",
   });
 
   const [loginAuth, setLoginAuth] = useState({
@@ -65,11 +65,11 @@ const LoginPage = ({ URL }) => {
         console.log(`login error: ${loginAuth.loginError}`);
         console.log(`login response: ${loginAuth.response}`);
         console.log(jsonResponse.message);
+        form.reset();
       } else {
         navigate("/admin");
         setToken(jsonResponse.token);
-        console.log(user);
-        console.log({ ...user, message: `Welcome, ${user[0].username}!` });
+        // console.log({ ...user, message: `Welcome, ${user[0].username}!` });
         setLoginAuth({ loginError: false, response: "" });
       }
     } catch (err) {
@@ -85,12 +85,14 @@ const LoginPage = ({ URL }) => {
       <Row>
         <Col
           lg="6"
+          md="12"
           className="p-0 m-0"
         >
           <img src={loginimg} />
         </Col>
         <Col
           lg="6"
+          md="12"
           className="col-container"
         >
           <div className="login-right-info flex-column d-flex justify-content-center">
@@ -135,7 +137,7 @@ const LoginPage = ({ URL }) => {
                     placeholder="Username*"
                     required
                     onChange={(e) => handleLoginFormData("username", e.target.value)}
-                    defaultValue="admin"
+                    defaultValue={loginInfoAuto.username}
                   />
                   <span className="form-control-container-icon_end">
                     <i className="fa-regular fa-circle-user"></i>{" "}
@@ -156,7 +158,7 @@ const LoginPage = ({ URL }) => {
                     minLength={8}
                     required
                     onChange={(e) => handleLoginFormData("password", e.target.value)}
-                    defaultValue="admin123*"
+                    defaultValue={loginInfoAuto.password}
                   />
                   <span
                     onClick={() => {
@@ -192,9 +194,6 @@ const LoginPage = ({ URL }) => {
               </div>
               <br />
               <button
-                onClick={() => {
-                  setLoginFormData({ username: "admin", password: "admin123*" });
-                }}
                 className="btn btn-login w-100 mt-5 py-3 login-btn"
                 type="submit"
               >
