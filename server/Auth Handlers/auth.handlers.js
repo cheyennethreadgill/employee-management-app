@@ -86,6 +86,7 @@ export const loginHandler = async (req, res) => {
                 res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
               }
               // res.status(200).json({ token });
+              // console.log(`Token in server ${JSON.stringify(token)}`);
               res.status(200).json({ token });
             }
           );
@@ -110,7 +111,7 @@ export const forgotPasswordHandler = async (req, res) => {
     },
     { $set: { passwordResetCode } }
   );
-console.log(modifiedCount)
+  console.log(modifiedCount);
   if (modifiedCount > 0) {
     try {
       await sendEmail({

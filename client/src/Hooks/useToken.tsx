@@ -18,8 +18,8 @@ export const useToken = (): [string, SetTokenType] => {
     localStorage.setItem("token", newToken);
     // then reset the token that's in storage above
     setInternalToken(newToken);
-    console.log(`Initial Token: ${token}`);
-    console.log(`Token passed from user: ${newToken}`);
+    // console.log(`Initial Token: ${token}`);
+    // console.log(`Token passed from user: ${newToken}`);
   };
 
   return [token, setToken];

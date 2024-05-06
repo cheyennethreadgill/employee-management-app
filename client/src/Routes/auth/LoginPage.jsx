@@ -23,8 +23,8 @@ const LoginPage = ({ URL }) => {
   // ******************PASSWORD
   const [passwordToggle, setPasswordToggle] = useState(false);
   const [loginInfoAuto, setLoginInfoAuto] = useState({
-    username: "",
-    password: "",
+    username: "admin",
+    password: "admin123*",
   });
 
   const [loginAuth, setLoginAuth] = useState({
@@ -36,7 +36,7 @@ const LoginPage = ({ URL }) => {
     username: "" || loginInfoAuto.username,
     password: "" || loginInfoAuto.password,
   });
-
+  console.log(loginFormData);
   const handleLoginFormData = (key, value) => {
     setLoginFormData({ ...loginFormData, [key]: value });
   };
@@ -68,7 +68,6 @@ const LoginPage = ({ URL }) => {
       } else {
         navigate("/admin");
         setToken(jsonResponse.token);
-        console.log(user);
         console.log({ ...user, message: `Welcome, ${user[0].username}!` });
         setLoginAuth({ loginError: false, response: "" });
       }
@@ -192,9 +191,6 @@ const LoginPage = ({ URL }) => {
               </div>
               <br />
               <button
-                onClick={() => {
-                  setLoginFormData({ username: "admin", password: "admin123*" });
-                }}
                 className="btn btn-login w-100 mt-5 py-3 login-btn"
                 type="submit"
               >
