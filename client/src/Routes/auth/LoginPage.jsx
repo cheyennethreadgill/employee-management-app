@@ -36,7 +36,7 @@ const LoginPage = ({ URL }) => {
     username: "" || loginInfoAuto.username,
     password: "" || loginInfoAuto.password,
   });
-  console.log(loginFormData);
+
   const handleLoginFormData = (key, value) => {
     setLoginFormData({ ...loginFormData, [key]: value });
   };

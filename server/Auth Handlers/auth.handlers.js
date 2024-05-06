@@ -85,8 +85,6 @@ export const loginHandler = async (req, res) => {
               if (err) {
                 res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
               }
-              // res.status(200).json({ token });
-              // console.log(`Token in server ${JSON.stringify(token)}`);
               res.status(200).json({ token });
             }
           );
