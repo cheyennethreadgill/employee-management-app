@@ -175,7 +175,6 @@ const AllEmployees = ({
       body: JSON.stringify(dataToUpload),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmQzNDgxYzQ5OGRmNDRiNWIzNWUxNCIsImZuYW1lIjoia2VsbHkiLCJsbmFtZSI6ImtlbGx5IiwidXNlcm5hbWUiOiJrZWxseSIsImVtYWlsIjoia2VsbHlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkREYxalRRelNXWTlYZzlzRGJXalBKT1FmelVRWjlXM2xMN3ZVTmg1NEFZb3YxeG4wby43eEciLCJpYXQiOjE3MTQyNDA2MDIsImV4cCI6MTcxNDI0NDIwMn0.uzli4hYFVa7webRHjykYEYXSYOne5dudkFDgx3a6Bd0`,
         Authorization: `Bearer ${token}`,
       },
     };
