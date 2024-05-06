@@ -18,13 +18,13 @@ const LoginPage = ({ URL }) => {
   const navigate = useNavigate();
 
   const [token, setToken] = useToken();
-  const user = useUser();
+  const [user] = useUser();
 
   // ******************PASSWORD
   const [passwordToggle, setPasswordToggle] = useState(false);
   const [loginInfoAuto, setLoginInfoAuto] = useState({
-    username: "admin",
-    password: "admin123*",
+    username: user.username || "admin",
+    password: user.password || "admin123*",
   });
 
   const [loginAuth, setLoginAuth] = useState({
@@ -65,6 +65,7 @@ const LoginPage = ({ URL }) => {
         console.log(`login error: ${loginAuth.loginError}`);
         console.log(`login response: ${loginAuth.response}`);
         console.log(jsonResponse.message);
+        form.reset();
       } else {
         navigate("/admin");
         setToken(jsonResponse.token);
@@ -134,7 +135,7 @@ const LoginPage = ({ URL }) => {
                     placeholder="Username*"
                     required
                     onChange={(e) => handleLoginFormData("username", e.target.value)}
-                    defaultValue="admin"
+                    defaultValue={loginInfoAuto.username}
                   />
                   <span className="form-control-container-icon_end">
                     <i className="fa-regular fa-circle-user"></i>{" "}
@@ -155,7 +156,7 @@ const LoginPage = ({ URL }) => {
                     minLength={8}
                     required
                     onChange={(e) => handleLoginFormData("password", e.target.value)}
-                    defaultValue="admin123*"
+                    defaultValue={loginInfoAuto.password}
                   />
                   <span
                     onClick={() => {
