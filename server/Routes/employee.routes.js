@@ -47,6 +47,7 @@ employeeRouter.put("/update-employee/:tokenParam", async (req, res, next) => {
   // console.log("req file in server--------------");
   const { authorization } = req.headers;
   const { tokenParam } = req.params;
+  console.log(tokenParam);
   let employeeInfoIntital = {
     email: req.body.email,
   };
@@ -83,10 +84,10 @@ employeeRouter.put("/update-employee/:tokenParam", async (req, res, next) => {
     const s = tokenParam.split(".")[1];
     const d = JSON.parse(atob(s));
 
-    console.log(d);
+    console.log(d.email);
     console.log(email);
 
-    if (d !== email) {
+    if (d.email !== email) {
       return res.status(409).json({ message: "You do not have access to change this resource." });
     }
 

@@ -12505,6 +12505,17 @@ form-select:is-invalid {
   width: 110px;
 }
 
+.left-nav-account-info_none {
+  opacity: 0;
+  height: 0;
+  transition: all ease-in-out 350ms;
+}
+.left-nav-account-info_display {
+  opacity: 1;
+  height: initial;
+  transition: all ease-in-out 350ms;
+}
+
 .brand-bar-mobile {
   position: fixed;
   top: 0;
@@ -12704,7 +12715,7 @@ form-select:is-invalid {
 }
 @media screen and (max-width: 1024px) {
   .main-nav-list_toggled {
-    transform: translateX(-63px);
+    transform: translateX(-90px);
     transition: all ease-in-out 350ms;
   }
 }
