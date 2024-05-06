@@ -126,7 +126,6 @@ const SignUpPage = ({ URL }) => {
                     onChange={(e) => {
                       const targetValue = e.target.value;
                       handleFormData("fname", targetValue);
-                      console.log(targetValue);
                     }}
                   />
                   <span className="form-control-container-icon_end">

@@ -69,7 +69,7 @@ const LoginPage = ({ URL }) => {
       } else {
         navigate("/admin");
         setToken(jsonResponse.token);
-        console.log({ ...user, message: `Welcome, ${user[0].username}!` });
+        // console.log({ ...user, message: `Welcome, ${user[0].username}!` });
         setLoginAuth({ loginError: false, response: "" });
       }
     } catch (err) {
