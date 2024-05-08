@@ -21,8 +21,8 @@ export const CustomContext = createContext();
 
 const Index = () => {
   // URL
-  const URL = "http://localhost:8080/";
-  // const URL = "https://employee-management-app-rho.vercel.app/";
+  // const URL = "http://localhost:8080/";
+  const URL = "https://employee-management-app-rho.vercel.app/";
 
   const EMPLOYEE_PATH = "admin/employees";
   const ADDEMPLOYEE_PATH = "admin/add-employee";
@@ -36,6 +36,7 @@ const Index = () => {
   const teamOptions = ["", "Sarah", "Michelle", "Kelly"];
   const departmentOptions = ["", "development", "designing", "testing", "hr"];
 
+  const [deleteNotif, setDeleteNotif] = useState(false);
   // **********************************************************************loading states
 
   const [loading, setLoading] = useState(true);
@@ -167,6 +168,8 @@ const Index = () => {
               UPDATE_PATH={UPDATE_PATH}
               handleLoadingState={handleLoadingState}
               loading={loading}
+              setDeleteNotif={setDeleteNotif}
+              deleteNotif={deleteNotif}
               employees={employees}
               handleSetEmployees={handleSetEmployees}
               handleFetchPromiseError={handleFetchPromiseError}
@@ -193,6 +196,8 @@ const Index = () => {
           path: "/admin/all-projects",
           element: (
             <AllProjects
+              setDeleteNotif={setDeleteNotif}
+              deleteNotif={deleteNotif}
               URL={URL}
               projects={projects}
               handleSetProjects={handleSetProjects}

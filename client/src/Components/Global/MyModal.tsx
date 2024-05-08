@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const MyModal = ({
+  URL,
+  UPDATE_PATH,
+  token,
   employeeid,
   firstname,
   lastname,
@@ -82,6 +85,8 @@ const MyModal = ({
       <Form
         className="my-modal-form"
         encType="multiform/form-data"
+        // method="post"
+        // action={`${URL}admin/${UPDATE_PATH}/${token}`}
       >
         {/* *******************************NAME */}
         <Form.Group

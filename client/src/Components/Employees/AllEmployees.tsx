@@ -7,7 +7,9 @@ import PageHeaders from "../Global/PageHeaders";
 import { Link } from "react-router-dom";
 import MyModal from "../Global/MyModal";
 import { useToken } from "../../Hooks/useToken";
-import { json } from "express";
+import { json, response } from "express";
+import { useUser } from "../../Hooks/useUser";
+import { DeleteNotification } from "../Global/Notifications";
 
 const AllEmployees = ({
   URL,
@@ -15,6 +17,8 @@ const AllEmployees = ({
   UPDATE_PATH,
   handleLoadingState,
   loading,
+  setDeleteNotif,
+  deleteNotif,
   employees,
   handleSetEmployees,
   handleFetchError,
@@ -75,7 +79,6 @@ const AllEmployees = ({
   const [deletePromptNow, setDeletePromptNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [token, setToken] = useToken();
-  console.log(token)
 
   const [employeeInfoForModal, setEmployeeInfoForModal] = useState<EmployeeObjectInterface>({
     employeeid: "",
@@ -116,6 +119,11 @@ const AllEmployees = ({
   const handleShowNow = () => setShowNow(!showNow);
   const handleShowDeletePromptNow = () => setDeletePromptNow(!deletePromptNow);
 
+  const [employeeAuth, setEmployeeAuth] = useState({
+    employeeError: false,
+    response: "",
+  });
+
   // Set employee info for modal given by employee card
   const handleEmployeeSetForModal = (employeeObject: EmployeeObjectInterface) => {
     setEmployeeInfoForModal(employeeObject);
@@ -150,8 +158,7 @@ const AllEmployees = ({
 
   //   UPDATE EMPLOYEE (DB)
   async function handleEmployeeUpdate(id: string, employeeToUpdate: EmployeeObjectInterface) {
-    // handleEmployeeStateUpdate(id, employeeToUpdate);
-    console.log(id);
+    console.log(employeeToUpdate);
 
     const dataToUpload = {
       _id: employeeToUpdate.employeeid,
@@ -170,6 +177,45 @@ const AllEmployees = ({
     };
 
     // Post options
+
+    // // set up form data API to use for multiform post
+    // const formData = new FormData();
+
+    // // append keys in body to new form object
+    // formData.append("employeeid", id);
+    // formData.append(
+    //   "fname",
+    //   `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`
+    // );
+    // formData.append(
+    //   "lname",
+    //   `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`
+    // );
+    // formData.append(
+    //   "degree",
+    //   `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`
+    // );
+    // formData.append(
+    //   "mobile",
+    //   `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`
+    // );
+    // formData.append(
+    //   "designation",
+    //   `${employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation}`
+    // );
+    // formData.append(
+    //   "department",
+    //   `${employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department}`
+    // );
+    // formData.append(
+    //   "email",
+    //   `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`
+    // );
+    // formData.append(
+    //   "image",
+    //   (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " "
+    // );
+
     const options = {
       method: "PUT",
       body: JSON.stringify(dataToUpload),
@@ -180,25 +226,41 @@ const AllEmployees = ({
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}admin/${UPDATE_PATH}/${token}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}admin/${UPDATE_PATH}/${id}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = await fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
       console.log(jsonPromiseResponse.message);
+
+      if (!fetchPromiseResponse.ok) {
+        setEmployeeAuth({ response: jsonPromiseResponse.message, employeeError: true });
+        console.log(fetchPromiseResponse);
+        setDeleteNotif(true);
+        setTimeout(() => {
+          setDeleteNotif(false);
+        }, 5000);
+      } else {
+        handleEmployeeStateUpdate(id, employeeToUpdate);
+        setEmployeeAuth({ response: jsonPromiseResponse.message, employeeError: false });
+        setDeleteNotif(true);
+        setTimeout(() => {
+          setDeleteNotif(false);
+        }, 5000);
+      }
     } catch (err) {
       handleFetchError(err);
     }
   }
 
   // DELETE EMPLOYEE From DB
-  async function deleteEmployeeFromDB(id: string) {
+  async function deleteEmployeeFromDB(email: string) {
     // Post options
     const options = {
       method: "DELETE",
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}admin/delete-employee/${id}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}admin/delete-employee/${email}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json() || fetchPromiseResponse.text();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
@@ -399,10 +461,20 @@ const AllEmployees = ({
             if there is employees, set loading to true && filtercount */}
           </section>
         </section>
+
+        {deleteNotif && (
+          <DeleteNotification
+            deleteNotif={deleteNotif}
+            response={employeeAuth.response}
+          />
+        )}
       </Container>
 
       {!showNow ? null : (
         <MyModal
+          URL={URL}
+          UPDATE_PATH={UPDATE_PATH}
+          token={token}
           handleEditMode={handleEditMode}
           handleShowNow={handleShowNow}
           employeeInfoForModal={employeeInfoForModal}

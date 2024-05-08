@@ -1,10 +1,10 @@
 import { toSentenceCase } from "../../Helpers/strings";
 
 // Deleted Notification
-export function DeleteNotification({ deleteNotif, thingDeleted }) {
+export function DeleteNotification({ deleteNotif, response }) {
   return (
     <div className={deleteNotif ? "project-card_delete-notification_show" : "project-card_delete-notification_remove"}>
-      <p> {toSentenceCase(thingDeleted)} deleted!</p>
+      <p> {response} </p>
     </div>
   );
 }

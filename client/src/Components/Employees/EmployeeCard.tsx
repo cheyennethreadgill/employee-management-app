@@ -203,8 +203,8 @@ const EmployeeCard = ({
                 <div className="form-btns">
                   <button
                     onClick={(e) => {
-                      console.log(image);
-                      console.log("employee imgage for modal via edit btn in employe card^^^^^^^^^^^^^^^^^^^^^^^");
+                      // console.log(image);
+                      // console.log("employee imgage for modal via edit btn in employe card^^^^^^^^^^^^^^^^^^^^^^^");
 
                       handleBtnValue(employeeid);
                       handleEditMode();
@@ -245,7 +245,7 @@ const EmployeeCard = ({
                   ></button>
                   <button
                     onClick={() => {
-                      onDelete(employeeid);
+                      onDelete(email);
                       onUpdateEmployeeState(employeeid);
                     }}
                     type="submit"
