@@ -39,10 +39,18 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
             <div className="brand-bar-mobile-brand-right">
               <p>{fname}</p>
               <ImageComponent
-                image="../../images/logo.png"
+                image={profileImg}
                 navImage={false}
               />
-              <button>Logout</button>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/auth/login");
+                }}
+                className="btn-none"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
