@@ -2,8 +2,8 @@ import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
-import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "../server/Routes/project.routes.js";
-import { employeeRouter } from "../server/Routes/employee.routes.js";
+import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
+import { employeeRouter } from "./Routes/employee.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -22,7 +22,6 @@ app.use("/auth", authRouter);
 
 app.use("/add-employee", employeeRouter);
 app.use("/update-employee", employeeRouter);
-
 
 app.use("/admin", employeeRouter);
 
