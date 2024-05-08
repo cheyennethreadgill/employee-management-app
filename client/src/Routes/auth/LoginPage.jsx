@@ -70,6 +70,7 @@ const LoginPage = ({ URL }) => {
         navigate("/admin");
         setToken(jsonResponse.token);
         // console.log({ ...user, message: `Welcome, ${user[0].username}!` });
+        console.log(user);
         setLoginAuth({ loginError: false, response: "" });
       }
     } catch (err) {

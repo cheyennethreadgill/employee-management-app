@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Button, Form } from "react-bootstrap";
 import { CustomContext } from "./AddEmployee";
@@ -19,6 +19,8 @@ const AddEmployeeForm = () => {
     handlePasswordValidation,
     handleFileTypeCheck,
   } = useContext(CustomContext);
+  // ******************PASSWORD
+  const [passwordToggle, setPasswordToggle] = useState(false);
 
   return (
     <Form
@@ -65,6 +67,73 @@ const AddEmployeeForm = () => {
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">Please enter valid last name.</Form.Control.Feedback>
         </Form.Group>
+        {/* *************************************************EMAIL */}
+        <Form.Group
+          className="form-group"
+          as={Col}
+          lg="6"
+        >
+          <Form.Control
+            type="email"
+            placeholder="email"
+            onChange={(e) => {
+              let val = e.target.value;
+              handleEmployeeFormData("email", toSentenceCase(e.target.value));
+              handleEmailCheck(val, handleInputErrors);
+            }}
+            required
+            maxLength={45}
+          />
+          {/* <Form.Control.Feedback type="invalid">Please enter a valid email address.</Form.Control.Feedback>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+          {inputErrors.email && (
+            <InputErrorComponent
+              errorType="email"
+              errorPContent="Please enter a valid email"
+            />
+          )}
+        </Form.Group>
+
+        {/* ***************************************Username */}
+        <Form.Group>
+          <div className="form-control-container ">
+            <Form.Control
+              className="form-control-container-input mt-3"
+              name="username"
+              placeholder="Username*"
+              minLength={4}
+              required
+              onChange={(e) => handleEmployeeFormData("username", e.target.value)}
+            />
+          </div>
+          <Form.Control.Feedback type="invalid">Please enter a valid password.</Form.Control.Feedback>
+          <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
+        </Form.Group>
+        {/* ***************************************Password */}
+        <Form.Group>
+          <div className="form-control-container ">
+            <Form.Control
+              className="form-control-container-input mt-3"
+              name="password"
+              type={passwordToggle ? "text" : "password"}
+              placeholder="Password*"
+              minLength={8}
+              required
+              onChange={(e) => handleEmployeeFormData("password", e.target.value)}
+            />
+            <span
+              onClick={() => {
+                setPasswordToggle(!passwordToggle);
+              }}
+              className="form-control-container-icon_end form-control-container-icon_end_password"
+            >
+              {passwordToggle ? <i className="fa-regular fa-eye"></i> : <i className="fa-regular fa-eye-slash"></i>}
+            </span>
+          </div>
+          <Form.Control.Feedback type="invalid">Please enter a valid password.</Form.Control.Feedback>
+          <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
+        </Form.Group>
+
         <Form.Group
           className="form-group"
           as={Col}
@@ -187,32 +256,7 @@ const AddEmployeeForm = () => {
           <Form.Control.Feedback type="invalid">Please enter a valid address.</Form.Control.Feedback>
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
-        {/* *************************************************EMAIL */}
-        <Form.Group
-          className="form-group"
-          as={Col}
-          lg="6"
-        >
-          <Form.Control
-            type="email"
-            placeholder="email"
-            onChange={(e) => {
-              let val = e.target.value;
-              handleEmployeeFormData("email", toSentenceCase(e.target.value));
-              handleEmailCheck(val, handleInputErrors);
-            }}
-            required
-            maxLength={45}
-          />
-          {/* <Form.Control.Feedback type="invalid">Please enter a valid email address.</Form.Control.Feedback>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
-          {inputErrors.email && (
-            <InputErrorComponent
-              errorType="email"
-              errorPContent="Please enter a valid email"
-            />
-          )}
-        </Form.Group>
+
         <Form.Group
           className="form-group"
           as={Col}

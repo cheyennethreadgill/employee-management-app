@@ -31,7 +31,7 @@ export const signUpHandler = async (req, res) => {
 
       // create web token
       jwt.sign(
-        { id: _id, fname, lname, username, email, password },
+        { id: _id, fname, lname, username, email, password, isVerified: false },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
         function (err, token) {

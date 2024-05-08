@@ -11,6 +11,8 @@ import { deleteProjectFromDB } from "../../Helpers/apiCalls";
 const AllProjects = ({
   URL,
   projects,
+  setDeleteNotif,
+  deleteNotif,
   handleSetProjects,
   workStatusOptions,
   priorityOptions,
@@ -63,7 +65,7 @@ const AllProjects = ({
 
   const [showNow, setShowNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [deleteNotif, setDeleteNotif] = useState(false);
+
   const [projectInfoForModal, setprojectInfoForModal] = useState<ProjectInterface>({
     projectID: null,
     title: "",
@@ -252,7 +254,7 @@ const AllProjects = ({
       {deleteNotif && (
         <DeleteNotification
           deleteNotif={deleteNotif}
-          thingDeleted="Project"
+          response="Project"
         />
       )}
     </section>

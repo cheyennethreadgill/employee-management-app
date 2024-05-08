@@ -38,6 +38,7 @@ const AddEmployee = ({
     gender: "",
     mobile: "",
     password: "",
+    username: "",
     designation: "",
     department: "",
     address: "",
@@ -79,7 +80,7 @@ const AddEmployee = ({
       if (!fetchPromiseResponse.ok) {
         console.log(await fetchPromiseResponse.text());
       } else {
-        const jsonPromiseResponse = fetchPromiseResponse.json();
+        const jsonPromiseResponse = await fetchPromiseResponse.json();
         // if theres an error, set state, udate ui to log response
         handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, InputErrorComponent);
         console.log(jsonPromiseResponse);
