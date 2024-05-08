@@ -2,7 +2,6 @@ import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
-import { findUserRoute, deleteUserRoute } from "../server/Routes/user.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "../server/Routes/project.routes.js";
 import { employeeRouter } from "../server/Routes/employee.routes.js";
 
@@ -24,8 +23,6 @@ app.use("/auth", authRouter);
 app.use("/add-employee", employeeRouter);
 app.use("/update-employee", employeeRouter);
 
-app.use("/find-user", findUserRoute);
-app.use("/delete-user", deleteUserRoute);
 
 app.use("/admin", employeeRouter);
 
