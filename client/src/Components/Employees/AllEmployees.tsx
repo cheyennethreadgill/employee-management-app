@@ -278,19 +278,21 @@ const AllEmployees = ({
   const handleFilteredEmployees = (e: string) => {
     let searchValue = e.toString().toLowerCase(); // Ensure value is a string
 
-    // sets filtered employee with found employee from filter fn
+    console.log(searchValue);
+    // // sets filtered employee with found employee from filter fn
     let found = employees.filter((employee: EmployeeObjectInterface) => {
       const { department, designation, email, _id, fname, lname, mobile, degree } = employee;
+
       if (department || designation || email || _id || fname || lname || mobile || degree) {
         if (
-          department.toLowerCase().includes(searchValue) ||
-          designation.toLowerCase().includes(searchValue) ||
-          email.toLowerCase().includes(searchValue) ||
-          _id.toString().includes(searchValue) ||
-          fname.toLowerCase().includes(searchValue) ||
-          lname.toLowerCase().includes(searchValue) ||
-          mobile.toString().includes(searchValue) ||
-          degree.toLowerCase().includes(searchValue)
+          (_id && _id.includes(searchValue)) ||
+          (department && department.includes(searchValue)) ||
+          (designation && designation.includes(searchValue)) ||
+          (email && email.includes(searchValue)) ||
+          (fname && fname.includes(searchValue)) ||
+          (lname && lname.includes(searchValue)) ||
+          (mobile && mobile.includes(searchValue)) ||
+          (degree && degree.includes(searchValue))
         ) {
           return employee;
         }
@@ -419,8 +421,7 @@ const AllEmployees = ({
                       type="text"
                       placeholder="Search"
                       onChange={(e) => {
-                        let targetValue = e.target.value;
-                        handleFilteredEmployees(targetValue);
+                        handleFilteredEmployees(e.target.value);
                       }}
                     />
                   </div>
