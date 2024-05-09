@@ -6,19 +6,52 @@ import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 import { useToken } from "../../Hooks/useToken";
 import { useUser } from "../../Hooks/useUser";
 const loginimg = require("../../images/login.png");
+import { useQueryParams } from "../../utils/useQueryParams";
 
 const LoginPage = ({ URL }) => {
   // interface FormDataInterface {
   //   username: string;
   //   password: string;
   // }
-  // const URL = "http://localhost:8080/auth/";
+
+  const GOOGLE_AUTH_URL = "auth/google/url";
   const LOGIN_PATH = "auth/login";
+
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 
-  const [token, setToken] = useToken();
   const [user] = useUser();
+  const [token, setToken] = useToken();
+
+  const [googleOAuthURL, setGoogleOAuthURL] = useState("");
+  const { token: oauthToken } = useQueryParams();
+
+  // set google oauth token if google btn is clicked
+  useEffect(() => {
+    if (oauthToken) {
+      setToken(oauthToken);
+      navigate("/admin");
+    }
+  }, [oauthToken, setToken]);
+
+  // auto load general googl oauth url from server
+  useEffect(() => {
+    const loadOAuthURL = async () => {
+      try {
+        const options = {
+          method: "GET",
+        };
+        const fetchresponse = await fetch(`${URL}${GOOGLE_AUTH_URL}`, options);
+        const { url } = await fetchresponse.json();
+
+        setGoogleOAuthURL(url);
+        console.log(url);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    loadOAuthURL();
+  }, []);
 
   // ******************PASSWORD
   const [passwordToggle, setPasswordToggle] = useState(false);
@@ -148,7 +181,6 @@ const LoginPage = ({ URL }) => {
                 <Form.Control.Feedback type="invalid">Please enter a username.</Form.Control.Feedback>
                 <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
               </Form.Group>
-
               <Form.Group>
                 <div className="form-control-container ">
                   <Form.Control
@@ -177,7 +209,6 @@ const LoginPage = ({ URL }) => {
                 <Form.Control.Feedback type="invalid">Please enter a valid password.</Form.Control.Feedback>
                 <Form.Control.Feedback>Looks Good!</Form.Control.Feedback>
               </Form.Group>
-
               <div className="d-flex pt-3">
                 <FormCheckInput />
                 <a
@@ -199,7 +230,19 @@ const LoginPage = ({ URL }) => {
                 type="submit"
               >
                 Log In
-              </button>
+              </button>{" "}
+              <p className="fw-medium text-center login-socials">OR</p>
+              <div className="text-center">
+                <button
+                  className="btn-none"
+                  onClick={() => {
+                    window.location.href = googleOAuthURL;
+                  }}
+                  disabled={!googleOAuthURL}
+                >
+                  <i className="fa-brands fa-google text-muted"></i>
+                </button>
+              </div>
             </Form>
           </div>
         </Col>
