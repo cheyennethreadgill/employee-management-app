@@ -1,8 +1,9 @@
+import { useNavigate, redirect } from "react-router-dom";
+
 import { useUser } from "../../Hooks/useUser";
 import { toSentenceCase } from "../../Helpers/strings";
 import ImageComponent from "../Employees/EmployeeImageComponent";
 import { Image } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 const logo = require("../../images/logo.png");
 const profileImg = require("../../images/admin.jpg");
 
@@ -39,10 +40,18 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
             <div className="brand-bar-mobile-brand-right">
               <p>{fname}</p>
               <ImageComponent
-                image="../../images/logo.png"
+                image={profileImg}
                 navImage={false}
               />
-              <button>Logout</button>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/auth/login");
+                }}
+                className="btn-none"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
@@ -88,7 +97,8 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
                   <button
                     onClick={() => {
                       localStorage.removeItem("token");
-                      navigate("/auth/login");
+                      return redirect("/auth/login");
+                      // navigate("/auth/login");
                     }}
                     className="btn-none"
                   >

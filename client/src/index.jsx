@@ -15,14 +15,16 @@ import { getProjects } from "./Hooks/getResources";
 import LoginPage from "./Routes/auth/LoginPage";
 import SignUpPage from "./Routes/auth/SignUpPage";
 import ForgotPasswordPage from "./Routes/auth/forgot.password";
+import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage";
+import PrivateRoute from "./Routes/auth/privateRoute";
 // import SuccessPage from "../../server/views/successPage";
 
 export const CustomContext = createContext();
 
 const Index = () => {
   // URL
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  const URL = "http://localhost:8080/";
+  // const URL = "https://employee-management-app-rho.vercel.app/";
 
   const EMPLOYEE_PATH = "admin/employees";
   const ADDEMPLOYEE_PATH = "admin/add-employee";
@@ -117,6 +119,11 @@ const Index = () => {
 
   // Routes
   const router = createBrowserRouter([
+    // <PrivateRoute
+    //       path="/admin"
+    //       component={<App />}
+    //       isAuthenticated={isAuthenticated()}
+    //     />
     {
       path: "/",
       element: <LoginPage URL={URL} />,
@@ -136,10 +143,10 @@ const Index = () => {
       path: "/auth/sign-up",
       element: <SignUpPage URL={URL} />,
     },
-    // {
-    //   path: "/sign-up/success",
-    //   element: <SuccessPage />,
-    // },
+    {
+      path: "/auth/reset-password/:passwordResetCode",
+      element: <PasswordResetLandingPage URL={URL} />,
+    },
     {
       path: "/admin",
       element: <App />,

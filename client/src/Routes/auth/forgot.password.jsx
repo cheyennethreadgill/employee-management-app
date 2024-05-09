@@ -41,16 +41,16 @@ const ForgotPasswordPage = ({ URL }) => {
       const options = {
         method: "PUT",
       };
-      console.log(email);
       const fetchresponse = await fetch(`${URL}${FORGOTPASSWORD_URL}${email}`, options);
-      const jsonResponse = await fetchresponse.json();
+      // const jsonResponse = await fetchresponse.json();
 
-      if (!fetchresponse.ok) {
-        setforgotPasswordAuth({ forgotPassworError: true, response: jsonResponse.message });
-        console.log(`forgot password error: ${forgotPasswordAuth.forgotPassworError}`);
-        console.log(`forgot password response: ${forgotPasswordAuth.response}`);
-        setSuccess(false);
-      }
+      // if (!fetchresponse.ok) {
+      //   setforgotPasswordAuth({ forgotPassworError: true, response: jsonResponse.message });
+      //   console.log(`forgot password error: ${forgotPasswordAuth.forgotPassworError}`);
+      //   console.log(`forgot password response: ${forgotPasswordAuth.response}`);
+      //   setSuccess(false);
+      // }
+
       setforgotPasswordAuth({ forgotPassworError: false, response: "" });
       setSuccess(true);
       setTimeout(() => {
