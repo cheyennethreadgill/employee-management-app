@@ -31,20 +31,26 @@ const AllEmployees = ({
     lname?: string;
     lastname?: string;
     department: string;
+    username: string;
     designation: string;
     mobile: string;
     email: string;
     degree: string;
+    password: string;
     image: File;
     newEmployeeid: number;
     newFirstname: string;
+    newUsername: string;
     newLastname: string;
     newDepartment: string;
     newDesignation: string;
     newMobile: string;
     newEmail: string;
+    newPassword: string;
     newDegree: string;
     newImage: File;
+    newPasswordUpdated: boolean;
+    newUsernameUpdated: boolean;
     newEmployeeidUpdated: boolean;
     newFirstnameUpdated: boolean;
     newLastnameUpdated: boolean;
@@ -89,15 +95,21 @@ const AllEmployees = ({
     email: "",
     degree: "",
     image: null,
+    username: "",
+    password: "",
     newEmployeeid: null,
     newFirstname: "",
+    newUsername: "",
     newLastname: "",
     newDepartment: "",
     newDesignation: "",
     newMobile: "",
     newEmail: "",
     newDegree: "",
+    newPassword: "",
     newImage: null,
+    newPasswordUpdated: false,
+    newUsernameUpdated: false,
     newEmployeeidUpdated: false,
     newFirstnameUpdated: false,
     newLastnameUpdated: false,
@@ -170,6 +182,8 @@ const AllEmployees = ({
         employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department
       }`,
       email: `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`,
+      username: `${employeeToUpdate.newUsernameUpdated ? employeeToUpdate.newUsername : employeeToUpdate.username}`,
+      password: `${employeeToUpdate.newPasswordUpdated ? employeeToUpdate.newPassword : employeeToUpdate.password}`,
       image: (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " ",
     };
 
