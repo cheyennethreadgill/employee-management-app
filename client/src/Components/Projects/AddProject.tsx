@@ -367,7 +367,11 @@ const AddProject = ({
                 <p>Work Status</p>
                 {workStatusOptions.map((option: string) => {
                   return (
-                    <React.Fragment key={option}>
+                    <Form.Label
+                      htmlFor="status"
+                      key={option}
+                    >
+                      {option}
                       <input
                         className="radio"
                         type="radio"
@@ -378,8 +382,7 @@ const AddProject = ({
                         }}
                         defaultChecked={option == "active"}
                       />
-                      <Form.Label htmlFor={option}>{option} </Form.Label>
-                    </React.Fragment>
+                    </Form.Label>
                   );
                 })}
               </fieldset>

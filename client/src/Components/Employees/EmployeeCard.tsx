@@ -112,12 +112,14 @@ const EmployeeCard = ({
             >
               <Row style={{ justifyContent: "center" }}>
                 <Col lg="12">
-                  <Form.Control
-                    style={{ margin: "0" }}
-                    className="radio"
-                    type="radio"
-                    id=""
-                  />
+                  <Form.Label htmlFor="employee-entry">
+                    <Form.Control
+                      style={{ margin: "0" }}
+                      className="radio"
+                      type="radio"
+                      name="employee-entry"
+                    />
+                  </Form.Label>
                 </Col>
               </Row>
             </Col>
@@ -241,7 +243,8 @@ const EmployeeCard = ({
                       });
                     }}
                     type="button"
-                    className="fa-regular fa-pen-to-square fs-5 edit-btn"
+                    className="fa-regular fa-pen-to-square fs-5 edit-btn btn-none"
+                    aria-label="edit employee"
                   ></button>
                   <button
                     onClick={() => {
@@ -250,6 +253,7 @@ const EmployeeCard = ({
                     }}
                     type="submit"
                     className="fa-solid fa-trash delete-btn"
+                    aria-label="delete employee"
                   ></button>
                 </div>
               </Col>
@@ -262,12 +266,14 @@ const EmployeeCard = ({
       <Row className="employee-card-desktop d-none d-md-flex">
         <div className="employee-card-desktop-form">
           <div className="employee-card-desktop-form-fields">
-            <Form.Control
-              style={{ margin: "0" }}
-              className="radio"
-              type="radio"
-              id=""
-            />
+            <Form.Label htmlFor="employee-entry">
+              <Form.Control
+                style={{ margin: "0" }}
+                className="radio"
+                type="radio"
+                name="employee-entry"
+              />
+            </Form.Label>
           </div>
 
           {/* **********************************CARD INFO */}
@@ -354,6 +360,7 @@ const EmployeeCard = ({
               }}
               type="submit"
               className="fa-regular fa-pen-to-square fs-5 edit-btn employee-card-form-btns"
+              aria-label="edit employee"
             ></button>
             <button
               onClick={() => {
@@ -361,7 +368,8 @@ const EmployeeCard = ({
                 onUpdateEmployeeState(employeeid);
               }}
               type="button"
-              className="fa-solid fa-trash delete-btn employee-card-form-btns"
+              className="fa-solid fa-trash delete-btn employee-card-form-btns btn-none"
+              aria-label="delete employee"
             ></button>
           </div>
           {/* END CONTAINER ROW */}

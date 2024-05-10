@@ -436,7 +436,10 @@ const AllEmployees = ({
               className="employees-header-controls"
             >
               <span className="icon-container">
-                <Link to="/add-employee">
+                <Link
+                  to="/add-employee"
+                  aria-label="Add Employee"
+                >
                   <i className="fa-solid fa-plus icon-container-icon add-employee-btn"></i>
                 </Link>
               </span>

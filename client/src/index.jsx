@@ -84,8 +84,8 @@ const Index = () => {
   const handleSetProjects = (data) => setProjects(data);
 
   // get Employees
-  useEffect(
-    () =>
+  useEffect(() => {
+    async function go() {
       getEmployees(
         employees,
         URL,
@@ -95,9 +95,10 @@ const Index = () => {
         handleFetchPromiseError,
         handleJsonPromiseResponseLog,
         handleFetchError
-      ),
-    []
-  );
+      );
+    }
+    go();
+  }, []);
 
   // get Projects
   useEffect(() => {
