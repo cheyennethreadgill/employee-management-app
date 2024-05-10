@@ -388,7 +388,7 @@ const AllEmployees = ({
             >
               <span className="icon-container">
                 <Link
-                  to="/add-employee"
+                  to="/admin/add-employee"
                   aria-label="Add Employee"
                 >
                   <i className="fa-solid fa-plus icon-container-icon add-employee-btn"></i>

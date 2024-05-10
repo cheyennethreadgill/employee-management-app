@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken";
 import { employees, users } from "../database.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
+import sgMail from "@sendgrid/mail";
+import { getGoogleOAuthURL } from "../utils/getGoogleOAuthURL.js";
+import { updateOrCreateUserFromOAuth } from "../utils/updateOrCreateUserFromOAuth.js";
+import { getGoogleUser } from "../utils/getGoogleUser.js";
 
 export const signUpHandler = async (req, res) => {
   const { fname, lname, username, email, password } = req.body;
@@ -97,8 +101,10 @@ export const loginHandler = async (req, res) => {
     res.status(500).json({ message: err });
   }
 };
+
 export const forgotPasswordHandler = async (req, res) => {
   const { email } = req.params;
+  console.log(req.params);
 
   // // generate random string to send to user
   const passwordResetCode = uuid();
@@ -112,18 +118,85 @@ export const forgotPasswordHandler = async (req, res) => {
   console.log(modifiedCount);
   if (modifiedCount > 0) {
     try {
-      await sendEmail({
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
         to: email,
         from: "threadgillcheyenne@gmail.com",
         subject: "Password reset",
-        text: `
-          To reset your password, click this link: http://localhost:3000/reset-password/${passwordResetCode}
-        `,
-      });
+        text: `To reset your password, click this link: http://localhost:3000/auth/reset-password/${passwordResetCode}`,
+      };
+      sgMail.send(msg);
+      return res.sendStatus(200);
     } catch (err) {
-      return res.status(500).json({ message: err });
+      return res.sendStatus(500);
     }
-  } else {
-    return res.status(500).json({ message: "Invalid credentials." });
   }
+  return res.sendStatus(200);
+};
+
+export const resetPasswordHandler = async (req, res) => {
+  const { passwordResetCode } = req.params;
+
+  // // generate random string to send to user
+  const { newPassword } = req.body;
+
+  const newPasswordHash = await bcrypt.hash(newPassword, 10);
+  try {
+    // find empl w. passresetcode
+    const { modifiedCount } = await employees.updateOne(
+      { passwordResetCode },
+      {
+        // set newpassword w hash
+        $set: {
+          password: newPasswordHash,
+        },
+        // remove the password reset field in DB
+        $unset: { passwordResetCode: "" },
+      }
+    );
+    console.log(modifiedCount);
+    if (modifiedCount === 0) {
+      return res.sendStatus(404);
+    }
+    return res.sendStatus(200);
+  } catch (err) {
+    return res.sendStatus(500);
+  }
+};
+
+// get oauth url request from client when google sign in option is clicked
+export const googleOAuthUrlHandler = async (req, res) => {
+  // getGoogleOAuthURL util file
+  const url = getGoogleOAuthURL();
+  // send url to client
+  res.status(200).json({ url });
+};
+
+// sends user back to after they allow google permissions
+export const googleOAuthCallbackHandler = async (req, res, next) => {
+  // google provides  code  in query after redirecting back to this route
+  const { code } = req.query;
+
+  // use the code from req.query to get the userinfo after access granted
+  const oauthUserInfo = await getGoogleUser({ code });
+
+  // use the info from oauthuserinfo to add to db or create
+  const insertedOrUpdatedUser = await updateOrCreateUserFromOAuth(req, res, next, { oauthUserInfo });
+
+  // get info from oauth and send to jwt sign
+  const { id, verified_email, email, fname, lname } = insertedOrUpdatedUser;
+
+  // create web token
+  jwt.sign(
+    { id, email, isVerified: verified_email, fname, lname },
+    process.env.JWT_SECRET,
+    { expiresIn: "2d" },
+    function (err, token) {
+      if (err) {
+        return res.sendStatus(500);
+      } else {
+        res.redirect(`http://localhost:3000/auth/login?token=${token}`);
+      }
+    }
+  );
 };
