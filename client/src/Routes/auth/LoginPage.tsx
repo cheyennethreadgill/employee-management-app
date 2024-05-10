@@ -26,6 +26,11 @@ const LoginPage = ({ URL }) => {
   const [googleOAuthURL, setGoogleOAuthURL] = useState("");
   const { token: oauthToken } = useQueryParams();
 
+  // remove any existing token so the auto info can show
+  useEffect(() => {
+    localStorage.removeItem("token");
+  }, []);
+
   // set google oauth token if google btn is clicked
   useEffect(() => {
     if (oauthToken) {
@@ -70,7 +75,7 @@ const LoginPage = ({ URL }) => {
     password: "" || loginInfoAuto.password,
   });
 
-  const handleLoginFormData = (key, value) => {
+  const handleLoginFormData = (key: string, value: string | File) => {
     setLoginFormData({ ...loginFormData, [key]: value });
   };
 
@@ -132,7 +137,7 @@ const LoginPage = ({ URL }) => {
           <div className="login-right-info flex-column d-flex justify-content-center">
             <h1 className="pb-3 text-dark">Welcome to Kuber</h1>
             <p className="fs-6 pb-4 text-muted">
-              Need an account?{" "}
+              Need an account?
               <span>
                 <button
                   onClick={() => {
@@ -174,7 +179,7 @@ const LoginPage = ({ URL }) => {
                     defaultValue={loginInfoAuto.username}
                   />
                   <span className="form-control-container-icon_end">
-                    <i className="fa-regular fa-circle-user"></i>{" "}
+                    <i className="fa-regular fa-circle-user"></i>
                   </span>
                 </div>
 
@@ -230,7 +235,7 @@ const LoginPage = ({ URL }) => {
                 type="submit"
               >
                 Log In
-              </button>{" "}
+              </button>
               <p className="fw-medium text-center login-socials">OR</p>
               <div className="text-center">
                 <button
