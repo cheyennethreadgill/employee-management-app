@@ -16,7 +16,6 @@ const AddEmployeeForm = () => {
     handleSubmit,
     handleEmailCheck,
     handleEmployeeFormData,
-    handlePasswordValidation,
     handleFileTypeCheck,
   } = useContext(CustomContext);
   // ******************PASSWORD
@@ -102,8 +101,8 @@ const AddEmployeeForm = () => {
               name="username"
               placeholder="Username*"
               minLength={4}
-              required
               onChange={(e) => handleEmployeeFormData("username", e.target.value)}
+              required
             />
           </div>
           <Form.Control.Feedback type="invalid">Please enter a valid password.</Form.Control.Feedback>
@@ -224,7 +223,7 @@ const AddEmployeeForm = () => {
               }}
               required
             >
-              {departmentOptions.map((option) => {
+              {departmentOptions.map((option: string) => {
                 return (
                   <option
                     key={option}

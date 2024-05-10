@@ -1,15 +1,12 @@
-import React, { useState } from "react";
-import { Container, Form } from "react-bootstrap";
-import EmployeeCard from "./EmployeeCard";
-import { date } from "../../Helpers/date";
-import { Row, Col } from "react-bootstrap";
-import PageHeaders from "../Global/PageHeaders";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Container, Form, Row, Col } from "react-bootstrap";
+import EmployeeCard from "./EmployeeCard";
+import PageHeaders from "../Global/PageHeaders";
 import MyModal from "../Global/MyModal";
-import { useToken } from "../../Hooks/useToken";
-import { json, response } from "express";
-import { useUser } from "../../Hooks/useUser";
 import { DeleteNotification } from "../Global/Notifications";
+import { date } from "../../Helpers/date";
+import { useToken } from "../../Hooks/useToken";
 
 const AllEmployees = ({
   URL,
@@ -176,46 +173,6 @@ const AllEmployees = ({
       image: (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " ",
     };
 
-    // Post options
-
-    // // set up form data API to use for multiform post
-    // const formData = new FormData();
-
-    // // append keys in body to new form object
-    // formData.append("employeeid", id);
-    // formData.append(
-    //   "fname",
-    //   `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`
-    // );
-    // formData.append(
-    //   "lname",
-    //   `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`
-    // );
-    // formData.append(
-    //   "degree",
-    //   `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`
-    // );
-    // formData.append(
-    //   "mobile",
-    //   `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`
-    // );
-    // formData.append(
-    //   "designation",
-    //   `${employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation}`
-    // );
-    // formData.append(
-    //   "department",
-    //   `${employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department}`
-    // );
-    // formData.append(
-    //   "email",
-    //   `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`
-    // );
-    // formData.append(
-    //   "image",
-    //   (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " "
-    // );
-
     const options = {
       method: "PUT",
       body: JSON.stringify(dataToUpload),
@@ -308,12 +265,10 @@ const AllEmployees = ({
     return (
       <EmployeeCard
         key={_id}
-        handleShowDeletePrompt={handleShowDeletePrompt}
         handleEditMode={handleEditMode}
         handleShowNow={handleShowNow}
         handleEmployeeSetForModal={handleEmployeeSetForModal}
         onUpdateEmployeeState={handleEmployeeDelete}
-        employees={employees}
         date={date}
         employeeid={_id}
         firstname={fname}
@@ -342,7 +297,6 @@ const AllEmployees = ({
         newEmailUpdated={employeeInfoForModal.newEmailUpdated}
         newDegreeUpdated={employeeInfoForModal.newDegreeUpdated}
         newImageUpdated={employeeInfoForModal.newImageUpdated}
-        handleEmployeeUpdate={handleEmployeeUpdate}
         onDelete={deleteEmployeeFromDB}
       />
     );
@@ -353,12 +307,10 @@ const AllEmployees = ({
     return (
       <EmployeeCard
         key={_id}
-        handleShowDeletePrompt={handleShowDeletePrompt}
         handleEditMode={handleEditMode}
         handleShowNow={handleShowNow}
         handleEmployeeSetForModal={handleEmployeeSetForModal}
         onUpdateEmployeeState={handleEmployeeDelete}
-        employees={employees}
         employeeid={_id}
         firstname={fname}
         lastname={lname}
@@ -387,7 +339,6 @@ const AllEmployees = ({
         newEmailUpdated={employeeInfoForModal.newEmailUpdated}
         newDegreeUpdated={employeeInfoForModal.newDegreeUpdated}
         newImageUpdated={employeeInfoForModal.newImageUpdated}
-        handleEmployeeUpdate={handleEmployeeUpdate}
         onDelete={deleteEmployeeFromDB}
       />
     );
@@ -479,10 +430,6 @@ const AllEmployees = ({
           URL={URL}
           UPDATE_PATH={UPDATE_PATH}
           token={token}
-          handleEditMode={handleEditMode}
-          handleShowNow={handleShowNow}
-          employeeInfoForModal={employeeInfoForModal}
-          handleEmployeeUpdate={handleEmployeeUpdate}
           employeeid={employeeInfoForModal.employeeid}
           firstname={employeeInfoForModal.firstname}
           lastname={employeeInfoForModal.lastname}
@@ -492,6 +439,10 @@ const AllEmployees = ({
           email={employeeInfoForModal.email}
           degree={employeeInfoForModal.degree}
           image={employeeInfoForModal.image}
+          handleEditMode={handleEditMode}
+          handleShowNow={handleShowNow}
+          handleEmployeeUpdate={handleEmployeeUpdate}
+          employeeInfoForModal={employeeInfoForModal}
         />
       )}
     </>

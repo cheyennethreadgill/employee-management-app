@@ -6,6 +6,14 @@ import PageHeaders from "../Global/PageHeaders";
 import { useUser } from "../../Hooks/useUser";
 
 const ProjectsDash = ({ URL, toggled, projects }) => {
+  interface ProjectInterface {
+    projectID: string;
+    title: string;
+    department: string;
+    priority: string;
+    team: string;
+    status: string;
+  }
   const { loading } = useContext(CustomContext);
 
   const titles = [
@@ -29,7 +37,7 @@ const ProjectsDash = ({ URL, toggled, projects }) => {
   const handleEditMode = () => setEditMode(!editMode);
 
   // Project Card Content
-  const projectsMapContent = projects.map((project) => {
+  const projectsMapContent = projects.map((project: ProjectInterface) => {
     const { projectID, title, department, priority, team, status } = project;
 
     return (
