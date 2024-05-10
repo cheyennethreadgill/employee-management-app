@@ -44,20 +44,31 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
             </>
 
             <div className="brand-bar-mobile-brand-right">
-              <p>{fname}</p>
-              <ImageComponent
-                image={null}
-                navImage={false}
-              />
-              <button
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  navigate("/auth/login");
-                }}
-                className="btn-none"
-              >
-                Logout
-              </button>
+              <div className="options">
+                <button
+                  className="d-flex gap-3 btn btn-none align-items-center"
+                  onClick={handleOptionPanelDisplay}
+                >
+                  <p className="m-0 fw-medium ">{fname}</p>
+                  <ImageComponent
+                    image={null}
+                    navImage={false}
+                  />
+                  {optionPanelDisplay ? (
+                    <div className="options-btns">
+                      <button
+                        className="btn-none options-btns-link"
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          navigate("/auth/login");
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  ) : null}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -91,6 +102,7 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
               <span className="opacity-0">main menu</span>
               <i className="brand-bar-mobile-toggle fa-solid fa-bars"></i>
             </button>
+
             <div className="brand-bar-desktop-brand-right">
               <i className="fa-regular fa-bell"></i>
               {/* <i className="fa-solid fa-bell"></i> */}

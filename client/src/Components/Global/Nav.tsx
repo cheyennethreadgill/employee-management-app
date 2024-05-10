@@ -1,13 +1,11 @@
-import React, { useState } from "react";
 import pages from "../pagelinks/pagelinks";
 import ListGroup from "./ListGroup";
 import ImageComponent from "../Employees/EmployeeImageComponent";
 import { useUser } from "../../Hooks/useUser";
-import { toSentenceCase } from "../../Helpers/strings";
 
 const Navigation = ({ handleNavToggle, handleMouseLeave, toggled, setToggled }) => {
   const [user] = useUser();
-  const { username, fname } = user;
+  const { fname } = user;
 
   return (
     <>
@@ -28,8 +26,6 @@ const Navigation = ({ handleNavToggle, handleMouseLeave, toggled, setToggled }) 
           />
           <br />
           <span>Welcome, {fname}!</span>
-
-          {/* <span>{toSentenceCase(username)}</span> */}
         </div>
 
         {pages.map((page) => {

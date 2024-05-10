@@ -58,7 +58,7 @@ const AllProjects = ({
     newDescriptionUpdated: boolean;
   };
 
-  const { ALLPROJECTS_PATH, loading, handleLoadingState } = useContext(CustomContext);
+  const { ALLPROJECTS_PATH, loading } = useContext(CustomContext);
 
   const UPDATE_PATH = "update-project";
   const DELETEPROJECT_PATH = "delete-project/";

@@ -1,9 +1,9 @@
 import { useState, createContext } from "react";
 import { Container } from "react-bootstrap";
-import PageHeaders from "../Global/PageHeaders";
 import { handlePasswordValidation } from "../../private/passwordValidation";
 import { handleFileTypeCheck } from "../../Helpers/formValidation";
 import { handleEmailCheck } from "../../Helpers/formValidation";
+import PageHeaders from "../Global/PageHeaders";
 import AddEmployeeForm from "./AddEmployeeForm";
 import InputErrorComponent from "./InputErrorComponent";
 
@@ -63,17 +63,12 @@ const AddEmployee = ({
     // // Post options
     const options = {
       method: "POST",
-      // **multipart not needed (multiform header will set automatically with for data api)
+
       headers: {
-        //   // "Content-Type":
-        //   //   "multipart/form-data; boundary=---------------------------974767299852498929531610575-----------------------------974767299852498929531610575",
         Accept: "*",
       },
-      // **use form data api to construct body instead of json
-      // body: JSON.stringify(employeeFormData),
       body: formData,
     };
-    // try/catch endpoint
     try {
       const fetchPromiseResponse = await fetch(`${URL}${ADDEMPLOYEE_PATH}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
@@ -135,7 +130,6 @@ const AddEmployee = ({
     handleSubmit,
     handleEmailCheck,
     handleEmployeeFormData,
-    handlePasswordValidation,
     handleFileTypeCheck,
   };
 

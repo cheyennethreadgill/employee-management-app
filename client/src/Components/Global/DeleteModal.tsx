@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const MyModal = ({
@@ -16,6 +16,17 @@ const MyModal = ({
   handleEmployeeUpdate,
   employeeInfoForModal,
 }) => {
+  interface employeeToUpdateInterface {
+    firstname: string;
+    lastname: string;
+    department: string;
+    degree: string;
+    designation: string;
+    email: string;
+    mobile: string;
+    image: File;
+  }
+
   // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
     newFirstnameUpdated: false,
@@ -27,7 +38,7 @@ const MyModal = ({
     newDegreeUpdated: false,
     newImageUpdated: false,
   });
-  const handleFormUpdatedStatus = (key, value) => {
+  const handleFormUpdatedStatus = (key: string, value: boolean) => {
     setFormUpdatedStatus({ ...formUpdatedStatus, [key]: value });
   };
 
@@ -43,14 +54,14 @@ const MyModal = ({
     newImage: null,
     combinedName: "",
   });
-  const handleFormData = (key, value) => {
+  const handleFormData = (key: string, value: string | File) => {
     setFormData({ ...formData, [key]: value });
   };
 
   console.log(formData.combinedName);
   // cutting off last name here
   // HANDLE NAME SPLIT
-  const getCombinedName = (e) => {
+  const getCombinedName = (e: string): Promise<string> => {
     handleFormData("combinedName", e);
     // only works when you hit space
     console.log(formData.combinedName);
@@ -70,8 +81,8 @@ const MyModal = ({
 
   console.log(formData.combinedName);
 
-  async function splitName() {
-    const response = await getCombinedName();
+  async function splitName(e: string) {
+    const response = await getCombinedName(e);
     const splitName = response.split(" ");
 
     handleFormData("newFirstname", splitName[0]);
@@ -90,7 +101,7 @@ const MyModal = ({
   // ****** works without code from name split
 
   // handle plit name for employee to update
-  const handleInputForhandleEmployeeToUpdate = (names) => {
+  const handleInputForhandleEmployeeToUpdate = (names: { firstname: string; lastname: string }) => {
     handleEmployeeToUpdate({ ...employeeToUpdate, ...names });
   };
 
@@ -107,7 +118,7 @@ const MyModal = ({
   });
 
   //handle EMPLOYEE UPDATE (EIFM from all empl)
-  const handleEmployeeToUpdate = (values) => setEmployeeToUpdate(values);
+  const handleEmployeeToUpdate = (values: employeeToUpdateInterface) => setEmployeeToUpdate(values);
 
   return (
     <section className="my-modal">
@@ -134,11 +145,10 @@ const MyModal = ({
               onKeyDown={(e) => {
                 handleFormUpdatedStatus("newFirstnameUpdated", true);
                 handleFormUpdatedStatus("newLastnameUpdated", true);
-                getCombinedName(e.target.value);
-                console.log(e.target.value);
+                getCombinedName((e.target as HTMLInputElement).value);
               }}
-              onBeforeInput={() => {
-                splitName();
+              onBeforeInput={(e) => {
+                splitName((e.target as HTMLInputElement).value);
               }}
             />
             <span className="form-control-container-icon_end">
@@ -269,10 +279,10 @@ const MyModal = ({
             accept=".png, .jpg, .jpeg"
             name="image"
             onChange={(e) => {
-              console.log(e.target.files[0]);
+              console.log((e.target as HTMLInputElement).files[0]);
               handleFormUpdatedStatus("newImageUpdated", true);
-              handleFormData("newImage", e.target.files[0]);
-              handleEmployeeToUpdate({ ...employeeToUpdate, image: e.target.files[0] });
+              handleFormData("newImage", (e.target as HTMLInputElement).files[0]);
+              handleEmployeeToUpdate({ ...employeeToUpdate, image: (e.target as HTMLInputElement).files[0] });
             }}
             placeholder={formUpdatedStatus.newImageUpdated ? formData.newImage : image}
           />
@@ -289,7 +299,6 @@ const MyModal = ({
           <input
             value="Save Changes"
             className="btn update-btn text-light"
-            variant="primary"
             onClick={(e) => {
               handleEditMode();
               handleEmployeeUpdate(e, employeeid, employeeToUpdate);

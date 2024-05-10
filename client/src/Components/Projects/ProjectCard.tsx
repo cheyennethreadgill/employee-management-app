@@ -152,7 +152,7 @@ const ProjectCard = ({
           <h3> {newTitleUpdated ? newTitle : title ? title : "N/A"} </h3>
         </div>
         {/* ******************************STATUS */}
-        {workStatusOptions.map((option) => {
+        {workStatusOptions.map((option: string) => {
           if (status && status.includes(option)) {
             return (
               <p
@@ -190,7 +190,7 @@ const ProjectCard = ({
 
           <div className="priority">
             <span className="priority-icon">
-              {priorityOptions.map((option) => {
+              {priorityOptions.map((option: string) => {
                 if (priority == option) {
                   return (
                     <div

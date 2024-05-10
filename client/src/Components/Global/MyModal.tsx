@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const MyModal = ({
@@ -19,6 +19,16 @@ const MyModal = ({
   handleEmployeeUpdate,
   employeeInfoForModal,
 }) => {
+  interface employeeToUpdateInterface {
+    firstname: string;
+    lastname: string;
+    department: string;
+    degree: string;
+    designation: string;
+    email: string;
+    mobile: string;
+    image: File;
+  }
   // Updated Form Status
   const [formUpdatedStatus, setFormUpdatedStatus] = useState({
     newFirstnameUpdated: false,
@@ -30,7 +40,7 @@ const MyModal = ({
     newDegreeUpdated: false,
     newImageUpdated: false,
   });
-  const handleFormUpdatedStatus = (key, value) => {
+  const handleFormUpdatedStatus = (key: string, value: boolean) => {
     setFormUpdatedStatus({ ...formUpdatedStatus, [key]: value });
   };
 
@@ -47,15 +57,15 @@ const MyModal = ({
     newImage: null,
   });
 
-  const handleFormData = (key, value) => {
+  const handleFormData = (key: string, value: string | File) => {
     setFormData({ ...formData, [key]: value });
   };
 
   // handle names for form data
-  const handleNameForFormData = (fname, lname) => {
+  const handleNameForFormData = (fname: string, lname: string) => {
     setFormData({ ...formData, newFirstname: fname, newLastname: lname, combinedName: fname + " " + lname });
   };
-  const handleNameStatus = (fnamestatus, lnamestatus) => {
+  const handleNameStatus = (fnamestatus: string, lnamestatus: string) => {
     setFormUpdatedStatus({
       ...formUpdatedStatus,
       [fnamestatus]: true,

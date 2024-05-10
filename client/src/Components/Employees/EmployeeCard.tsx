@@ -4,12 +4,10 @@ import ImageComponent from "./EmployeeImageComponent";
 import { toSentenceCase } from "../../Helpers/strings";
 
 const EmployeeCard = ({
-  handleShowDeletePrompt,
   handleEditMode,
   handleShowNow,
   handleEmployeeSetForModal,
   onUpdateEmployeeState,
-  employees,
   employeeid,
   firstname,
   lastname,
@@ -38,7 +36,6 @@ const EmployeeCard = ({
   newEmailUpdated,
   newDegreeUpdated,
   newImageUpdated,
-  handleEmployeeUpdate,
   onDelete,
 }) => {
   interface Conditionals {
@@ -95,7 +92,7 @@ const EmployeeCard = ({
   const [foundEmployee, setFoundEmployee] = useState([]);
 
   // SHOW UPDATE MODAL
-  const handleBtnValue = (id) => setBtnValue(id);
+  const handleBtnValue = (id: number) => setBtnValue(id);
 
   return (
     <>
@@ -127,8 +124,6 @@ const EmployeeCard = ({
             {/* **********************************CARD INFO */}
             {employeeCardConditionals.map((condition) => {
               const { updateStatus, newEntry, originalEntry } = condition;
-
-              // const letter = originalEntry[0].charAt(1);
 
               if (originalEntry[0] == image) {
                 return (
@@ -204,10 +199,7 @@ const EmployeeCard = ({
               <Col lg="12">
                 <div className="form-btns">
                   <button
-                    onClick={(e) => {
-                      // console.log(image);
-                      // console.log("employee imgage for modal via edit btn in employe card^^^^^^^^^^^^^^^^^^^^^^^");
-
+                    onClick={() => {
                       handleBtnValue(employeeid);
                       handleEditMode();
                       handleShowNow(true);
@@ -323,7 +315,7 @@ const EmployeeCard = ({
           {/* **********************************ACTIONS */}
           <div className="form-btns employee-card-desktop-form-fields">
             <button
-              onClick={(e) => {
+              onClick={() => {
                 handleBtnValue(employeeid);
                 handleEditMode();
                 handleShowNow(true);
