@@ -36,7 +36,7 @@ const ProjectCard = ({
   onDelete,
 }) => {
   const [btnValue, setBtnValue] = useState(0);
-  const handleBtnValue = (id) => setBtnValue(id);
+  const handleBtnValue = (id: number) => setBtnValue(id);
 
   // Titles
   const titles = ["Created", "Team Lead", "Priority", "Deadline", "Bug", "Team"];
@@ -84,8 +84,8 @@ const ProjectCard = ({
     >
       <div className="options">
         <i
-          onClick={handleOptionPanelDisplay}
           className={optionsIconDisplay ? "fa-solid fa-ellipsis-vertical fs-5 options-icon options-icon_visible" : null}
+          onClick={handleOptionPanelDisplay}
         ></i>
         {/* ***Options Panel End */}
         {optionPanelDisplay ? (

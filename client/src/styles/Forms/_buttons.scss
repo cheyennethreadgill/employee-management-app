@@ -1,0 +1,59 @@
+.options {
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &-icon {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: opacity ease-in-out 400ms;
+    padding: 0.6rem 1.1rem;
+
+    &_visible {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity ease-in-out 400ms;
+    }
+    &:hover {
+      background-color: rgb(241, 241, 241);
+      border-radius: 10rem;
+      padding: 0.6rem 1.1rem;
+    }
+  }
+
+  &-btns {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    background-color: white;
+    color: black;
+    width: 11rem;
+    gap: 0.5rem;
+    filter: $drop-shadow-right;
+    position: absolute;
+    right: 0;
+    top: 2rem;
+    padding: 1rem 0.5rem;
+    transition: all ease-in-out 100ms;
+
+    &-link {
+      display: flex;
+      gap: 0.3rem;
+      padding: 0.5rem 0;
+
+      &:hover {
+        background-color: rgb(235, 235, 235);
+      }
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+    }
+  }
+}

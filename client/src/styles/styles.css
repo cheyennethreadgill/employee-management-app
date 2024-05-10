@@ -1,4 +1,10 @@
 @charset "UTF-8";
+.opacity-0 {
+  opacity: 0;
+  position: absolute;
+  top: -100rem;
+}
+
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
@@ -12491,6 +12497,59 @@ form-select:is-invalid {
   border: solid 1.2px green;
 }
 
+.options {
+  position: relative;
+}
+.options:hover {
+  cursor: pointer;
+}
+.options-icon {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: opacity ease-in-out 400ms;
+  padding: 0.6rem 1.1rem;
+}
+.options-icon_visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity ease-in-out 400ms;
+}
+.options-icon:hover {
+  background-color: rgb(241, 241, 241);
+  border-radius: 10rem;
+  padding: 0.6rem 1.1rem;
+}
+.options-btns {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  background-color: white;
+  color: black;
+  width: 11rem;
+  gap: 0.5rem;
+  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  padding: 1rem 0.5rem;
+  transition: all ease-in-out 100ms;
+}
+.options-btns-link {
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.5rem 0;
+}
+.options-btns-link:hover {
+  background-color: rgb(235, 235, 235);
+}
+.options-btns p {
+  margin: 0;
+  font-size: 1rem;
+}
+
 .app {
   position: relative;
 }
@@ -12541,7 +12600,7 @@ form-select:is-invalid {
   bottom: 0;
   z-index: 5;
   transition: all ease-in-out 350ms;
-  filter: drop-shadow(0 0.1rem 0.3rem rgb(217, 221, 227));
+  filter: drop-shadow(0 0.1rem 0.3rem rgb(193, 197, 202));
   height: 64px;
   transition: all ease-in-out 350ms;
 }
@@ -12598,7 +12657,7 @@ form-select:is-invalid {
   top: 0;
   bottom: 0;
   z-index: 5;
-  filter: drop-shadow(0 0.1rem 0.3rem rgb(217, 221, 227));
+  filter: drop-shadow(0 0.1rem 0.3rem rgb(193, 197, 202));
   height: 64px;
   transition: all ease-in-out 350ms;
 }
@@ -12684,7 +12743,7 @@ form-select:is-invalid {
   margin: 2rem 0 0 0;
   font-size: 0.95rem;
   font-weight: 400;
-  filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
+  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
   z-index: 9;
   top: 32px;
   position: fixed;
@@ -12724,7 +12783,7 @@ form-select:is-invalid {
 }
 .main-nav-list_toggled {
   transition: all ease-in-out 350ms;
-  filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
+  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
   transition: all ease-in-out 350ms;
   width: 63px;
   gap: 1rem;
@@ -12958,7 +13017,7 @@ form-select:is-invalid {
   margin: 0 auto;
   position: relative;
   z-index: 3;
-  filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
+  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
 }
 .employees-header {
   background-color: rgb(210, 218, 243);
@@ -13309,58 +13368,6 @@ form-select:is-invalid {
 }
 .project .progress-bar-inner_canceled {
   width: 0px;
-}
-.project .options {
-  position: relative;
-}
-.project .options:hover {
-  cursor: pointer;
-}
-.project .options-icon {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transition: opacity ease-in-out 400ms;
-  padding: 0.6rem 1.1rem;
-}
-.project .options-icon_visible {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity ease-in-out 400ms;
-}
-.project .options-icon:hover {
-  background-color: rgb(241, 241, 241);
-  border-radius: 10rem;
-  padding: 0.6rem 1.1rem;
-}
-.project .options-btns {
-  display: flex;
-  flex-direction: column;
-  opacity: 1;
-  background-color: white;
-  color: black;
-  width: 11rem;
-  gap: 0.5rem;
-  filter: drop-shadow(0.1rem 0.5rem 0.2rem rgb(217, 221, 227));
-  position: absolute;
-  right: 0;
-  top: 2rem;
-  padding: 1rem 0.5rem;
-  transition: all ease-in-out 100ms;
-}
-.project .options-btns-link {
-  display: flex;
-  gap: 0.3rem;
-  padding: 0.5rem 0;
-}
-.project .options-btns-link:hover {
-  background-color: rgb(235, 235, 235);
-}
-.project .options-btns p {
-  margin: 0;
-  font-size: 1rem;
 }
 
 .project-card_delete-notification_show {

@@ -23,7 +23,6 @@ const ProjectsDash = ({ URL, toggled, projects }) => {
 
   const { fname } = user;
 
-
   // State
   // const [show, setShow] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -52,7 +51,7 @@ const ProjectsDash = ({ URL, toggled, projects }) => {
     <Container className="projects-dash">
       <PageHeaders title="Dashboard" />
       <section className={!toggled ? "dash-projects-card" : "dash-projects-card_toggled"}>
-        <h1 className="mb-5 fs-3">Welcome, {fname}!</h1>
+        <h2 className="mb-5 fs-3">Welcome, {fname}!</h2>
         <div className="dash-projects-card-titles">
           {titles.map((title) => {
             return <h3 key={title}> {title} </h3>;
