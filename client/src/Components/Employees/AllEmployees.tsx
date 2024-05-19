@@ -7,6 +7,7 @@ import MyModal from "../Global/MyModal";
 import { DeleteNotification } from "../Global/Notifications";
 import { date } from "../../Helpers/date";
 import { useToken } from "../../Hooks/useToken";
+import { json } from "body-parser";
 
 const AllEmployees = ({
   URL,
@@ -141,8 +142,6 @@ const AllEmployees = ({
   // *******UI STATE
   // UPDATE Employee (UI)
   const handleEmployeeStateUpdate = (id: string, employeeToUpdate: EmployeeObjectInterface) => {
-    console.log("handleEmployeeStateUpdate function ran");
-    console.log(`ID in handleEmployeeStateUpdate ${id}`);
     handleSetEmployees(
       employees.map((employee: { _id: string }) => {
         const { _id } = employee;
@@ -167,33 +166,49 @@ const AllEmployees = ({
 
   //   UPDATE EMPLOYEE (DB)
   async function handleEmployeeUpdate(id: string, employeeToUpdate: EmployeeObjectInterface) {
-    console.log(employeeToUpdate);
+    const formData = new FormData();
 
-    const dataToUpload = {
-      _id: employeeToUpdate.employeeid,
-      fname: `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`,
-      lname: `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`,
-      degree: `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`,
-      mobile: `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`,
-      designation: `${
-        employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation
-      }`,
-      department: `${
-        employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department
-      }`,
-      email: `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`,
-      username: `${employeeToUpdate.newUsernameUpdated ? employeeToUpdate.newUsername : employeeToUpdate.username}`,
-      password: `${employeeToUpdate.newPasswordUpdated ? employeeToUpdate.newPassword : employeeToUpdate.password}`,
-      image: (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " ",
-    };
+    // append keys in body to new form object
+    // formData.append("employeeid", id);
+    formData.append(
+      "fname",
+      `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`
+    );
+    formData.append(
+      "lname",
+      `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`
+    );
+    formData.append(
+      "degree",
+      `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`
+    );
+    formData.append(
+      "mobile",
+      `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`
+    );
+    formData.append(
+      "designation",
+      `${employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation}`
+    );
+    formData.append(
+      "department",
+      `${employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department}`
+    );
+    formData.append(
+      "email",
+      `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`
+    );
+    formData.append(
+      "image",
+      (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " "
+    );
 
     const options = {
       method: "PUT",
-      body: JSON.stringify(dataToUpload),
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: formData,
     };
 
     try {
@@ -201,7 +216,6 @@ const AllEmployees = ({
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = await fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
-      console.log(jsonPromiseResponse.message);
 
       if (!fetchPromiseResponse.ok) {
         setEmployeeAuth({ response: jsonPromiseResponse.message, employeeError: true });
@@ -212,6 +226,7 @@ const AllEmployees = ({
         }, 5000);
       } else {
         handleEmployeeStateUpdate(id, employeeToUpdate);
+        setToken(jsonPromiseResponse.token);
         setEmployeeAuth({ response: jsonPromiseResponse.message, employeeError: false });
         setDeleteNotif(true);
         setTimeout(() => {

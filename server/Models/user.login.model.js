@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import emailValidator from "email-validator";
+// import emailValidator from "email-validator";
 import bcrypt from "bcrypt";
 
 const options = {
@@ -35,14 +35,17 @@ const UserLoginSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    validate: {
-      validator: emailValidator.validate,
-    },
+    // validate: {
+    //   validator: emailValidator.validate,
+    // },
     lowercase: true,
   },
   password: {
     type: String,
     minLength: 8,
+  },
+  image: {
+    type: String,
   },
 });
 

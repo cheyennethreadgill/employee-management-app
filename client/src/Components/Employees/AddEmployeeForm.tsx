@@ -28,7 +28,7 @@ const AddEmployeeForm = () => {
       onSubmit={(e) => {
         handleSubmit(e, e.currentTarget);
       }}
-      autoComplete="true"
+      autoComplete="on"
       encType="multipart/form-data"
     >
       <Row>
@@ -269,8 +269,7 @@ const AddEmployeeForm = () => {
               handleEmployeeFormData("dateofbirth", toSentenceCase(e.target.value));
             }}
             required
-            min="1900-01-01"
-            max="2003-01-01"
+            min="1920-01-01"
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">Please select date of birth.</Form.Control.Feedback>

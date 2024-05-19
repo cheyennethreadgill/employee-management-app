@@ -1,11 +1,11 @@
 import pages from "../pagelinks/pagelinks";
 import ListGroup from "./ListGroup";
-import ImageComponent from "../Employees/EmployeeImageComponent";
+import ImageComponent from "../Employees/ImageComponent";
 import { useUser } from "../../Hooks/useUser";
 
 const Navigation = ({ handleNavToggle, handleMouseLeave, toggled, setToggled }) => {
   const [user] = useUser();
-  const { fname } = user;
+  const { fname, lname, image } = user;
 
   return (
     <>
@@ -16,16 +16,18 @@ const Navigation = ({ handleNavToggle, handleMouseLeave, toggled, setToggled }) 
         <div
           className={
             toggled
-              ? " left-nav-account-info_none m-0 m-auto my-0 pb-5"
-              : " left-nav-account-info_display m-0 m-auto my-0 pb-5"
+              ? " left-nav-account-info_none m-0 m-auto my-0 pb-5 text-center"
+              : " left-nav-account-info_display m-0 m-auto my-0 pb-5 text-center"
           }
         >
-          <ImageComponent
-            image=""
-            navImage={true}
-          />
-          <br />
-          <span>Welcome, {fname}!</span>
+          <div className="pb-2 ">
+            <ImageComponent
+              image={image}
+              navImage="main-nav"
+            />
+          </div>
+
+          <span className="text-dark"> {`${fname} ${lname}`}</span>
         </div>
 
         {pages.map((page) => {
