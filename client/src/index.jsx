@@ -47,7 +47,7 @@ const Index = () => {
   // *********************************************************************ERROR HANDLING
   const handleFetchPromiseError = (response) => {
     if (!response.ok) {
-      console.log(`Something went wrong with fetch from server ${response.message} `);
+      return console.log(`Something went wrong with fetch from server ${response.message} `);
     }
   };
 
@@ -57,24 +57,19 @@ const Index = () => {
   // response log
   const handleJsonPromiseResponseLog = (res, setFormError) => {
     if (!res.ok) {
-      let message = res.message;
       if (setFormError) {
         setFormError(true);
       }
-      setResponseMessage(message);
+      setResponseMessage(res.message);
       return ServerErrorComponent();
     } else {
       setFormError(false);
-      console.log(res);
+      console.log(res.token);
     }
   };
   // fetch error
   const handleFetchError = (err) => {
-    if (err) {
-      console.log(`FETCH FAILED: ${err.status}`);
-    } else {
-      return;
-    }
+    console.log(`FETCH FAILED: ${err}`);
   };
 
   // *************************************************************************Resources

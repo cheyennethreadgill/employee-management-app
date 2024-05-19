@@ -26,10 +26,10 @@ const LoginPage = ({ URL }) => {
   const [googleOAuthURL, setGoogleOAuthURL] = useState("");
   const { token: oauthToken } = useQueryParams();
 
-  // remove any existing token so the auto info can show
-  useEffect(() => {
-    localStorage.removeItem("token");
-  }, []);
+  // // remove any existing token so the auto info can show
+  // useEffect(() => {
+  //   localStorage.removeItem("token");
+  // }, []);
 
   // set google oauth token if google btn is clicked
   useEffect(() => {
@@ -64,6 +64,8 @@ const LoginPage = ({ URL }) => {
     username: user.username || "admin",
     password: user.password || "admin123*",
   });
+
+  console.log(loginInfoAuto.username, loginInfoAuto.password)
 
   const [loginAuth, setLoginAuth] = useState({
     loginError: false,

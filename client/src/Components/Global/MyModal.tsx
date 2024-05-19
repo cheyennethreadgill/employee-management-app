@@ -95,8 +95,6 @@ const MyModal = ({
       <Form
         className="my-modal-form"
         encType="multiform/form-data"
-        // method="post"
-        // action={`${URL}admin/${UPDATE_PATH}/${token}`}
       >
         {/* *******************************NAME */}
         <Form.Group
@@ -258,7 +256,6 @@ const MyModal = ({
               handleFormUpdatedStatus("newImageUpdated", true);
               handleFormData("newImage", (e.target as HTMLInputElement).files[0]);
               handleEmployeeToUpdate({ ...employeeToUpdate, image: (e.target as HTMLInputElement).files[0] });
-              console.log((e.target as HTMLInputElement).files[0]);
             }}
             placeholder={formUpdatedStatus.newImageUpdated ? formData.newImage : image}
           />
@@ -275,7 +272,7 @@ const MyModal = ({
           <Form.Control
             value="Save Changes"
             className="btn update-btn text-light"
-            onClick={(e) => {
+            onClick={() => {
               handleEditMode();
               handleEmployeeUpdate(employeeid, employeeToUpdate);
               handleShowNow(false);

@@ -35,7 +35,9 @@ const SignUpPage = ({ URL }) => {
     username: "",
     email: "",
     password: "",
+    image: " ",
   });
+
 
   const handleFormData = (key, value) => {
     setformData({ ...formData, [key]: value });

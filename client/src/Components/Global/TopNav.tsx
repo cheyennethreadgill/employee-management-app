@@ -3,17 +3,44 @@ import { useState } from "react";
 
 import { useUser } from "../../Hooks/useUser";
 import { toSentenceCase } from "../../Helpers/strings";
-import ImageComponent from "../Employees/EmployeeImageComponent";
-import { Image } from "react-bootstrap";
+import ImageComponent from "../Employees/ImageComponent";
 const logo = require("../../images/logo.png");
 
 const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
   const [user] = useUser();
 
-  const { username, fname } = user;
+  const { fname, image } = user;
+
   const navigate = useNavigate();
   const [optionPanelDisplay, setOptionPanelDisplay] = useState(false);
   const handleOptionPanelDisplay = () => setOptionPanelDisplay(!optionPanelDisplay);
+
+  // const handleLogout = async () => {
+  //   // // Post options
+  //   const options = {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "*",
+  //     },
+  //     body: "",
+  //   };
+
+  //   // try {
+  //   //   const fetchPromiseResponse = await fetch(`${URL}auth/logout`, options);
+  //   //   handleFetchPromiseError(fetchPromiseResponse);
+  //   //   if (!fetchPromiseResponse.ok) {
+  //   //     console.log(await fetchPromiseResponse.text());
+  //   //   } else {
+  //   //     const jsonPromiseResponse = await fetchPromiseResponse.json();
+  //   //     // if theres an error, set state, udate ui to log response
+  //   //     handleJsonPromiseResponseLog(jsonPromiseResponse, setFormError, InputErrorComponent);
+  //   //     console.log(jsonPromiseResponse);
+  //   //   }
+  //   // } catch (err) {
+  //   //   console.log(`Error in Add employee fetch:`);
+  //   //   handleFetchError(err);
+  //   // }
+  // };
 
   return (
     <>
@@ -21,16 +48,16 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
       <div className="brand-bar-mobile d-md-block d-lg-none">
         <div className="brand-bar-mobile-controls-container">
           <div className="brand-bar-mobile-controls">
+            {toggled ? (
+              <button
+                className="btn-none"
+                onClick={handleNavToggle}
+              >
+                <span className="opacity-0">main menu</span>
+                <i className="brand-bar-mobile-toggle fa-solid fa-bars"></i>
+              </button>
+            ) : null}
             <>
-              {toggled ? (
-                <button
-                  className="btn-none opacity-0"
-                  onClick={handleNavToggle}
-                >
-                  <i className="brand-bar-mobile-toggle fa-solid fa-bars"></i>
-                </button>
-              ) : null}
-
               <div className="brand-bar-mobile-brand">
                 <img
                   src={logo}
@@ -51,14 +78,15 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
                 >
                   <p className="m-0 fw-medium ">{fname}</p>
                   <ImageComponent
-                    image={null}
-                    navImage={false}
+                    image={image}
+                    navImage={true}
                   />
                   {optionPanelDisplay ? (
                     <div className="options-btns">
                       <button
                         className="btn-none options-btns-link"
                         onClick={() => {
+                          // handleLogout();
                           localStorage.removeItem("token");
                           navigate("/auth/login");
                         }}
@@ -114,8 +142,8 @@ const TopNav = ({ handleNavToggle, handleMouseLeave, toggled }) => {
                   <p className="brand-bar-desktop-brand-right-name fw-medium text-dark">{toSentenceCase(fname)}</p>
                   <div className="brand-bar-desktop-brand-right-img">
                     <ImageComponent
-                      image={null}
-                      navImage={false}
+                      image={image}
+                      navImage={true}
                     />
 
                     {optionPanelDisplay ? (

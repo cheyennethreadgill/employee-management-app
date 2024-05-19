@@ -25,5 +25,5 @@ export const useUser = () => {
       setUser(userPayload);
     }, [token]);
     return [user];
-  } else return [{ fname: "", lname: "", username: "", email: "", password: "" }];
+  } else return [{ fname: "", lname: "", username: "", email: "", password: "", image: " " }];
 };

@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Row, Form, Col } from "react-bootstrap";
-import React, { useState } from "react";
-import ImageComponent from "./EmployeeImageComponent";
 import { toSentenceCase } from "../../Helpers/strings";
+import ImageComponent from "./ImageComponent";
 
 const EmployeeCard = ({
   handleEditMode,
@@ -139,7 +139,7 @@ const EmployeeCard = ({
                       </Col>
                       <Col lg="12">
                         <ImageComponent
-                          navImage={false}
+                          navImage={null}
                           image={originalEntry[0]}
                         />
                       </Col>
@@ -279,7 +279,7 @@ const EmployeeCard = ({
                   className="employee-card-desktop-form-fields"
                 >
                   <ImageComponent
-                    navImage={false}
+                    navImage={null}
                     image={originalEntry[0]}
                   />
                 </div>

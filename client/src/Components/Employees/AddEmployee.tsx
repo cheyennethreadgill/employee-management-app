@@ -1,11 +1,11 @@
 import { useState, createContext } from "react";
 import { Container } from "react-bootstrap";
-import { handlePasswordValidation } from "../../private/passwordValidation";
 import { handleFileTypeCheck } from "../../Helpers/formValidation";
 import { handleEmailCheck } from "../../Helpers/formValidation";
 import PageHeaders from "../Global/PageHeaders";
 import AddEmployeeForm from "./AddEmployeeForm";
 import InputErrorComponent from "./InputErrorComponent";
+// import { useToken } from '../../Hooks/useToken';
 
 export const CustomContext = createContext(null);
 
@@ -57,19 +57,22 @@ const AddEmployee = ({
     e.preventDefault();
     // use FormData Api to construct the body in request when handling multiform
     const formData = new FormData();
+
     for (const key in employeeFormData) {
       formData.append(key, employeeFormData[key]);
     }
+
+    console.log(employeeFormData.image);
     // // Post options
     const options = {
       method: "POST",
-
       headers: {
         Accept: "*",
       },
       body: formData,
     };
     try {
+      console.dir(formData);
       const fetchPromiseResponse = await fetch(`${URL}${ADDEMPLOYEE_PATH}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       if (!fetchPromiseResponse.ok) {

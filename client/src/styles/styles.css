@@ -12530,7 +12530,7 @@ form-select:is-invalid {
   color: black;
   width: 11rem;
   gap: 0.5rem;
-  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
+  filter: drop-shadow(0rem 0.9rem 0.4rem rgb(193, 197, 202));
   position: absolute;
   right: 0;
   top: 2rem;
@@ -12741,7 +12741,7 @@ form-select:is-invalid {
   margin: 2rem 0 0 0;
   font-size: 0.95rem;
   font-weight: 400;
-  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
+  filter: drop-shadow(0rem 0.9rem 0.4rem rgb(193, 197, 202));
   z-index: 9;
   top: 32px;
   position: fixed;
@@ -12781,7 +12781,7 @@ form-select:is-invalid {
 }
 .main-nav-list_toggled {
   transition: all ease-in-out 350ms;
-  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
+  filter: drop-shadow(0rem 0.9rem 0.4rem rgb(193, 197, 202));
   transition: all ease-in-out 350ms;
   width: 63px;
   gap: 1rem;
@@ -13015,7 +13015,7 @@ form-select:is-invalid {
   margin: 0 auto;
   position: relative;
   z-index: 3;
-  filter: drop-shadow(0rem 0.2rem 0.4rem rgb(193, 197, 202));
+  filter: drop-shadow(0rem 0.9rem 0.4rem rgb(193, 197, 202));
 }
 .employees-header {
   background-color: rgb(210, 218, 243);

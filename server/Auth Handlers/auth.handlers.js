@@ -10,7 +10,7 @@ import { updateOrCreateUserFromOAuth } from "../utils/updateOrCreateUserFromOAut
 import { getGoogleUser } from "../utils/getGoogleUser.js";
 
 export const signUpHandler = async (req, res) => {
-  const { fname, lname, username, email, password } = req.body;
+  const { fname, lname, username, email, password, image } = req.body;
   try {
     const user = new User({
       fname: req.body.fname,
@@ -18,6 +18,7 @@ export const signUpHandler = async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
+      image: " ",
     });
     // check to see if user is already in db
     const userExists = await User.findOne({
@@ -35,7 +36,7 @@ export const signUpHandler = async (req, res) => {
 
       // create web token
       jwt.sign(
-        { id: _id, fname, lname, username, email, password, isVerified: false },
+        { id: _id, fname, lname, username, email, password, image, isVerified: false },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
         function (err, token) {
@@ -68,7 +69,7 @@ export const loginHandler = async (req, res) => {
     });
 
     if (foundUser) {
-      const { _id, fname, lname, username, password, email } = foundUser;
+      const { _id, fname, lname, username, password, email, image } = foundUser;
       // conpmare password against db
       bcrypt.compare(passwordBody, password, (err, result) => {
         if (err) {
@@ -82,7 +83,7 @@ export const loginHandler = async (req, res) => {
         } else {
           // generate token(cookie) to send to client
           jwt.sign(
-            { id: _id, fname, lname, username, email, password },
+            { id: _id, fname, lname, username, email, password, image: image },
             process.env.JWT_SECRET,
             { expiresIn: "1hr" },
             (err, token) => {
@@ -132,6 +133,35 @@ export const forgotPasswordHandler = async (req, res) => {
     }
   }
   return res.sendStatus(200);
+};
+export const logoutHandler = async (req, res) => {
+  // const { email } = req.params;
+  // console.log(req.params);
+  // // // generate random string to send to user
+  // const passwordResetCode = uuid();
+  // const { modifiedCount } = await employees.updateOne(
+  //   {
+  //     email,
+  //   },
+  //   { $set: { passwordResetCode } }
+  // );
+  // console.log(modifiedCount);
+  // if (modifiedCount > 0) {
+  //   try {
+  //     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  //     const msg = {
+  //       to: email,
+  //       from: "threadgillcheyenne@gmail.com",
+  //       subject: "Password reset",
+  //       text: `To reset your password, click this link: http://localhost:3000/auth/reset-password/${passwordResetCode}`,
+  //     };
+  //     sgMail.send(msg);
+  //     return res.sendStatus(200);
+  //   } catch (err) {
+  //     return res.sendStatus(500);
+  //   }
+  // }
+  // return res.sendStatus(200);
 };
 
 export const resetPasswordHandler = async (req, res) => {
