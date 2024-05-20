@@ -1,10 +1,13 @@
 import { Router } from "express";
 import { employees, users } from "../database.js";
-import { s3 } from "../server.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import aws from "aws-sdk";
 
 export const employeeRouter = new Router();
+
+// Create S3 instance
+const s3 = new aws.S3();
 
 employeeRouter.get("/employees", async (req, res, next) => {
   try {
