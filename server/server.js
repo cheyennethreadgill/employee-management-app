@@ -26,7 +26,7 @@ aws.config.update({
 });
 
 // Create S3 instance
-export const s3 = new aws.S3();
+const s3 = new aws.S3();
 
 // middleware used for entire application
 app.use(cors());
@@ -53,3 +53,5 @@ app.listen(PORT, () => {
   console.log(`Server running on port 8080... 
    --------------------------------------------------------------------`);
 });
+
+export default s3;
