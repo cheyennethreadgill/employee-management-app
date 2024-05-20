@@ -4,14 +4,14 @@ import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
 import { employeeRouter } from "./Routes/employee.routes.js";
-import aws from "aws-sdk";
+
 
 import multer from "multer";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// aws
+
 
 // upload to multer memory storage
 const upload = multer({
@@ -25,8 +25,7 @@ aws.config.update({
   region: process.env.AWS_REGION,
 });
 
-// Create S3 instance
-const s3 = new aws.S3();
+
 
 // middleware used for entire application
 app.use(cors());
@@ -54,4 +53,4 @@ app.listen(PORT, () => {
    --------------------------------------------------------------------`);
 });
 
-// export default s3;
+
