@@ -9,6 +9,13 @@ export const employeeRouter = new Router();
 // Create S3 instance
 const s3 = new aws.S3();
 
+// Configure AWS SDK
+aws.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+
 employeeRouter.get("/employees", async (req, res, next) => {
   try {
     let foundArray = [];
