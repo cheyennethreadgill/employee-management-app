@@ -16,7 +16,6 @@ import LoginPage from "./Routes/auth/LoginPage";
 import SignUpPage from "./Routes/auth/SignUpPage";
 import ForgotPasswordPage from "./Routes/auth/forgot.password";
 import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage";
-import PrivateRoute from "./Routes/auth/privateRoute";
 // import SuccessPage from "../../server/views/successPage";
 
 export const CustomContext = createContext();
