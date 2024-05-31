@@ -19,7 +19,7 @@
   ],
   "functions": {
     "./server/**/*": {
-      "maxDuration": 15
+      "maxDuration": 5
     }
   }
 }
