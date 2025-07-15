@@ -16,10 +16,5 @@
         "Access-Control-Allow-Headers": "Accept, Content-Type"
       }
     }
-  ],
-  "functions": {
-    "./server/**/*": {
-      "maxDuration": 5
-    }
-  }
+  ]
 }
