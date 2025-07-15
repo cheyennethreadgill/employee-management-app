@@ -45,7 +45,7 @@ export async function getProjects(
       handleSetProjects(jsonResponse);
       handleLoadingState(false);
     }
-  } catch (err) {
+  } catch (err) { //try catch error
     handleFetchError(err);
     console.log(`error in resource file, problem with fetching projects in getProjects function: ${err}`);
   }

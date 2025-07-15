@@ -55,17 +55,17 @@ const SignUpPage = ({ URL }) => {
 
     try {
       const options = {
-        method: "POST",
+        method: "POST", //post sign up client credentials to DB
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       };
       const fetchresponse = await fetch(`${URL}${SIGNUP_PATH}`, options);
       const jsonResonse = await fetchresponse.json();
       if (!fetchresponse.ok) {
+        setSignUpAuth({ ...signUpAuth, signUpError: true, response: jsonResonse });
         console.log(`Sign up error: ${signUpAuth.signUpError}`);
         console.log(`Sign up response: ${signUpAuth.response}`);
-        console.log(jsonResonse.message);
-        setSignUpAuth({ ...signUpAuth, signUpError: true, response: jsonResonse.message });
+        console.log(jsonResonse)
         form.reset();
       } else {
         navigate("/auth/login");
@@ -105,7 +105,9 @@ const SignUpPage = ({ URL }) => {
               Sign Up
             </Form.Label>
             <p className="fs-5 pb-4 text-muted">Enter details to create your account </p>
-            {signUpAuth.signUpError && <p className="text-danger fw-bold">{signUpAuth.response}</p>}
+            
+            
+            {signUpAuth.signUpError && <p className="text-danger fw-bold">{JSON.stringify(signUpAuth.response)}</p>}
 
             <Form
               noValidate
@@ -190,7 +192,6 @@ const SignUpPage = ({ URL }) => {
                     name="email"
                     type="email"
                     placeholder="Email*"
-                    minLength={8}
                     required
                     onChange={(e) => {
                       const targetValue = e.target.value;
