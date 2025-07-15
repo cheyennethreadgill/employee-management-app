@@ -23,7 +23,8 @@ const upload = multer({
 
 
 // middleware used for entire application
-app.use(cors());
+app.use( cors() ); //requests handled already at app level
+
 app.use(
   bodyParser.json({
     limit: 10000000,

@@ -10,7 +10,6 @@ export const URI = process.env.MONGODB_URI;
 const client = new MongoClient(URI);
 
 // connect to database
-
 export const database = client.db("Kuber_Employee_Management_DB");
 
 // make a query from employees that shows all employees

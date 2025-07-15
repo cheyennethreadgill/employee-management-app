@@ -22,8 +22,8 @@ export const CustomContext = createContext();
 
 const Index = () => {
   // URL
-  // const URL = "http://localhost:8080/";
-  const URL = "https://employee-management-app-rho.vercel.app/";
+  // const URL = "http://localhost:8080/"; //use when in local development
+  const URL = "https://employee-management-app-rho.vercel.app/"; // use when in production
 
   const EMPLOYEE_PATH = "admin/employees";
   const ADDEMPLOYEE_PATH = "admin/add-employee";
@@ -57,7 +57,7 @@ const Index = () => {
   const handleJsonPromiseResponseLog = (res, setFormError) => {
     if (!res.ok) {
       if (setFormError) {
-        setFormError(true);
+        setFormError( true );
       }
       setResponseMessage(res.message);
       return ServerErrorComponent();
