@@ -5,13 +5,10 @@ import authRouter from "./Routes/auth.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
 import { employeeRouter } from "./Routes/employee.routes.js";
 
-
 import multer from "multer";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-
-
 
 // upload to multer memory storage
 const upload = multer({
@@ -19,11 +16,12 @@ const upload = multer({
 });
 // Configure AWS SDK with environment variables
 
-
-
-
 // middleware used for entire application
-app.use( cors() ); //requests handled already at app level
+var corsOptions = {
+  origin: "https://kubermanagement.netlify.app",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions)); //requests handled already at app level
 
 app.use(
   bodyParser.json({
@@ -48,5 +46,3 @@ app.listen(PORT, () => {
   console.log(`Server running on port 8080... 
    --------------------------------------------------------------------`);
 });
-
-
