@@ -1,7 +1,7 @@
 export async function getEmployees(
   employees,
-  URL: string,
-  PATH: string,
+  URL,
+  PATH,
   handleLoadingState,
   handleSetEmployees,
   handleFetchPromiseError,
