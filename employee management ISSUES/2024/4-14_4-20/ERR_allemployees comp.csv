@@ -1,0 +1,26 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Employees\AllEmployees.tsx|6133|'show' is declared but its value is never read.|34|9|34|13|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'deletePrompt' is declared but its value is never read.|36|9|36|21|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'handleShow' is declared but its value is never read.|106|8|106|18|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'handleClose' is declared but its value is never read.|108|8|108|19|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'handleShowDeletePromptNow' is declared but its value is never read.|111|8|111|33|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'e' is declared but its value is never read.|144|38|144|39|undefined
+client\src\Components\Global\MyModal.jsx|2339|Property 'files' does not exist on type 'EventTarget & FormControlElement'.
+  Property 'files' does not exist on type 'EventTarget & HTMLTextAreaElement'.|244|50|244|55|undefined
+client\src\Components\Global\MyModal.jsx|2339|Property 'files' does not exist on type 'EventTarget & FormControlElement'.
+  Property 'files' does not exist on type 'EventTarget & HTMLTextAreaElement'.|245|76|245|81|undefined
+client\src\Components\Global\MyModal.jsx|2322|Type '{ value: string; className: string; variant: string; onClick: (e: MouseEvent<HTMLInputElement, MouseEvent>) => void; type: "submit"; }' is not assignable to type 'DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>'.
+  Property 'variant' does not exist on type 'DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>'.|262|12|262|19|undefined
+client\src\Components\Global\MyModal.jsx|6133|'React' is declared but its value is never read.|0|7|0|12|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'key' implicitly has an 'any' type, but a better type may be inferred from usage.|30|35|30|38|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.|30|40|30|45|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'key' implicitly has an 'any' type, but a better type may be inferred from usage.|47|26|47|29|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.|47|31|47|36|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'fname' implicitly has an 'any' type, but a better type may be inferred from usage.|52|33|52|38|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'lname' implicitly has an 'any' type, but a better type may be inferred from usage.|52|40|52|45|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'fnamestatus' implicitly has an 'any' type, but a better type may be inferred from usage.|55|28|55|39|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'lnamestatus' implicitly has an 'any' type, but a better type may be inferred from usage.|55|41|55|52|undefined
+client\src\Components\Global\MyModal.jsx|7044|Parameter 'values' implicitly has an 'any' type, but a better type may be inferred from usage.|78|34|78|40|undefined
+server\server.js|80001|File is a CommonJS module; it may be converted to an ES module.|0|16|0|34|undefined
+server\server.js|6133|'all' is declared but its value is never read.|6|6|6|13|undefined
+server\server.js|6133|'req' is declared but its value is never read.|78|29|78|32|undefined

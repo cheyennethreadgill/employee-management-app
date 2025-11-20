@@ -1,0 +1,19 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Employees\EmployeeCard.jsx|8006|'interface' declarations can only be used in TypeScript files.|43|12|43|24|undefined
+client\src\Components\Employees\EmployeeCard.jsx|8010|Type annotations can only be used in TypeScript files.|48|34|48|48|undefined
+client\src\Components\Employees\EmployeeCard.jsx|2322|Type 'string[]' is not assignable to type 'Key'.|121|20|121|23|undefined
+client\src\Components\Employees\EmployeeCard.jsx|2322|Type 'string[]' is not assignable to type 'Key'.|139|20|139|23|undefined
+client\src\Components\Employees\EmployeeCard.jsx|2322|Type 'string[]' is not assignable to type 'Key'.|157|20|157|23|undefined
+client\src\Components\Employees\EmployeeCard.jsx|2322|Type 'string[]' is not assignable to type 'Key'.|263|18|263|21|undefined
+client\src\Components\Employees\EmployeeCard.jsx|2322|Type 'string[]' is not assignable to type 'Key'.|273|18|273|21|undefined
+client\src\Components\Employees\EmployeeCard.jsx|2322|Type 'string[]' is not assignable to type 'Key'.|286|18|286|21|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'React' is declared but its value is never read.|1|7|1|12|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'handleShowDeletePrompt' is declared but its value is never read.|6|2|6|24|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'employees' is declared but its value is never read.|11|2|11|11|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'handleEmployeeUpdate' is declared but its value is never read.|40|2|40|22|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'btnValue' is declared but its value is never read.|81|9|81|17|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'foundEmployee' is declared but its value is never read.|82|9|82|22|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'setFoundEmployee' is declared but its value is never read.|82|24|82|40|undefined
+client\src\Components\Employees\EmployeeCard.jsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|85|26|85|28|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'e' is declared but its value is never read.|189|30|189|31|undefined
+client\src\Components\Employees\EmployeeCard.jsx|6133|'e' is declared but its value is never read.|299|24|299|25|undefined

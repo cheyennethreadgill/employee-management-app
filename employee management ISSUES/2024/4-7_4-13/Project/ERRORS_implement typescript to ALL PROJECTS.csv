@@ -1,0 +1,40 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Projects\AllProjects.jsx|2322|Type '{ setDeleteNotif: Dispatch<SetStateAction<boolean>>; workStatusOptions: any; priorityOptions: any; teamOptions: any; departmentOptions: any; URL: any; handleProjectSetForModal: (values: any) => void; ... 29 more ...; handleDeleteProjectFromDB: (id: any) => Promise<...>; }' is not assignable to type 'IntrinsicAttributes & { DeleteNotification: any; setDeleteNotif: any; workStatusOptions: any; priorityOptions: any; teamOptions: any; departmentOptions: any; handleShowNow: any; ... 27 more ...; onDelete: any; }'.
+  Property 'URL' does not exist on type 'IntrinsicAttributes & { DeleteNotification: any; setDeleteNotif: any; workStatusOptions: any; priorityOptions: any; teamOptions: any; departmentOptions: any; handleShowNow: any; ... 27 more ...; onDelete: any; }'.|142|22|142|25|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newTitle' does not exist on type '{}'.|160|52|160|60|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newDescription' does not exist on type '{}'.|161|58|161|72|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newDepartment' does not exist on type '{}'.|162|57|162|70|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newPriority' does not exist on type '{}'.|163|55|163|66|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newStatus' does not exist on type '{}'.|164|53|164|62|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newTeam' does not exist on type '{}'.|165|51|165|58|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newTitleUpdated' does not exist on type '{}'.|166|59|166|74|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newDepartmentUpdated' does not exist on type '{}'.|167|64|167|84|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newPriorityUpdated' does not exist on type '{}'.|168|62|168|80|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newStatusUpdated' does not exist on type '{}'.|169|60|169|76|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newTeamUpdated' does not exist on type '{}'.|170|58|170|72|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'newDescriptionUpdated' does not exist on type '{}'.|171|65|171|86|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'projectID' does not exist on type '{}'.|192|41|192|50|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'title' does not exist on type '{}'.|193|37|193|42|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'department' does not exist on type '{}'.|194|42|194|52|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'priority' does not exist on type '{}'.|195|40|195|48|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'team' does not exist on type '{}'.|196|36|196|40|undefined
+client\src\Components\Projects\AllProjects.jsx|2322|Type '{ workStatusOptions: any; priorityOptions: any; teamOptions: any; departmentOptions: any; projectInfoForModal: {}; handleShowNow: () => void; handleEditMode: () => void; projectID: any; title: any; ... 5 more ...; handleProjectUpdate: (e: any, id: any, projectToUpdate: any) => Promise<...>; }' is not assignable to type 'IntrinsicAttributes & { workStatusOptions: any; priorityOptions: any; teamOptions: any; departmentOptions: any; projectInfoForModal: any; handleEditMode: any; ... 7 more ...; description: any; }'.
+  Property 'status' does not exist on type 'IntrinsicAttributes & { workStatusOptions: any; priorityOptions: any; teamOptions: any; departmentOptions: any; projectInfoForModal: any; handleEditMode: any; ... 7 more ...; description: any; }'.|197|10|197|16|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'status' does not exist on type '{}'.|197|38|197|44|undefined
+client\src\Components\Projects\AllProjects.jsx|2339|Property 'description' does not exist on type '{}'.|198|43|198|54|undefined
+client\src\Components\Projects\AllProjects.jsx|6133|'React' is declared but its value is never read.|0|7|0|12|undefined
+client\src\Components\Projects\AllProjects.jsx|6133|'handleFetchErrorworkStatusOptions' is declared but its value is never read.|21|2|21|35|undefined
+client\src\Components\Projects\AllProjects.jsx|6133|'handleLoadingState' is declared but its value is never read.|23|37|23|55|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'values' implicitly has an 'any' type, but a better type may be inferred from usage.|35|36|35|42|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|38|42|38|44|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'project' implicitly has an 'any' type, but a better type may be inferred from usage.|40|23|40|30|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|47|36|47|38|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'projectToUpdate' implicitly has an 'any' type, but a better type may be inferred from usage.|47|40|47|55|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'project' implicitly has an 'any' type, but a better type may be inferred from usage.|49|20|49|27|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|59|37|59|39|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'e' implicitly has an 'any' type, but a better type may be inferred from usage.|69|37|69|38|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|69|40|69|42|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'projectToUpdate' implicitly has an 'any' type, but a better type may be inferred from usage.|69|44|69|59|undefined
+client\src\Components\Projects\AllProjects.jsx|6133|'jsonPromiseResponse' is declared but its value is never read.|95|12|95|31|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'err' implicitly has an 'any' type, but a better type may be inferred from usage.|98|7|98|10|undefined
+client\src\Components\Projects\AllProjects.jsx|7044|Parameter 'project' implicitly has an 'any' type, but a better type may be inferred from usage.|114|29|114|36|undefined

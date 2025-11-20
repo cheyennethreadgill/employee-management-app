@@ -1,0 +1,27 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type 'any[]' is not assignable to type 'Key'.|116|20|116|23|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type 'any[]' is not assignable to type 'Key'.|134|20|134|23|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type 'any[]' is not assignable to type 'Key'.|152|20|152|23|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type '{ onClick: (e: MouseEvent<HTMLElement, MouseEvent>) => void; type: string; className: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.
+  Property 'type' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.|219|20|219|24|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type '{ onClick: () => void; type: string; className: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.
+  Property 'type' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.|227|20|227|24|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type '{ children: (Element | Element[])[]; autoComplete: string; className: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>'.
+  Property 'autoComplete' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>'.|240|10|240|22|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type 'any[]' is not assignable to type 'Key'.|259|18|259|21|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type 'any[]' is not assignable to type 'Key'.|269|18|269|21|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type 'any[]' is not assignable to type 'Key'.|282|18|282|21|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type '{ onClick: (e: MouseEvent<HTMLElement, MouseEvent>) => void; type: string; className: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.
+  Property 'type' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.|329|14|329|18|undefined
+client\src\Components\Employees\EmployeeCard.tsx|2322|Type '{ onClick: () => void; type: string; className: string; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.
+  Property 'type' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.|337|14|337|18|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'React' is declared but its value is never read.|1|7|1|12|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'handleShowDeletePrompt' is declared but its value is never read.|6|2|6|24|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'employees' is declared but its value is never read.|11|2|11|11|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'handleEmployeeUpdate' is declared but its value is never read.|40|2|40|22|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'btnValue' is declared but its value is never read.|76|9|76|17|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'foundEmployee' is declared but its value is never read.|77|9|77|22|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'setFoundEmployee' is declared but its value is never read.|77|24|77|40|undefined
+client\src\Components\Employees\EmployeeCard.tsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|80|26|80|28|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'e' is declared but its value is never read.|184|30|184|31|undefined
+client\src\Components\Employees\EmployeeCard.tsx|6133|'e' is declared but its value is never read.|294|24|294|25|undefined
