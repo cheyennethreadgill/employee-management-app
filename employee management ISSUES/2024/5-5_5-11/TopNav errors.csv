@@ -1,0 +1,10 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Global\TopNav.tsx|2322|Type '{ type: string; className: string; onClick: any; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.
+  Property 'type' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.|23|18|23|22|undefined
+client\src\Components\Global\TopNav.tsx|2322|Type '{ type: string; className: string; onClick: any; }' is not assignable to type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.
+  Property 'type' does not exist on type 'DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>'.|81|14|81|18|undefined
+client\src\Components\Global\TopNav.tsx|6133|'Image' is declared but its value is never read.|5|0|5|40|undefined
+client\src\Components\Global\TopNav.tsx|80005|'require' call may be converted to an import.|6|13|6|45|undefined
+client\src\Components\Global\TopNav.tsx|80005|'require' call may be converted to an import.|7|19|7|52|undefined
+client\src\Components\Global\TopNav.tsx|6133|'handleMouseLeave' is declared but its value is never read.|9|35|9|51|undefined
+client\src\Components\Global\TopNav.tsx|6133|'username' is declared but its value is never read.|12|10|12|18|undefined

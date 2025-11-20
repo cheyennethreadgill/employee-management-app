@@ -1,0 +1,79 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Employees\AllEmployees.tsx|2322|Type '{ key: any; handleShowDeletePrompt: () => void; setShow: Dispatch<SetStateAction<boolean>>; handleShow: () => void; handleEditMode: () => void; handleShowNow: () => void; ... 36 more ...; onDelete: (id: any) => Promise<...>; }' is not assignable to type 'IntrinsicAttributes & { handleShowDeletePrompt: any; handleEditMode: any; handleShowNow: any; handleEmployeeSetForModal: any; onUpdateEmployeeState: any; employees: any; ... 29 more ...; onDelete: any; }'.
+  Property 'setShow' does not exist on type 'IntrinsicAttributes & { handleShowDeletePrompt: any; handleEditMode: any; handleShowNow: any; handleEmployeeSetForModal: any; onUpdateEmployeeState: any; employees: any; ... 29 more ...; onDelete: any; }'.|187|8|187|15|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmployeeid' does not exist on type '{}'.|208|44|208|57|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newFirstname' does not exist on type '{}'.|209|43|209|55|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newLastname' does not exist on type '{}'.|210|42|210|53|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDepartment' does not exist on type '{}'.|211|44|211|57|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDesignation' does not exist on type '{}'.|212|45|212|59|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newMobile' does not exist on type '{}'.|213|40|213|49|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmail' does not exist on type '{}'.|214|39|214|47|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDegree' does not exist on type '{}'.|215|40|215|49|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newImage' does not exist on type '{}'.|216|39|216|47|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmployeeidUpdated' does not exist on type '{}'.|217|51|217|71|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newFirstnameUpdated' does not exist on type '{}'.|218|50|218|69|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newLastnameUpdated' does not exist on type '{}'.|219|49|219|67|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDepartmentUpdated' does not exist on type '{}'.|220|51|220|71|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDesignationUpdated' does not exist on type '{}'.|221|52|221|73|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newMobileUpdated' does not exist on type '{}'.|222|47|222|63|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmailUpdated' does not exist on type '{}'.|223|46|223|61|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDegreeUpdated' does not exist on type '{}'.|224|47|224|63|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newImageUpdated' does not exist on type '{}'.|225|46|225|61|undefined
+client\src\Components\Employees\AllEmployees.tsx|2322|Type '{ key: any; handleShowDeletePrompt: () => void; setShow: Dispatch<SetStateAction<boolean>>; handleShow: () => void; handleEditMode: () => void; handleShowNow: () => void; ... 37 more ...; onDelete: (id: any) => Promise<...>; }' is not assignable to type 'IntrinsicAttributes & { handleShowDeletePrompt: any; handleEditMode: any; handleShowNow: any; handleEmployeeSetForModal: any; onUpdateEmployeeState: any; employees: any; ... 29 more ...; onDelete: any; }'.
+  Property 'setShow' does not exist on type 'IntrinsicAttributes & { handleShowDeletePrompt: any; handleEditMode: any; handleShowNow: any; handleEmployeeSetForModal: any; onUpdateEmployeeState: any; employees: any; ... 29 more ...; onDelete: any; }'.|238|8|238|15|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmployeeid' does not exist on type '{}'.|260|44|260|57|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newFirstname' does not exist on type '{}'.|261|43|261|55|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newLastname' does not exist on type '{}'.|262|42|262|53|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDepartment' does not exist on type '{}'.|263|44|263|57|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDesignation' does not exist on type '{}'.|264|45|264|59|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newMobile' does not exist on type '{}'.|265|40|265|49|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmail' does not exist on type '{}'.|266|39|266|47|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDegree' does not exist on type '{}'.|267|40|267|49|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newImage' does not exist on type '{}'.|268|39|268|47|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmployeeidUpdated' does not exist on type '{}'.|269|51|269|71|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newFirstnameUpdated' does not exist on type '{}'.|270|50|270|69|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newLastnameUpdated' does not exist on type '{}'.|271|49|271|67|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDepartmentUpdated' does not exist on type '{}'.|272|51|272|71|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDesignationUpdated' does not exist on type '{}'.|273|52|273|73|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newMobileUpdated' does not exist on type '{}'.|274|47|274|63|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmailUpdated' does not exist on type '{}'.|275|46|275|61|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDegreeUpdated' does not exist on type '{}'.|276|47|276|63|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newImageUpdated' does not exist on type '{}'.|277|46|277|61|undefined
+client\src\Components\Employees\AllEmployees.tsx|2322|Type '{ employees: any; handleEditMode: () => void; handleShowNow: () => void; employeeInfoForModal: {}; handleEmployeeUpdate: (e: any, id: any, employeeToUpdate: any) => Promise<void>; ... 17 more ...; newImage: any; }' is not assignable to type 'IntrinsicAttributes & { employeeid: any; firstname: any; lastname: any; department: any; designation: any; degree: any; email: any; image: any; mobile: any; handleEditMode: any; handleShowNow: any; handleEmployeeUpdate: any; employeeInfoForModal: any; }'.
+  Property 'employees' does not exist on type 'IntrinsicAttributes & { employeeid: any; firstname: any; lastname: any; department: any; designation: any; degree: any; email: any; image: any; mobile: any; handleEditMode: any; handleShowNow: any; handleEmployeeUpdate: any; employeeInfoForModal: any; }'. Did you mean 'employeeid'?|354|10|354|19|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'employeeid' does not exist on type '{}'.|359|43|359|53|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'firstname' does not exist on type '{}'.|360|42|360|51|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'lastname' does not exist on type '{}'.|361|41|361|49|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'department' does not exist on type '{}'.|362|43|362|53|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'designation' does not exist on type '{}'.|363|44|363|55|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'mobile' does not exist on type '{}'.|364|39|364|45|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'email' does not exist on type '{}'.|365|38|365|43|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'degree' does not exist on type '{}'.|366|39|366|45|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'image' does not exist on type '{}'.|367|38|367|43|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmployeeid' does not exist on type '{}'.|368|46|368|59|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newFirstname' does not exist on type '{}'.|369|45|369|57|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newLastname' does not exist on type '{}'.|370|44|370|55|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDepartment' does not exist on type '{}'.|371|46|371|59|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDesignation' does not exist on type '{}'.|372|47|372|61|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newMobile' does not exist on type '{}'.|373|42|373|51|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newEmail' does not exist on type '{}'.|374|41|374|49|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newDegree' does not exist on type '{}'.|375|42|375|51|undefined
+client\src\Components\Employees\AllEmployees.tsx|2339|Property 'newImage' does not exist on type '{}'.|376|41|376|49|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'React' is declared but its value is never read.|0|7|0|12|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'deletePrompt' is declared but its value is never read.|36|9|36|21|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'handleShowDeletePromptNow' is declared but its value is never read.|47|8|47|33|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'values' implicitly has an 'any' type, but a better type may be inferred from usage.|50|37|50|43|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|56|37|56|39|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'employeeToUpdate' implicitly has an 'any' type, but a better type may be inferred from usage.|56|41|56|57|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'employee' implicitly has an 'any' type, but a better type may be inferred from usage.|58|21|58|29|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|69|32|69|34|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'employee' implicitly has an 'any' type, but a better type may be inferred from usage.|71|24|71|32|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'e' implicitly has an 'any' type, but a better type may be inferred from usage.|79|38|79|39|undefined
+client\src\Components\Employees\AllEmployees.tsx|6133|'e' is declared but its value is never read.|79|38|79|39|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|79|41|79|43|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'employeeToUpdate' implicitly has an 'any' type, but a better type may be inferred from usage.|79|45|79|61|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.|138|38|138|40|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'e' implicitly has an 'any' type, but a better type may be inferred from usage.|159|35|159|36|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'employee' implicitly has an 'any' type, but a better type may be inferred from usage.|161|34|161|42|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'employee' implicitly has an 'any' type, but a better type may be inferred from usage.|180|42|180|50|undefined
+client\src\Components\Employees\AllEmployees.tsx|7044|Parameter 'employee' implicitly has an 'any' type, but a better type may be inferred from usage.|231|56|231|64|undefined

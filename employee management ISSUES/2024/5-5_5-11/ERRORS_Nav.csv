@@ -1,0 +1,7 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Global\ListGroup.tsx|6133|'React' is declared but its value is never read.|0|7|0|12|undefined
+client\src\Components\Global\Nav.tsx|2322|Type '{ key: number; name: string; links: { name: string; link: string; }[]; handleNavToggle: any; handleMouseLeave: any; toggled: any; setToggled: any; icon: string; }' is not assignable to type 'IntrinsicAttributes & { toggled: any; setToggled: any; name: any; links: any; icon: any; }'.
+  Property 'handleNavToggle' does not exist on type 'IntrinsicAttributes & { toggled: any; setToggled: any; name: any; links: any; icon: any; }'.|42|14|42|29|undefined
+client\src\Components\Global\Nav.tsx|6192|All imports in import declaration are unused.|0|0|0|40|undefined
+client\src\Components\Global\Nav.tsx|6133|'toSentenceCase' is declared but its value is never read.|5|0|5|55|undefined
+client\src\Components\Global\Nav.tsx|6133|'username' is declared but its value is never read.|9|10|9|18|undefined

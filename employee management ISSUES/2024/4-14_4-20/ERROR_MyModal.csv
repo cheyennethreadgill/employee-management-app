@@ -1,0 +1,18 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Global\MyModal.tsx|2339|Property 'files' does not exist on type 'EventTarget & FormControlElement'.
+  Property 'files' does not exist on type 'EventTarget & HTMLTextAreaElement'.|243|50|243|55|undefined
+client\src\Components\Global\MyModal.tsx|2339|Property 'files' does not exist on type 'EventTarget & FormControlElement'.
+  Property 'files' does not exist on type 'EventTarget & HTMLTextAreaElement'.|244|76|244|81|undefined
+client\src\Components\Global\MyModal.tsx|2339|Property 'files' does not exist on type 'EventTarget & FormControlElement'.
+  Property 'files' does not exist on type 'EventTarget & HTMLTextAreaElement'.|245|35|245|40|undefined
+client\src\Components\Global\MyModal.tsx|6133|'React' is declared but its value is never read.|0|7|0|12|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'key' implicitly has an 'any' type, but a better type may be inferred from usage.|29|35|29|38|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.|29|40|29|45|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'key' implicitly has an 'any' type, but a better type may be inferred from usage.|46|26|46|29|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.|46|31|46|36|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'fname' implicitly has an 'any' type, but a better type may be inferred from usage.|51|33|51|38|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'lname' implicitly has an 'any' type, but a better type may be inferred from usage.|51|40|51|45|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'fnamestatus' implicitly has an 'any' type, but a better type may be inferred from usage.|54|28|54|39|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'lnamestatus' implicitly has an 'any' type, but a better type may be inferred from usage.|54|41|54|52|undefined
+client\src\Components\Global\MyModal.tsx|7044|Parameter 'values' implicitly has an 'any' type, but a better type may be inferred from usage.|77|34|77|40|undefined
+client\src\Components\Global\MyModal.tsx|6133|'e' is declared but its value is never read.|262|22|262|23|undefined

@@ -1,0 +1,8 @@
+file|error code|error message|start line|start char|end line|end char|target
+client\src\Components\Employees\AddEmployeeForm.tsx|2322|Type '{ children: any; name: string; id: string; onChange: (e: ChangeEvent<HTMLSelectElement>) => void; required: true; maxLength: number; }' is not assignable to type 'DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>'.
+  Property 'maxLength' does not exist on type 'DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>'.|155|14|155|23|undefined
+client\src\Components\Employees\AddEmployeeForm.tsx|2339|Property 'files' does not exist on type 'EventTarget & FormControlElement'.
+  Property 'files' does not exist on type 'EventTarget & HTMLTextAreaElement'.|257|55|257|60|undefined
+client\src\Components\Employees\AddEmployeeForm.tsx|2339|Property 'files' does not exist on type 'EventTarget & FormControlElement'.
+  Property 'files' does not exist on type 'EventTarget & HTMLTextAreaElement'.|258|34|258|39|undefined
+client\src\Components\Employees\AddEmployeeForm.tsx|7044|Parameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.|157|38|157|44|undefined
