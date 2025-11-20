@@ -10,9 +10,6 @@
     "serve": "vite preview",
     "test": "jest"
   },
-  "engines": {
-    "node": "22.x"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
