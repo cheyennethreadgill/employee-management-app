@@ -4,18 +4,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../src/styles/styles.css";
-import ErrorPage from "./Components/Errors/ErrorPage.jsx";
-import ProjectsDash from "./Components/Dashboard/ProjectsDash.jsx";
-import AddEmployee from "./Components/Employees/AddEmployee.jsx";
-import AllEmployees from "./Components/Employees/AllEmployees.jsx";
-import AddProject from "./Components/Projects/AddProject.jsx";
-import AllProjects from "./Components/Projects/AllProjects.jsx";
-import { getEmployees } from "./Hooks/getResources.jsx";
-import { getProjects } from "./Hooks/getResources.jsx";
-import LoginPage from "./Routes/auth/LoginPage.jsx";
-import SignUpPage from "./Routes/auth/SignUpPage.jsx";
-import ForgotPasswordPage from "./Routes/auth/forgot.password.jsx";
-import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage.jsx";
+import ErrorPage from "./Components/Errors/ErrorPage";
+import ProjectsDash from "./Components/Dashboard/ProjectsDash";
+import AddEmployee from "./Components/Employees/AddEmployee";
+import AllEmployees from "./Components/Employees/AllEmployees";
+import AddProject from "./Components/Projects/AddProject";
+import AllProjects from "./Components/Projects/AllProjects";
+import { getEmployees } from "./Hooks/getResources";
+import { getProjects } from "./Hooks/getResources";
+import LoginPage from "./Routes/auth/LoginPage";
+import SignUpPage from "./Routes/auth/SignUpPage";
+import ForgotPasswordPage from "./Routes/auth/forgot.password";
+import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage";
 // import SuccessPage from "../../server/views/successPage";
 
 export const CustomContext = createContext();
@@ -46,7 +46,7 @@ const Index = () => {
   // *********************************************************************ERROR HANDLING
   const handleFetchPromiseError = (response) => {
     if (!response.ok) {
-      return console.log(`Something went wrong with fetch from server: "${response.message}" `);
+      return console.log(`Something went wrong with fetch. Server sent: "${response.message}" `);
     }
   };
 
