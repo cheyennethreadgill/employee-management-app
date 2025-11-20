@@ -46,7 +46,7 @@ const Index = () => {
   // *********************************************************************ERROR HANDLING
   const handleFetchPromiseError = (response) => {
     if (!response.ok) {
-      return console.log(`Something went wrong with fetch from server ${response.message} `);
+      return console.log(`Something went wrong with fetch from server: "${response.message}" `);
     }
   };
 
