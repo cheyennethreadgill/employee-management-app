@@ -65,8 +65,6 @@ const LoginPage = ({ URL }) => {
     password: user.password || "admin123*",
   });
 
-  console.log(loginInfoAuto.username, loginInfoAuto.password);
-
   const [loginAuth, setLoginAuth] = useState({
     loginError: false,
     response: "",

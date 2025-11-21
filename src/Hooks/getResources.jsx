@@ -1,7 +1,7 @@
-export async function getEmployees (
+export async function getEmployees(
   employees,
-  URL,
-  PATH,
+  URL: string,
+  PATH: string,
   handleLoadingState,
   handleSetEmployees,
   handleFetchPromiseError,
@@ -9,7 +9,7 @@ export async function getEmployees (
   handleFetchError
 ) {
   try {
-    const fetchPromise = await fetch( `${URL}${PATH}` );
+    const fetchPromise = await fetch(`${URL}${PATH}`);
     handleFetchPromiseError(fetchPromise);
     if (!fetchPromise.ok) {
       console.log(await fetchPromise.text());
@@ -45,7 +45,8 @@ export async function getProjects(
       handleSetProjects(jsonResponse);
       handleLoadingState(false);
     }
-  } catch (err) { //try catch error
+  } catch (err) {
+    //try catch error
     handleFetchError(err);
     console.log(`error in resource file, problem with fetching projects in getProjects function: ${err}`);
   }
