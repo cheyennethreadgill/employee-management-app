@@ -43,12 +43,12 @@ const LoginPage = ({ URL }) => {
   useEffect(() => {
     const loadOAuthURL = async () => {
       try {
-        // const options = {
-        //   method: "GET",
-        //   "Content-Type": "application/json",
-        //   Accept: "*/*",
-        // };
-        const fetchresponse = await fetch(`${URL}${GOOGLE_AUTH_URL}`, { method: "GET" });
+        const options = {
+          method: "GET",
+          "Content-Type": "application/json",
+          Accept: "*/*",
+        };
+        const fetchresponse = await fetch(`${URL}${GOOGLE_AUTH_URL}`, options);
         const { url } = await fetchresponse.json();
 
         setGoogleOAuthURL(url);
@@ -95,7 +95,7 @@ const LoginPage = ({ URL }) => {
     try {
       const options = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "*" },
         body: JSON.stringify(loginFormData),
       };
       const fetchresponse = await fetch(`${URL}${LOGIN_PATH}`, options);
