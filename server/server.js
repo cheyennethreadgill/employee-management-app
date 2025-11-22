@@ -20,7 +20,7 @@ const upload = multer({
 var corsOptions = {
   origin: "https://kubermanagement.netlify.app",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  method: "*",
+  methods: "*",
   allowedHeaders: "*",
 };
 app.use(cors(corsOptions)); //requests handled already at app level
