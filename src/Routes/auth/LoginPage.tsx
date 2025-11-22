@@ -45,6 +45,8 @@ const LoginPage = ({ URL }) => {
       try {
         const options = {
           method: "GET",
+          "Content-Type": "application/json",
+          Accept: "*/*",
         };
         const fetchresponse = await fetch(`${URL}${GOOGLE_AUTH_URL}`, options);
         const { url } = await fetchresponse.json();
