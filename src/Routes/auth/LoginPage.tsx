@@ -95,7 +95,7 @@ const LoginPage = ({ URL }) => {
     try {
       const options = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Accept": "*" },
         body: JSON.stringify(loginFormData),
       };
       const fetchresponse = await fetch(`${URL}${LOGIN_PATH}`, options);
