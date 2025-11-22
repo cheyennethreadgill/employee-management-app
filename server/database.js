@@ -22,4 +22,3 @@ export const sessions = database.collection("sessions");
 // console.log(foundEmployee);
 
 // export { URI, database, employees, projects, users, sessions };
-
