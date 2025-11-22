@@ -11,10 +11,10 @@
       "src": "/(.*)",
       "dest": "server.js",
       "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "https://kubermanagement.netlify.app",
-        "Access-Control-Allow-Headers": "Accept, Content-Type"
-      }
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://kubermanagement.netlify.app" },
+        { "key": "Access-Control-Allow-Headers", "value": "Accept, Content-Type" }
+      ]
     }
   ]
 }
