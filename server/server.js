@@ -17,13 +17,8 @@ const upload = multer({
 // Configure AWS SDK with environment variables
 
 // middleware used for entire application
-var corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  methods: "*",
-  allowedHeaders: "*",
-};
-app.use(cors(corsOptions)); //requests handled already at app level
+
+//requests handled already at app level
 
 app.use(
   bodyParser.json({
