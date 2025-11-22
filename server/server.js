@@ -16,7 +16,13 @@ const upload = multer({
 });
 // Configure AWS SDK with environment variables
 
+const corsOptions = {
+  origin: "*",
+  methods: "*",
+  allowedHeaders: "*",
+};
 // middleware used for entire application
+app.use(cors(corsOptions));
 
 //requests handled already at app level
 
