@@ -15,7 +15,7 @@ export async function getEmployees(
       console.log(await fetchPromise.text());
     } else {
       const jsonResponse = await fetchPromise.json();
-      handleJsonPromiseResponseLog(jsonResponse);
+      handleJsonPromiseResponseLog("getResources error:", jsonResponse);
       handleSetEmployees(jsonResponse);
       handleLoadingState(false);
     }
@@ -41,7 +41,7 @@ export async function getProjects(
       console.log(await promise.text());
     } else {
       const jsonResponse = await promise.json();
-      handleJsonPromiseResponseLog(jsonResponse);
+      handleJsonPromiseResponseLog("getProjects error:", jsonResponse);
       handleSetProjects(jsonResponse);
       handleLoadingState(false);
     }
