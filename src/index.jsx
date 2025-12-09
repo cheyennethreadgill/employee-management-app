@@ -18,9 +18,13 @@ import ForgotPasswordPage from "./Routes/auth/forgot.password";
 import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage";
 // import SuccessPage from "../../server/views/successPage";
 
+import { logFromDB } from "../server/database.js";
+
 export const CustomContext = createContext(null);
 
 const Index = () => {
+  logFromDB();
+
   // URL
   // const URL = "http://localhost:8080/"; // Server data: use when in local development
   const URL = "https://employee-management-app-rho.vercel.app/"; // use when in production
