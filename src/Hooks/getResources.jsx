@@ -20,8 +20,7 @@ export async function getEmployees(
       handleLoadingState(false);
     }
   } catch (err) {
-    handleFetchError(err);
-    console.log(`error in resource file, problem with fetching projects in getEmployees function: ${err}`);
+    handleFetchError(`error in resource file, problem with fetching projects in getEmployees function: ${err}`);
   }
 }
 
