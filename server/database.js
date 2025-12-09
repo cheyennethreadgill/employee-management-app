@@ -24,6 +24,8 @@ async function run() {
     // Send a ping to confirm a successful connection
     await client.db(DBNAME).command({ ping: 1 });
     console.log("******************************************You successfully connected to MongoDB!");
+    // connect to database
+    // make a query from employees that shows all employees
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -31,18 +33,10 @@ async function run() {
 }
 run().catch(console.dir);
 
-// connect to database
-export const database = client.db(DBNAME);
-
-// make a query from employees that shows all employees
-export const employees = database.collection("employees");
-export const projects = database.collection("projects");
-export const users = database.collection("users");
-export const sessions = database.collection("sessions");
-
 console.log("server working");
 
-const foundEmployee = await employees.findOne({ fname: "admin" });
-console.log(foundEmployee);
-
+// const employees = database.collection("employees");
+// const projects = database.collection("projects");
+// const users = database.collection("users");
+// const sessions = database.collection("sessions");
 // export { URI, database, employees, projects, users, sessions };
