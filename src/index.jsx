@@ -18,7 +18,7 @@ import ForgotPasswordPage from "./Routes/auth/forgot.password";
 import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage";
 // import SuccessPage from "../../server/views/successPage";
 
-export const CustomContext = createContext();
+export const CustomContext = createContext(null);
 
 const Index = () => {
   // URL
