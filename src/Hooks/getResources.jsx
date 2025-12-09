@@ -41,13 +41,12 @@ export async function getProjects(
       console.log(await promise.text());
     } else {
       const jsonResponse = await promise.json();
-      handleJsonPromiseResponseLog("getProjects error:", jsonResponse);
+      handleJsonPromiseResponseLog(jsonResponse);
       handleSetProjects(jsonResponse);
       handleLoadingState(false);
     }
   } catch (err) {
     //try catch error
-    handleFetchError(err);
-    console.log(`error in resource file, problem with fetching projects in getProjects function: ${err}`);
+    handleFetchError(`error in resource file, problem with fetching projects in getProjects function: ${err}`);
   }
 }
