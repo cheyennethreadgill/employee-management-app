@@ -18,7 +18,6 @@ import ForgotPasswordPage from "./Routes/auth/forgot.password";
 import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage";
 // import SuccessPage from "../../server/views/successPage";
 
-import { logFromDB } from "../server/database.js";
 
 export const CustomContext = createContext(null);
 
