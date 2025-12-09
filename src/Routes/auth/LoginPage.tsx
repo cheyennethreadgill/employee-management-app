@@ -6,7 +6,6 @@ import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 import { useToken } from "../../Hooks/useToken";
 import { useUser } from "../../Hooks/useUser";
 import { useQueryParams } from "../../utils/useQueryParams";
-import { logFromDB } from "../../../server/database";
 
 const loginimg = "../images/login.png";
 
@@ -17,7 +16,6 @@ const LoginPage = ({ URL }) => {
   // }
 
   console.log("Index working");
-  logFromDB();
 
   const GOOGLE_AUTH_URL = "auth/google/url";
   const LOGIN_PATH = "auth/login";
