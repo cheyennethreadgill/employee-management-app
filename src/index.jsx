@@ -78,34 +78,34 @@ const Index = () => {
   const handleSetProjects = (data) => setProjects(data);
 
   // get Employees then populate app state with employees
-  useEffect(() => {
-    async function go() {
-      getEmployees(
-        employees,
-        URL,
-        EMPLOYEE_PATH,
-        handleLoadingState,
-        handleSetEmployees,
-        handleFetchPromiseError,
-        handleJsonPromiseResponseLog,
-        handleFetchError
-      );
-    }
-    go();
-  }, []);
+  // useEffect(() => {
+  //   async function go() {
+  //     getEmployees(
+  //       employees,
+  //       URL,
+  //       EMPLOYEE_PATH,
+  //       handleLoadingState,
+  //       handleSetEmployees,
+  //       handleFetchPromiseError,
+  //       handleJsonPromiseResponseLog,
+  //       handleFetchError
+  //     );
+  //   }
+  //   go();
+  // }, []);
 
-  // get Projects
-  useEffect(() => {
-    getProjects(
-      URL,
-      ALLPROJECTS_PATH,
-      handleSetProjects,
-      handleLoadingState,
-      handleFetchPromiseError,
-      handleJsonPromiseResponseLog,
-      handleFetchError
-    );
-  }, []);
+  // // get Projects
+  // useEffect(() => {
+  //   getProjects(
+  //     URL,
+  //     ALLPROJECTS_PATH,
+  //     handleSetProjects,
+  //     handleLoadingState,
+  //     handleFetchPromiseError,
+  //     handleJsonPromiseResponseLog,
+  //     handleFetchError
+  //   );
+  // }, []);
 
   // server error component
   function ServerErrorComponent() {
