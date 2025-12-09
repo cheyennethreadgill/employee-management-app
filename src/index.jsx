@@ -23,7 +23,7 @@ import { logFromDB } from "../server/database.js";
 export const CustomContext = createContext(null);
 
 const Index = () => {
-  logFromDB();
+ 
 
   // URL
   // const URL = "http://localhost:8080/"; // Server data: use when in local development
