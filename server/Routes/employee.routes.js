@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { employees, users } from "../database.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import aws from "aws-sdk";
@@ -16,38 +15,32 @@ export const employeeRouter = new Router();
 //   region: process.env.AWS_REGION,
 // });
 
-employeeRouter.get( "/employees", async ( req, res, next ) => {
-  
+employeeRouter.get("/employees", async (req, res, next) => {
   try {
     await client.connect();
 
-    const employees = await client
-      .db(process.env.MONGODB_DBNAME)
-      .collection("employees")
-      .find({})
-      .toArray();
+    const employees = await client.db(process.env.MONGODB_DBNAME).collection("employees").find({}).toArray();
 
     return res.status(200).json(employees);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 
+  //   try {
 
-//   try {
-    
-//     let foundArray = [];
-//     const allEmployeesFound = employees.find();
+  //     let foundArray = [];
+  //     const allEmployeesFound = employees.find();
 
-//     for await (const doc of allEmployeesFound) {
-//       foundArray.push(doc);
-//     }
-//     res.json(foundArray);
-//   } catch (err) {
-//     console.log(`************error getting employees in employee route: ${err}`);
-//     next(err);
-//   }
-// }
-);
+  //     for await (const doc of allEmployeesFound) {
+  //       foundArray.push(doc);
+  //     }
+  //     res.json(foundArray);
+  //   } catch (err) {
+  //     console.log(`************error getting employees in employee route: ${err}`);
+  //     next(err);
+  //   }
+  // }
+});
 
 employeeRouter.get("/find-employee", async (req, res, next) => {
   const reqName = req.body.fname;
