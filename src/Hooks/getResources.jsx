@@ -18,6 +18,7 @@ export async function getEmployees(
       handleJsonPromiseResponseLog("getResources error:", jsonResponse);
       handleSetEmployees(jsonResponse);
       handleLoadingState(false);
+      console.log(jsonResponse);
     }
   } catch (err) {
     handleFetchError(`error in resource file, problem with fetching projects in getEmployees function: ${err}`);
