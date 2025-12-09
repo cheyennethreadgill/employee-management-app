@@ -46,7 +46,7 @@ const Index = () => {
   // *********************************************************************ERROR HANDLING
   const handleFetchPromiseError = (response) => {
     if (!response.ok) {
-      return console.log(`FetchPromiseErrorFn: Something went wrong with fetch. Server sent: "${response.message}" `);
+      return console.log(`Something went wrong with fetch. Server sent: "${response.message}" `);
     }
   };
 
@@ -77,7 +77,7 @@ const Index = () => {
   const handleSetEmployees = (data) => setEmployees(data);
   const handleSetProjects = (data) => setProjects(data);
 
-  // get Employees
+  // get Employees then populate app state with employees
   useEffect(() => {
     async function go() {
       getEmployees(
