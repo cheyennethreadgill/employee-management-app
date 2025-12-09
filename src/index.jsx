@@ -18,12 +18,9 @@ import ForgotPasswordPage from "./Routes/auth/forgot.password";
 import PasswordResetLandingPage from "./Routes/auth/PasswordResetLandingPage";
 // import SuccessPage from "../../server/views/successPage";
 
-
 export const CustomContext = createContext(null);
 
 const Index = () => {
- 
-
   // URL
   // const URL = "http://localhost:8080/"; // Server data: use when in local development
   const URL = "https://employee-management-app-rho.vercel.app/"; // use when in production
@@ -81,34 +78,34 @@ const Index = () => {
   const handleSetProjects = (data) => setProjects(data);
 
   // get Employees then populate app state with employees
-  // useEffect(() => {
-  //   async function go() {
-  //     getEmployees(
-  //       employees,
-  //       URL,
-  //       EMPLOYEE_PATH,
-  //       handleLoadingState,
-  //       handleSetEmployees,
-  //       handleFetchPromiseError,
-  //       handleJsonPromiseResponseLog,
-  //       handleFetchError
-  //     );
-  //   }
-  //   go();
-  // }, []);
+  useEffect(() => {
+    async function go() {
+      getEmployees(
+        employees,
+        URL,
+        EMPLOYEE_PATH,
+        handleLoadingState,
+        handleSetEmployees,
+        handleFetchPromiseError,
+        handleJsonPromiseResponseLog,
+        handleFetchError
+      );
+    }
+    go();
+  }, []);
 
   // // get Projects
-  // useEffect(() => {
-  //   getProjects(
-  //     URL,
-  //     ALLPROJECTS_PATH,
-  //     handleSetProjects,
-  //     handleLoadingState,
-  //     handleFetchPromiseError,
-  //     handleJsonPromiseResponseLog,
-  //     handleFetchError
-  //   );
-  // }, []);
+  useEffect(() => {
+    getProjects(
+      URL,
+      ALLPROJECTS_PATH,
+      handleSetProjects,
+      handleLoadingState,
+      handleFetchPromiseError,
+      handleJsonPromiseResponseLog,
+      handleFetchError
+    );
+  }, []);
 
   // server error component
   function ServerErrorComponent() {
