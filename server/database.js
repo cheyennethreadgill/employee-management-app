@@ -36,9 +36,9 @@ export const database = client.db(DBNAME);
 
 // make a query from employees that shows all employees
 export const employees = database.collection("employees");
-// export const projects = database.collection("projects");
-// export const users = database.collection("users");
-// export const sessions = database.collection("sessions");
+export const projects = database.collection("projects");
+export const users = database.collection("users");
+export const sessions = database.collection("sessions");
 
 console.log("server working");
 
