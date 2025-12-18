@@ -1,7 +1,8 @@
 import User from "../Models/user.login.model.js";
 // import successPage from "../views/successPage.jsx";
 import jwt from "jsonwebtoken";
-import { employees, users } from "../database.js";
+// import { employees, users } from "../database.js";
+// import { connectDB } from "../database.js"; /// use this instead of above
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import sgMail from "@sendgrid/mail";

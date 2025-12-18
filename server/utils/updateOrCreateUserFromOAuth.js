@@ -1,15 +1,21 @@
-import { employees } from "../database.js";
+import { connectDB } from "../database.js";
 // take user info from google oath and create new user in db
 
 // user from get user
 export const updateOrCreateUserFromOAuth = async (req, res, next, { oauthUserInfo }) => {
   const { id: googleID, verified_email, email, given_name, family_name } = oauthUserInfo;
 
+  const db = await connectDB();
+
   try {
     // check to see if user is already in db
-    const userExists = await employees.findOne({
-      email,
-    });
+
+    const userExists = await db(process.env.MONGODB_DBNAME)
+      .collection("employees")
+      .findOne({
+        email,
+      })
+      .toArray();
 
     if (userExists) {
       console.log("****userExists");
