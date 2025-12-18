@@ -8,11 +8,15 @@ export async function getEmployees(
   handleJsonPromiseResponseLog,
   handleFetchError
 ) {
+  // *******************************************
   try {
     const fetchPromise = await fetch(`${URL}${PATH}`);
     handleFetchPromiseError(fetchPromise);
     if (!fetchPromise.ok) {
-      console.log(await fetchPromise.text());
+      console.log(
+        await fetchPromise.text(),
+        "**************something went wrong with your fetching from employee route"
+      );
     } else {
       const jsonResponse = await fetchPromise.json();
       handleJsonPromiseResponseLog("getResources error:", jsonResponse);
