@@ -15,8 +15,6 @@ const LoginPage = ({ URL }) => {
   //   password: string;
   // }
 
-  console.log("Index working");
-
   const GOOGLE_AUTH_URL = "auth/google/url";
   const LOGIN_PATH = "auth/login";
 
