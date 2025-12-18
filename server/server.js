@@ -3,7 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
-import { employeeRouter } from "./Routes/employee.routes.js";
+import { employeeRouter } from "./api/employees.js";
 
 import multer from "multer";
 
@@ -39,7 +39,7 @@ app.use(upload.single("image"));
 // all requests to sign up and login with be router using router in auth.routes
 app.use("/auth", authRouter);
 
-app.use("/admin", employeeRouter);
+app.use("/api", employeeRouter);
 
 app.use("/add-project", addProjectsRouter);
 app.use("/all-projects", getProjectsRouter);
