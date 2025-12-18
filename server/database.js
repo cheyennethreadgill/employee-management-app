@@ -22,18 +22,16 @@ export async function connectDB() {
     await client.connect();
     const db = client.db(DBNAME);
 
-    const employees = await db.collection("employees").find({}).toArray();
+    // const employees = await db.collection("employees").find({}).toArray();
 
-    console.log(employees, "<<<<<employees log");
+    // console.log(employees, "<<<<<employees log");
 
-    console.log("*************You've successfully connected to MongoDB! DB File***********");
+    // console.log("*************You've successfully connected to MongoDB! DB File***********");
     return db;
   } catch (err) {
     console.log("something went wrong with connecting to MongoDB, DB File");
   }
 }
-
-console.log("**********database working***************");
 
 // const employees = database.collection("employees");
 // const projects = database.collection("projects");
