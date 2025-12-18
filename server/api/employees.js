@@ -1,13 +1,9 @@
-import { MongoClient } from "mongodb";
-import dotenv from "dotenv";
-import { Router } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import aws from "aws-sdk";
+import { connectDB } from "../database";
 
-dotenv.config();
 export const employeeRouter = new Router();
-const client = new MongoClient(process.env.MONGODB_URI);
 
 // // Create S3 instance
 // const s3 = new aws.S3();
@@ -21,9 +17,9 @@ const client = new MongoClient(process.env.MONGODB_URI);
 
 employeeRouter.get("/employees", async (req, res, next) => {
   try {
-    await client.connect();
+    const db = await connectDB();
 
-    const employees = await client.db(process.env.MONGODB_DBNAME).collection("employees").find({}).toArray();
+    const employees = await db(process.env.MONGODB_DBNAME).collection("employees").find({}).toArray();
 
     console.log("******************employees api is working");
 

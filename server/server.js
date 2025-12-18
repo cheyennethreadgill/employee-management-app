@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
 import { employeeRouter } from "./api/employees.js";
+import { connectDB } from "./database.js";
 
 import multer from "multer";
 
@@ -21,6 +22,8 @@ const corsOptions = {
   methods: "*",
   allowedHeaders: "*",
 };
+
+await connectDB();
 // middleware used for entire application
 app.use(cors(corsOptions));
 
