@@ -95,17 +95,17 @@ const Index = () => {
   }, []);
 
   // // get Projects
-  // useEffect(() => {
-  //   getProjects(
-  //     URL,
-  //     ALLPROJECTS_PATH,
-  //     handleSetProjects,
-  //     handleLoadingState,
-  //     handleFetchPromiseError,
-  //     handleJsonPromiseResponseLog,
-  //     handleFetchError
-  //   );
-  // }, []);
+  useEffect(() => {
+    getProjects(
+      URL,
+      ALLPROJECTS_PATH,
+      handleSetProjects,
+      handleLoadingState,
+      handleFetchPromiseError,
+      handleJsonPromiseResponseLog,
+      handleFetchError
+    );
+  }, []);
 
   // server error component
   function ServerErrorComponent() {
