@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { projects } from "../database.js";
+// import { projects } from "../database.js";
 
 const projectRouter = new Router();
 

@@ -5,7 +5,6 @@ import authRouter from "./Routes/auth.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
 import { employeeRouter } from "./api/employees.js";
 import { connectDB } from "./database.js";
-
 import multer from "multer";
 
 const app = express();
@@ -23,7 +22,9 @@ const corsOptions = {
   allowedHeaders: "*",
 };
 
+// waiting for the DB to connect
 await connectDB();
+
 // middleware used for entire application
 app.use(cors(corsOptions));
 
@@ -49,6 +50,5 @@ app.use("/all-projects", getProjectsRouter);
 app.use("/update-project", updateProjectsRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server running on port 8080... 
-   --------------------------------------------------------------------`);
+  console.log(`***********Server running on port 8080...*********`);
 });
