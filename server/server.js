@@ -3,7 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
 import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
-import { employeeRouter } from "./Routes/employee.routes.js";
+import { employeeRouter } from "./api/employees.js";
 
 import multer from "multer";
 
