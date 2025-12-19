@@ -15,11 +15,5 @@
         { "key": "Access-Control-Allow-Headers", "value": "*" }
       ]
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "server.js"
-    }
   ]
 }
