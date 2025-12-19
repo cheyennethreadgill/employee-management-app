@@ -14,5 +14,11 @@
         { "key": "Access-Control-Allow-Headers", "value": "*" }
       ]
     }
+  ],
+  "routes": [
+    {
+      "src": "/(.api)",
+      "dest": "/"
+    }
   ]
 }
