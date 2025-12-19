@@ -16,13 +16,15 @@ export const employeeRouter = new Router();
 //   region: process.env.AWS_REGION,
 // });
 
+// handling employees api get route
 employeeRouter.get("/employees", async (req, res, next) => {
   try {
-    // awaiting a new db connection
+    // awaiting a new database connection
     const db = await connectDB();
 
     const employees = await db.collection("employees").find({}).toArray();
 
+    console.log(employees);
     return res.status(200).json(employees);
   } catch (err) {
     return res.status(500).json({ error: err.message });

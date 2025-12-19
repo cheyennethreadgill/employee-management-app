@@ -52,3 +52,5 @@ app.use("/update-project", updateProjectsRouter);
 app.listen(PORT, () => {
   console.log(`***********Server running on port 8080...*********`);
 });
+
+export default app;
