@@ -4,34 +4,31 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 // configure .ENV file
 dotenv.config();
 
-export const URI = process.env.MONGODB_URI;
+const URI = process.env.MONGODB_URI;
 const DBNAME = process.env.MONGODB_DBNAME;
 
 // set up new client
 // const client = new MongoClient(URI);
-const client = new MongoClient(URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
 
-async function run() {
+export async function connectDB() {
   try {
+    // setting up client
+    const client = new MongoClient(URI, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    });
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db(DBNAME).command({ ping: 1 });
-    console.log("******************************************You successfully connected to MongoDB!");
-    // connect to database
-    // make a query from employees that shows all employees
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    const db = client.db(DBNAME);
+    console.log("***You've successfully connected to MongoDB!");
+    return db;
+  } catch (err) {
+    console.log("something went wrong with connecting to MongoDB");
   }
 }
-run().catch(console.dir);
 
 console.log("server working");
 
