@@ -21,9 +21,7 @@ employeeRouter.get("/employees", async (req, res, next) => {
     // awaiting a new db connection
     const db = await connectDB();
 
-    const employees = await db(process.env.MONGODB_DBNAME).collection("employees").find({}).toArray();
-
-    console.log("******************employees api is working");
+    const employees = await db.collection("employees").find({}).toArray();
 
     return res.status(200).json(employees);
   } catch (err) {
