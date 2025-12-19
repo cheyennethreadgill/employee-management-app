@@ -26,7 +26,7 @@ export async function connectDB() {
 
     // console.log(employees, "<<<<<employees log");
 
-    // console.log("*************You've successfully connected to MongoDB! DB File***********");
+    console.log("*************You've successfully connected to MongoDB! DB File***********");
     return db;
   } catch (err) {
     console.log("******************something went wrong with connecting to MongoDB, DB File**************:", err);
