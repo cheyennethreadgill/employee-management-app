@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import aws from "aws-sdk";
 import { connectDB } from "../database.js";
 
-export const employeeRouter = new Router();
+// export const employeeRouter = new Router();
 
 // // Create S3 instance
 // const s3 = new aws.S3();
@@ -17,7 +17,13 @@ export const employeeRouter = new Router();
 // });
 
 // handling employees api get route
-employeeRouter.get("/employees", async (req, res, next) => {
+export default async function getEmployeess ( req, res, next ) {
+  
+  export default async function handler(req, res) {
+  if (req.method !== "GET") {
+    return res.status(405).end();
+  }
+
   try {
     // awaiting a new database connection
     const db = await connectDB();

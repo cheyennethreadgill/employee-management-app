@@ -1,11 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -14,12 +8,6 @@
         { "key": "Access-Control-Allow-Methods", "value": "*" },
         { "key": "Access-Control-Allow-Headers", "value": "*" }
       ]
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "server.js"
     }
   ]
 }
