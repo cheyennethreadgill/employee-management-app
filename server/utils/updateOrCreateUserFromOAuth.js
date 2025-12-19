@@ -1,4 +1,4 @@
-import { connectDB } from "../database.js";
+import { connectDB } from "../api/database.js";
 // take user info from google oath and create new user in db
 
 // user from get user
