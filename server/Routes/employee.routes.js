@@ -21,6 +21,7 @@ employeeRouter.get("/employees", async (req, res, next) => {
 
     const employees = await client.db(process.env.MONGODB_DBNAME).collection("employees").find({}).toArray();
 
+    console.log("employees auth route working");
     return res.status(200).json(employees);
   } catch (err) {
     return res.status(500).json({ error: err.message });
