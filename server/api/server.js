@@ -1,9 +1,9 @@
 import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
-import authRouter from "./Routes/auth.routes.js";
-import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
-import { employeeRouter } from "./api/employees.js";
+import authRouter from "../Routes/auth.routes.js";
+import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "../Routes/project.routes.js";
+import { employeeRouter } from "./employees.js";
 import { connectDB } from "./database.js";
 import multer from "multer";
 
