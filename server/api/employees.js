@@ -24,7 +24,7 @@ employeeRouter.get("/employees", async (req, res, next) => {
 
     const employees = await db.collection("employees").find({}).toArray();
 
-    console.log(employees);
+    console.log(employees, "<<<<<<<<<employees in api");
     return res.status(200).json(employees);
   } catch (err) {
     return res.status(500).json({ error: err.message });
