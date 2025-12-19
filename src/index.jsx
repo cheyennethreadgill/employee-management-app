@@ -25,7 +25,7 @@ const Index = () => {
   // const URL = "http://localhost:8080/"; // Server data: use when in local development
   const URL = "https://employee-management-app-rho.vercel.app/"; // use when in production
 
-  const EMPLOYEE_PATH = "admin/employees";
+  const EMPLOYEES_API_PATH = "api/employees";
   const ADDEMPLOYEE_PATH = "admin/add-employee";
   const ALLPROJECTS_PATH = "all-projects";
   const UPDATE_PATH = "update-employee";
@@ -72,6 +72,7 @@ const Index = () => {
   };
 
   // *************************************************************************Resources
+
   const [employees, setEmployees] = useState([]);
   const [projects, setProjects] = useState([]);
   const handleSetEmployees = (data) => setEmployees(data);
@@ -83,7 +84,7 @@ const Index = () => {
       getEmployees(
         employees,
         URL,
-        EMPLOYEE_PATH,
+        EMPLOYEES_API_PATH,
         handleLoadingState,
         handleSetEmployees,
         handleFetchPromiseError,
@@ -95,17 +96,17 @@ const Index = () => {
   }, []);
 
   // // get Projects
-  useEffect(() => {
-    getProjects(
-      URL,
-      ALLPROJECTS_PATH,
-      handleSetProjects,
-      handleLoadingState,
-      handleFetchPromiseError,
-      handleJsonPromiseResponseLog,
-      handleFetchError
-    );
-  }, []);
+  // useEffect(() => {
+  //   getProjects(
+  //     URL,
+  //     ALLPROJECTS_PATH,
+  //     handleSetProjects,
+  //     handleLoadingState,
+  //     handleFetchPromiseError,
+  //     handleJsonPromiseResponseLog,
+  //     handleFetchError
+  //   );
+  // }, []);
 
   // server error component
   function ServerErrorComponent() {
@@ -166,7 +167,7 @@ const Index = () => {
           element: (
             <AllEmployees
               URL={URL}
-              EMPLOYEE_PATH={EMPLOYEE_PATH}
+              EMPLOYEES_API_PATH={EMPLOYEES_API_PATH}
               UPDATE_PATH={UPDATE_PATH}
               handleLoadingState={handleLoadingState}
               loading={loading}
@@ -254,7 +255,7 @@ const Index = () => {
 
   const contextValues = {
     ADDEMPLOYEE_PATH,
-    EMPLOYEE_PATH,
+    EMPLOYEES_API_PATH,
     ALLPROJECTS_PATH,
     ADDPROJECT_PATH,
     loading,
