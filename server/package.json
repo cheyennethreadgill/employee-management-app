@@ -6,7 +6,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "start": "vite",
+    "start": "node server",
     "build": "vite build",
     "serve": "vite preview"
   },
