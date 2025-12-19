@@ -7,8 +7,7 @@ dotenv.config();
 const URI = process.env.MONGODB_URI;
 const DBNAME = process.env.MONGODB_DBNAME;
 
-// set up new client
-
+// set up new DB client
 export async function connectDB() {
   try {
     // setting up client
@@ -25,7 +24,7 @@ export async function connectDB() {
 
     const employees = await db.collection("employees").find({}).toArray();
 
-    console.log(employees);
+    console.log(employees, "<<<<<employees log");
 
     console.log("*************You've successfully connected to MongoDB! DB File***********");
     return db;
