@@ -44,11 +44,15 @@ app.use(upload.single("image"));
 
 app.use("/", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API!");
-} );
+});
 
 app.use("/auth", authRouter);
 
-app.use("/api", employeeRouter);
+// app.use("/api", employeeRouter);
+// ***************************** TESTING
+app.use("/api", (req, res) => {
+  res.send("employees api json working (employee.js)");
+});
 
 app.use("/add-project", addProjectsRouter);
 app.use("/all-projects", getProjectsRouter);
