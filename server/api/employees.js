@@ -26,6 +26,7 @@ employeeRouter.get("/employees", async (req, res, next) => {
 
     console.log(employees, "<<<<<<<<<employees in api");
     // return res.status(200).json(employees);
+    res.send("employees api json working (employee.js)");
     res.send(employees);
   } catch (err) {
     return res.status(500).json({ error: err.message });
