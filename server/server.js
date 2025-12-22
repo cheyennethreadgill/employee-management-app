@@ -51,7 +51,7 @@ app.use("/auth", authRouter);
 // app.use("/api", employeeRouter);
 // ***************************** TESTING
 app.use("/api", (req, res) => {
-  res.json("employees api json working (employee.js)");
+  console.log("employees api json working (employee.js)");
 });
 
 app.use("/add-project", addProjectsRouter);
