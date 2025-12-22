@@ -43,12 +43,6 @@ app.use(upload.single("image"));
 // all requests to sign up and login with be router using router in auth.routes
 app.use("/auth", authRouter);
 
-app.use("/", (req, res) => {
-  res.send({
-    json: "this api is working",
-  });
-});
-
 app.use("/api", employeeRouter);
 
 app.use("/add-project", addProjectsRouter);
