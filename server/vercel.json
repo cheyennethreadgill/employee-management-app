@@ -17,7 +17,7 @@
     }
   ],
   "redirects": [
-    { "source": "/api/employees", "destination": "/server.js" },
+    { "source": "/api", "destination": "/server.js" },
     {
       "source": "/",
       "destination": "/server.js"
