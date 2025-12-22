@@ -44,7 +44,8 @@ app.use(upload.single("image"));
 
 app.use("/", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API!");
-});
+} );
+
 app.use("/auth", authRouter);
 
 app.use("/api", employeeRouter);
