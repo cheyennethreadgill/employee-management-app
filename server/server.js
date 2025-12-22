@@ -44,11 +44,9 @@ app.use(upload.single("image"));
 app.use("/auth", authRouter);
 
 app.use("/", (req, res) => {
-  res
-    .send({
-      json: "this api is working",
-    })
-    .end();
+  res.send({
+    json: "this api is working",
+  });
 });
 
 app.use("/api", employeeRouter);
