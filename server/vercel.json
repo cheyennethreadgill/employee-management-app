@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "./server.js",
       "use": "@vercel/node"
     }
   ],
@@ -16,5 +16,5 @@
       ]
     }
   ],
-  "redirects": [{ "source": "/", "destination": "/server.js" }]
+  "redirects": [{ "source": "/(.*)", "destination": "/server.js" }]
 }
