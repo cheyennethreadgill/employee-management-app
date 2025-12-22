@@ -44,6 +44,7 @@ app.use(upload.single("image"));
 
 app.use("/", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API!");
+  console.log("employees api json working (employee.js)");
 });
 
 app.use("/auth", authRouter);
@@ -51,7 +52,6 @@ app.use("/auth", authRouter);
 // app.use("/api", employeeRouter);
 // ***************************** TESTING
 app.use("/api", (req, res) => {
-  console.log("employees api json working (employee.js)");
 });
 
 app.use("/add-project", addProjectsRouter);
