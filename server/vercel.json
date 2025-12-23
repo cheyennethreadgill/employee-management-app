@@ -16,11 +16,5 @@
       ]
     }
   ],
-  "redirects": [
-    { "source": "/api", "destination": "/server.js" },
-    {
-      "source": "/",
-      "destination": "/server.js"
-    }
-  ]
+  "redirects": [{ "source": "/api", "destination": "/server.js" }]
 }
