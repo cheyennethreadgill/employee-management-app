@@ -41,11 +41,11 @@ app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 app.use(upload.single("image"));
 
 // all requests to sign up and login with be router using router in auth.routes
-app.use("/auth", authRouter);
+// app.use("/auth", authRouter);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the Kuber Employee Management API!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the Kuber Employee Management API!");
+// });
 
 // app.use("/api", employeeRouter);
 app.get("/api/employees", (req, res, next) => {
@@ -57,9 +57,9 @@ app.get("/api/employees", (req, res, next) => {
 //   res.send("employees api json working (employee.js)");
 // });
 
-app.use("/add-project", addProjectsRouter);
-app.use("/all-projects", getProjectsRouter);
-app.use("/update-project", updateProjectsRouter);
+// app.use("/add-project", addProjectsRouter);
+// app.use("/all-projects", getProjectsRouter);
+// app.use("/update-project", updateProjectsRouter);
 
 app.listen(PORT, () => {
   console.log(`***********Server running on port ${PORT}...*********`);
