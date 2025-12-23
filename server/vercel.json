@@ -15,6 +15,5 @@
         { "key": "Access-Control-Allow-Headers", "value": "*" }
       ]
     }
-  ],
-  "redirects": [{ "source": "/api/employees", "destination": "/api/employees.js" }]
+  ]
 }
