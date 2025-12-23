@@ -20,7 +20,7 @@ export const employeeRouter = new Router();
 //   res.send("Welcome to the Kuber Employee Management API!");
 // });
 // handling employees api get route
-// employeeRouter.get("/employees", async (req, res, next) => {
+employeeRouter.get("/employees", async (req, res, next) => {
 //   try {
 //     // awaiting a new database connection
 //     // const db = await connectDB();
