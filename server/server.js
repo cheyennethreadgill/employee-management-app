@@ -45,7 +45,7 @@ app.use(upload.single("image"));
 app.use("/auth", authRouter);
 
 // main route (instead of ('/')
-app.use("/api", employeeRouter);
+app.use("/", employeeRouter);
 // ***************************** TESTING
 // app.use("/api", (req, res) => {
 //   res.send("employees api json working (employee.js)");
