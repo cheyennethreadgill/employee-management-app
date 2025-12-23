@@ -43,12 +43,12 @@ app.use(upload.single("image"));
 // all requests to sign up and login with be router using router in auth.routes
 app.use("/auth", authRouter);
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API!");
 });
 
 // app.use("/api", employeeRouter);
-app.use("/api", async (req, res, next) => {
+app.get("/api", async (req, res, next) => {
   try {
     // awaiting a new database connection
     // const db = await connectDB();
