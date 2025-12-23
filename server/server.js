@@ -48,34 +48,8 @@ app.get("/", (req, res) => {
 });
 
 // app.use("/api", employeeRouter);
-app.get("/api/employees", async (req, res, next) => {
-  try {
-    // awaiting a new database connection
-    // const db = await connectDB();
-
-    // const employees = await db.collection("employees").find({}).toArray();
-
-    // console.log(employees, "<<<<<<<<<employees in api");
-    // return res.status(200).json(employees);
-
-    // *************************testing
-    res.send("employees api json working (server.js)");
-    // res.send(employees);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-  // try {
-  //   let foundArray = [];
-  //   const allEmployeesFound = employees.find();
-
-  //   for await (const doc of allEmployeesFound) {
-  //     foundArray.push(doc);
-  //   }
-  //   res.json(foundArray);
-  // } catch (err) {
-  //   console.log(`************error getting employees in employee route: ${err}`);
-  //   next(err);
-  // }
+app.get("/api/employees", (req, res, next) => {
+  res.send("employees api json working (server.js)");
 });
 
 // ***************************** TESTING
