@@ -48,7 +48,7 @@ app.get("/", (req, res) => {
 });
 
 // app.use("/api", employeeRouter);
-app.get("/api", async (req, res, next) => {
+app.get("/api/employees", async (req, res, next) => {
   try {
     // awaiting a new database connection
     // const db = await connectDB();
