@@ -43,9 +43,12 @@ app.use(upload.single("image"));
 // all requests to sign up and login with be router using router in auth.routes
 
 app.use("/auth", authRouter);
+app.use("/", employeeRouter);
 
 // main route (instead of ('/')
-app.use("/api", employeeRouter);
+app.use("/", (req, res) => {
+  res.send("Welcome to the Kuber Employee Management API!");
+});
 // ***************************** TESTING
 // app.use("/api", (req, res) => {
 //   res.send("employees api json working (employee.js)");
