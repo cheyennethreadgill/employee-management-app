@@ -16,7 +16,7 @@ export const employeeRouter = new Router();
 //   region: process.env.AWS_REGION,
 // });
 
-employeeRouter.get("/", (req, res) => {
+employeeRouter.get("/api", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API!");
 });
 // handling employees api get route
