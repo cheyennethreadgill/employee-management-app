@@ -66,9 +66,9 @@ app.use("/", (req, res) => {
 
 // In serverless deployments we must not start a listener here.
 
-// app.listen(PORT, () => {
-//   console.log(`***********Server running on port ${PORT}...*********`);
-// });
+app.listen(PORT, () => {
+  console.log(`***********Server running on port ${PORT}...*********`);
+});
 // The platform (Vercel) will call the exported handler instead.
 
 export default app;
