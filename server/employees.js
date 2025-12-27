@@ -2,7 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import aws from "aws-sdk";
-import { connectDB } from "./database.js";
+import { connectDB } from "../api/database.js";
 
 export const employeeRouter = new Router();
 
