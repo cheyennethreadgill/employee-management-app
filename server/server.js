@@ -46,7 +46,7 @@ app.use(upload.single("image"));
 app.use("/api", employeeRouter);
 
 app.use("/", (req, res) => {
-  res.send("Welcome to the Kuber Employee Management API! (Root)");
+  res.send("Welcome to the Kuber Employee Management API! (Root path)");
 });
 // app.use("/api", (req, res, next) => {
 //   res.send("employees api json working (server.js)");
