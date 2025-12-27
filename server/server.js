@@ -45,7 +45,7 @@ app.use(upload.single("image"));
 // all requests to sign up and login with be router using router in auth.routes
 // app.use("/auth", authRouter);
 
-// app.use("/api", employeeRouter);
+app.use("/api", employeeRouter);
 
 // app.use("/api", (req, res, next) => {
 //   res.send("employees api json working (server.js)");
@@ -64,8 +64,11 @@ app.use("/", (req, res) => {
 // app.use("/all-projects", getProjectsRouter);
 // app.use("/update-project", updateProjectsRouter);
 
-// In serverless deployments we must not start a listener here.
+// Only start a local listener when not running on Vercel (Vercel imports the app).
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`***********Server running on port ${PORT}....*********`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`***********Server running on port ${PORT}....*********`);
-});
+export default app;
