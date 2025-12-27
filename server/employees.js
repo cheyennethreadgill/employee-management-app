@@ -16,10 +16,6 @@ export const employeeRouter = new Router();
 //   region: process.env.AWS_REGION,
 // });
 
-employeeRouter.get("/", (req, res) => {
-  res.send("(employees.js Root) ");
-});
-
 // handling employees api get route
 // employeeRouter.get("/employees", async (req, res, next) => {
 // //   try {
@@ -60,7 +56,7 @@ employeeRouter.get("/employees", async (req, res, next) => {
     // return res.status(200).json(employees);
     // *************************testing
     // res.send("employees api json working (employee.js)");
-    res.send(employees);
+    res.json(employees);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -364,4 +360,8 @@ employeeRouter.delete("/delete-employee/:email", async (req, res) => {
   } catch (err) {
     res.json({ message: err });
   }
+});
+
+employeeRouter.get("/", (req, res) => {
+  res.send("(employees.js Root) ");
 });

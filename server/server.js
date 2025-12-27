@@ -45,14 +45,15 @@ app.use(upload.single("image"));
 // all requests to sign up and login with be router using router in auth.routes
 // app.use("/auth", authRouter);
 
-// app.use("/api", employeeRouter);
+app.use("/api", employeeRouter);
+
+// app.use("/api", (req, res, next) => {
+//   res.send("employees api json working (server.js)");
+// });
 
 app.use("/", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API! (Root path)");
 });
-// app.use("/api", (req, res, next) => {
-//   res.send("employees api json working (server.js)");
-// });
 
 // ***************************** TESTING
 // app.use("/api", (req, res) => {
@@ -65,9 +66,9 @@ app.use("/", (req, res) => {
 
 // In serverless deployments we must not start a listener here.
 
-app.listen(PORT, () => {
-  console.log(`***********Server running on port ${PORT}...*********`);
-});
+// app.listen(PORT, () => {
+//   console.log(`***********Server running on port ${PORT}...*********`);
+// });
 // The platform (Vercel) will call the exported handler instead.
 
 export default app;
