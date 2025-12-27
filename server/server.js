@@ -6,6 +6,7 @@ import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Ro
 import { employeeRouter } from "./employees.js";
 import { connectDB } from "./database.js";
 import multer from "multer";
+import { connect } from "mongoose";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -22,8 +23,9 @@ const corsOptions = {
   allowedHeaders: "*",
 };
 
+// await connectDB();
 // Do not connect to DB at module import time in serverless environments.
-// Connect inside route handlers via `connectDB()` when needed.
+// Connect inside route handlers via `connectDB()` when needed.^^^^
 
 // middleware used for entire application
 app.use(cors(corsOptions));
