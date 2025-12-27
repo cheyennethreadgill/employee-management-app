@@ -69,6 +69,3 @@ app.use("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`***********Server running on port ${PORT}....*********`);
 });
-// The platform (Vercel) will call the exported handler instead.
-
-export default app;
