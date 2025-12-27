@@ -22,8 +22,8 @@ const corsOptions = {
   allowedHeaders: "*",
 };
 
-// waiting for the DB to connect
-await connectDB();
+// Do not connect to DB at module import time in serverless environments.
+// Connect inside route handlers via `connectDB()` when needed.
 
 // middleware used for entire application
 app.use(cors(corsOptions));
@@ -61,8 +61,11 @@ app.use("/", (req, res) => {
 // app.use("/all-projects", getProjectsRouter);
 // app.use("/update-project", updateProjectsRouter);
 
-// app.listen(PORT, () => {
-//   console.log(`***********Server running on port ${PORT}...*********`);
-// });
+// In serverless deployments we must not start a listener here.
+
+app.listen(PORT, () => {
+  console.log(`***********Server running on port ${PORT}...*********`);
+});
+// The platform (Vercel) will call the exported handler instead.
 
 export default app;
