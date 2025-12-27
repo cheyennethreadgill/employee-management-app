@@ -23,7 +23,7 @@ const corsOptions = {
   allowedHeaders: "*",
 };
 
-// await connectDB();
+await connectDB();
 // Do not connect to DB at module import time in serverless environments.
 // Connect inside route handlers via `connectDB()` when needed.^^^^
 
