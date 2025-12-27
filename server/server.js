@@ -61,8 +61,8 @@ app.use("/", (req, res) => {
 // app.use("/all-projects", getProjectsRouter);
 // app.use("/update-project", updateProjectsRouter);
 
-app.listen(PORT, () => {
-  console.log(`***********Server running on port ${PORT}...*********`);
-});
+// app.listen(PORT, () => {
+//   console.log(`***********Server running on port ${PORT}...*********`);
+// });
 
 export default app;
