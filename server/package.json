@@ -6,9 +6,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "start": "node server"
   },
   "jest": {
     "preset": "jest-mysql"
