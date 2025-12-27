@@ -71,3 +71,4 @@ app.listen(PORT, () => {
 });
 // The platform (Vercel) will call the exported handler instead.
 
+export default add
