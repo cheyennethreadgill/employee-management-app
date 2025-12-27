@@ -65,10 +65,10 @@ app.use("/", (req, res) => {
 // app.use("/update-project", updateProjectsRouter);
 
 // Only start a local listener when not running on Vercel (Vercel imports the app).
-if (!process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`***********Server running on port ${PORT}....*********`);
-  });
-}
+// if (!process.env.VERCEL) {
+//   app.listen(PORT, () => {
+//     console.log(`***********Server running on port ${PORT}....*********`);
+//   });
+// }
 
 export default app;
