@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import aws from "aws-sdk";
 import { connectDB } from "./database.js";
 
-export const employeeRouter = new Router();
+// export const employeeRouter = new Router();
 
 // // Create S3 instance
 // const s3 = new aws.S3();
