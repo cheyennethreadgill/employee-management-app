@@ -9,5 +9,6 @@
         { "key": "Access-Control-Allow-Headers", "value": "*" }
       ]
     }
-  ]
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index.js" }]
 }
