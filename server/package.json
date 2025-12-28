@@ -27,6 +27,7 @@
     "connect-mongodb-session": "^5.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
@@ -43,7 +44,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "^5.0.1",
-    "dotenv": "^16.4.7",
     "serverless-http": "^4.0.0"
   },
   "devDependencies": {
