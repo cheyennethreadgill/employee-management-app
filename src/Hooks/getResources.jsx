@@ -10,7 +10,7 @@ export async function getEmployees(
 ) {
   // *******************************************
   try {
-    const fetchPromise = await fetch("https://employee-management-app-rho.vercel.app/api/employees");
+    const fetchPromise = await fetch(`${URL}${PATH}`);
     handleFetchPromiseError(fetchPromise);
     if (!fetchPromise.ok) {
       console.log(
