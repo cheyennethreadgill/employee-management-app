@@ -51,15 +51,13 @@ app.use(upload.single("image"));
 //   res.send("employees api json working (server.js)");
 // });
 
-
-
-app.use("/", (req, res) => {
-  res.send("Welcome to the Kuber Employee Management API! (Root path)");
-});
-
 // ***************************** TESTING
 app.use("/api", (req, res) => {
   res.send("employees api json working (employee.js)");
+});
+
+app.use("/", (req, res) => {
+  res.send("Welcome to the Kuber Employee Management API! (Root path)");
 });
 
 // app.use("/add-project", addProjectsRouter);
