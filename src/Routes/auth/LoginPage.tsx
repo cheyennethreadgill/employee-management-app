@@ -28,9 +28,9 @@ const LoginPage = ({ URL }) => {
   const { token: oauthToken } = useQueryParams();
 
   // // remove any existing token so the auto info can show
-  // useEffect(() => {
-  //   localStorage.removeItem("token");
-  // }, []);
+  useEffect(() => {
+    localStorage.removeItem("token");
+  }, []);
 
   // set google oauth token if google btn is clicked
   useEffect(() => {
@@ -41,27 +41,27 @@ const LoginPage = ({ URL }) => {
   }, [oauthToken, setToken]);
 
   // auto load general googl oauth url from server
-  // useEffect(() => {
-  //   const loadOAuthURL = async () => {
-  //     try {
-  //       const options = {
-  //         method: "GET",
-  //         "Content-Type": "application/json",
-  //         Accept: "*/*",
-  //       };
-  //       const fetchresponse = await fetch(`${URL}${GOOGLE_AUTH_URL}`, options);
-  //       const { url } = await fetchresponse.json();
+  useEffect(() => {
+    const loadOAuthURL = async () => {
+      try {
+        const options = {
+          method: "GET",
+          "Content-Type": "application/json",
+          Accept: "*/*",
+        };
+        const fetchresponse = await fetch(`${URL}${GOOGLE_AUTH_URL}`, options);
+        const { url } = await fetchresponse.json();
 
-  //       setGoogleOAuthURL(url);
-  //       console.log(url);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   loadOAuthURL();
-  // }, []);
+        setGoogleOAuthURL(url);
+        console.log(url);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    loadOAuthURL();
+  }, []);
 
-  // ******************PASSWORD
+  // *************************************************************PASSWORD
   const [passwordToggle, setPasswordToggle] = useState(false);
   const [loginInfoAuto, setLoginInfoAuto] = useState({
     username: user.username || "admin",
