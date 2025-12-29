@@ -1,26 +1,21 @@
 import { Router } from "express";
-// import { projects } from "../database.js";
+import { connectDB } from "../database.js";
 
-const projectRouter = new Router();
+export const projectRouter = new Router();
 
-export const getProjectsRouter = projectRouter.get("/", async (req, res, next) => {
+// ***********************************************************GET PROJECTS
+projectRouter.get("/all-projects", async (req, res, next) => {
   try {
-    let foundArray = [];
-    const allProjectsFound = projects.find();
-
-    for await (const doc of allProjectsFound) {
-      foundArray.push(doc);
-    }
-    res.json(foundArray);
+    const db = await connectDB();
+    const projects = await db.collection("projects").find({}).toArray();
+    return res.status(200).json(projects);
   } catch (err) {
     console.log(`error getting projects: ${err}`);
     next(err);
-  } finally {
-    console.log("Get projects action complete.");
-    res.end();
   }
 });
 
+// ***********************************************************ADD PROJECTS
 export const addProjectsRouter = projectRouter.post("/", async (req, res) => {
   console.log(req.body);
 
@@ -62,6 +57,7 @@ export const addProjectsRouter = projectRouter.post("/", async (req, res) => {
   }
 });
 
+// ***********************************************************EDIT PROJECTS
 export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
   console.log(req.body);
 
