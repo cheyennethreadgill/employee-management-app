@@ -11,7 +11,7 @@ import AllEmployees from "./Components/Employees/AllEmployees";
 import AddProject from "./Components/Projects/AddProject";
 import AllProjects from "./Components/Projects/AllProjects";
 import { getEmployees } from "./Hooks/getResources";
-import { getProjects } from "./Hooks/getResources";
+// import { getProjects } from "./Hooks/getResources";
 import LoginPage from "./Routes/auth/LoginPage";
 import SignUpPage from "./Routes/auth/SignUpPage";
 import ForgotPasswordPage from "./Routes/auth/forgot.password";
@@ -49,14 +49,15 @@ const Index = () => {
       return response;
     }
   };
+  const [formError, setFormError] = useState(false)
 
   // set respionse message
   const [responseMessage, setResponseMessage] = useState("");
 
   // response log
-  const handleJsonPromiseResponseLog = (res, setFormError) => {
+  const handleJsonPromiseResponseLog = (res, json) => {
     if (!res.ok) {
-      if (setFormError) {
+      if (json) {
         setFormError(true);
       }
       setResponseMessage(res.message);
