@@ -115,7 +115,7 @@ const LoginPage = ({ URL }) => {
         setLoginAuth({ loginError: false, response: "" });
       }
     } catch (err) {
-      console.log(err);
+      console.log(`error in login form data, handleAddUserFromLogin FN>>> ${err}`);
     }
 
     form.reset();
