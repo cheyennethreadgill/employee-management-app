@@ -55,53 +55,56 @@ export const signUpHandler = async (req, res) => {
   }
 };
 
+// **********************************************************LOGIN HANDLER
+
 export const loginHandler = async (req, res) => {
   // const { username, password } = req.body;
+  res.json({ message: "**********login handler working" });
 
-  let usernameBody = req.body.username;
-  let passwordBody = req.body.password;
+  // let usernameBody = req.body.username;
+  // let passwordBody = req.body.password;
 
-  try {
-    // compare user info and db info
+  // try {
+  //   // compare user info and db info
 
-    // check to see if user is already in db
-    const foundUser = await User.findOne({
-      username: usernameBody,
-    });
+  //   // check to see if user is already in db
+  //   const foundUser = await User.findOne({
+  //     username: usernameBody,
+  //   });
 
-    if (foundUser) {
-      const { _id, fname, lname, username, password, email, image } = foundUser;
-      // conpmare password against db
-      bcrypt.compare(passwordBody, password, (err, result) => {
-        if (err) {
-          res.sendStatus(409).json({ message: "*****Login encryption error." });
-        }
-        if (result === false) {
-          res.status(401).json({
-            message: "Login Error: Invalid credentials.",
-            user: username,
-          });
-        } else {
-          // generate token(cookie) to send to client
-          jwt.sign(
-            { id: _id, fname, lname, username, email, password, image: image },
-            process.env.JWT_SECRET,
-            { expiresIn: "1hr" },
-            (err, token) => {
-              if (err) {
-                res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
-              }
-              res.status(200).json({ token });
-            }
-          );
-        }
-      });
-    } else {
-      res.status(409).json({ message: "Invalid credentials." });
-    }
-  } catch (err) {
-    res.status(500).json({ message: err });
-  }
+  //   if (foundUser) {
+  //     const { _id, fname, lname, username, password, email, image } = foundUser;
+  //     // conpmare password against db
+  //     bcrypt.compare(passwordBody, password, (err, result) => {
+  //       if (err) {
+  //         res.sendStatus(409).json({ message: "*****Login encryption error." });
+  //       }
+  //       if (result === false) {
+  //         res.status(401).json({
+  //           message: "Login Error: Invalid credentials.",
+  //           user: username,
+  //         });
+  //       } else {
+  //         // generate token(cookie) to send to client
+  //         jwt.sign(
+  //           { id: _id, fname, lname, username, email, password, image: image },
+  //           process.env.JWT_SECRET,
+  //           { expiresIn: "1hr" },
+  //           (err, token) => {
+  //             if (err) {
+  //               res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
+  //             }
+  //             res.status(200).json({ token });
+  //           }
+  //         );
+  //       }
+  //     });
+  //   } else {
+  //     res.status(409).json({ message: "Invalid credentials." });
+  //   }
+  // } catch (err) {
+  //   res.status(500).json({ message: err });
+  // }
 };
 
 export const forgotPasswordHandler = async (req, res) => {
@@ -135,35 +138,8 @@ export const forgotPasswordHandler = async (req, res) => {
   }
   return res.sendStatus(200);
 };
-export const logoutHandler = async (req, res) => {
-  // const { email } = req.params;
-  // console.log(req.params);
-  // // // generate random string to send to user
-  // const passwordResetCode = uuid();
-  // const { modifiedCount } = await employees.updateOne(
-  //   {
-  //     email,
-  //   },
-  //   { $set: { passwordResetCode } }
-  // );
-  // console.log(modifiedCount);
-  // if (modifiedCount > 0) {
-  //   try {
-  //     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  //     const msg = {
-  //       to: email,
-  //       from: "threadgillcheyenne@gmail.com",
-  //       subject: "Password reset",
-  //       text: `To reset your password, click this link: http://localhost:3000/auth/reset-password/${passwordResetCode}`,
-  //     };
-  //     sgMail.send(msg);
-  //     return res.sendStatus(200);
-  //   } catch (err) {
-  //     return res.sendStatus(500);
-  //   }
-  // }
-  // return res.sendStatus(200);
-};
+
+export const logoutHandler = async (req, res) => {};
 
 export const resetPasswordHandler = async (req, res) => {
   const { passwordResetCode } = req.params;

@@ -23,8 +23,6 @@ export async function getEmployees(
     handleJsonPromiseResponseLog("getResources error:", jsonResponse);
     handleSetEmployees(jsonResponse);
     handleLoadingState(false);
-    console.log(jsonResponse);
-    console.log("******employees from getResources");
   } catch (err) {
     handleFetchError(`error in resource file, problem with fetching employees in getEmployees function: ${err}`);
   }

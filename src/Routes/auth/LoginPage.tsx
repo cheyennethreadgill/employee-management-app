@@ -21,6 +21,7 @@ const LoginPage = ({ URL }) => {
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 
+  // *********************************************************STATES
   const [user] = useUser();
   const [token, setToken] = useToken();
 
@@ -32,7 +33,7 @@ const LoginPage = ({ URL }) => {
     localStorage.removeItem("token");
   }, []);
 
-  // set google oauth token if google btn is clicked
+  // ***************************************************set GOOGLE OAUTH token if google btn is clicked
   useEffect(() => {
     if (oauthToken) {
       setToken(oauthToken);
@@ -40,7 +41,7 @@ const LoginPage = ({ URL }) => {
     }
   }, [oauthToken, setToken]);
 
-  // auto load general googl oauth url from server
+  // **********************auto load general GOOGLE oauth url from server
   useEffect(() => {
     const loadOAuthURL = async () => {
       try {
@@ -82,6 +83,8 @@ const LoginPage = ({ URL }) => {
     setLoginFormData({ ...loginFormData, [key]: value });
   };
 
+  // **********************************************LOGIN FORM DATA HANDLER
+
   async function handleAddUserFromLogin(e, loginFormData) {
     const form = e.currentTarget;
 
@@ -101,6 +104,7 @@ const LoginPage = ({ URL }) => {
       };
       const fetchresponse = await fetch(`${URL}${LOGIN_PATH}`, options);
       const jsonResponse = await fetchresponse.json();
+
       if (!fetchresponse.ok) {
         setLoginAuth({ ...loginAuth, loginError: true, response: jsonResponse.message });
         console.log(`login error: ${loginAuth.loginError}`);
@@ -108,7 +112,7 @@ const LoginPage = ({ URL }) => {
         console.log(jsonResponse.message);
         form.reset();
       } else {
-        navigate("/admin");
+        // navigate("/admin");
         setToken(jsonResponse.token);
         // console.log({ ...user, message: `Welcome, ${user[0].username}!` });
         console.log(user);

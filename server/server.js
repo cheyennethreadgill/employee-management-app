@@ -1,9 +1,9 @@
 import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
-import authRouter from "./Routes/auth.routes.js";
+import { authRouter } from "./Routes/auth.routes.js";
+import { employeeRouter } from "./Routes/employees.js";
 import { projectRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
-import { employeeRouter } from "./employees.js";
 import { connectDB } from "./database.js";
 import multer from "multer";
 import { connect } from "mongoose";
@@ -42,14 +42,16 @@ app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 
 app.use(upload.single("image"));
 
+// app.use("/auth", authRouter);
+app.use("/auth", (req, res) => {
+  res.json({ message: "**********login handler working" });
+});
 app.use("/api", projectRouter);
+app.use("/api", employeeRouter);
 app.use("/add-project", addProjectsRouter);
 app.use("/update-project", updateProjectsRouter);
 
 // all requests to sign up and login with be router using router in auth.routes
-app.use("/auth", authRouter);
-
-app.use("/api", employeeRouter);
 
 // ***************************** TESTING
 // app.use("/api", (req, res, next) => {
@@ -61,10 +63,9 @@ app.use("/", (req, res) => {
 });
 
 // Only start a local listener when not running on Vercel (Vercel imports the app).
-if (!process.env.VERCEL) {
+
   app.listen(PORT, () => {
     console.log(`***********Server running on port ${PORT}....*********`);
   });
-}
 
 export default app;
