@@ -30,28 +30,28 @@ export async function getEmployees(
   }
 }
 
-// export async function getProjects(
-//   URL,
-//   PATH,
-//   handleSetProjects,
-//   handleLoadingState,
-//   handleFetchPromiseError,
-//   handleJsonPromiseResponseLog,
-//   handleFetchError
-// ) {
-//   try {
-//     const promise = await fetch(`${URL}${PATH}`);
-//     handleFetchPromiseError(promise);
-//     if (!promise.ok) {
-//       console.log(await promise.text());
-//     } else {
-//       const jsonResponse = await promise.json();
-//       handleJsonPromiseResponseLog(jsonResponse);
-//       handleSetProjects(jsonResponse);
-//       handleLoadingState(false);
-//     }
-//   } catch (err) {
-//     //try catch error
-//     handleFetchError(`error in resource file, problem with fetching projects in getProjects function: ${err}`);
-//   }
-// }
+export async function getProjects(
+  URL,
+  PATH,
+  handleSetProjects,
+  handleLoadingState,
+  handleFetchPromiseError,
+  handleJsonPromiseResponseLog,
+  handleFetchError
+) {
+  try {
+    const promise = await fetch(`${URL}${PATH}`);
+    handleFetchPromiseError(promise);
+    if (!promise.ok) {
+      console.log(await promise.text());
+    } else {
+      const jsonResponse = await promise.json();
+      handleJsonPromiseResponseLog(jsonResponse);
+      handleSetProjects(jsonResponse);
+      handleLoadingState(false);
+    }
+  } catch (err) {
+    //try catch error
+    handleFetchError(`error in resource file, problem with fetching projects in getProjects function: ${err}`);
+  }
+}
