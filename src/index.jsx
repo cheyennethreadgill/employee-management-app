@@ -10,8 +10,7 @@ import AddEmployee from "./Components/Employees/AddEmployee";
 import AllEmployees from "./Components/Employees/AllEmployees";
 import AddProject from "./Components/Projects/AddProject";
 import AllProjects from "./Components/Projects/AllProjects";
-import { getEmployees } from "./Hooks/getResources";
-// import { getProjects } from "./Hooks/getResources";
+import { getEmployees, getProjects } from "./Hooks/getResources";
 import LoginPage from "./Routes/auth/LoginPage";
 import SignUpPage from "./Routes/auth/SignUpPage";
 import ForgotPasswordPage from "./Routes/auth/forgot.password";
@@ -27,7 +26,7 @@ const Index = () => {
 
   const EMPLOYEES_API_PATH = "api/employees";
   const ADDEMPLOYEE_PATH = "admin/add-employee";
-  const ALLPROJECTS_PATH = "all-projects";
+  const ALLPROJECTS_PATH = "api/all-projects";
   const UPDATE_PATH = "update-employee";
   const ADDPROJECT_PATH = "add-project";
 
@@ -49,7 +48,7 @@ const Index = () => {
       return response;
     }
   };
-  const [formError, setFormError] = useState(false)
+  const [formError, setFormError] = useState(false);
 
   // set respionse message
   const [responseMessage, setResponseMessage] = useState("");
@@ -97,17 +96,17 @@ const Index = () => {
   }, []);
 
   // // get Projects
-  // useEffect(() => {
-  //   getProjects(
-  //     URL,
-  //     ALLPROJECTS_PATH,
-  //     handleSetProjects,
-  //     handleLoadingState,
-  //     handleFetchPromiseError,
-  //     handleJsonPromiseResponseLog,
-  //     handleFetchError
-  //   );
-  // }, []);
+  useEffect(() => {
+    getProjects(
+      URL,
+      ALLPROJECTS_PATH,
+      handleSetProjects,
+      handleLoadingState,
+      handleFetchPromiseError,
+      handleJsonPromiseResponseLog,
+      handleFetchError
+    );
+  }, []);
 
   // server error component
   function ServerErrorComponent() {
@@ -200,12 +199,11 @@ const Index = () => {
           path: "/admin/all-projects",
           element: (
             <AllProjects
-              setDeleteNotif={setDeleteNotif}
-              deleteNotif={deleteNotif}
               URL={URL}
               projects={projects}
+              setDeleteNotif={setDeleteNotif}
+              deleteNotif={deleteNotif}
               handleSetProjects={handleSetProjects}
-              ALLPROJECTS_PATH={ALLPROJECTS_PATH}
               workStatusOptions={workStatusOptions}
               priorityOptions={priorityOptions}
               teamOptions={teamOptions}
@@ -224,7 +222,6 @@ const Index = () => {
               projects={projects}
               handleSetProjects={handleSetProjects}
               handleLoadingState={handleLoadingState}
-              ALLPROJECTS_PATH={ALLPROJECTS_PATH}
               ServerErrorComponent={ServerErrorComponent}
               handleFetchPromiseError={handleFetchPromiseError}
               handleJsonPromiseResponseLog={handleJsonPromiseResponseLog}
