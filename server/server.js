@@ -58,9 +58,9 @@ app.use("/", (req, res) => {
 });
 
 // ***************************** TESTING
-// app.use("/api", (req, res) => {
-//   res.send("employees api json working (employee.js)");
-// });
+app.use("/api", (req, res) => {
+  res.send("employees api json working (employee.js)");
+});
 
 // app.use("/add-project", addProjectsRouter);
 // app.use("/all-projects", getProjectsRouter);
