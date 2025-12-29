@@ -1,9 +1,5 @@
-import app from "../server.js";
-import ServerlessHttp from "serverless-http";
 
-// export default ServerlessHttp(app);
 
-// ...existing code...
 console.log("api/index module loaded");
 
 export default async function handler(req, res) {
@@ -18,4 +14,4 @@ export default async function handler(req, res) {
     res.status(500).send("Server handler import error");
   }
 }
-// ...existing code...
+
