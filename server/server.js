@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 
 app.use(upload.single("image"));
 
-app.use("/projects", projectRouter);
+app.use("/api", projectRouter);
 app.use("/add-project", addProjectsRouter);
 app.use("/update-project", updateProjectsRouter);
 
