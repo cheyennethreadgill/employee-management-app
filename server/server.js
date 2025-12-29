@@ -51,6 +51,8 @@ app.use(upload.single("image"));
 //   res.send("employees api json working (server.js)");
 // });
 
+console.log("*****************server.js imported");
+
 app.use("/", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API! (Root path)");
 });
