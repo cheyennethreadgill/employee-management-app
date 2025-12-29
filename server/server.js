@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 app.use(upload.single("image"));
 
 // all requests to sign up and login with be router using router in auth.routes
-// app.use("/auth", authRouter);
+app.use("/auth", authRouter);
 
 app.use("/api", employeeRouter);
 
