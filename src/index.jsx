@@ -25,7 +25,7 @@ const Index = () => {
 
   const EMPLOYEES_API_PATH = "api/employees";
   const ADDEMPLOYEE_PATH = "admin/add-employee";
-  const ALLPROJECTS_PATH = "projects/all-projects";
+  const ALLPROJECTS_PATH = "api/all-projects";
   const UPDATE_PATH = "update-employee";
   const ADDPROJECT_PATH = "add-project";
 
