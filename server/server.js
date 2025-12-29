@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
 import authRouter from "./Routes/auth.routes.js";
-import { getProjectsRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
+import { projectRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
 import { employeeRouter } from "./employees.js";
 import { connectDB } from "./database.js";
 import multer from "multer";
@@ -42,6 +42,10 @@ app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 
 app.use(upload.single("image"));
 
+app.use("/api", projectRouter);
+app.use("/add-project", addProjectsRouter);
+app.use("/update-project", updateProjectsRouter);
+
 // all requests to sign up and login with be router using router in auth.routes
 app.use("/auth", authRouter);
 
@@ -56,15 +60,11 @@ app.use("/", (req, res) => {
   res.send("Welcome to the Kuber Employee Management API! (Root path)");
 });
 
-// app.use("/add-project", addProjectsRouter);
-// app.use("/all-projects", getProjectsRouter);
-// app.use("/update-project", updateProjectsRouter);
-
 // Only start a local listener when not running on Vercel (Vercel imports the app).
-// if (!process.env.VERCEL) {
-//   app.listen(PORT, () => {
-//     console.log(`***********Server running on port ${PORT}....*********`);
-//   });
-// }
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`***********Server running on port ${PORT}....*********`);
+  });
+}
 
 export default app;
