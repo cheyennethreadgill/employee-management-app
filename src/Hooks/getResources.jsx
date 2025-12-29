@@ -15,7 +15,7 @@ export async function getEmployees(
     if (!fetchPromise.ok) {
       console.log(
         await fetchPromise.text(),
-        "**************something went wrong with your fetching from employee route"
+        "**************something went wrong with your fetching from employee route in getEmployees file"
       );
     } else {
       const jsonResponse = await fetchPromise.json();
@@ -26,7 +26,7 @@ export async function getEmployees(
       console.log("******employees from getResources");
     }
   } catch (err) {
-    handleFetchError(`error in resource file, problem with fetching projects in getEmployees function: ${err}`);
+    handleFetchError(`error in resource file, problem with fetching employees in getEmployees function: ${err}`);
   }
 }
 
