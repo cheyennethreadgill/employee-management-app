@@ -83,7 +83,7 @@ export const loginHandler = async (req, res) => {
         }
         if (result === false) {
           res.status(401).json({
-            message: "Login Error: Invalid credentials.",
+            message: "Login Error: Invalid credentials.: auth.handlers.js",
             user: username,
           });
         } else {
