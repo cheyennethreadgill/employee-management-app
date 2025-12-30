@@ -40,7 +40,8 @@ export const addProjectsRouter = projectRouter.post("/", async (req, res) => {
     res.json({ message: "Form Error: Project ID must be 4 characters." });
   } else {
     try {
-      await projects.insertOne(projectInfo);
+      const db = await connectDB();
+      await db.collection("projects").insertOne(projectInfo);
 
       res.json({
         status: "success",
