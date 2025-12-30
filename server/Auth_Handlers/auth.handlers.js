@@ -84,33 +84,34 @@ export const loginHandler = async (req, res) => {
         }
         // ***********looks like this check is overriding the valid credentials below
         // if the info isn't a match, log error
-        // if (result === false) {
-        //   res.status(401).json({
-        //     message: "Login Error: Invalid credentials.: auth.handlers.js",
-        //     user: username,
-        //     password: password,
-        //     passwordFromReq: passwordBody,
-        //   });
-        // }
-        // ***********looks like this check is overriding the valid credentials below
-
-        //if credentials is valid, do this:
-        // generate token(cookie) with db data to send to client
-        jwt.sign(
-          { id: _id, fname, lname, username, email, password, image: image },
-          process.env.JWT_SECRET,
-          { expiresIn: "1hr" },
-          (err, token) => {
-            if (err) {
-              res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
+        if (result === false) {
+          res.status(401).json({
+            message: "Login Error: Invalid credentials.: auth.handlers.js",
+            user: username,
+            password: password,
+            passwordFromReq: passwordBody,
+          });
+        } else {
+          //if credentials is valid, do this:
+          // generate token(cookie) with db data to send to client
+          jwt.sign(
+            { id: _id, fname, lname, username, email, password, image: image },
+            process.env.JWT_SECRET,
+            { expiresIn: "1hr" },
+            (err, token) => {
+              if (err) {
+                res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
+              }
+              // send client the login token if password is correct
+              res.status(200).json({ token });
             }
-            // send client the login token if password is correct
-            res.status(200).json({ token });
-          }
-        );
+          );
+        }
       });
-    } else {
-      res.status(409).json({ message: "User not found.: Login FN" }); //log if the user isnt found
+    }
+    //log if the user isnt found
+    else {
+      res.status(409).json({ message: "User not found.: Login FN" });
     }
   } catch (err) {
     res.status(500).json({ message: err });
