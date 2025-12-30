@@ -79,10 +79,11 @@ export const loginHandler = async (req, res) => {
       // compare password against db, result is a boolean
       bcrypt.compare(passwordBody, password, (err, result) => {
         // if bycrypt fn errors, log error
-        res.send("************************result from bcrypt compare", result);
+        res.send({ message: `************************result from bcrypt compare: ${result}` });
         if (err) {
           res.sendStatus(409).json({ message: "*****Login encryption error." });
         }
+        // ***********looks like this check is overriding the valid credentials below
         // if the info isn't a match, log error
         // if (result === false) {
         //   res.status(401).json({
@@ -92,6 +93,7 @@ export const loginHandler = async (req, res) => {
         //     passwordFromReq: passwordBody,
         //   });
         // }
+        // ***********looks like this check is overriding the valid credentials below
         else {
           //if credentials is valid, do this:
           // generate token(cookie) to send to client
