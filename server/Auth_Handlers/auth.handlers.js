@@ -78,9 +78,11 @@ export const loginHandler = async (req, res) => {
       const { _id, fname, lname, username, password, email, image } = foundUser;
       // compare password against db
       bcrypt.compare(passwordBody, password, (err, result) => {
+        // if bycrypt fn errors, log error
         if (err) {
           res.sendStatus(409).json({ message: "*****Login encryption error." });
         }
+        // if the info isn't a match
         if (result === false) {
           res.status(401).json({
             message: "Login Error: Invalid credentials.: auth.handlers.js",
@@ -103,7 +105,7 @@ export const loginHandler = async (req, res) => {
         }
       });
     } else {
-      res.status(409).json({ message: "Invalid credentials." });
+      res.status(409).json({ message: "User not found.: Login FN" });
     }
   } catch (err) {
     res.status(500).json({ message: err });
