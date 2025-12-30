@@ -78,6 +78,7 @@ export const loginHandler = async (req, res) => {
       const { _id, fname, lname, username, password, email, image } = foundUser;
       // compare password against db, result is a boolean
       bcrypt.compare(passwordBody, password, (err, result) => {
+        console.log("************************result from bcrypt compare");
         // if bycrypt fn errors, log error
         if (err) {
           res.sendStatus(409).json({ message: "*****Login encryption error." });
