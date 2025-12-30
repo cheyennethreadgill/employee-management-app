@@ -43,9 +43,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
 app.use(upload.single("image"));
 
 // app.use("/auth", authRouter);
-app.use("/auth", (req, res) => {
-  res.json({ message: "**********login handler working" });
-});
+app.use("/auth", authRouter);
+
 app.use("/api", projectRouter);
 app.use("/api", employeeRouter);
 app.use("/add-project", addProjectsRouter);
@@ -64,8 +63,8 @@ app.use("/", (req, res) => {
 
 // Only start a local listener when not running on Vercel (Vercel imports the app).
 
-  app.listen(PORT, () => {
-    console.log(`***********Server running on port ${PORT}....*********`);
-  });
+app.listen(PORT, () => {
+  console.log(`***********Server running on port ${PORT}....*********`);
+});
 
 export default app;
