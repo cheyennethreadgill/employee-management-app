@@ -88,7 +88,7 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
     // update the filtered project
     await db.collection("projects").updateOne(filterProject, projectInfo);
 
-    res.json({
+    res.status(200).json({
       status: "success",
       message: "project updated successfully.",
       projectUpdated: req.body,
