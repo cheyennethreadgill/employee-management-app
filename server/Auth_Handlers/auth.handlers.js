@@ -79,9 +79,8 @@ export const loginHandler = async (req, res) => {
       // compare password against db, result is a boolean
       bcrypt.compare(passwordBody, password, (err, result) => {
         // if bycrypt fn errors, log error
-        res.send({ message: `************************result from bcrypt compare: ${result}` });
         if (err) {
-          res.sendStatus(409).json({ message: "*****Login encryption error." });
+          res.sendStatus(409).json({ message: "*****General encryption error." });
         }
         // ***********looks like this check is overriding the valid credentials below
         // if the info isn't a match, log error
@@ -94,22 +93,21 @@ export const loginHandler = async (req, res) => {
         //   });
         // }
         // ***********looks like this check is overriding the valid credentials below
-        else {
-          //if credentials is valid, do this:
-          // generate token(cookie) to send to client
-          jwt.sign(
-            { id: _id, fname, lname, username, email, password, image: image },
-            process.env.JWT_SECRET,
-            { expiresIn: "1hr" },
-            (err, token) => {
-              if (err) {
-                res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
-              }
-              // send client the login token if password is correct
-              res.status(200).json({ token });
+
+        //if credentials is valid, do this:
+        // generate token(cookie) with db data to send to client
+        jwt.sign(
+          { id: _id, fname, lname, username, email, password, image: image },
+          process.env.JWT_SECRET,
+          { expiresIn: "1hr" },
+          (err, token) => {
+            if (err) {
+              res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
             }
-          );
-        }
+            // send client the login token if password is correct
+            res.status(200).json({ token });
+          }
+        );
       });
     } else {
       res.status(409).json({ message: "User not found.: Login FN" }); //log if the user isnt found
