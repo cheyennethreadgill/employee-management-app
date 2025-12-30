@@ -78,20 +78,21 @@ export const loginHandler = async (req, res) => {
       const { _id, fname, lname, username, password, email, image } = foundUser;
       // compare password against db, result is a boolean
       bcrypt.compare(passwordBody, password, (err, result) => {
-        console.log("************************result from bcrypt compare");
+        console.log("************************result from bcrypt compare", err);
         // if bycrypt fn errors, log error
         if (err) {
           res.sendStatus(409).json({ message: "*****Login encryption error." });
         }
         // if the info isn't a match, log error
-        if (result === false) {
-          res.status(401).json({
-            message: "Login Error: Invalid credentials.: auth.handlers.js",
-            user: username,
-            password: password,
-            passwordFromReq: passwordBody,
-          });
-        } else {
+        // if (result === false) {
+        //   res.status(401).json({
+        //     message: "Login Error: Invalid credentials.: auth.handlers.js",
+        //     user: username,
+        //     password: password,
+        //     passwordFromReq: passwordBody,
+        //   });
+        // }
+        else {
           //if credentials is valid, do this:
           // generate token(cookie) to send to client
           jwt.sign(
