@@ -10,6 +10,7 @@ import { getGoogleOAuthURL } from "../utils/getGoogleOAuthURL.js";
 import { updateOrCreateUserFromOAuth } from "../utils/updateOrCreateUserFromOAuth.js";
 import { getGoogleUser } from "../utils/getGoogleUser.js";
 
+// **********************************************************SIGNUP HANDLER
 export const signUpHandler = async (req, res) => {
   const { fname, lname, username, email, password, image } = req.body;
   try {
@@ -56,13 +57,14 @@ export const signUpHandler = async (req, res) => {
 };
 
 // **********************************************************LOGIN HANDLER
-
 export const loginHandler = async (req, res) => {
   // const { username, password } = req.body;
   let usernameBody = req.body.username;
   let passwordBody = req.body.password;
+
   try {
     const db = await connectDB();
+    console.log("**************************successfully connect to DB");
     // compare user info and db info
     // check to see if user is already in db
     const foundUser = await db.collection("employees").findOne({ username: usernameBody });
