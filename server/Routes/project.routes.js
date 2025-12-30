@@ -61,10 +61,12 @@ export const addProjectsRouter = projectRouter.post("/", async (req, res) => {
 export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
   console.log(req.body);
 
+  // get the project id to filter
   let filterProject = {
     projectID: req.body.projectID,
   };
 
+  // set the project with the updated info from form
   let projectInfo = {
     $set: {
       title: req.body.title,
@@ -82,7 +84,9 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
   };
 
   try {
-    await projects.updateOne(filterProject, projectInfo);
+    const db = await connectDB();
+    // update the filtered project
+    await db.collection("projects").updateOne(filterProject, projectInfo);
 
     res.json({
       status: "success",
@@ -90,7 +94,7 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
       projectUpdated: req.body,
     });
   } catch (err) {
-    console.log(`error updating project: ${err}`);
+    console.log(`error updating project (project.routes.js): ${err}`);
     next(err);
   } finally {
     console.log("User project update complete.");
