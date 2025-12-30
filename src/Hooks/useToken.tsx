@@ -8,6 +8,9 @@ export const useToken = (): [string, SetTokenType] => {
   // get token that's in local storage in state
   const initialToken = (): string => {
     const g = localStorage.getItem("token") || "";
+    if (!g.valueOf) {
+      return null;
+    }
     return g;
   };
 
@@ -21,6 +24,5 @@ export const useToken = (): [string, SetTokenType] => {
     // console.log(`Initial Token: ${token}`);
     // console.log(`Token passed from user: ${newToken}`);
   };
-
   return [token, setToken];
 };

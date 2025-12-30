@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, lazy } from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
@@ -34,12 +34,12 @@ const LoginPage = ({ URL }) => {
   }, []);
 
   // ***************************************************set GOOGLE OAUTH token if google btn is clicked
-  useEffect(() => {
-    if (oauthToken) {
-      setToken(oauthToken);
-      navigate("/admin");
-    }
-  }, [oauthToken, setToken]);
+  // useEffect(() => {
+  //   if (oauthToken) {
+  //     setToken(oauthToken);
+  //     navigate("/admin");
+  //   }
+  // }, [oauthToken, setToken]);
 
   // **********************auto load general GOOGLE oauth url from server
   useEffect(() => {
@@ -54,7 +54,6 @@ const LoginPage = ({ URL }) => {
         const { url } = await fetchresponse.json();
 
         setGoogleOAuthURL(url);
-        console.log(url);
       } catch (err) {
         console.log(err);
       }
@@ -112,6 +111,7 @@ const LoginPage = ({ URL }) => {
         console.log(jsonResponse.message);
         form.reset();
       } else {
+        // can I lazy load admin???
         // navigate("/admin");
         setToken(jsonResponse.token);
         // console.log({ ...user, message: `Welcome, ${user[0].username}!` });

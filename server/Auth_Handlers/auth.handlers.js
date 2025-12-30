@@ -2,7 +2,7 @@ import User from "../Models/user.login.model.js";
 // import successPage from "../views/successPage.jsx";
 import jwt from "jsonwebtoken";
 // import { employees, users } from "../database.js";
-// import { connectDB } from "../database.js"; /// use this instead of above
+import { connectDB } from "../database.js"; /// use this instead of above
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import sgMail from "@sendgrid/mail";
@@ -59,52 +59,53 @@ export const signUpHandler = async (req, res) => {
 
 export const loginHandler = async (req, res) => {
   // const { username, password } = req.body;
-  res.json({ message: "**********login handler working" });
+  let usernameBody = req.body.username;
+  let passwordBody = req.body.password;
+  try {
+    const db = await connectDB();
+    // compare user info and db info
+    // check to see if user is already in db
+    const foundUser = await db.collection("employees").findOne({ username: usernameBody });
+    console.log(foundUser, "******************************");
 
-  // let usernameBody = req.body.username;
-  // let passwordBody = req.body.password;
+    // const foundUser = await User.findOne({
+    //   username: usernameBody,
+    // } );
 
-  // try {
-  //   // compare user info and db info
-
-  //   // check to see if user is already in db
-  //   const foundUser = await User.findOne({
-  //     username: usernameBody,
-  //   });
-
-  //   if (foundUser) {
-  //     const { _id, fname, lname, username, password, email, image } = foundUser;
-  //     // conpmare password against db
-  //     bcrypt.compare(passwordBody, password, (err, result) => {
-  //       if (err) {
-  //         res.sendStatus(409).json({ message: "*****Login encryption error." });
-  //       }
-  //       if (result === false) {
-  //         res.status(401).json({
-  //           message: "Login Error: Invalid credentials.",
-  //           user: username,
-  //         });
-  //       } else {
-  //         // generate token(cookie) to send to client
-  //         jwt.sign(
-  //           { id: _id, fname, lname, username, email, password, image: image },
-  //           process.env.JWT_SECRET,
-  //           { expiresIn: "1hr" },
-  //           (err, token) => {
-  //             if (err) {
-  //               res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
-  //             }
-  //             res.status(200).json({ token });
-  //           }
-  //         );
-  //       }
-  //     });
-  //   } else {
-  //     res.status(409).json({ message: "Invalid credentials." });
-  //   }
-  // } catch (err) {
-  //   res.status(500).json({ message: err });
-  // }
+    if (foundUser) {
+      const { _id, fname, lname, username, password, email, image } = foundUser;
+      // compare password against db
+      bcrypt.compare(passwordBody, password, (err, result) => {
+        if (err) {
+          res.sendStatus(409).json({ message: "*****Login encryption error." });
+        }
+        if (result === false) {
+          res.status(401).json({
+            message: "Login Error: Invalid credentials.",
+            user: username,
+          });
+        } else {
+          // generate token(cookie) to send to client
+          jwt.sign(
+            { id: _id, fname, lname, username, email, password, image: image },
+            process.env.JWT_SECRET,
+            { expiresIn: "1hr" },
+            (err, token) => {
+              if (err) {
+                res.sendStatus(401).json({ message: "login error: Invalid JWT credentials." });
+              }
+              // send client the login token if password is correct
+              res.status(200).json({ token });
+            }
+          );
+        }
+      });
+    } else {
+      res.status(409).json({ message: "Invalid credentials." });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 };
 
 export const forgotPasswordHandler = async (req, res) => {
@@ -171,6 +172,7 @@ export const resetPasswordHandler = async (req, res) => {
   }
 };
 
+// ***********************************************************GOOGLE
 // get oauth url request from client when google sign in option is clicked
 export const googleOAuthUrlHandler = async (req, res) => {
   // getGoogleOAuthURL util file

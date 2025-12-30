@@ -7,15 +7,18 @@ export const useUser = () => {
   const navigate = useNavigate();
   const [token] = useToken();
 
+  // parse the token to get the payload (user info)
+  const splitToken = token.split(".")[1];
+
   if (token) {
     const userPayload = () => {
+
+      console.log(token)
       // atob fn decodes an encoded string
       const parsedPayload = JSON.parse(atob(splitToken));
       return parsedPayload;
     };
 
-    // parse the token to get the payload (user info)
-    const splitToken = token.split(".")[1];
     // set user in state
     const [user, setUser] = useState(userPayload);
 
