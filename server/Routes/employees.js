@@ -100,9 +100,9 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
 
       // **********************************************upload to aws
       const bucketName = process.env.AWS_BUCKET_NAME;
-      const fileForAWS = JSON.stringify(req.file);
-      res.send({ message: `bucket name: ${bucketName}. File for aws ${fileForAWS}` });
-      // await awsImageUpload({ bucketName, generateKey, fileForAWS });
+      const fileForAWS = req.file.body;
+
+      await awsImageUpload({ bucketName, generateKey, fileForAWS });
 
       // // File uploaded successfully, return URL or other relevant info
 
