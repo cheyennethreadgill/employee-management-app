@@ -87,7 +87,7 @@ const AddEmployee = ({
       console.log(`Error in Add employee fetch:`);
       handleFetchError(err);
     }
-    currentTarget.reset();
+    // currentTarget.reset();
   }
   // get form validation response
   const promise = (e: React.FormEvent<HTMLFormElement>) => {
