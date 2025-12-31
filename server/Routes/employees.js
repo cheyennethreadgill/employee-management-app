@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { PutObjectCommand, S3Client, S3ServiceException } from "@aws-sdk/client-s3";
 import { connectDB } from "../database.js";
-import { readFile } from "node:fs/promises";
+import { readFile, filePath } from "node:fs/promises";
 
 export const employeeRouter = new Router();
 
