@@ -1,9 +1,8 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { PutObjectCommand, S3Client, S3ServiceException } from "@aws-sdk/client-s3";
 import { connectDB } from "../database.js";
-// import { readFile, filePath } from "node:fs/promises";
+import { awsImageUpload } from "../aws_handlers.js";
 
 export const employeeRouter = new Router();
 
@@ -71,7 +70,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
     department: req.body.department,
     email: req.body.email,
     degree: req.body.degree,
-    image: (req.file && req.file.originalname) || " ",
+    image: import(req.file && req.file.originalname) || " ",
     username: req.body.username,
     password: await generateHashPassword(),
   };
@@ -94,25 +93,17 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
 
     try {
       // Generate a unique key based on the file's original name
-      function generateKey() {
+      async function generateKey() {
         const origname = req.file.originalname;
         return `${origname}`;
       }
 
-      // set up new aws s3 client
-      const client = new S3Client({});
-
-      const uploadParams = new PutObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: generateKey(), // Leave it empty for now
-        Body: await readFile(filePath),
-      });
-
-      // Upload file to AWS S3 database
-      const response = await client.send(uploadParams);
+      // **********************************************upload to aws
+      const bucketName = process.env.AWS_BUCKET_NAME;
+      const fileForAWS = req.file.buffer;
+      await awsImageUpload({ bucketName, generateKey, fileForAWS });
 
       // File uploaded successfully, return URL or other relevant info
-      console.log({ url: data.Location });
 
       //***************************************** */ then wait for the new employee to be added
       const db = await connectDB();
@@ -148,21 +139,8 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         awsUpload: response,
       });
     } catch (err) {
-      if (err instanceof S3ServiceException && err.name === "EntityTooLarge") {
-        console.error(
-          `Error from S3 while uploading object to ${process.env.AWS_BUCKET_NAME}. \
-The object was too large. To upload objects larger than 5GB, use the S3 console (160GB max) \
-or the multipart upload API (5TB max).`
-        );
-      } else if (err instanceof S3ServiceException) {
-        console.error(
-          `Error from S3 while uploading object to $${process.env.AWS_BUCKET_NAME}.  ${err.name}: ${err.message}`
-        );
-      } else {
-        throw err;
-        // console.log(`error adding employee: ${err}`);
-        // return res.status(500).json({ error: "**************Failed to upload file to S3" });
-      }
+      console.log(`error adding employee: ${err}`);
+      return res.status(500).json({ error: "**************Failed to upload file to S3", err });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
