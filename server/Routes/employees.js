@@ -101,8 +101,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       // **********************************************upload to aws
       const bucketName = process.env.AWS_BUCKET_NAME;
       const fileForAWS = req.file.buffer;
-      console.log(` file for aws ${fileForAWS}`);
-      console.log(`bucket name: ${bucketName}`);
+      res.send(`bucket name: ${bucketName}. File for aws ${fileForAWS}`);
       // await awsImageUpload({ bucketName, generateKey, fileForAWS });
 
       // // File uploaded successfully, return URL or other relevant info
@@ -142,7 +141,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       // });
     } catch (err) {
       console.log(`error adding employee: ${err}`);
-      return res.status(500).json({ error: "**************Failed to upload file to S3", err });
+      return res.status(500).json({ err });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
