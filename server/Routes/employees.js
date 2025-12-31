@@ -145,40 +145,40 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
-  else {
-    try {
-      const db = await connectDB();
-      await db.collection("employees").insertOne(employeeInfo);
+  // else {
+  //   try {
+  //     const db = await connectDB();
+  //     await db.collection("employees").insertOne(employeeInfo);
 
-      const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
+  //     const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
 
-      const { _id, fname, lname, username, email, password, image } = addedEmployee;
+  //     const { _id, fname, lname, username, email, password, image } = addedEmployee;
 
-      // create web token
-      jwt.sign(
-        { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
-        process.env.JWT_SECRET,
-        { expiresIn: "2d" },
-        function (err, token) {
-          if (err) {
-            return res.status(401).json("Unauthorized access.");
-          } else {
-            // send token to front end
-            res.status(200).json({ token });
-          }
-        }
-      );
+  //     // create web token
+  //     jwt.sign(
+  //       { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
+  //       process.env.JWT_SECRET,
+  //       { expiresIn: "2d" },
+  //       function (err, token) {
+  //         if (err) {
+  //           return res.status(401).json("Unauthorized access.");
+  //         } else {
+  //           // send token to front end
+  //           res.status(200).json({ token });
+  //         }
+  //       }
+  //     );
 
-      return res.json({
-        status: res.statusCode,
-        message: "Employee added successfully.",
-        employee: req.body,
-      });
-    } catch (err) {
-      console.log(`error adding employee: ${err}`);
-      return next(err);
-    }
-  }
+  //     return res.json({
+  //       status: res.statusCode,
+  //       message: "Employee added successfully.",
+  //       employee: req.body,
+  //     });
+  //   } catch (err) {
+  //     console.log(`error adding employee: ${err}`);
+  //     return next(err);
+  //   }
+  // }
 });
 
 // employeeRouter.get("/find-employee", async (req, res, next) => {
