@@ -25,7 +25,7 @@ const Index = () => {
   const URL = "https://employee-management-app-rho.vercel.app/"; // use when in production
 
   const EMPLOYEES_API_PATH = "api/employees";
-  const ADDEMPLOYEE_PATH = "admin/add-employee";
+  const ADDEMPLOYEE_PATH = "api/add-employee";
   const ALLPROJECTS_PATH = "api/all-projects";
   const UPDATE_PATH = "update-employee";
   const ADDPROJECT_PATH = "add-project";

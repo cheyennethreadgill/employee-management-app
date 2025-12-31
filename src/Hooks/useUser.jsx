@@ -12,8 +12,6 @@ export const useUser = () => {
 
   if (token) {
     const userPayload = () => {
-
-      console.log(token)
       // atob fn decodes an encoded string
       const parsedPayload = JSON.parse(atob(splitToken));
       return parsedPayload;

@@ -9,7 +9,7 @@ export const useToken = (): [string, SetTokenType] => {
   const initialToken = (): string => {
     const g = localStorage.getItem("token") || "";
     if (!g.valueOf) {
-      return null;
+      return;
     }
     return g;
   };

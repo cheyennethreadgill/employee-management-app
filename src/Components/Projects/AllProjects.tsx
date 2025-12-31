@@ -92,17 +92,7 @@ const AllProjects = ({
   const handleEditMode = () => setEditMode(!editMode);
   const handleProjectSetForModal = (projectObject: ProjectInterface) => setprojectInfoForModal(projectObject); // Set project info given by employee card
 
-  // // UPDATE PROJECT STATE DELETE (UI)
-  const handleProjectStateUpdateDelete = (id: number) => {
-    handleSetProjects(
-      projects.filter((project: { projectID: number }) => {
-        const { projectID } = project;
-        return projectID !== id;
-      })
-    );
-  };
-
-  // UPDATE Project STATE (UI)
+  // **********************************UPDATE Project STATE (UI)
   const handleProjectStateUpdate = (id: number, projectToUpdate: object) => {
     handleSetProjects(
       projects.map((project: { projectID: number }) => {
@@ -115,16 +105,7 @@ const AllProjects = ({
     );
   };
 
-  const handleDeleteProjectFromDB = (id: number) =>
-    deleteProjectFromDB(
-      id,
-      URL,
-      DELETEPROJECT_PATH,
-      handleFetchPromiseError,
-      handleJsonPromiseResponseLog,
-      handleFetchError
-    );
-  //   UPDATE PROJECT (DB)
+  //   ********************************UPDATE PROJECT (DB)
   async function handleProjectUpdate(e: React.FormEvent, id: number, projectToUpdate: ProjectInterface) {
     e.preventDefault();
     handleProjectStateUpdate(id, projectToUpdate);
@@ -157,6 +138,26 @@ const AllProjects = ({
       (err: Error) => handleFetchError(err);
     }
   }
+
+  // // UPDATE PROJECT STATE DELETE (UI)
+  const handleProjectStateUpdateDelete = (id: number) => {
+    handleSetProjects(
+      projects.filter((project: { projectID: number }) => {
+        const { projectID } = project;
+        return projectID !== id;
+      })
+    );
+  };
+
+  const handleDeleteProjectFromDB = (id: number) =>
+    deleteProjectFromDB(
+      id,
+      URL,
+      DELETEPROJECT_PATH,
+      handleFetchPromiseError,
+      handleJsonPromiseResponseLog,
+      handleFetchError
+    );
 
   return (
     <section className="all-projects">

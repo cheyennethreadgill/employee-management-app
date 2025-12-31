@@ -109,10 +109,9 @@ const LoginPage = ({ URL }) => {
         console.log(`login error: ${loginAuth.loginError}`);
         console.log(`login response: ${loginAuth.response}`);
         console.log(jsonResponse.message);
-        form.reset();
       } else {
         // can I lazy load admin???
-        // navigate("/admin");
+        navigate("/admin")
         setToken(jsonResponse.token);
         // console.log({ ...user, message: `Welcome, ${user[0].username}!` });
         console.log(user);
