@@ -158,11 +158,9 @@ or the multipart upload API (5TB max).`
           `Error from S3 while uploading object to $${process.env.AWS_BUCKET_NAME}.  ${err.name}: ${err.message}`
         );
       } else {
-        throw err;
+        console.log(`error adding employee: ${err}`);
+        return res.status(500).json({ error: "**************Failed to upload file to S3" }).next(err);
       }
-
-      console.log(`error adding employee: ${err}`);
-      return res.status(500).json({ error: "**************Failed to upload file to S3" }).next(err);
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
