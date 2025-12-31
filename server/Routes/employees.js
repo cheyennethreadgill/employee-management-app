@@ -93,16 +93,16 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
 
     try {
       // Generate a unique key based on the file's original name
-      // async function generateKey() {
-      //   const origname = req.file.originalname;
-      //   return `${origname}`;
-      // }
+      async function generateKey() {
+        const origname = req.file.originalname;
+        return `${origname}`;
+      }
 
       // **********************************************upload to aws
       const bucketName = process.env.AWS_BUCKET_NAME;
-      const fileForAWS = req.file.body;
+      const fileForAWS = req.file.buffer;
 
-      await awsImageUpload({ bucketName, generateKey, fileForAWS });
+      await awsImageUpload({ req, res, bucketName, generateKey, fileForAWS });
 
       // // File uploaded successfully, return URL or other relevant info
 
