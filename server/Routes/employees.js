@@ -159,7 +159,7 @@ or the multipart upload API (5TB max).`
         );
       } else {
         console.log(`error adding employee: ${err}`);
-        return res.status(500).json({ error: "**************Failed to upload file to S3" }).next(err);
+        return res.status(500).json({ error: "**************Failed to upload file to S3" });
       }
     }
   }
