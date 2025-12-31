@@ -60,7 +60,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
   // if req file is present want to send error if req file is uploaded, else continue with query
 
   const generateHashPassword = async () => {
-    return bcrypt.hash(req.body.password, 10);
+    return await bcrypt.hash(req.body.password, 10);
   };
 
   let employeeInfo = {
