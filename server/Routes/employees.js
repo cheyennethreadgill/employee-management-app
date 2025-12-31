@@ -75,7 +75,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
     password: await generateHashPassword(),
   };
 
-  // if theres an image present in the client
+  // *************************************************if theres an image present in the client
   if (req.file) {
     //SET REQ FILE FOR ABOVE
     employeeInfo.image = req.file.originalname;
@@ -104,7 +104,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const uploadParams = new PutObjectCommand({
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: generateKey(), // Leave it empty for now
-        Body: req.file.buffer,
+        Body: await readFile(filePath),
       });
 
       // Upload file to AWS S3 database
@@ -158,7 +158,7 @@ or the multipart upload API (5TB max).`
           `Error from S3 while uploading object to $${process.env.AWS_BUCKET_NAME}.  ${err.name}: ${err.message}`
         );
       } else {
-       throw err
+        throw err;
         // console.log(`error adding employee: ${err}`);
         // return res.status(500).json({ error: "**************Failed to upload file to S3" });
       }
