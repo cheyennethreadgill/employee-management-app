@@ -7,14 +7,14 @@ import { connectDB } from "../database.js";
 export const employeeRouter = new Router();
 
 // // Create S3 instance
-// const s3 = new aws.S3();
+const s3 = new aws.S3();
 
-// // Configure AWS SDK
-// aws.config.update({
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//   region: process.env.AWS_REGION,
-// });
+// Configure AWS SDK
+aws.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
 
 // handling employees api get route
 // employeeRouter.get("/employees", async (req, res, next) => {
@@ -47,6 +47,7 @@ export const employeeRouter = new Router();
 // //   // }
 // // });
 
+// *******************************************************GET ALL EMPLOYEES
 employeeRouter.get("/employees", async (req, res, next) => {
   try {
     // awaiting a new database connection
@@ -60,17 +61,6 @@ employeeRouter.get("/employees", async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-  // try {
-  //   let foundArray = [];
-  //   const allEmployeesFound = employees.find();
-  //   for await (const doc of allEmployeesFound) {
-  //     foundArray.push(doc);
-  //   }
-  //   res.json(foundArray);
-  // } catch (err) {
-  //   console.log(`************error getting employees in employee route: ${err}`);
-  //   next(err);
-  // }
 });
 
 // employeeRouter.get("/find-employee", async (req, res, next) => {
@@ -228,128 +218,139 @@ employeeRouter.get("/employees", async (req, res, next) => {
 //   // set token in employee modal with new token sent from server response on PUT
 // });
 
-// employeeRouter.post("/add-employee", async (req, res, next) => {
-//   // if req file isnt present, continue with query
-//   // if req file is present want to send error if req file is uploaded, else continue with query
+// ********************************************************ADD EMPLOYEE
+employeeRouter.post("/add-employee", async (req, res, next) => {
+  // if req file isnt present, continue with query
+  // if req file is present want to send error if req file is uploaded, else continue with query
 
-//   const generateHashPassword = async () => {
-//     return bcrypt.hash(req.body.password, 10);
-//   };
+  const generateHashPassword = async () => {
+    return bcrypt.hash(req.body.password, 10);
+  };
 
-//   let employeeInfo = {
-//     fname: req.body.fname,
-//     lname: req.body.lname,
-//     mobile: req.body.mobile,
-//     designation: req.body.designation,
-//     department: req.body.department,
-//     email: req.body.email,
-//     degree: req.body.degree,
-//     image: (req.file && req.file.originalname) || " ",
-//     username: req.body.username,
-//     password: await generateHashPassword(),
-//   };
+  let employeeInfo = {
+    fname: req.body.fname,
+    lname: req.body.lname,
+    mobile: req.body.mobile,
+    designation: req.body.designation,
+    department: req.body.department,
+    email: req.body.email,
+    degree: req.body.degree,
+    image: (req.file && req.file.originalname) || " ",
+    username: req.body.username,
+    password: await generateHashPassword(),
+  };
 
-//   if (req.file) {
-//     //SET REQ FILE FOR ABOVE
-//     employeeInfo.image = req.file.originalname;
+  // if theres an image present in the client
+  if (req.file) {
+    //SET REQ FILE FOR ABOVE
+    employeeInfo.image = req.file.originalname;
 
-//     // SERVER HANDLE FILE CHECK
-//     let index = employeeInfo.image.lastIndexOf(".");
-//     let extension = employeeInfo.image.substring(-1 + index + 1);
+    // ********************************************SERVER HANDLE FILE CHECK
+    let index = employeeInfo.image.lastIndexOf(".");
+    let extension = employeeInfo.image.substring(-1 + index + 1);
 
-//     if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
-//       //if file exists and extension is wrong
-//       console.log(`*****************Please give valid extension. File entered: ${extension}`);
-//       return res.status(500).json({ error: `Please give valid extension: ${extension}` });
-//     }
+    // check to see if there is an accept file format that was uploaded
+    if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
+      //if file exists and extension is wrong
+      console.log(`*****************Please give valid extension. File entered: ${extension}`);
+      return res.status(500).json({ error: `Please give valid extension: ${extension}` });
+    }
 
-//     try {
-//       // Generate a unique key based on the file's original name
-//       function generateKey() {
-//         const origname = req.file.originalname;
-//         return `${origname}`;
-//       }
-//       const uploadParams = {
-//         Bucket: process.env.AWS_BUCKET_NAME,
-//         Key: generateKey(), // Leave it empty for now
-//         Body: req.file.buffer,
-//       };
+    try {
+      // Generate a unique key based on the file's original name
+      function generateKey() {
+        const origname = req.file.originalname;
+        return `${origname}`;
+      }
+      const uploadParams = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: generateKey(), // Leave it empty for now
+        Body: req.file.buffer,
+      };
 
-//       // Upload file to S3
-//       s3.upload(uploadParams, (err, data) => {
-//         if (err) {
-//           console.error(err);
-//           return res.status(500).json({ error: "**************Failed to upload file to S3" });
-//         }
-//         // File uploaded successfully, return URL or other relevant info
-//         console.log({ url: data.Location });
-//       });
-//       // ***********************************************s3 end
-//       await employees.insertOne(employeeInfo);
-//       const addedEmployee = await employees.findOne({ email: req.body.email });
+      // Upload file to AWS S3 database
+      s3.upload(uploadParams, (err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: "**************Failed to upload file to S3" });
+        }
+        // File uploaded successfully, return URL or other relevant info
+        console.log({ url: data.Location });
+      });
 
-//       const { _id, fname, lname, username, email, password, image } = addedEmployee;
+      //***************************************** */ then wait for the new employee to be added
+      const db = await connectDB();
+      await db.collection("employees").insertOne(employeeInfo);
 
-//       // create web token
-//       jwt.sign(
-//         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
-//         process.env.JWT_SECRET,
-//         { expiresIn: "2d" },
-//         function (err, token) {
-//           if (err) {
-//             return res.status(401).json("Unauthorized access.");
-//           } else {
-//             // send token to front end
-//             res.status(200).json({ token });
-//           }
-//         }
-//       );
+      const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
 
-//       console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
-//       console.log(req.file);
-//       console.log({ body: req.body });
+      const { _id, fname, lname, username, email, password, image } = addedEmployee;
 
-//       return res.json({
-//         status: "success",
-//         message: "Employee added successfully.",
-//         employee: req.body,
-//       });
-//     } catch (err) {
-//       console.log(`error adding employee: ${err}`);
-//       return next(err);
-//     }
-//   } else {
-//     try {
-//       await employees.insertOne(employeeInfo);
-//       const addedEmployee = await employees.findOne({ email: req.body.email });
-//       const { _id, fname, lname, username, email, password, image } = addedEmployee;
+      // create web token
+      jwt.sign(
+        { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
+        process.env.JWT_SECRET,
+        { expiresIn: "2d" },
+        function (err, token) {
+          if (err) {
+            return res.status(401).json("Unauthorized access.");
+          } else {
+            // send token to front end
+            res.status(200).json({ token });
+          }
+        }
+      );
 
-//       // create web token
-//       jwt.sign(
-//         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
-//         process.env.JWT_SECRET,
-//         { expiresIn: "2d" },
-//         function (err, token) {
-//           if (err) {
-//             return res.status(401).json("Unauthorized access.");
-//           } else {
-//             // send token to front end
-//             res.status(200).json({ token });
-//           }
-//         }
-//       );
+      console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
+      console.log(req.file);
+      console.log({ body: req.body });
 
-//       return res.json({
-//         status: res.statusCode,
-//         message: "Employee added successfully.",
-//         employee: req.body,
-//       });
-//     } catch (err) {
-//       console.log(`error adding employee: ${err}`);
-//       return next(err);
-//     }
-//   }
-// });
+      return res.json({
+        status: "success",
+        message: "Employee added successfully.",
+        employee: req.body,
+      });
+    } catch (err) {
+      console.log(`error adding employee: ${err}`);
+      return next(err);
+    }
+  }
+  // **********************************************if there isnt an image uploaded to the client, do this:
+  else {
+    try {
+      const db = await connectDB();
+      await db.collection("employees").insertOne(employeeInfo);
+
+      const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
+
+      const { _id, fname, lname, username, email, password, image } = addedEmployee;
+
+      // create web token
+      jwt.sign(
+        { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
+        process.env.JWT_SECRET,
+        { expiresIn: "2d" },
+        function (err, token) {
+          if (err) {
+            return res.status(401).json("Unauthorized access.");
+          } else {
+            // send token to front end
+            res.status(200).json({ token });
+          }
+        }
+      );
+
+      return res.json({
+        status: res.statusCode,
+        message: "Employee added successfully.",
+        employee: req.body,
+      });
+    } catch (err) {
+      console.log(`error adding employee: ${err}`);
+      return next(err);
+    }
+  }
+});
 
 // employeeRouter.delete("/delete-employee/:email", async (req, res) => {
 //   try {
