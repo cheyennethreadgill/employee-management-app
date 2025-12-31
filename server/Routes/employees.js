@@ -93,52 +93,53 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
 
     try {
       // Generate a unique key based on the file's original name
-      async function generateKey() {
-        const origname = req.file.originalname;
-        return `${origname}`;
-      }
+      // async function generateKey() {
+      //   const origname = req.file.originalname;
+      //   return `${origname}`;
+      // }
 
       // **********************************************upload to aws
       const bucketName = process.env.AWS_BUCKET_NAME;
       const fileForAWS = req.file.buffer;
-      console.log(fileForAWS)
-      await awsImageUpload({ bucketName, generateKey, fileForAWS });
+      console.log(` file for aws ${fileForAWS}`);
+      console.log(`bucket name: ${bucketName}`);
+      // await awsImageUpload({ bucketName, generateKey, fileForAWS });
 
-      // File uploaded successfully, return URL or other relevant info
+      // // File uploaded successfully, return URL or other relevant info
 
-      //***************************************** */ then wait for the new employee to be added
-      const db = await connectDB();
-      await db.collection("employees").insertOne(employeeInfo);
+      // //***************************************** */ then wait for the new employee to be added
+      // const db = await connectDB();
+      // await db.collection("employees").insertOne(employeeInfo);
 
-      const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
+      // const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
 
-      const { _id, fname, lname, username, email, password, image } = addedEmployee;
+      // const { _id, fname, lname, username, email, password, image } = addedEmployee;
 
-      // create web token
-      jwt.sign(
-        { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
-        process.env.JWT_SECRET,
-        { expiresIn: "2d" },
-        function (err, token) {
-          if (err) {
-            return res.status(401).json("Unauthorized access.");
-          } else {
-            // send token to front end
-            res.status(200).json({ token });
-          }
-        }
-      );
+      // // create web token
+      // jwt.sign(
+      //   { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
+      //   process.env.JWT_SECRET,
+      //   { expiresIn: "2d" },
+      //   function (err, token) {
+      //     if (err) {
+      //       return res.status(401).json("Unauthorized access.");
+      //     } else {
+      //       // send token to front end
+      //       res.status(200).json({ token });
+      //     }
+      //   }
+      // );
 
-      console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
-      console.log(req.file);
-      console.log({ body: req.body, awsResponse: response });
+      // console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
+      // console.log(req.file);
+      // console.log({ body: req.body, awsResponse: response });
 
-      return res.json({
-        status: "success",
-        message: "Employee added successfully.",
-        employee: req.body,
-        awsUpload: response,
-      });
+      // return res.json({
+      //   status: "success",
+      //   message: "Employee added successfully.",
+      //   employee: req.body,
+      //   awsUpload: response,
+      // });
     } catch (err) {
       console.log(`error adding employee: ${err}`);
       return res.status(500).json({ error: "**************Failed to upload file to S3", err });
