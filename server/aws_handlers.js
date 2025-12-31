@@ -1,4 +1,5 @@
 import { PutObjectCommand, S3Client, S3ServiceException } from "@aws-sdk/client-s3";
+import { error } from "node:console";
 import { readFile } from "node:fs/promises";
 
 export const awsImageUpload = async ({ bucket, key, file }) => {
@@ -8,7 +9,7 @@ export const awsImageUpload = async ({ bucket, key, file }) => {
   const uploadParams = new PutObjectCommand({
     Bucket: bucket,
     Key: await key(), // Leave it empty for now
-    Body: await readFile(file),
+    Body: file,
   });
 
   try {
@@ -27,7 +28,8 @@ or the multipart upload API (5TB max).`
         `Error from S3 while uploading object to $${process.env.AWS_BUCKET_NAME}.  ${err.name}: ${err.message}`
       );
     } else {
-      throw err;
+      console.log(`something went wrong with aws upload ${err}`);
+      throw error;
     }
   }
 };
