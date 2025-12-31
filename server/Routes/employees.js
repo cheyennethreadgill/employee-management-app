@@ -138,7 +138,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
 
       console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
       console.log(req.file);
-      console.log({ body: req.body });
+      console.log({ body: req.body, awsResponse: response });
 
       return res.json({
         status: "success",
@@ -158,8 +158,9 @@ or the multipart upload API (5TB max).`
           `Error from S3 while uploading object to $${process.env.AWS_BUCKET_NAME}.  ${err.name}: ${err.message}`
         );
       } else {
-        console.log(`error adding employee: ${err}`);
-        return res.status(500).json({ error: "**************Failed to upload file to S3" });
+       throw err
+        // console.log(`error adding employee: ${err}`);
+        // return res.status(500).json({ error: "**************Failed to upload file to S3" });
       }
     }
   }
