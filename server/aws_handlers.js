@@ -2,7 +2,7 @@ import { PutObjectCommand, S3Client, S3ServiceException } from "@aws-sdk/client-
 import { error } from "node:console";
 import { readFile } from "node:fs/promises";
 
-export const awsImageUpload = async ({ req, res, bucket, key, file }) => {
+export const awsImageUpload = async (req, res, bucket, key, file) => {
   // set up new aws s3 client
   const client = new S3Client({ region: "us-east-2" });
 
