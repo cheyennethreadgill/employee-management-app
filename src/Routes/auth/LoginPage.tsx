@@ -28,18 +28,20 @@ const LoginPage = ({ URL }) => {
   const [googleOAuthURL, setGoogleOAuthURL] = useState("");
   const { token: oauthToken } = useQueryParams();
 
-  // // remove any existing token so the auto info can show
+  // // remove any existing token (user info) so the auto info can show
   useEffect(() => {
     localStorage.removeItem("token");
   }, []);
 
   // ***************************************************set GOOGLE OAUTH token if google btn is clicked
-  // useEffect(() => {
-  //   if (oauthToken) {
-  //     setToken(oauthToken);
-  //     navigate("/admin");
-  //   }
-  // }, [oauthToken, setToken]);
+  useEffect(() => {
+    if (oauthToken) {
+      setToken(oauthToken);
+      navigate("/admin");
+    } else {
+      return;
+    }
+  }, [oauthToken, setToken]);
 
   // **********************auto load general GOOGLE oauth url from server
   useEffect(() => {
@@ -61,11 +63,11 @@ const LoginPage = ({ URL }) => {
     loadOAuthURL();
   }, []);
 
-  // *************************************************************PASSWORD
+  // ************************************************************PASSWORD
   const [passwordToggle, setPasswordToggle] = useState(false);
   const [loginInfoAuto, setLoginInfoAuto] = useState({
-    username: user.username || "admin",
-    password: user.password || "admin123*",
+    username: "admin",
+    password: "admin123*",
   });
 
   const [loginAuth, setLoginAuth] = useState({
@@ -111,7 +113,7 @@ const LoginPage = ({ URL }) => {
         console.log(jsonResponse.message);
       } else {
         // can I lazy load admin???
-        navigate("/admin")
+        navigate("/admin");
         setToken(jsonResponse.token);
         // console.log({ ...user, message: `Welcome, ${user[0].username}!` });
         console.log(user);
