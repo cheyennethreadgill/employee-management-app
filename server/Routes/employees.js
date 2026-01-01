@@ -77,43 +77,37 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
 
   // *************************************************if theres an image present in the client
   if (req.file) {
-    //SET REQ FILE FOR ABOVE
-    employeeInfo.image = req.file.originalname;
+    console.log(req.file.originalname);
+    // //SET REQ FILE FOR ABOVE
+    // employeeInfo.image = req.file.originalname;
 
-    // ********************************************SERVER HANDLE FILE CHECK
-    let index = employeeInfo.image.lastIndexOf(".");
-    let extension = employeeInfo.image.substring(-1 + index + 1);
+    // // ********************************************SERVER HANDLE FILE CHECK
+    // let index = employeeInfo.image.lastIndexOf(".");
+    // let extension = employeeInfo.image.substring(-1 + index + 1);
 
-    // check to see if there is an accept file format that was uploaded
-    if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
-      //if file exists and extension is wrong
-      console.log(`*****************Please give valid extension. File entered: ${extension}`);
-      return res.status(500).json({ error: `Please give valid extension: ${extension}` });
-    }
+    // // check to see if there is an accept file format that was uploaded
+    // if (extension !== ".png" && extension !== ".jpeg" && extension !== ".jpg") {
+    //   //if file exists and extension is wrong
+    //   console.log(`*****************Please give valid extension. File entered: ${extension}`);
+    //   return res.status(500).json({ error: `Please give valid extension: ${extension}` });
+    // }
 
     try {
-      // Generate a unique key based on the file's original name
-      async function generateKey() {
-        const origname = req.file.originalname;
-        return `${origname}`;
-      }
-
-      // **********************************************upload to aws
-      const bucketName = process.env.AWS_BUCKET_NAME;
-      const fileForAWS = req.file.buffer;
-
-      await awsImageUpload({ req, res, bucketName, generateKey, fileForAWS });
-
+      // // Generate a unique key based on the file's original name
+      // async function generateKey() {
+      //   const origname = req.file.originalname;
+      //   return `${origname}`;
+      // }
+      // // **********************************************upload to aws
+      // const bucketName = process.env.AWS_BUCKET_NAME;
+      // const fileForAWS = req.file.buffer;
+      // await awsImageUpload( req, res, bucketName, generateKey, fileForAWS );
       // // File uploaded successfully, return URL or other relevant info
-
       // //***************************************** */ then wait for the new employee to be added
       // const db = await connectDB();
       // await db.collection("employees").insertOne(employeeInfo);
-
       // const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
-
       // const { _id, fname, lname, username, email, password, image } = addedEmployee;
-
       // // create web token
       // jwt.sign(
       //   { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
@@ -128,11 +122,9 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       //     }
       //   }
       // );
-
       // console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
       // console.log(req.file);
       // console.log({ body: req.body, awsResponse: response });
-
       // return res.json({
       //   status: "success",
       //   message: "Employee added successfully.",
