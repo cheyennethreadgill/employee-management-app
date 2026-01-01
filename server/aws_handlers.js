@@ -4,17 +4,18 @@ import { readFile } from "node:fs/promises";
 
 export const awsImageUpload = async ({ req, res, bucket, key, file }) => {
   // set up new aws s3 client
-  const client = new S3Client({});
+  const client = new S3Client({ region: "us-east-2" });
 
-  const uploadParams = new PutObjectCommand({
+  const uploadParams = {
     Bucket: bucket,
     Key: await key(), // Leave it empty for now
     Body: file,
-  });
+  };
 
   try {
     // Upload file to AWS S3 database
-    const response = await client.send(uploadParams);
+    const command = new PutObjectCommand(uploadParams);
+    const response = await client.send(command);
     res.json(response);
   } catch {
     if (err instanceof S3ServiceException && err.name === "EntityTooLarge") {
