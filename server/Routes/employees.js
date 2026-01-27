@@ -93,12 +93,12 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
     }
 
     try {
+      // **********************************************upload to aws
       // Generate a unique key based on the file's original name
       async function generateKey() {
         const origname = req.file.originalname;
         return `${origname}`;
       }
-      // **********************************************upload to aws
       const bucketName = process.env.AWS_BUCKET_NAME;
       const fileForAWS = req.file.buffer;
       await awsImageUpload(req, res, bucketName, generateKey, fileForAWS);
@@ -132,7 +132,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         awsUpload: res,
       });
     } catch (err) {
-      return res.status(500).json({ error: `empl.135: Error adding employee: ${(err.message, err.cause)}` });
+      return res.status(500).json({ error: `empl.135: Error adding employee: ${(err)}` });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
