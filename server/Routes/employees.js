@@ -132,7 +132,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       });
     } catch (err) {
       console.log(`empl.134: error adding employee: ${err} `);
-      return res.status(500).json({ message: "error adding employee:", err });
+      return res.status(500).json({ message: "empl.135: error adding employee:", err });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
@@ -140,9 +140,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
     try {
       const db = await connectDB();
       await db.collection("employees").insertOne(employeeInfo);
-
       const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
-
       const { _id, fname, lname, username, email, password, image } = addedEmployee;
 
       // create web token
