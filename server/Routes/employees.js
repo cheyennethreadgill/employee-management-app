@@ -117,22 +117,20 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         function (err, token) {
           if (err) {
             return res.status(401).json("Unauthorized access.");
-          } else {
-            // send token to front end
-            res.status(200).json({ token });
           }
         }
       );
-      console.log(`${req.file}`);
 
+      console.log(`${req.file}`);
       return res.json({
         status: "success",
+        token,
         message: "Employee added successfully.",
         employee: req.body,
         awsUpload: res,
       });
     } catch (err) {
-      return res.status(500).json({ error: `empl.135: Error adding employee: ${(err)}` });
+      return res.status(500).json({ error: `empl.135: Error adding employee: ${err}` });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
@@ -151,15 +149,13 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         function (err, token) {
           if (err) {
             return res.status(401).json("Unauthorized access.");
-          } else {
-            // send token to front end
-            res.status(200).json({ token });
           }
         }
       );
 
       return res.json({
         status: res.statusCode,
+        token,
         message: "Employee added successfully.",
         employee: req.body,
       });
