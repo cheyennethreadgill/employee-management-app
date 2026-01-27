@@ -8,7 +8,7 @@ export const awsImageUpload = async (req, res, bucket, key, file) => {
   const uploadParams = {
     Bucket: bucket,
     Key: await key(), // Leave it empty for now
-    Body:  file,
+    Body: file,
   };
 
   try {
@@ -17,6 +17,8 @@ export const awsImageUpload = async (req, res, bucket, key, file) => {
     const command = new PutObjectCommand(uploadParams);
     const response = await client.send(command);
     res.json(response);
+
+    console.log(`IMAGE UPLOADED (aws handler): ${employeeInfo.image}`);
   } catch (err) {
     if (err instanceof S3ServiceException && err.name === "EntityTooLarge") {
       console.error(

@@ -123,7 +123,6 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
           }
         }
       );
-      console.log(`IMAGE UPLOADED (req file if/else conditional): ${employeeInfo.image}`);
       console.log(`${req.file}`);
 
       return res.json({
