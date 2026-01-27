@@ -57,9 +57,9 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
   // if req file isnt present, continue with query
   // if req file is present want to send error if req file is uploaded, else continue with query
 
-  // const generateHashPassword = async () => {
-  //   return await bcrypt.hash(req.body.password, 10);
-  // };
+  const generateHashPassword = async () => {
+    return await bcrypt.hash(req.body.password, 10);
+  };
 
   let employeeInfo = {
     fname: req.body.fname,
@@ -76,7 +76,6 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
 
   // *************************************************if theres an image present in the client
   if (req.file) {
-    console.log(`****************************************${JSON.stringify(req.file.originalname)}`);
     // console.log(req.file.originalname);
     //SET REQ FILE FOR ABOVE
     employeeInfo.image = req.file.originalname;
