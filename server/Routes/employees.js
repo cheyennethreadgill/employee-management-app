@@ -115,8 +115,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const token = jwt.sign(
         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
         process.env.JWT_SECRET,
-        { expiresIn: "2d" },
-        
+        { expiresIn: "2d" }
       );
 
       console.log(`${req.file}`);
@@ -128,7 +127,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         awsUpload: res,
       });
     } catch (err) {
-      return res.status(500).json({ error: `empl.135: Error adding employee: ${err}` });
+      return res.status(500).json({ error: `empl.135: Error adding employee: ${err || "Unknown Error"}` });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
@@ -143,8 +142,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const token = jwt.sign(
         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
         process.env.JWT_SECRET,
-        { expiresIn: "2d" },
-       
+        { expiresIn: "2d" }
       );
 
       return res.json({
@@ -154,7 +152,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         employee: req.body,
       });
     } catch (err) {
-      res.status(500).json({ message: `empl.169: error adding employee: ${err}` });
+      res.status(500).json({ message: `empl.169: error adding employee: ${err || "Unknown Error"} ` });
       return next(err);
     }
   }
