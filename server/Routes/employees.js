@@ -104,33 +104,33 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       await awsImageUpload(req, res, bucketName, generateKey, fileForAWS);
 
       // File uploaded successfully, return URL or other relevant info
-      //***************************************** */ then wait for the new employee to be added
-      // const db = await connectDB();
-      // await db.collection("employees").insertOne(employeeInfo);
-      // const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
-      // const { _id, fname, lname, username, email, password, image } = addedEmployee;
-      // // create web token
-      // jwt.sign(
-      //   { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
-      //   process.env.JWT_SECRET,
-      //   { expiresIn: "2d" },
-      //   function (err, token) {
-      //     if (err) {
-      //       return res.status(401).json("Unauthorized access.");
-      //     } else {
-      //       // send token to front end
-      //       res.status(200).json({ token });
-      //     }
-      //   }
-      // );
-      // console.log(`${req.file}`);
+      // ***************************************** */ then wait for the new employee to be added
+      const db = await connectDB();
+      await db.collection("employees").insertOne(employeeInfo);
+      const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
+      const { _id, fname, lname, username, email, password, image } = addedEmployee;
+      // create web token
+      jwt.sign(
+        { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
+        process.env.JWT_SECRET,
+        { expiresIn: "2d" },
+        function (err, token) {
+          if (err) {
+            return res.status(401).json("Unauthorized access.");
+          } else {
+            // send token to front end
+            res.status(200).json({ token });
+          }
+        }
+      );
+      console.log(`${req.file}`);
 
-      // return res.json({
-      //   status: "success",
-      //   message: "Employee added successfully.",
-      //   employee: req.body,
-      //   awsUpload: res,
-      // });
+      return res.json({
+        status: "success",
+        message: "Employee added successfully.",
+        employee: req.body,
+        awsUpload: res,
+      });
     } catch (err) {
       return res.status(500).json({ error: `empl.135: Error adding employee: ${(err.message, err.cause)}` });
     }
