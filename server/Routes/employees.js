@@ -109,19 +109,19 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
       const { _id, fname, lname, username, email, password, image } = addedEmployee;
       // create web token
-      // jwt.sign(
-      //   { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
-      //   process.env.JWT_SECRET,
-      //   { expiresIn: "2d" },
-      //   function (err, token) {
-      //     if (err) {
-      //       return res.status(401).json("Unauthorized access.");
-      //     } else {
-      //       // send token to front end
-      //       res.status(200).json({ token });
-      //     }
-      //   }
-      // );
+      jwt.sign(
+        { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
+        process.env.JWT_SECRET,
+        { expiresIn: "2d" },
+        function (err, token) {
+          if (err) {
+            return res.status(401).json("Unauthorized access.");
+          } else {
+            // send token to front end
+            res.status(200).json({ token });
+          }
+        }
+      );
       console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
       console.log(req.file);
       console.log({ body: req.body, awsResponse: res });
@@ -132,7 +132,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         awsUpload: res,
       });
     } catch (err) {
-      res.status(500).json(JSON.stringify(err));
+      res.status(500).json({ message: `empl.169: error adding employee: ${err}` });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
