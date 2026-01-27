@@ -133,7 +133,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       });
     } catch (err) {
       console.log(err.message, err.cause);
-      return res.status(500).json({ error: `empl.135: Error adding employee: ${err.message}` });
+      return res.status(500).json({ error: `empl.135: Error adding employee: ${(err.message, err.cause)}` });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
