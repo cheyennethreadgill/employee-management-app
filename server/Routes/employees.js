@@ -53,7 +53,7 @@ employeeRouter.get("/employees", async (req, res, next) => {
 });
 
 // ********************************************************ADD EMPLOYEE
-employeeRouter.post("/add-employee", async (req, res) => {
+employeeRouter.post("/add-employee", async (req, res, next) => {
   // if req file isnt present, continue with query
   // if req file is present want to send error if req file is uploaded, else continue with query
 
@@ -165,6 +165,7 @@ employeeRouter.post("/add-employee", async (req, res) => {
       });
     } catch (err) {
       res.status(500).json({ message: `empl.169: error adding employee: ${err}` });
+      return next(err);
     }
   }
 });
