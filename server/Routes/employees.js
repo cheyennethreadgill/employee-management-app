@@ -70,7 +70,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
     department: req.body.department,
     email: req.body.email,
     degree: req.body.degree,
-    image: import(req.file && req.file.originalname) || " ",
+    image: (req.file && req.file.originalname) || " ",
     username: req.body.username,
     password: await generateHashPassword(),
   };
