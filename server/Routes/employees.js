@@ -109,16 +109,14 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       await db.collection("employees").insertOne(employeeInfo);
       const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
       const { _id, fname, lname, username, email, password, image } = addedEmployee;
+
       // create web token
+
       const token = jwt.sign(
         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
-        function (err, token) {
-          if (err) {
-            return res.status(401).json("Unauthorized access.");
-          }
-        }
+        
       );
 
       console.log(`${req.file}`);
@@ -146,11 +144,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
-        function (err, token) {
-          if (err) {
-            return res.status(401).json("Unauthorized access.");
-          }
-        }
+       
       );
 
       return res.json({
