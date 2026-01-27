@@ -17,7 +17,6 @@ export const awsImageUpload = async (req, res, bucket, key, file) => {
     const command = new PutObjectCommand(uploadParams);
     const response = await client.send(command);
     res.json(response);
-
     console.log(`IMAGE UPLOADED (aws handler): ${employeeInfo.image}`);
   } catch (err) {
     if (err instanceof S3ServiceException && err.name === "EntityTooLarge") {
@@ -28,7 +27,7 @@ or the multipart upload API (5TB max).`
       );
     } else if (err instanceof S3ServiceException) {
       console.error(
-        `Error from S3 while uploading object to $${process.env.AWS_BUCKET_NAME}.  ${err.name}: ${err.message}`
+        `Error from S3 while uploading object to ${process.env.AWS_BUCKET_NAME}.  ${err.name}: ${err.message}`
       );
     } else {
       console.log(`something went wrong with aws upload ${err}`);
