@@ -8,7 +8,7 @@ export const awsImageUpload = async (req, res, bucket, key, file) => {
   const uploadParams = {
     Bucket: bucket,
     Key: await key(), // Leave it empty for now
-    Body: await file,
+    Body:  file,
   };
 
   try {
