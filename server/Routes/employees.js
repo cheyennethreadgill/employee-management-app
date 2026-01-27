@@ -131,7 +131,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         awsUpload: response,
       });
     } catch (err) {
-      console.log(`error adding employee: ${err} empl.134`);
+      console.log(`empl.134: error adding employee: ${err} `);
       return res.status(500).json({ message: "error adding employee:", err });
     }
   }
@@ -166,7 +166,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         employee: req.body,
       });
     } catch (err) {
-      console.log(`error adding employee: ${err}`);
+      console.log(`empl.169: error adding employee: ${err}`);
       return next(err);
     }
   }
