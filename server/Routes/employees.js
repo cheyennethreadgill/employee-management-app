@@ -110,7 +110,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
       const { _id, fname, lname, username, email, password, image } = addedEmployee;
       // create web token
-      jwt.sign(
+      const token = jwt.sign(
         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
@@ -142,7 +142,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const { _id, fname, lname, username, email, password, image } = addedEmployee;
 
       // create web token
-      jwt.sign(
+      const token = jwt.sign(
         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
