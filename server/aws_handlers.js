@@ -3,12 +3,12 @@ import { error } from "node:console";
 
 export const awsImageUpload = async (req, res, bucket, key, file) => {
   // set up new aws s3 client
-  const client = new S3Client({ region: "us-east-2" });
+  const client = new S3Client({ region: process.env.AWS_REGION });
 
   const uploadParams = {
     Bucket: bucket,
     Key: await key(), // Leave it empty for now
-    Body: file,
+    Body: await file,
   };
 
   try {
