@@ -14,4 +14,3 @@ const logFile = () => {
   });
 };
 
-logFile();
