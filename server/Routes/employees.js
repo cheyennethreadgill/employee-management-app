@@ -61,6 +61,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
     return await bcrypt.hash(req.body.password, 10);
   };
 
+  // employee info from client
   let employeeInfo = {
     fname: req.body.fname,
     lname: req.body.lname,
@@ -123,12 +124,12 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       );
       console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
       console.log(req.file);
-      console.log({ body: req.body, awsResponse: response });
+      console.log({ body: req.body, awsResponse: res });
       return res.json({
         status: "success",
         message: "Employee added successfully.",
         employee: req.body,
-        awsUpload: response,
+        awsUpload: res,
       });
     } catch (err) {
       res.status(500).json({ message: "empl.134: error adding employee:", err });
