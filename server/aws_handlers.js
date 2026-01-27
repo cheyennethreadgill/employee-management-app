@@ -17,7 +17,7 @@ export const awsImageUpload = async (req, res, bucket, key, filePath) => {
     const command = new PutObjectCommand(uploadParams);
     const response = await client.send(command);
     res.json(response);
-  } catch {
+  } catch (err) {
     if (err instanceof S3ServiceException && err.name === "EntityTooLarge") {
       console.error(
         `Error from S3 while uploading object to ${process.env.AWS_BUCKET_NAME}. \
