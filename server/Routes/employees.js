@@ -132,7 +132,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         awsUpload: res,
       });
     } catch (err) {
-      return res.status(500).json({ error: `empl.135: Server error: ${err.message}` });
+      return res.status(500).json({ error: `empl.135: Error adding employee: ${err.message}` });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
