@@ -53,7 +53,7 @@ employeeRouter.get("/employees", async (req, res, next) => {
 });
 
 // ********************************************************ADD EMPLOYEE
-employeeRouter.post("/add-employee", async (req, res, next) => {
+employeeRouter.post("/add-employee", async (req, res) => {
   // if req file isnt present, continue with query
   // if req file is present want to send error if req file is uploaded, else continue with query
 
@@ -132,7 +132,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         awsUpload: res,
       });
     } catch (err) {
-      console.log(`empl.135: error adding employee: ${err}`);
+      return res.status(500).json({ error: `empl.135: Server error: ${err.message}` });
     }
   }
   // **********************************************if there isnt an image uploaded to the client, do this:
@@ -164,8 +164,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         employee: req.body,
       });
     } catch (err) {
-      console.log(`empl.169: error adding employee: ${err}`);
-      return next(err);
+      res.status(500).json({ message: `empl.169: error adding employee: ${err}` });
     }
   }
 });
