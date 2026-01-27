@@ -102,6 +102,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const bucketName = process.env.AWS_BUCKET_NAME;
       const fileForAWS = req.file.originalname;
       await awsImageUpload(req, res, bucketName, generateKey, fileForAWS);
+
       // File uploaded successfully, return URL or other relevant info
       //***************************************** */ then wait for the new employee to be added
       const db = await connectDB();
@@ -122,9 +123,10 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
           }
         }
       );
-      console.log(`IMAGE UPLOADED (req file else conditional): ${employeeInfo.image}`);
-      console.log(req.file);
+      console.log(`IMAGE UPLOADED (req file if/else conditional): ${employeeInfo.image}`);
+      console.log(`${req.file}`);
       console.log({ body: req.body, awsResponse: res });
+
       return res.json({
         status: "success",
         message: "Employee added successfully.",
