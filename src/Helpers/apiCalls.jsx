@@ -9,7 +9,7 @@ export async function deleteProjectFromDB(
 ) {
   // Post options
   const options = {
-    method: "DELETE"
+    method: "DELETE",
   };
 
   try {
