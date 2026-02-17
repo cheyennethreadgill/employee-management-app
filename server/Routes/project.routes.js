@@ -51,6 +51,9 @@ export const addProjectsRouter = projectRouter.post("/", async (req, res) => {
     } catch (err) {
       console.log(`error adding project: ${err}`);
       next(err);
+    } finally {
+      console.log("User project action complete.");
+      res.end();
     }
   }
 });
@@ -122,8 +125,5 @@ export const deleteProjectsRouter = projectRouter.delete("/", async (req, res, n
   } catch (err) {
     console.log(`project.126: error deleting project: ${err}`);
     next(err);
-  } finally {
-    console.log("User project deletion complete.");
-    res.end();
   }
 });
