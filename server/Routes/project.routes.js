@@ -51,9 +51,6 @@ export const addProjectsRouter = projectRouter.post("/", async (req, res) => {
     } catch (err) {
       console.log(`error adding project: ${err}`);
       next(err);
-    } finally {
-      console.log("User project action complete.");
-      res.end();
     }
   }
 });
