@@ -14,7 +14,8 @@ export async function deleteProjectFromDB(
   };
 
   try {
-    const fetchPromiseResponse = await fetch(`${URL}${DELETEPROJECT_PATH}`, options);
+    console.log(id);
+    const fetchPromiseResponse = await fetch(`${URL}${DELETEPROJECT_PATH}:${id}`, options);
     handleFetchPromiseError(fetchPromiseResponse);
     const jsonPromiseResponse = await fetchPromiseResponse.json();
     handleJsonPromiseResponseLog(jsonPromiseResponse);
