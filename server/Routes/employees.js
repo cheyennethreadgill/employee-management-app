@@ -122,6 +122,7 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         token,
         message: "Employee added successfully.",
         employee: req.body,
+        file: req.file,
       });
     } catch (err) {
       return res.status(500).json({ error: `empl.135: Error adding employee: ${err.message} || "Unknown Error` });
