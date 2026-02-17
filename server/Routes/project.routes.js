@@ -103,7 +103,7 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
   }
 });
 // ***********************************************************DELETE PROJECTS
-export const deleteProjectsRouter = projectRouter.delete("/", async (req, res, next) => {
+export const deleteProjectsRouter = projectRouter.delete("/", async (req, res) => {
   console.log(req.body);
 
   // get the project id to filter
@@ -124,6 +124,5 @@ export const deleteProjectsRouter = projectRouter.delete("/", async (req, res, n
     });
   } catch (err) {
     console.log(`project.126: error deleting project: ${err}`);
-    next(err);
   }
 });
