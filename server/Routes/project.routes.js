@@ -106,17 +106,12 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
 export const deleteProjectsRouter = projectRouter.delete("/", async (req, res) => {
   console.log(req.body);
 
-  // get the project id to filter
-  let filterProject = {
-    projectID: req.body.projectID,
-  };
+  const ID = req.body.projectID;
 
   // delete project from DB
-
   try {
     const db = await connectDB();
-    // update the filtered project
-    await db.collection("projects").deleteOne(filterProject);
+    await db.collection("projects").deleteOne({ projectID: ID });
 
     res.status(200).json({
       status: "success",
