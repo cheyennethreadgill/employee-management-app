@@ -54,7 +54,7 @@ app.use("/api", projectRouter);
 app.use("/api", employeeRouter);
 app.use("/add-project", addProjectsRouter);
 app.use("/update-project", updateProjectsRouter);
-app.use("/delete-project/:id", deleteProjectsRouter);
+app.use("/delete-project", deleteProjectsRouter);
 
 // all requests to sign up and login with be router using router in auth.routes
 
