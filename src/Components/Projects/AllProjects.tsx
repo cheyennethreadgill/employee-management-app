@@ -61,7 +61,7 @@ const AllProjects = ({
   const { ALLPROJECTS_PATH, loading } = useContext(CustomContext);
 
   const UPDATE_PATH = "update-project";
-  const DELETEPROJECT_PATH = "delete-project/";
+  const DELETEPROJECT_PATH = "delete-project";
 
   const [showNow, setShowNow] = useState(false);
   const [editMode, setEditMode] = useState(false);
