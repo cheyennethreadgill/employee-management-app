@@ -9,12 +9,10 @@ export async function deleteProjectFromDB(
 ) {
   // Post options
   const options = {
-    method: "DELETE",
-    body: id,
+    method: "DELETE"
   };
 
   try {
-    console.log(id);
     const fetchPromiseResponse = await fetch(`${URL}${DELETEPROJECT_PATH}:${id}`, options);
     handleFetchPromiseError(fetchPromiseResponse);
     const jsonPromiseResponse = await fetchPromiseResponse.json();
