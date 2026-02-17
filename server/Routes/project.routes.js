@@ -116,7 +116,7 @@ export const deleteProjectsRouter = projectRouter.delete("/", async (req, res) =
   try {
     const db = await connectDB();
     // update the filtered project
-    await db.collection("projects").deleteOne({ projectID });
+    await db.collection("projects").deleteOne({ filterProject });
 
     res.status(200).json({
       status: "success",
