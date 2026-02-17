@@ -103,7 +103,7 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
   }
 });
 // ***********************************************************DELETE PROJECTS
-export const deleteProjectsRouter = projectRouter.delete("/", async (req, res) => {
+export const deleteProjectsRouter = projectRouter.delete("/", async (req, res, next) => {
   console.log(req.body);
 
   // get the project id to filter
@@ -120,7 +120,7 @@ export const deleteProjectsRouter = projectRouter.delete("/", async (req, res) =
 
     res.status(200).json({
       status: "success",
-      message: "Project eleted successfully.",
+      message: "Project deleted successfully.",
     });
   } catch (err) {
     console.log(`project.126: error deleting project: ${err}`);
