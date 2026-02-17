@@ -110,20 +110,19 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
       const addedEmployee = await db.collection("employees").findOne({ email: req.body.email });
       const { _id, fname, lname, username, email, password, image } = addedEmployee;
 
-      // create web token
-
+      // create web token with info from added employee
       const token = jwt.sign(
         { id: _id, fname, lname, username, email, password, image: image, isVerified: false },
         process.env.JWT_SECRET,
         { expiresIn: "2d" },
       );
 
-      console.log(`${req.file}`);
       return res.json({
-        status: "success",
+        status: 200,
         token,
         message: "Employee added successfully.",
         employee: req.body,
+        awsFileUploaded: req.file.originalname,
       });
     } catch (err) {
       return res.status(500).json({ error: `empl.135: Error adding employee: ${err.message || "Unknown Error"}` });
