@@ -102,3 +102,31 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
     res.end();
   }
 });
+// ***********************************************************DELETE PROJECTS
+export const deleteProjectsRouter = projectRouter.delete("/", async (req, res) => {
+  console.log(req.body);
+
+  // get the project id to filter
+  let filterProject = {
+    projectID: req.body.projectID,
+  };
+
+  // delete project from DB
+
+  try {
+    const db = await connectDB();
+    // update the filtered project
+    await db.collection("projects").deleteOne({ projectID });
+
+    res.status(200).json({
+      status: "success",
+      message: "Project eleted successfully.",
+    });
+  } catch (err) {
+    console.log(`project.126: error deleting project: ${err}`);
+    next(err);
+  } finally {
+    console.log("User project deletion complete.");
+    res.end();
+  }
+});

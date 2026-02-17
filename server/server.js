@@ -3,7 +3,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import { authRouter } from "./Routes/auth.routes.js";
 import { employeeRouter } from "./Routes/employees.js";
-import { projectRouter, addProjectsRouter, updateProjectsRouter } from "./Routes/project.routes.js";
+import {
+  projectRouter,
+  addProjectsRouter,
+  updateProjectsRouter,
+  deleteProjectsRouter,
+} from "./Routes/project.routes.js";
 import { connectDB } from "./database.js";
 import multer from "multer";
 import { connect } from "mongoose";
@@ -35,7 +40,7 @@ app.use(cors(corsOptions));
 app.use(
   bodyParser.json({
     limit: 10000000,
-  })
+  }),
 );
 
 app.use(bodyParser.urlencoded({ extended: true, limit: 10000000 }));
@@ -49,6 +54,7 @@ app.use("/api", projectRouter);
 app.use("/api", employeeRouter);
 app.use("/add-project", addProjectsRouter);
 app.use("/update-project", updateProjectsRouter);
+app.use("/delete-project", deleteProjectsRouter);
 
 // all requests to sign up and login with be router using router in auth.routes
 
