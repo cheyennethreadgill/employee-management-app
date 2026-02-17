@@ -122,7 +122,6 @@ employeeRouter.post("/add-employee", async (req, res, next) => {
         token,
         message: "Employee added successfully.",
         employee: req.body,
-        awsFileUploaded: req.file.originalname,
       });
     } catch (err) {
       return res.status(500).json({ error: `empl.135: Error adding employee: ${err.message }` });
