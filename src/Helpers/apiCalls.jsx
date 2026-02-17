@@ -5,11 +5,12 @@ export async function deleteProjectFromDB(
   DELETEPROJECT_PATH,
   handleFetchPromiseError,
   handleJsonPromiseResponseLog,
-  handleFetchError
+  handleFetchError,
 ) {
   // Post options
   const options = {
     method: "DELETE",
+    body: id,
   };
 
   try {
