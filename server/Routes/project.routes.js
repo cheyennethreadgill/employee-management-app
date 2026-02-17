@@ -103,14 +103,13 @@ export const updateProjectsRouter = projectRouter.put("/", async (req, res) => {
   }
 });
 // ***********************************************************DELETE PROJECTS
-export const deleteProjectsRouter = projectRouter.delete("/", async (req, res) => {
-  console.log(req.body);
-
+export const deleteProjectsRouter = projectRouter.delete("/:id", async (req, res) => {
+  console.log(req.params);
 
   // delete project from DB
   try {
     const db = await connectDB();
-    await db.collection("projects").deleteOne();
+    await db.collection("projects").deleteOne({ projectID: req.params.id });
 
     res.status(200).json({
       status: "success",
