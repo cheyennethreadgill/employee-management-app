@@ -212,7 +212,7 @@ const AllEmployees = ({
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}/${id}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}api/${UPDATE_PATH}/${id}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = await fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
