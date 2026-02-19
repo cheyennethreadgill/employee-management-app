@@ -224,10 +224,13 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
     },
   };
 
+  // do this if user isn't authorized to edit
   if (!authorization) {
     console.log("NOT AUTHORIZED");
     res.status(401).json({ message: "You don't have acces to change this resource.", auth: authorization });
   }
+
+  // -------------------------------------------------------------------TOKEN
   // get payload from auth token sent from client
   const token = authorization.split(" ")[1];
 
@@ -283,7 +286,7 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
         const db = await connectDB();
         await db.collection("employees").updateOne(employeeInfoIntital, employeeInfoUpdated);
         const foundUser = await db.collection("employees").findOne({ email: req.body.email });
-
+        console.log(`${foundUser}>> user in employees put`);
         const { _id, fname, lname, username, email, password, image } = foundUser;
         // get the data from db
         // create web token
@@ -291,17 +294,18 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
           { id: _id, fname, lname, username, email, password, image: image },
           process.env.JWT_SECRET,
           { expiresIn: "2d" },
-          function (err, token) {
-            if (err) {
-              return res.status(401).json("Unauthorized access.");
-            }
-            // send token to front end
-            return res.status(200).json({ message: "Employee Updated!", token });
-          },
+          // function (err, token) {
+          //   if (err) {
+          //     return res.status(401).json("Unauthorized access.");
+          //   }
+          //   // send token to front end
+          //   return res.status(200).json({ message: "Employee Updated!", token });
+          // },
         );
+
+        return res.status(200).json({ message: "Employee Updated!", token });
       } catch (err) {
-        console.log(`error update employee: ${err}`);
-        return res.sendStatus(500);
+        return res.status(401).json(`error update employee: ${err}`);
       }
     } else {
       try {
