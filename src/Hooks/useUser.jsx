@@ -8,9 +8,9 @@ export const useUser = () => {
   const [token] = useToken();
 
   // parse the token to get the payload (user info)
-  const splitToken = token.split(".")[1];
+  const splitToken = token && token.includes(".") ? token.split(".")[1] : null;
 
-  if (token) {
+  if (token && splitToken) {
     const userPayload = () => {
       // atob fn decodes an encoded string
       const parsedPayload = JSON.parse(atob(splitToken));
