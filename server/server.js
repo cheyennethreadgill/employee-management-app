@@ -65,7 +65,7 @@ app.use("/update-employee", employeeRouter);
 // });
 
 app.use("/", (req, res) => {
-  res.send("Welcome to the Kuber Employee Management API! (Root path)");
+  res.json("Welcome to the Kuber Employee Management API! (Root path)");
 });
 
 // Only start a local listener when not running on Vercel (Vercel imports the app).
