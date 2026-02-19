@@ -150,7 +150,7 @@ const AllEmployees = ({
         } else {
           return { ...employee };
         }
-      })
+      }),
     );
   };
 
@@ -160,7 +160,7 @@ const AllEmployees = ({
       employees.filter((employee: EmployeeObjectInterface) => {
         const { _id } = employee;
         return _id !== id;
-      })
+      }),
     );
   };
 
@@ -172,35 +172,35 @@ const AllEmployees = ({
     // formData.append("employeeid", id);
     formData.append(
       "fname",
-      `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`
+      `${employeeToUpdate.newFirstnameUpdated ? employeeToUpdate.newFirstname : employeeToUpdate.firstname}`,
     );
     formData.append(
       "lname",
-      `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`
+      `${employeeToUpdate.newLastnameUpdated ? employeeToUpdate.newLastname : employeeToUpdate.lastname}`,
     );
     formData.append(
       "degree",
-      `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`
+      `${employeeToUpdate.newDegreeUpdated ? employeeToUpdate.newDegree : employeeToUpdate.degree}`,
     );
     formData.append(
       "mobile",
-      `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`
+      `${employeeToUpdate.newMobileUpdated ? employeeToUpdate.newMobile : employeeToUpdate.mobile}`,
     );
     formData.append(
       "designation",
-      `${employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation}`
+      `${employeeToUpdate.newDesignationUpdated ? employeeToUpdate.newDesignation : employeeToUpdate.designation}`,
     );
     formData.append(
       "department",
-      `${employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department}`
+      `${employeeToUpdate.newDepartmentUpdated ? employeeToUpdate.newDepartment : employeeToUpdate.department}`,
     );
     formData.append(
       "email",
-      `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`
+      `${employeeToUpdate.newEmailUpdated ? employeeToUpdate.newEmail : employeeToUpdate.email}`,
     );
     formData.append(
       "image",
-      (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " "
+      (employeeToUpdate.newImageUpdated && employeeToUpdate.newImage) || employeeToUpdate.image || " ",
     );
 
     const options = {
@@ -212,7 +212,7 @@ const AllEmployees = ({
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}admin/${UPDATE_PATH}/${id}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}${UPDATE_PATH}/${id}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = await fetchPromiseResponse.json();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
