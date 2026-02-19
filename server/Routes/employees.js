@@ -331,9 +331,9 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
             }
           },
         );
+        return res.status(200).json({ message: "Employee Updated!", token });
       } catch (err) {
-        console.log(`error update employee: ${err}`);
-        return res.sendStatus(500).json({ message: err });
+        return res.status(401).json(`error update employee: ${err}`);
       }
     }
   });
