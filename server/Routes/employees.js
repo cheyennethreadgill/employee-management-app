@@ -322,14 +322,14 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
           { id: _id, fname, lname, username, email, password, image },
           process.env.JWT_SECRET,
           { expiresIn: "2d" },
-          function (err, token) {
-            if (err) {
-              return res.status(401).json("Unauthorized access.");
-            } else {
-              // send token to front end
-              return res.status(200).json({ token });
-            }
-          },
+          // function (err, token) {
+          //   if (err) {
+          //     return res.status(401).json("Unauthorized access.");
+          //   } else {
+          //     // send token to front end
+          //     return res.status(200).json({ token });
+          //   }
+          // },
         );
         return res.status(200).json({ message: "Employee Updated!", token });
       } catch (err) {
