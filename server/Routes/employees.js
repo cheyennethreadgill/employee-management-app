@@ -339,6 +339,7 @@ employeeRouter.delete("/delete-employee/:email", async (req, res) => {
     console.log(vals);
     await employees.deleteOne({ email: vals });
     await users.deleteOne({ email: vals });
+    res.json("Employee deleted.").status(200);
   } catch (err) {
     res.json({ message: err });
   }
