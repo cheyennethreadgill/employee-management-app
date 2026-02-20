@@ -268,15 +268,13 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
         }
         const uploadParams = {
           Bucket: process.env.AWS_BUCKET_NAME,
-          Key: generateKey(), // Leave it empty for now
+          Key: generateKey, // Leave it empty for now
           Body: req.file.buffer,
         };
 
         // Upload file to S3
         await awsImageUpload(uploadParams);
         // File uploaded successfully, return URL or other relevant info
-
-        // ***********************************************s3 end
 
         const db = await connectDB();
         await db.collection("employees").updateOne(employeeInfoIntital, employeeInfoUpdated);
