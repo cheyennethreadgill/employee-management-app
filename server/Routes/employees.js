@@ -335,10 +335,19 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
 
 employeeRouter.delete("/delete-employee/:email", async (req, res) => {
   try {
-    let vals = req.params.email;
-    console.log(vals);
-    await employees.deleteOne({ email: vals });
-    await users.deleteOne({ email: vals });
+    let employeeInfo = req.params.email;
+
+    // find employee
+    const db = await connectDB();
+    const foundEmail = await db.collection("employees").findOne(employeeInfo);
+    // if cannot find, send error
+
+    if (!foundEmail === employeeInfo) {
+      res.json("Email not found").status(400);
+    }
+
+    // else continue with deletion
+    await employees.deleteOne({ email: employeeInfo });
     res.json("Employee deleted.").status(200);
   } catch (err) {
     res.json({ message: err });
