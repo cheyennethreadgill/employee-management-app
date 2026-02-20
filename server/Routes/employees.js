@@ -342,15 +342,15 @@ employeeRouter.delete("/delete-employee/:email", async (req, res) => {
     const foundEmail = await db.collection("employees").findOne(employeeInfo);
     // if cannot find, send error
 
-    if (!foundEmail === employeeInfo) {
+    if (!foundEmail) {
       res.status(400).json("Email not found");
     }
 
     // else continue with deletion
     await db.collection("employees").deleteOne({ email: employeeInfo });
-    res.status(200).json("Employee deleted.");
+    return res.status(200).json("Employee deleted.");
   } catch (err) {
-    res.json({ message: err });
+    return res.json({ message: err });
   }
 });
 
