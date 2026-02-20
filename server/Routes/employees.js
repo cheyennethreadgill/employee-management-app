@@ -350,7 +350,7 @@ employeeRouter.delete("/delete-employee/:email", async (req, res) => {
     await employees.deleteOne({ email: employeeInfo });
     res.json("Employee deleted.").status(200);
   } catch (err) {
-    res.json({ message: err });
+    res.json(err);
   }
 });
 
