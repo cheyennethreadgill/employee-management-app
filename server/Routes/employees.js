@@ -335,7 +335,7 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
 
 employeeRouter.delete("/delete-employee/:email", async (req, res) => {
   try {
-    let employeeInfo = req.params.email;
+    let employeeInfo = { email: req.params.email };
 
     // find employee
     const db = await connectDB();
@@ -347,7 +347,7 @@ employeeRouter.delete("/delete-employee/:email", async (req, res) => {
     }
 
     // else continue with deletion
-    await db.collection("employees").deleteOne({ email: employeeInfo });
+    await db.collection("employees").deleteOne(employeeInfo);
     return res.status(200).json("Employee deleted.");
   } catch (err) {
     return res.json({ message: err });
