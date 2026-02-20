@@ -343,7 +343,7 @@ employeeRouter.delete("/delete-employee/:email", async (req, res) => {
     // if cannot find, send error
 
     if (!foundEmail) {
-      res.status(400).json("Email not found");
+      return res.status(400).json("Email not found");
     }
 
     // else continue with deletion
