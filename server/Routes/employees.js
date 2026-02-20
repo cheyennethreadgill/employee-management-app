@@ -273,14 +273,9 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
         };
 
         // Upload file to S3
-        s3.upload(uploadParams, (err, data) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).json({ message: "**************Failed to upload file to S3" });
-          }
-          console.log({ url: data.Location });
-          // File uploaded successfully, return URL or other relevant info
-        });
+        await awsImageUpload(uploadParams);
+        // File uploaded successfully, return URL or other relevant info
+
         // ***********************************************s3 end
 
         const db = await connectDB();
