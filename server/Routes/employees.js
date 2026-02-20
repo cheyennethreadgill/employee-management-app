@@ -333,16 +333,16 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
   // set token in employee modal with new token sent from server response on PUT
 });
 
-// employeeRouter.delete("/delete-employee/:email", async (req, res) => {
-//   try {
-//     let vals = req.params.email;
-//     console.log(vals);
-//     await employees.deleteOne({ email: vals });
-//     await users.deleteOne({ email: vals });
-//   } catch (err) {
-//     res.json({ message: err });
-//   }
-// });
+employeeRouter.delete("/delete-employee/:email", async (req, res) => {
+  try {
+    let vals = req.params.email;
+    console.log(vals);
+    await employees.deleteOne({ email: vals });
+    await users.deleteOne({ email: vals });
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
 
 // employeeRouter.get("/", (req, res) => {
 //   res.send("(employees.js Root) ");
