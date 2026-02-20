@@ -246,7 +246,7 @@ const AllEmployees = ({
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}admin/delete-employee/${email}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}api/delete-employee/${email}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json() || fetchPromiseResponse.text();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
