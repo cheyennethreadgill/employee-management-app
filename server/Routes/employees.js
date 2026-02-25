@@ -235,15 +235,15 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
   const token = authorization.split(" ")[1];
 
   // verify the payload from client
-  jwt.verify( token, "nkjsd;s5s68edsfdgdg8ds56r54KJhHGTFFYHTFYULHJDIUHSD", async ( err, decoded ) => {
-    if ( err ) {
-      return res.status( 409 ).json( { message: "Error with JWT verification" } );
+  jwt.verify(token, "nkjsd;s5s68edsfdgdg8ds56r54KJhHGTFFYHTFYULHJDIUHSD", async (err, decoded) => {
+    if (err) {
+      return res.status(409).json({ message: "Error with JWT verification" });
     }
 
     // if id sent from client doesnt equal the id that they want to update
-    
-    if ( id === "664100fd3f2c3c90eb122546" ) {
-      console.log( "access granted" );
+
+    if (id === "664100fd3f2c3c90eb122546") {
+      console.log("access granted");
       return;
     } else {
       if (id !== decoded.id) {
@@ -339,17 +339,26 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
   // set token in employee modal with new token sent from server response on PUT
 });
 
-employeeRouter.delete("/delete-employee/:email", async (req, res) => {
+employeeRouter.delete("/delete-employee/:id", async (req, res) => {
   try {
-    let employeeInfo = { email: req.params.email };
+    let employeeInfo = { _id: req.params.id };
 
     // find employee
     const db = await connectDB();
-    const foundEmail = await db.collection("employees").findOne(employeeInfo);
+    const foundID = await db.collection("employees").findOne(employeeInfo);
     // if cannot find, send error
 
-    if (!foundEmail) {
-      return res.status(400).json("Email not found");
+    if (!foundID) {
+      return res.status(400).json("Employee not found.");
+    }
+
+    if (employeeInfo._id === "664100fd3f2c3c90eb122546") {
+      console.log("access granted");
+      return;
+    } else {
+      if (employeeInfo._id !== req.params.id) {
+        return res.status(409).json({ message: "Access denied. You need admin privledges to delete this." });
+      }
     }
 
     // else continue with deletion
