@@ -240,13 +240,16 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
       return res.status(409).json({ message: "Error with JWT verification" });
     }
 
-    // if email sent from client doesnt equal the id that they want to update
+    // if id sent from client doesnt equal the id that they want to update
     if (id !== decoded.id) {
-      return res.status(409).json({ message: "You do not have access to change this resource." });
+      return res.status(409).json({ message: "Access denied. You need admin privledges to make this change." });
+    } else if (id === "664100fd3f2c3c90eb122546") {
+      console.log("access granted");
+      return;
     }
 
-    // update the emloyee
     if (req.file) {
+      // update the emloyee
       //SET REQ FILE FOR ABOVE
       reqImg = req.file.originalname;
 
