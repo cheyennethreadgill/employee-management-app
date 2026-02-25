@@ -241,9 +241,9 @@ employeeRouter.put("/update-employee/:id", async (req, res, next) => {
     }
 
     // if id sent from client doesnt equal the id that they want to update
-    if (id !== decoded.id) {
-      return res.status(409).json({ message: "Access denied. You need admin privledges to make this change." });
-    }
+    // if (id !== decoded.id) {
+    //   return res.status(409).json({ message: "Access denied. You need admin privledges to make this change." });
+    // }
     if (id === "664100fd3f2c3c90eb122546") {
       console.log("access granted");
       return;
