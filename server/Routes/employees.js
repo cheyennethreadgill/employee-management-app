@@ -345,7 +345,7 @@ employeeRouter.delete("/delete-employee/:id", async (req, res) => {
 
     // find employee
     const db = await connectDB();
-    const foundID = await db.collection("employees").findOne(employeeInfo);
+    const foundID = await db.collection("employees").findOne({ _id: req.params.id });
     // if cannot find, send error
 
     if (!foundID) {
