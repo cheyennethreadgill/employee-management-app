@@ -239,14 +239,14 @@ const AllEmployees = ({
   }
 
   // DELETE EMPLOYEE From DB
-  async function deleteEmployeeFromDB(email: string) {
+  async function deleteEmployeeFromDB(id: string) {
     // Post options
     const options = {
       method: "DELETE",
     };
 
     try {
-      const fetchPromiseResponse = await fetch(`${URL}api/delete-employee/${email}`, options);
+      const fetchPromiseResponse = await fetch(`${URL}api/delete-employee/${id}`, options);
       handleFetchPromiseError(fetchPromiseResponse);
       const jsonPromiseResponse = fetchPromiseResponse.json() || fetchPromiseResponse.text();
       handleJsonPromiseResponseLog(jsonPromiseResponse);
