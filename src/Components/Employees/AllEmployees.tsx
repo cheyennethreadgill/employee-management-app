@@ -262,27 +262,27 @@ const AllEmployees = ({
   const employeeCount = employees.length > 0;
 
   const handleFilteredEmployees = (e: string) => {
-    let searchValue = e.toString().toLowerCase(); // Ensure value is a string
+    let searchValue = e.toString(); // Ensure value is a string
 
-    console.log(searchValue);
+    // console.log(searchValue);
     // // sets filtered employee with found employee from filter fn
     let found = employees.filter((employee: EmployeeObjectInterface) => {
       const { department, designation, email, _id, fname, lname, mobile, degree } = employee;
 
-      if (department || designation || email || _id || fname || lname || mobile || degree) {
-        if (
-          (_id && _id.includes(searchValue)) ||
-          (department && department.includes(searchValue)) ||
-          (designation && designation.includes(searchValue)) ||
-          (email && email.includes(searchValue)) ||
-          (fname && fname.includes(searchValue)) ||
-          (lname && lname.includes(searchValue)) ||
-          (mobile && mobile.includes(searchValue)) ||
-          (degree && degree.includes(searchValue))
-        ) {
-          return employee;
-        }
+      // if (department || designation || email || _id || fname || lname || mobile || degree) {
+      if (
+        (_id && _id.includes(searchValue)) ||
+        (department && department.includes(searchValue)) ||
+        (designation && designation.includes(searchValue)) ||
+        (email && email.includes(searchValue)) ||
+        (fname && fname == searchValue) ||
+        (lname && lname.includes(searchValue)) ||
+        (mobile && mobile.includes(searchValue)) ||
+        (degree && degree.includes(searchValue))
+      ) {
+        return employee;
       }
+      // }
     });
     setfilteredEmloyees(found);
   };
