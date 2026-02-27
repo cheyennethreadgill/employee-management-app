@@ -346,17 +346,13 @@ employeeRouter.delete("/delete-employee/:id", async (req, res) => {
     // find employee
     const db = await connectDB();
     const foundID = await db.collection("employees").findOne({ _id: req.params.id });
-    // if cannot find, send error
 
-    if (!foundID) {
-      return res.status(400).json("Employee not found.");
-    }
-
+    // if admin is logged in, grant access to delete any resource
     if (employeeInfo._id === "664100fd3f2c3c90eb122546") {
       console.log("access granted");
       return;
     } else {
-      if (employeeInfo._id !== req.params.id) {
+      if (foundID._id !== req.params.id) {
         return res.status(409).json({ message: "Access denied. You need admin privledges to delete this." });
       }
     }
