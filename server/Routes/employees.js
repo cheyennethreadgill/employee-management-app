@@ -360,7 +360,7 @@ employeeRouter.delete("/delete-employee/:id", async (req, res) => {
       }
     }
   } catch (err) {
-    return res.json({ message: err });
+    return res.status(500).json({ message: err });
   }
 });
 
