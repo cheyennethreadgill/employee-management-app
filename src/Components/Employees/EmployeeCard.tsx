@@ -356,7 +356,7 @@ const EmployeeCard = ({
             ></button>
             <button
               onClick={() => {
-                onDelete(email);
+                onDelete(employeeid);
                 onUpdateEmployeeState(employeeid);
               }}
               type="button"
