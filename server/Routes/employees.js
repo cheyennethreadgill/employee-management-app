@@ -350,16 +350,15 @@ employeeRouter.delete("/delete-employee/:id", async (req, res) => {
     // if admin is logged in, grant access to delete any resource
     if (employeeInfo._id === "664100fd3f2c3c90eb122546") {
       console.log("access granted");
-      return;
+      // else continue with deletion
+      await db.collection("employees").deleteOne(employeeInfo);
+      return res.status(200).json("Employee deleted.");
     } else {
+      // if found ID doesnt match the id of the employee you want to delete, return error
       if (foundID._id !== req.params.id) {
         return res.status(409).json({ message: "Access denied. You need admin privledges to delete this." });
       }
     }
-
-    // else continue with deletion
-    await db.collection("employees").deleteOne(employeeInfo);
-    return res.status(200).json("Employee deleted.");
   } catch (err) {
     return res.json({ message: err });
   }
